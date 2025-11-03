@@ -89,9 +89,9 @@ exports.handler = async function(event, context) {
         
         return { statusCode: 200, body: JSON.stringify({ success: success, message: '備註儲存成功' }) };
 
-    } catch (error) {
+   } catch (error) {
         // 捕獲來自 updateProgressDatabase 的錯誤
         console.error('Save Note error:', error.toString());
-        return { statusCode: 500, body: JSON.stringify({ success: false, message: '伺服器內部錯誤，備註未能儲存。' }) });
+        return { statusCode: 500, body: JSON.stringify({ success: false, message: '伺服器內部錯誤，備註未能儲存。' }) }; // <-- 修正後的程式碼
     }
 };
