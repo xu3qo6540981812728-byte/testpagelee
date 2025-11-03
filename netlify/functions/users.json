@@ -1,0 +1,51 @@
+[
+    {
+        "username": "C73449",
+        "password": "19940201",
+        "name": "李培智",
+        "role": "manager",
+        "team": "A組"
+    },
+    {
+        "username": "C84730",
+        "password": "19851010",
+        "name": "李志仁",
+        "role": "agent",
+        "team": "A組"
+    },
+    {
+        "username": "C80624",
+        "password": "19930109",
+        "name": "葉欣宜",
+        "role": "agent",
+        "team": "A組"
+    },
+    {
+        "username": "C91517",
+        "password": "20010721",
+        "name": "劉懷懋",
+        "role": "agent",
+        "team": "A組"
+    },
+    {
+        "username": "C87976",
+        "password": "19980216",
+        "name": "林俊翔",
+        "role": "agent",
+        "team": "A組"
+    },
+    {
+        "username": "shinelee",
+        "password": "shinelee",
+        "name": "李正翔",
+        "role": "manager",
+        "team": "B組"
+    },
+    {
+        "username": "guest",
+        "password": "guest",
+        "name": "訪客",
+        "role": "agent",
+        "team": "B組"
+    }
+]
