@@ -3219,26 +3219,6 @@
 
             </div>
         </div>
-        <div id="chapter14" class="content-section space-y-8">
-            <header>
-                <h2 class="text-4xl font-bold text-slate-800 border-b-4 border-indigo-500 pb-3 mb-2">🚀 團隊菁英進度儀表板</h2>
-                <p class="text-slate-500">快速追蹤您的團隊成員的課程與實作進度</p>
-            </header>
-
-            <div id="dashboard-content" class="bg-white p-6 md:p-8 rounded-xl shadow-lg content-card animate-on-scroll">
-                <h3 class="text-2xl font-bold text-indigo-700 mb-6 border-b pb-2">團隊進度總覽</h3>
-                <div id="team-summary-list" class="space-y-4">
-                    <p class="text-slate-500 text-center" id="loading-message">正在載入團隊進度數據...</p>
-                </div>
-                
-                <div class="mt-8 pt-4 border-t border-slate-200">
-                    <h4 class="text-xl font-semibold text-slate-700 mb-3">進度分析圖 (虛擬)</h4>
-                    <div class="bg-slate-50 p-4 rounded-lg text-center text-slate-600">
-                        <p>📊 實際環境中，這裡可以繪製圖表（如 Bar Chart 或 Pie Chart）來視覺化比較進度。</p>
-                    </div>
-                </div>
-            </div>
-        </div>
     </template>
 <div id="audio-player-container" class="fixed top-16 right-6 z-50 flex flex-col items-center transition-all duration-300 ease-in-out">
     <button id="audio-fab-btn" class="flex items-center justify-center w-12 h-12 bg-gradient-to-r from-indigo-600 to-purple-600 text-white rounded-full shadow-lg hover:scale-105 transition-all duration-300">
@@ -3370,57 +3350,7 @@ function resetAudioPlayerUI() {
     });
 
 
-    const allUsers = [
-        { username: 'C73449', name: '李培智', role: 'manager', team: 'A組' },
-        { username: 'C84730', name: '李志仁', role: 'agent', team: 'A組' },
-        { username: 'C80624', name: '葉欣宜', role: 'agent', team: 'A組' },
-        { username: 'C91517', name: '劉懷懋', role: 'agent', team: 'A組' },
-        { username: 'C87976', name: '林俊翔', role: 'agent', team: 'A組' },
-        { username: 'shinelee', name: '李正翔', role: 'manager', team: 'B組' },
-        { username: 'guest', name: '訪客', role: 'agent', team: 'B組' },
-        { username: 'manager', name: '主管範例', role: 'manager', team: 'C組' },
-        { username: 'business1', name: '業務範例1', role: 'agent', team: 'C組' },
-        { username: 'business2', name: '業務範例2', role: 'agent', team: 'C組' },
-    ];
-
-    // 【新增：計算單一成員進度百分比的函數】
-    function calculatePercentage(progressData, progressItems) {
-        const progressItemsToCount = progressItems.filter(item => item.type !== 'header');
-        const progressItemsCount = progressItemsToCount.length;
-        let completedCount = 0;
-
-        progressItemsToCount.forEach((item) => {
-            const index = progressItems.findIndex(i => i.name === item.name);
-            const itemData = progressData[index];
-            
-            let isCompleted = false;
-
-            if (item.counts && item.counts.length > 0) {
-                const hasCounts = item.counts.length > 0;
-                let isCountCompleted = true;
-                
-                if (hasCounts) {
-                    isCountCompleted = item.counts.every(countName => {
-                        const value = itemData?.counts?.[countName] || '';
-                        return value.trim() !== ''; 
-                    });
-                }
-
-                if (isCountCompleted) {
-                    isCompleted = true;
-                }
-                
-            } else {
-                isCompleted = itemData?.checked || false;
-            }
-
-            if (isCompleted) {
-                completedCount++;
-            }
-        });
-
-        return progressItemsCount > 0 ? Math.round((completedCount / progressItemsCount) * 100) : 0;
-    }
+    
     
     const appWrapper = document.getElementById('app-wrapper');
     const tocContainer = document.querySelector('#table-of-contents .grid');
@@ -3533,8 +3463,7 @@ const loggedInRole = sessionStorage.getItem('loggedInRole');
         { id: 'chapter10', title: '銷售篇：帶看與客戶探索', description: '從帶看到收斡的關鍵步驟' },
         { id: 'chapter11', title: '引導收斡與調價', description: '臨門一腳的藝術' },
         { id: 'chapter12', title: '總結：成為頂尖顧問的思維', description: '整合所學，內化為專業本能，成為客戶的顧問而非業務' },
-        { id: 'chapter13', title: '實用工具箱', description: '整合所有線上計算機' },
-        { id: 'chapter14', title: '主管儀表板', description: '團隊進度總覽與分析' }
+        { id: 'chapter13', title: '實用工具箱', description: '整合所有線上計算機' }
     ];
     const audioMap = {
     'chapter1': 'chapter1-history.mp3', // 台灣房市歷史
@@ -3615,9 +3544,7 @@ function showContent(sectionId, element) {
         }
         audioPlayerContainer.classList.remove('expanded');
 
-        if (sectionId === 'chapter14') {
-            renderDashboard();
-        }
+        
         handleProgressLogic(sectionId);
 
        
@@ -3855,87 +3782,6 @@ const stampImage = document.getElementById('stamp-image-placeholder');
         motivationText.innerHTML = finalHTML;
     }
 }
-    function renderDashboard() { // 移除 async 關鍵字
-    const loggedInRole = sessionStorage.getItem('loggedInRole');
-    const loggedInTeam = sessionStorage.getItem('loggedInTeam');
-    
-    if (loggedInRole !== 'manager') {
-            document.getElementById('team-summary-list').innerHTML = 
-                '<p class="text-red-600 text-center text-xl">🚨 權限不足：您必須是主管才能查看此儀表板。</p>';
-            return;
-        }
-        
-        // 篩選出同組的成員 (包含主管自己)
-        const teamMembers = allUsers.filter(user => user.team === loggedInTeam);
-    const summaryList = document.getElementById('team-summary-list');
-    summaryList.innerHTML = ''; 
-
-    document.getElementById('loading-message').textContent = '正在載入團隊進度數據...';
-    
-    // 使用 Promise.all 來等待所有異步讀取完成
-    const fetchPromises = teamMembers.map(member => {
-        return new Promise(async (resolve) => { // 這裡使用 async
-            let memberProgressData = {};
-            
-            if (typeof db !== 'undefined') {
-                 try {
-                     // 使用 await 讀取數據
-                     const doc = await db.collection("progressData").doc(member.username).get();
-                     if (doc.exists) {
-                        memberProgressData = doc.data();
-                     }
-                 } catch (error) {
-                     console.error(`讀取用戶 ${member.username} 的進度失敗:`, error);
-                 }
-            }
-            
-            const percentage = calculatePercentage(memberProgressData, progressItems);
-            
-            // 返回包含用戶信息和計算結果的對象
-            resolve({ member, percentage });
-        });
-    });
-
-    // 等待所有數據都獲取完畢
-    Promise.all(fetchPromises)
-        .then(results => {
-            let dashboardHTML = '';
-            results.forEach(result => {
-                const { member, percentage } = result;
-                
-                // --- (原來的 HTML 渲染邏輯，直接從這裡複製貼上) ---
-                let colorClass = 'bg-red-200 text-red-800';
-                if (percentage >= 100) { colorClass = 'bg-green-200 text-green-800'; }
-                else if (percentage >= 70) { colorClass = 'bg-blue-200 text-blue-800'; }
-                else if (percentage >= 40) { colorClass = 'bg-yellow-200 text-yellow-800'; }
-                
-                const isManager = member.role === 'manager';
-                const nameDisplay = isManager ? `👑 ${member.name} (主管)` : member.name;
-                
-                dashboardHTML += `
-                    <div class="flex items-center justify-between p-4 border rounded-lg hover:shadow-md transition duration-200">
-                        <div class="font-semibold text-slate-800 flex items-center space-x-3">
-                            <span class="text-xs text-slate-500 w-12">${member.username}</span>
-                            <span class="text-lg">${nameDisplay}</span>
-                        </div>
-                        <div class="flex flex-col items-end">
-                            <span class="font-extrabold text-2xl ${colorClass} px-3 py-1 rounded-full">${percentage}%</span>
-                            <button data-username="${member.username}" class="view-progress-btn text-sm text-indigo-600 hover:underline mt-1">
-                                切換查看
-                            </button>
-                        </div>
-                    </div>
-                `;
-                // --- (HTML 渲染邏輯結束) ---
-            });
-            
-            summaryList.innerHTML = dashboardHTML;
-            document.getElementById('loading-message').textContent = ''; 
-        })
-        .catch(error => {
-             console.error("Dashboard 渲染失敗:", error);
-             document.getElementById('team-summary-list').innerHTML = `<p class="text-red-600 text-center text-xl">❌ 數據載入失敗，請檢查 Firebase 連線。</p>`;
-        });
 function handleProgressLogic(sectionId) {
     
    const progressArea = document.getElementById('progress-display-area');
@@ -4241,8 +4087,19 @@ function handleProgressLogic(sectionId) {
     if (loggedInRole === 'manager') {
         managerControlPanel.classList.remove('hidden');
         
-
-       
+        // 1. 取得所有用戶並篩選出同組業務 (由於沒有後端 API，這裡暫時使用 login.js 的靜態列表)
+        const allUsers = [
+            { username: 'C73449', name: '李培智', role: 'manager', team: 'A組' },
+            { username: 'C84730', name: '李志仁', role: 'agent', team: 'A組' },
+            { username: 'C80624', name: '葉欣宜', role: 'agent', team: 'A組' },
+            { username: 'C91517', name: '劉懷懋', role: 'agent', team: 'A組' },
+            { username: 'C87976', name: '林俊翔', role: 'agent', team: 'A組' },
+            { username: 'shinelee', name: '李正翔', role: 'manager', team: 'B組' },
+            { username: 'guest', name: '訪客', role: 'agent', team: 'B組' },
+            { username: 'manager', name: '主管範例', role: 'manager', team: 'C組' },
+            { username: 'business1', name: '業務範例1', role: 'agent', team: 'C組' },
+            { username: 'business2', name: '業務範例2', role: 'agent', team: 'C組' },
+        ];
         
         const teamMembers = allUsers.filter(user => 
             (user.team === loggedInTeam && user.username !== loggedInUser) || user.username === loggedInUser
@@ -4328,30 +4185,7 @@ function handleProgressLogic(sectionId) {
     window.onload = function() {
         updateCarousel();
     };
-    document.addEventListener('click', (e) => {
-        if (e.target.classList.contains('view-progress-btn')) {
-            const targetUsername = e.target.dataset.username;
-            const targetUser = allUsers.find(u => u.username === targetUsername); 
-            
-            if (targetUser) {
-                currentViewingUser = targetUsername; // 設定當前查看用戶
-                
-                // 1. 更新進度表的下拉選單顯示
-                const teamMemberSelect = document.getElementById('team-member-select');
-                if(teamMemberSelect) teamMemberSelect.value = targetUsername;
-
-                // 2. 更新當前查看名稱
-                const currentProgressName = document.getElementById('current-progress-name');
-                if(currentProgressName) currentProgressName.textContent = targetUser.name;
-                
-                // 3. 切換到進度表頁面 (chapter0)
-                const progressNavLink = sidebarNav.querySelector('[data-chapter-id="chapter0"]');
-                if (progressNavLink) showContent('chapter0', progressNavLink);
-                
-                // loadProgressFromFirebase() 會在 showContent 內部被呼叫。
-            }
-        }
-    });
+    
    const closeCertificationModal = document.getElementById('close-certification-modal');
     const eliteCertificationModal = document.getElementById('elite-certification-modal');
 
@@ -4407,8 +4241,6 @@ function handleProgressLogic(sectionId) {
     
 </body>
 </html>
-
-
 
 
 
