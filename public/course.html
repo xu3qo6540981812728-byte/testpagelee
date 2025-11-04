@@ -3190,8 +3190,11 @@ async function fetchTeamMembers(managerTeam) {
         const selectElement = document.getElementById('team-member-select');
         const loggedInName = sessionStorage.getItem('loggedInName');
         
-        // 【核心修改 A】：新增「所有業務明細總覽」選項
-        let optionsHtml = `<option value="ALL_TEAM_PROGRESS" data-is-all="true">所有業務明細總覽</option>`;
+        const isDirector = loggedInRole === 'director';
+        const teamSuffix = isDirector && teamToDisplay ? ` (${teamToDisplay}組)` : '';
+        
+        // 【核心修改 A - Bug 1 修復點】：僅在此處新增「所有業務明細總覽」選項。
+        let optionsHtml = `<option value="ALL_TEAM_PROGRESS" data-is-all="true">所有業務明細總覽${teamSuffix}</option>`;
         optionsHtml += `<option value="PROMPT_SELECT" disabled>-- 請選擇業務員 --</option>`;
         
         // 填充組員選項
@@ -3211,7 +3214,16 @@ async function fetchTeamMembers(managerTeam) {
         
         // 確保目前查看的名字是正確的 (處理提示狀態)
         const selectedUser = allUsers.find(u => u.username === currentTarget);
-        document.getElementById('current-progress-name').textContent = selectedUser ? selectedUser.name : (currentTarget === 'ALL_TEAM_PROGRESS' ? '所有業務' : '未選擇');
+        
+        // 確保總覽狀態的名稱也包含組別
+        let currentProgressName = '未選擇';
+        if (currentTarget === 'ALL_TEAM_PROGRESS') {
+             currentProgressName = `所有業務${teamSuffix}`;
+        } else if (selectedUser) {
+             currentProgressName = selectedUser.name;
+        }
+
+        document.getElementById('current-progress-name').textContent = currentProgressName;
         
         // 【核心修改 B】：預設選中「所有業務明細總覽」
         selectElement.value = 'ALL_TEAM_PROGRESS';
@@ -3270,7 +3282,8 @@ async function fetchTeamMembers(managerTeam) {
                 
                 // 總監模式下，切換組別後，自動載入總覽頁
                 if (document.getElementById('chapter0').classList.contains('active')) {
-                     document.getElementById('current-progress-name').textContent = '所有業務';
+                     const teamSuffix = newTeam ? ` (${newTeam}組)` : '';
+                     document.getElementById('current-progress-name').textContent = `所有業務${teamSuffix}`;
                      renderTeamProgressList(allUsers); 
                 }
             });
@@ -3292,7 +3305,10 @@ async function fetchTeamMembers(managerTeam) {
             
             if (selectedUsername === 'ALL_TEAM_PROGRESS') {
                 // 如果選擇了總覽，則渲染總覽表
-                document.getElementById('current-progress-name').textContent = '所有業務';
+                const currentTeam = loggedInRole === 'director' ? sessionStorage.getItem('currentSelectedTeam') : loggedInTeam;
+                const teamSuffix = loggedInRole === 'director' && currentTeam ? ` (${currentTeam}組)` : '';
+                document.getElementById('current-progress-name').textContent = `所有業務${teamSuffix}`;
+                
                 if (document.getElementById('chapter0').classList.contains('active')) {
                     renderTeamProgressList(allUsers);
                 }
@@ -3343,15 +3359,8 @@ async function renderTeamProgressList(allUsers) {
         targetUsers = allUsers.filter(user => user.role === 'agent');
     }
     
-    // 【新增】一個「全部明細」的選項，其 value 設為特殊標記
-    const allDetailOption = document.createElement('option');
-    allDetailOption.value = 'ALL_TEAM_PROGRESS';
-    allDetailOption.textContent = isDirector ? `所有業務明細總覽 (${currentTeam}組)` : '所有業務明細總覽';
-    
-    // 確保「全部明細」選項在下拉選單中被選中
-    const selectElement = document.getElementById('team-member-select');
-    selectElement.prepend(allDetailOption);
-    
+    // 【Bug 1 修復點】：已移除此處重複添加下拉選單選項的程式碼。
+
     // 獲取所有業務的進度資料 (只讀取一次)
     const progressDocs = await db.collection("progressData").get();
     const allProgressData = {};
@@ -4356,6 +4365,7 @@ function handleProgressLogic(sectionId) {
     
 </body>
 </html>
+
 
 
 
