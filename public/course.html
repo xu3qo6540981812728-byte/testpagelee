@@ -505,7 +505,7 @@
     </div>
     <div id="agent-progress-content"> 
         <div class="bg-white p-4 sm:p-8 rounded-xl shadow-lg content-card animate-on-scroll">
-           <div class="hidden md:grid md:grid-cols-[0.7fr_100px_260px_1.1fr] gap-4 px-4 py-3 bg-slate-100 rounded-t-lg">
+           <div class="hidden md:grid md:grid-cols-[0.7fr_100px_240px_1.1fr] gap-4 px-4 py-3 bg-slate-100 rounded-t-lg">
     <div class="font-semibold text-slate-600">項目</div>
     <div class="font-semibold text-slate-600 text-center">完成狀態<br>(主管審核)</div>
     <div class="font-semibold text-slate-600 text-center">進度日期 / 備註</div>
@@ -3978,7 +3978,7 @@ function handleProgressLogic(sectionId) {
             const isChecked = progressData[index]?.checked || false;
             const completionDate = progressData[index]?.completionDate || '';
             const itemWrapper = document.createElement('div');
-            itemWrapper.className = 'progress-item grid grid-cols-1 md:grid-cols-[0.7fr_100px_260px_1.1fr] gap-x-4 border-t border-slate-200 px-4 py-4 hover:bg-slate-50';
+            itemWrapper.className = 'progress-item grid grid-cols-1 md:grid-cols-[0.7fr_100px_240px_1.1fr] gap-x-4 border-t border-slate-200 px-4 py-4 hover:bg-slate-50';
             let countInputsHTML = '';
             if (item.counts) {
                 const inputs = item.counts.map(countName => {
@@ -4368,6 +4368,7 @@ function handleProgressLogic(sectionId) {
     
 </body>
 </html>
+
 
 
 
