@@ -497,18 +497,8 @@
             
         </div>
     </div>
-<div id="all-members-list-container" class="bg-white p-4 sm:p-8 rounded-xl shadow-lg transition-all duration-300 hidden">
-    <h3 class="text-2xl font-bold text-indigo-700 mb-4 border-b pb-2">所屬業務全體項目進度明細</h3>
-    <div class="overflow-x-auto">
-        <table id="all-members-progress-table" class="min-w-full divide-y divide-gray-200">
-            </table>
     </div>
-    <div class="mt-6 p-4 bg-yellow-50 rounded-lg text-sm text-yellow-800 border-l-4 border-yellow-400">
-        📌 提示：點擊業務員的**名字**，即可進入該業務員的單獨進度修改頁面。
-    </div>
-</div>
-</div>
-    <div id="chapter1" class="content-section space-y-8">
+        <div id="chapter1" class="content-section space-y-8">
             <header class=" ">
                 <h2 class="text-4xl font-bold text-slate-800 border-b-4 border-indigo-500 pb-3 mb-2">台灣房市歷史</h2>
                 <p class="text-slate-500">回顧過去，洞見未來</p>
@@ -3183,111 +3173,6 @@ document.addEventListener('DOMContentLoaded', () => {
         const secs = Math.floor(seconds % 60);
         return `${minutes.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
     }
-    async function loadAllProgressData(usernames) {
-    const progressMap = {};
-    
-    // 修復: 確保 db 存在且 usernames 列表不為空
-    if (typeof db === 'undefined' || usernames.length === 0) return progressMap; 
-    
-    const promises = usernames.map(username => db.collection("progressData").doc(username).get());
-    const docs = await Promise.all(promises);
-
-    docs.forEach(doc => {
-        if (doc.exists) {
-            progressMap[doc.id] = doc.data();
-        }
-    });
-    return progressMap;
-}
-
-// 【新增函數】: 顯示全部業務員清單的邏輯
-window.showAllMembersList = async (teamFilter, allUsers) => {
-    // 1. 介面切換
-    document.getElementById('agent-progress-content').classList.add('hidden');
-    document.getElementById('all-members-list-container').classList.remove('hidden');
-    document.getElementById('current-progress-name').textContent = '所有組員明細';
-
-    // 2. 過濾要顯示的業務員
-    let membersToDisplay = [];
-    // 總監模式下，顯示當前選擇組別的所有業務員 (targetTeam 在 fetchTeamMembers 中設定)
-    if (loggedInRole === 'director') {
-        membersToDisplay = allUsers.filter(user => user.role === 'agent' && user.team === teamFilter);
-    // 主管模式下，只顯示自己組別的所有業務員
-    } else if (loggedInRole === 'manager') {
-        membersToDisplay = allUsers.filter(user => user.team === teamFilter && user.role === 'agent');
-    }
-
-    const usernames = membersToDisplay.map(m => m.username);
-    const allProgressData = await loadAllProgressData(usernames);
-
-    const progressItemsToCount = progressItems.filter(item => item.type !== 'header');
-    const totalItems = progressItemsToCount.length;
-    // 簡化項目名稱，移除括號內的內容和 'x' 後的內容
-    const progressNames = progressItemsToCount.map(item => item.name.split('（')[0].split('x')[0].trim());
-
-    // 3. 渲染表格標題 (所有進度項目名稱)
-    let headerHtml = `<thead><tr class="bg-gray-200">`;
-    headerHtml += `<th class="px-3 py-2 text-left text-xs font-bold text-gray-700 w-24">業務員</th>`; // 調整寬度
-    headerHtml += progressNames.map(name => `<th class="px-3 py-2 text-center text-xs font-bold text-gray-700">${name}</th>`).join('');
-    headerHtml += `<th class="px-3 py-2 text-center text-xs font-bold text-gray-700 w-16">總進度</th></tr></thead>`; // 調整寬度
-
-    // 4. 渲染表格內容
-    let bodyHtml = `<tbody class="bg-white divide-y divide-gray-100">`;
-    
-    membersToDisplay.forEach(member => {
-        const memberProgress = allProgressData[member.username] || {};
-        let completedCount = 0;
-        let rowHtml = `<tr>`;
-
-        // 業務員名稱 (點擊切換修改頁)
-        rowHtml += `<td class="px-3 py-2 whitespace-nowrap text-sm font-medium text-indigo-600 hover:text-indigo-800 cursor-pointer" 
-            onclick="switchUserToEdit('${member.username}', '${member.name}')">
-            ${member.name} (\\${member.username})
-        </td>`;
-
-        // 進度項目狀態
-        progressItemsToCount.forEach((item, index) => {
-            const itemData = memberProgress[index] || {};
-            let isCompleted = itemData.checked || false;
-
-            // 重新應用進度計算邏輯 (需填寫計數欄位才算完成)
-            if (item.counts && item.counts.length > 0) {
-                const allCountsFilled = item.counts.every(countName => {
-                    const value = itemData?.counts?.[countName] || '';
-                    return value.trim() !== '';
-                });
-                // 必須勾選 AND 數字填寫才算完成
-                if (itemData.checked && allCountsFilled) {
-                    isCompleted = true;
-                } else {
-                    isCompleted = false;
-                }
-            } else {
-                // 沒有計數欄位的項目，只看勾選狀態
-                isCompleted = itemData.checked || false;
-            }
-
-            if (isCompleted) completedCount++;
-
-            const statusIcon = isCompleted ?
-                `<svg class="h-5 w-5 text-green-500 mx-auto" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" /></svg>` :
-                `<svg class="h-5 w-5 text-red-400 mx-auto" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" /></svg>`;
-
-            rowHtml += `<td class="px-3 py-2 whitespace-nowrap text-center">${statusIcon}</td>`;
-        });
-
-        // 總進度百分比
-        const percentage = totalItems > 0 ? Math.round((completedCount / totalItems) * 100) : 0;
-        const color = percentage === 100 ? 'text-green-600 font-bold' : (percentage > 50 ? 'text-blue-600' : 'text-orange-500');
-        rowHtml += `<td class="px-3 py-2 whitespace-nowrap text-center text-sm ${color}">${percentage}%</td>`;
-
-        rowHtml += `</tr>`;
-        bodyHtml += rowHtml;
-    });
-
-    bodyHtml += `</tbody>`;
-    document.getElementById('all-members-progress-table').innerHTML = headerHtml + bodyHtml;
-};
 /**
 * 函數：從後端 API 獲取組員列表，並填充下拉選單
  * @param {string} managerTeam - 當前登入主管所屬的組別
@@ -3306,9 +3191,7 @@ async function fetchTeamMembers(managerTeam) {
         const loggedInName = sessionStorage.getItem('loggedInName');
         
         // 【修正點 1】：移除 "個人進度" 選項，並加入 "請選擇業務員" 的預設提示選項
-        // **新增 "所有組員清單明細" 選項**
-        let optionsHtml = `<option value="ALL_MEMBERS_LIST" class="text-red-600 font-bold">--- 所有組員清單明細 ---</option>`; 
-        optionsHtml += `<option value="PROMPT_SELECT" disabled selected>-- 請選擇業務員 --</option>`;
+        let optionsHtml = `<option value="PROMPT_SELECT" disabled selected>-- 請選擇業務員 --</option>`;
         
         // 填充組員選項
         teamMembers.forEach(member => {
@@ -3347,33 +3230,26 @@ async function fetchTeamMembers(managerTeam) {
         let targetTeam = managerTeam;
         let targetUser = 'PROMPT_SELECT'; // 預設為提示狀態
         
-       if (loggedInRole === 'director') {
-    const uniqueTeams = [...new Set(allUsers.map(user => user.team))].filter(t => t);
-    
-    // **注意：這裡已經移除了錯誤的 Markdown 符號**
-    const currentSelectedTeam = sessionStorage.getItem('currentSelectedTeam');
-    targetTeam = uniqueTeams.includes(currentSelectedTeam) ? currentSelectedTeam : uniqueTeams[0];
-    const teamMembers = allUsers.filter(
-        user => user.team === targetTeam && user.role === 'agent'
-    );
-    
-    // 創建總監介面
-    managerControlPanel.innerHTML = `
-        <h5 class="font-bold text-indigo-700 mb-2">總監控制面板 (可切換組別)</h5>
-        <div id="team-and-member-controls" class="flex flex-col sm:flex-row gap-3">
-            <select id="team-filter-select" class="w-full sm:w-1/2 p-2 border border-indigo-300 rounded-lg bg-white text-slate-700 shadow-sm focus:ring-indigo-500 focus:border-indigo-500 transition">
-                ${uniqueTeams.map((team, index) => `<option value="${team}" ${team === targetTeam ? 'selected' : ''}>${team} 進度</option>`).join('')}
-            </select>
-            <select id="team-member-select" class="w-full sm:w-1/2 p-2 border border-indigo-300 rounded-lg bg-white text-slate-700 shadow-sm focus:ring-indigo-500 focus:border-indigo-500 transition">
-                <option value="ALL_MEMBERS_LIST" class="text-red-600 font-bold">--- 所有組員清單明細 ---</option> 
-                <option value="PROMPT_SELECT" disabled selected>-- 請選擇業務員 --</option>
-                ${teamMembers.map(member => `<option value="${member.username}">${member.name} (${member.username}) - ${member.team}</option>`).join('')}
-            </select>
-        </div>
-        <div id="current-user-info" class="w-full mt-3 p-2 bg-indigo-100 rounded-lg text-sm text-indigo-700 flex items-center justify-center">
-            目前查看：<span id="current-progress-name" class="font-bold ml-1">未選擇</span>
-        </div>
-    `;
+        if (loggedInRole === 'director') {
+            const uniqueTeams = [...new Set(allUsers.map(user => user.team))].filter(t => t);
+            
+            const currentSelectedTeam = sessionStorage.getItem('currentSelectedTeam') || 'A組';
+            targetTeam = uniqueTeams.includes(currentSelectedTeam) ? currentSelectedTeam : uniqueTeams[0];
+            
+            // 創建總監介面
+            managerControlPanel.innerHTML = `
+                <h5 class="font-bold text-indigo-700 mb-2">總監控制面板 (可切換組別)</h5>
+                <div id="team-and-member-controls" class="flex flex-col sm:flex-row gap-3">
+                    <select id="team-filter-select" class="w-full sm:w-1/2 p-2 border border-indigo-300 rounded-lg bg-white text-slate-700 shadow-sm focus:ring-indigo-500 focus:border-indigo-500 transition">
+                        ${uniqueTeams.map((team, index) => `<option value="${team}" ${team === targetTeam ? 'selected' : ''}>${team} 進度</option>`).join('')}
+                    </select>
+                    <select id="team-member-select" class="w-full sm:w-1/2 p-2 border border-indigo-300 rounded-lg bg-white text-slate-700 shadow-sm focus:ring-indigo-500 focus:border-indigo-500 transition">
+                    </select>
+                </div>
+                <div id="current-user-info" class="w-full mt-3 p-2 bg-indigo-100 rounded-lg text-sm text-indigo-700 flex items-center justify-center">
+                    目前查看：<span id="current-progress-name" class="font-bold ml-1">未選擇</span>
+                </div>
+            `;
             
             // 初始填充成員清單
             populateMembers(targetTeam, allUsers, targetUser);
@@ -3403,22 +3279,11 @@ async function fetchTeamMembers(managerTeam) {
         
         const memberChangeListener = (e) => {
             const selectedUsername = e.target.value;
-            
-            if (selectedUsername === 'ALL_MEMBERS_LIST') { // <-- 新增邏輯
-                showAllMembersList(targetTeam, allUsers); // 假設有一個新函數來處理列表顯示
-                return; 
-            }
-            
-            // 選擇單一業務員的邏輯 (保持不變)
             const selectedUser = allUsers.find(u => u.username === selectedUsername);
             currentViewingUser = selectedUsername;
             
             document.getElementById('current-progress-name').textContent = selectedUser ? selectedUser.name : '未選擇';
             
-            // 確保進度表容器顯示，列表容器隱藏
-            document.getElementById('agent-progress-content').classList.remove('hidden');
-            document.getElementById('all-members-list-container').classList.add('hidden'); // 假設新增的列表容器 ID
-
             loadProgressFromFirebase();
         };
         memberSelectElement.addEventListener('change', memberChangeListener);
@@ -3429,8 +3294,6 @@ async function fetchTeamMembers(managerTeam) {
         loadProgressFromFirebase();
     } catch (error) {
         console.error('Failed to fetch team members:', error);
-// 【新增函數】: 異步載入所有業務員的進度數據
-
         if (managerControlPanel) {
             managerControlPanel.innerHTML = `<p class="text-red-500 p-4">無法載入組員列表，請檢查連線或後台配置。</p>`;
         }
@@ -3836,7 +3699,7 @@ function updateProgressDisplay() {
     if (currentViewingUser === 'PROMPT_SELECT' && isManagerOrDirector) {
         document.getElementById('progress-percentage').textContent = `成員進度`;
         document.getElementById('progress-bar-visual').style.width = `0%`;
-        document.getElementById('progress-motivation').innerHTML = `<span class="text-lg font-extrabold text-red-600 animate-pulse">請從上方下拉選單中選擇一位業務員。</span>`;
+        document.getElementById('progress-motivation').innerHTML = `<span class="text-lg font-extrabold text-red-600 animate-pulse">請從下拉選單中選擇一位業務員。</span>`;
         document.getElementById('agent-progress-content').classList.add('hidden'); // 隱藏進度表內容
         return;
     }
@@ -3923,8 +3786,6 @@ function updateProgressDisplay() {
                 : styledTitle;
             motivationText.innerHTML = finalHTML;
         } else {
-            const currentNameElement = document.getElementById('current-progress-name');
-const viewingName = currentNameElement ? currentNameElement.textContent : '未選擇成員';
             // 主管/總監模式下，顯示普通進度訊息
             motivationText.innerHTML = `當前查看：<span class="font-bold">${document.getElementById('current-progress-name').textContent}</span> 的學習進度`;
         }
@@ -4285,17 +4146,7 @@ function handleProgressLogic(sectionId) {
     window.onload = function() {
         updateCarousel();
     };
-
-// 【新增函數】: 切換到單一業務員的進度修改頁面
-window.switchUserToEdit = (username, name) => {
-// 將目標業務員的資訊存入 sessionStorage，並觸發進度頁面切換
-currentViewingUser = username;
-document.getElementById('current-progress-name').textContent = name;
-// 模擬選單切換，顯示單一進度表並載入資料
-document.getElementById('agent-progress-content').classList.remove('hidden');
-document.getElementById('all-members-list-container').classList.add('hidden');
-loadProgressFromFirebase();
-};
+    
    const closeCertificationModal = document.getElementById('close-certification-modal');
     const eliteCertificationModal = document.getElementById('elite-certification-modal');
     if (closeCertificationModal) {
@@ -4347,12 +4198,6 @@ loadProgressFromFirebase();
     
 </body>
 </html>
-
-
-
-
-
-
 
 
 
