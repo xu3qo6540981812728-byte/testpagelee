@@ -497,8 +497,18 @@
             
         </div>
     </div>
+<div id="all-members-list-container" class="bg-white p-4 sm:p-8 rounded-xl shadow-lg transition-all duration-300 hidden">
+    <h3 class="text-2xl font-bold text-indigo-700 mb-4 border-b pb-2">所屬業務全體項目進度明細</h3>
+    <div class="overflow-x-auto">
+        <table id="all-members-progress-table" class="min-w-full divide-y divide-gray-200">
+            </table>
     </div>
-        <div id="chapter1" class="content-section space-y-8">
+    <div class="mt-6 p-4 bg-yellow-50 rounded-lg text-sm text-yellow-800 border-l-4 border-yellow-400">
+        📌 提示：點擊業務員的**名字**，即可進入該業務員的單獨進度修改頁面。
+    </div>
+</div>
+</div>
+    <div id="chapter1" class="content-section space-y-8">
             <header class=" ">
                 <h2 class="text-4xl font-bold text-slate-800 border-b-4 border-indigo-500 pb-3 mb-2">台灣房市歷史</h2>
                 <p class="text-slate-500">回顧過去，洞見未來</p>
@@ -3310,6 +3320,71 @@ async function fetchTeamMembers(managerTeam) {
         loadProgressFromFirebase();
     } catch (error) {
         console.error('Failed to fetch team members:', error);
+// 【新增函數】: 異步載入所有業務員的進度數據
+async function loadAllProgressData(usernames) {
+const progressMap = {};
+**` if (typeof db === 'undefined'
+const promises = usernames.map(username => db.collection("progressData").doc(username).get());
+const docs = await Promise.all(promises);
+docs.forEach(doc => {
+if (doc.exists) {
+progressMap[doc.id] = doc.data();
+}
+});
+return progressMap;
+}
+// 【新增函數】: 顯示全部業務員清單的邏輯
+const showAllMembersList = async (teamFilter, allUsers) => {
+// 1. 介面切換
+document.getElementById('agent-progress-content').classList.add('hidden');
+document.getElementById('all-members-list-container').classList.remove('hidden');
+document.getElementById('current-progress-name').textContent = '所有組員明細';
+// 2. 過濾要顯示的業務員
+let membersToDisplay = [];
+if (loggedInRole === 'director') {
+membersToDisplay = allUsers.filter(user => user.role === 'agent' && user.team === teamFilter);
+} else if (loggedInRole === 'manager') {
+membersToDisplay = allUsers.filter(user => user.team === teamFilter && user.role === 'agent');
+}
+const usernames = membersToDisplay.map(m => m.username);
+const allProgressData = await loadAllProgressData(usernames);
+const progressItemsToCount = progressItems.filter(item => item.type !== 'header');
+const totalItems = progressItemsToCount.length;
+const progressNames = progressItemsToCount.map(item => item.name.split('（')[0].split('x')[0].trim()); // 簡化項目名稱
+// 3. 渲染表格標題 (所有進度項目名稱)
+** let headerHtml = \<thead><tr class="bg-gray-200"><th class="px-3 py-2 text-left text-xs font-bold text-gray-700">業務員</th>`;`**
+headerHtml += \總進度`;`
+// 4. 渲染表格內容
+let bodyHtml = \`;`
+membersToDisplay.forEach(member => {
+**` const memberProgress = allProgressData[member.username]
+let completedCount = 0;
+let rowHtml = \`;`
+// 業務員名稱 (點擊切換修改頁)
+rowHtml += \<td class="px-3 py-2 whitespace-nowrap text-sm font-medium text-indigo-600 hover:text-indigo-800 cursor-pointer" `
+onclick="switchUserToEdit('${member.username}', '${member.name}')"\>
+</td>\;`
+// 進度項目狀態
+progressItemsToCount.forEach((item, index) => {
+**` const itemData = memberProgress[index]
+**` let isCompleted = itemData.checked
+// 重新應用進度計算邏輯 (需填寫計數欄位才算完成)
+if (item.counts && item.counts.length > 0) {
+const allCountsFilled = item.counts.every(countName => {
+**` const value = itemData?.counts?.[countName]
+return value.trim() !== '';
+});
+if (itemData.checked && allCountsFilled) {
+isCompleted = true;
+} else {
+isCompleted = false;
+}
+}
+if (isCompleted) completedCount++;
+const statusIcon = isCompleted ?
+\` :`
+\`;`
+rowHtml += \${statusIcon}</td>`;`
         if (managerControlPanel) {
             managerControlPanel.innerHTML = `<p class="text-red-500 p-4">無法載入組員列表，請檢查連線或後台配置。</p>`;
         }
@@ -4162,7 +4237,17 @@ function handleProgressLogic(sectionId) {
     window.onload = function() {
         updateCarousel();
     };
-    
+
+// 【新增函數】: 切換到單一業務員的進度修改頁面
+window.switchUserToEdit = (username, name) => {
+// 將目標業務員的資訊存入 sessionStorage，並觸發進度頁面切換
+currentViewingUser = username;
+document.getElementById('current-progress-name').textContent = name;
+// 模擬選單切換，顯示單一進度表並載入資料
+document.getElementById('agent-progress-content').classList.remove('hidden');
+document.getElementById('all-members-list-container').classList.add('hidden');
+loadProgressFromFirebase();
+};
    const closeCertificationModal = document.getElementById('close-certification-modal');
     const eliteCertificationModal = document.getElementById('elite-certification-modal');
     if (closeCertificationModal) {
@@ -4214,6 +4299,7 @@ function handleProgressLogic(sectionId) {
     
 </body>
 </html>
+
 
 
 
