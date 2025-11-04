@@ -3181,20 +3181,22 @@ async function fetchTeamMembers(managerTeam) {
     const loggedInUser = sessionStorage.getItem('loggedInUser');
     const loggedInRole = sessionStorage.getItem('loggedInRole');
     const managerControlPanel = document.getElementById('manager-control-panel');
+    const loggedInName = sessionStorage.getItem('loggedInName');
     
     // 函數：重新渲染成員清單
     const populateMembers = (teamToDisplay, allUsers, currentTarget) => {
-        const teamMembers = allUsers.filter(
-            user => user.team === teamToDisplay && user.role === 'agent'
+        // 總監模式下：顯示所有業務員。主管模式下：僅顯示所屬組別業務員。
+        const membersToDisplay = allUsers.filter(
+            user => user.role === 'agent' && (loggedInRole === 'director' || user.team === teamToDisplay)
         );
         const selectElement = document.getElementById('team-member-select');
-        const loggedInName = sessionStorage.getItem('loggedInName');
         
-        // 【修正點 1】：移除 "個人進度" 選項，並加入 "請選擇業務員" 的預設提示選項
-        let optionsHtml = `<option value="PROMPT_SELECT" disabled selected>-- 請選擇業務員 --</option>`;
+        // 預設選項：新增「全部組員進度總覽」
+        let optionsHtml = `<option value="__ALL_MEMBERS__">全部組員進度總覽</option>`; 
+        optionsHtml += `<option value="PROMPT_SELECT" disabled ${currentTarget === 'PROMPT_SELECT' ? 'selected' : ''}>-- 請選擇業務員 --</option>`;
         
         // 填充組員選項
-        teamMembers.forEach(member => {
+        membersToDisplay.forEach(member => {
             const option = document.createElement('option');
             option.value = member.username;
             option.textContent = `${member.name} (${member.username}) - ${member.team}`;
@@ -3208,9 +3210,18 @@ async function fetchTeamMembers(managerTeam) {
         
         selectElement.innerHTML = optionsHtml;
         
-        // 確保目前查看的名字是正確的 (處理提示狀態)
-        const selectedUser = allUsers.find(u => u.username === currentTarget);
-        document.getElementById('current-progress-name').textContent = selectedUser ? selectedUser.name : '未選擇';
+        // 確保目前查看的名字是正確的 (處理提示狀態和總覽狀態)
+        let nameToDisplay;
+        if (currentTarget === '__ALL_MEMBERS__') {
+            nameToDisplay = '全部組員進度總覽';
+        } else if (currentTarget === 'PROMPT_SELECT') {
+            nameToDisplay = '未選擇';
+        } else {
+            const selectedUser = allUsers.find(u => u.username === currentTarget);
+            nameToDisplay = selectedUser ? selectedUser.name : '未選擇';
+        }
+        
+        document.getElementById('current-progress-name').textContent = nameToDisplay;
     };
     
     try {
@@ -3228,7 +3239,7 @@ async function fetchTeamMembers(managerTeam) {
         
         // 決定預設的目標組別和目標用戶
         let targetTeam = managerTeam;
-        let targetUser = 'PROMPT_SELECT'; // 預設為提示狀態
+        let targetUser = '__ALL_MEMBERS__'; // 預設為總覽狀態
         
         if (loggedInRole === 'director') {
             const uniqueTeams = [...new Set(allUsers.map(user => user.team))].filter(t => t);
@@ -3247,7 +3258,7 @@ async function fetchTeamMembers(managerTeam) {
                     </select>
                 </div>
                 <div id="current-user-info" class="w-full mt-3 p-2 bg-indigo-100 rounded-lg text-sm text-indigo-700 flex items-center justify-center">
-                    目前查看：<span id="current-progress-name" class="font-bold ml-1">未選擇</span>
+                    目前查看：<span id="current-progress-name" class="font-bold ml-1">全部組員進度總覽</span>
                 </div>
             `;
             
@@ -3260,16 +3271,17 @@ async function fetchTeamMembers(managerTeam) {
                 const newTeam = e.target.value;
                 sessionStorage.setItem('currentSelectedTeam', newTeam);
                 
-                currentViewingUser = 'PROMPT_SELECT'; // 切回提示狀態
+                currentViewingUser = '__ALL_MEMBERS__'; // 切回總覽狀態
                 
-                populateMembers(newTeam, allUsers, 'PROMPT_SELECT'); 
+                populateMembers(newTeam, allUsers, currentViewingUser); 
                 
-                loadProgressFromFirebase(); // 載入提示狀態的空白進度
+                renderAllMembersProgressList(newTeam, allUsers); // 載入新的總覽清單
             });
         } else {
-             // 主管模式：保持不變，只顯示自己組別的成員
+             // 主管模式
              populateMembers(managerTeam, allUsers, targetUser);
         }
+        
         // 監聽成員選擇事件 (不論主管或總監)
         const memberSelectElement = document.getElementById('team-member-select');
         
@@ -3279,19 +3291,28 @@ async function fetchTeamMembers(managerTeam) {
         
         const memberChangeListener = (e) => {
             const selectedUsername = e.target.value;
-            const selectedUser = allUsers.find(u => u.username === selectedUsername);
             currentViewingUser = selectedUsername;
             
-            document.getElementById('current-progress-name').textContent = selectedUser ? selectedUser.name : '未選擇';
-            
-            loadProgressFromFirebase();
+            if (selectedUsername === '__ALL_MEMBERS__') {
+                const currentTeam = loggedInRole === 'director' ? document.getElementById('team-filter-select').value : managerTeam;
+                document.getElementById('current-progress-name').textContent = '全部組員進度總覽';
+                renderAllMembersProgressList(currentTeam, allUsers);
+            } else if (selectedUsername === 'PROMPT_SELECT') {
+                 document.getElementById('current-progress-name').textContent = '未選擇';
+                 loadProgressFromFirebase();
+            } else {
+                const selectedUser = allUsers.find(u => u.username === selectedUsername);
+                document.getElementById('current-progress-name').textContent = selectedUser ? selectedUser.name : '未選擇';
+                loadProgressFromFirebase();
+            }
         };
         memberSelectElement.addEventListener('change', memberChangeListener);
         memberSelectElement._listener = memberChangeListener; 
         
-        // 【修正點 2】：初次載入時，將 currentViewingUser 設為提示狀態
+        // 初次載入時，將 currentViewingUser 設為總覽狀態，並渲染總覽清單
         currentViewingUser = targetUser;
-        loadProgressFromFirebase();
+        const initialTeam = loggedInRole === 'director' ? (document.getElementById('team-filter-select')?.value || targetTeam) : managerTeam;
+        renderAllMembersProgressList(initialTeam, allUsers);
     } catch (error) {
         console.error('Failed to fetch team members:', error);
         if (managerControlPanel) {
@@ -3299,6 +3320,303 @@ async function fetchTeamMembers(managerTeam) {
         }
     }
 }
+    /**
+* 函數：渲染全部組員的進度總覽清單 (僅主管/總監模式使用)
+ * @param {string} targetTeam - 目標組別名稱 (總監模式下可切換)
+ * @param {Array<Object>} allUsers - 所有用戶數據
+ */
+async function renderAllMembersProgressList(targetTeam, allUsers) {
+    
+    document.getElementById('agent-progress-content').classList.remove('hidden'); // 確保內容顯示
+    document.getElementById('progress-header-area').style.display = 'flex';
+    document.getElementById('progress-table-title').textContent = `${targetTeam} - 業務員進度總覽`;
+    document.getElementById('progress-subtitle').textContent = `點擊姓名可查看並編輯單一業務員進度`;
+    document.getElementById('certification-stamp-area').classList.add('hidden'); // 隱藏印章
+    document.getElementById('progress-display-area').classList.add('hidden'); // 隱藏單一進度條
+
+    const progressListContainer = document.getElementById('agent-progress-content');
+    progressListContainer.innerHTML = ''; // 清空舊內容
+    
+    // 篩選出目標業務員（總監看全部，主管看自己的組）
+    const agentsToDisplay = allUsers.filter(user => 
+        user.role === 'agent' && (loggedInRole === 'director' ? user.team === targetTeam : user.team === loggedInTeam)
+    );
+
+    if (agentsToDisplay.length === 0) {
+        progressListContainer.innerHTML = `<p class="p-8 text-center text-slate-500">此組別目前無業務員數據。</p>`;
+        return;
+    }
+
+    // 準備表格 HTML 結構
+    let tableHtml = `
+        <div class="bg-white p-4 sm:p-8 rounded-xl shadow-lg content-card animate-on-scroll">
+            <h3 class="text-2xl font-bold text-slate-800 mb-6">${targetTeam} 組員進度明細</h3>
+            <div class="overflow-x-auto">
+                <table class="min-w-full bg-white border border-slate-200 rounded-lg">
+                    <thead class="bg-indigo-100">
+                        <tr>
+                            <th class="p-3 text-left font-bold text-indigo-700 sticky-col-1">姓名 (帳號)</th>
+                            <th class="p-3 text-center font-bold text-indigo-700">總進度</th>
+                            <th class="p-3 text-center font-bold text-indigo-700">完成項目數</th>
+                            <th class="p-3 text-left font-bold text-indigo-700">操作</th>
+                        </tr>
+                    </thead>
+                    <tbody id="all-members-progress-tbody" class="divide-y divide-slate-200">
+                        </tbody>
+                </table>
+            </div>
+            
+            <div id="progress-detail-container" class="mt-8 border-t pt-6 hidden">
+                <h4 id="detail-title" class="text-xl font-bold text-indigo-700 mb-4"></h4>
+                <div id="progress-detail-table">
+                    </div>
+                <button id="close-detail-btn" class="mt-4 py-2 px-4 bg-red-500 text-white rounded-lg hover:bg-red-600 transition">
+                    返回總覽清單
+                </button>
+            </div>
+        </div>
+    `;
+
+    progressListContainer.innerHTML = tableHtml;
+    const tbody = document.getElementById('all-members-progress-tbody');
+    const detailContainer = document.getElementById('progress-detail-container');
+    const detailTitle = document.getElementById('detail-title');
+    const detailTable = document.getElementById('progress-detail-table');
+    const closeDetailBtn = document.getElementById('close-detail-btn');
+    const progressItemsToCount = progressItems.filter(item => item.type !== 'header');
+    const totalItems = progressItemsToCount.length;
+    
+    // 1. 獲取所有業務員的進度數據
+    const progressPromises = agentsToDisplay.map(agent => 
+        db.collection("progressData").doc(agent.username).get().then(doc => ({
+            username: agent.username,
+            name: agent.name,
+            team: agent.team,
+            data: doc.exists ? doc.data() : {}
+        }))
+    );
+
+    const allProgressData = await Promise.all(progressPromises);
+    let allRowsHtml = '';
+
+    // 2. 計算每個業務員的進度並渲染主清單表格
+    allProgressData.forEach(member => {
+        let completedCount = 0;
+        
+        progressItemsToCount.forEach((item, index) => {
+            const itemIndex = progressItems.findIndex(i => i.name === item.name); // 獲取原始索引
+            const itemData = member.data[itemIndex];
+            
+            let isCompleted = false;
+            const isCheckedByManager = itemData?.checked || false; 
+
+            if (item.counts && item.counts.length > 0) {
+                const allCountsFilled = item.counts.every(countName => {
+                    const value = itemData?.counts?.[countName] || '';
+                    return value.trim() !== ''; 
+                });
+
+                if (isCheckedByManager && allCountsFilled) {
+                    isCompleted = true;
+                }
+            } else {
+                isCompleted = isCheckedByManager;
+            }
+
+            if (isCompleted) {
+                completedCount++;
+            }
+        });
+
+        const percentage = totalItems > 0 ? Math.round((completedCount / totalItems) * 100) : 0;
+        const progressColor = percentage === 100 ? 'bg-green-500' : percentage >= 50 ? 'bg-yellow-500' : 'bg-red-500';
+        
+        allRowsHtml += `
+            <tr data-username="${member.username}" class="progress-row hover:bg-indigo-50 cursor-pointer">
+                <td class="p-3 font-semibold text-slate-800 sticky-col-1">${member.name} (${member.username}) - ${member.team}</td>
+                <td class="p-3 text-center">
+                    <div class="h-2.5 w-full bg-slate-200 rounded-full">
+                        <div class="${progressColor} h-2.5 rounded-full" style="width: ${percentage}%"></div>
+                    </div>
+                    <span class="text-xs text-slate-600 mt-1 block">${percentage}%</span>
+                </td>
+                <td class="p-3 text-center text-lg font-bold text-indigo-600">${completedCount} / ${totalItems}</td>
+                <td class="p-3">
+                    <button data-action="view" data-username="${member.username}" class="view-detail-btn py-1 px-3 text-sm bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition">
+                        查看/編輯進度
+                    </button>
+                </td>
+            </tr>
+        `;
+    });
+
+    tbody.innerHTML = allRowsHtml;
+    
+    // 3. 綁定事件監聽器
+    tbody.addEventListener('click', (e) => {
+        const viewBtn = e.target.closest('.view-detail-btn');
+        if (!viewBtn) return;
+
+        const username = viewBtn.dataset.username;
+        const member = allProgressData.find(m => m.username === username);
+        if (!member) return;
+
+        // 隱藏主清單
+        tbody.closest('table').style.display = 'none';
+        
+        // 渲染詳細進度表
+        renderSingleMemberDetail(member.username, member.name, member.data);
+        
+        // 顯示詳細清單
+        detailContainer.classList.remove('hidden');
+        detailTitle.textContent = `${member.name} (${member.username}) - 詳細進度`;
+        
+        // 滾動到頂部
+        progressListContainer.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+    
+    // 返回總覽清單按鈕事件
+    closeDetailBtn.addEventListener('click', () => {
+        document.getElementById('progress-detail-container').classList.add('hidden');
+        tbody.closest('table').style.display = 'table';
+        tbody.closest('table').scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+
+    // 4. 渲染單一業務員的詳細進度表 (可編輯)
+    function renderSingleMemberDetail(username, name, data) {
+        
+        const isAgent = loggedInRole === 'agent';
+        const disabledAttr = isAgent ? 'disabled' : '';
+        
+        let detailHtml = `<div class="border border-slate-200 rounded-lg">
+            <div class="hidden md:grid md:grid-cols-[0.8fr_80px_200px_1.2fr] gap-4 px-4 py-3 bg-slate-100 rounded-t-lg">
+                <div class="font-semibold text-slate-600">項目</div>
+                <div class="font-semibold text-slate-600 text-center">完成狀態<br>(主管審核)</div>
+                <div class="font-semibold text-slate-600 text-center">進度日期 / 備註</div>
+                <div class="font-semibold text-slate-600">次數紀錄</div>
+            </div>`;
+            
+        progressItems.forEach((item, index) => {
+            if (item.type === 'header') {
+                detailHtml += `<div class="py-3 px-4 bg-slate-200 text-slate-700 font-bold text-base md:rounded-none">${item.name}</div>`;
+                return;
+            }
+            
+            const itemData = data[index] || {};
+            const isChecked = itemData.checked || false;
+            const completionDate = itemData.completionDate || '';
+            const remarkValue = itemData.remark || '';
+            
+            let countInputsHTML = '';
+            if (item.counts) {
+                const inputs = item.counts.map(countName => {
+                    const value = itemData.counts?.[countName] || '';
+                    return ` <div class="flex items-center space-x-2"> <label class="text-slate-600 w-20 text-right flex-shrink-0">${countName}:</label> <input type="text" value="${value}" ${disabledAttr} data-index="${index}" data-count-name="${countName}" data-username="${username}" class="count-input-detail w-16 text-center border rounded py-1 px-2 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition" placeholder="次數"> </div>`;
+                }).join('');
+                countInputsHTML = `<div class="flex flex-wrap items-center justify-start gap-2 mt-2 md:mt-0">${inputs}</div>`;
+            }
+            
+            detailHtml += ` 
+                <div class="progress-item grid grid-cols-1 md:grid-cols-[0.8fr_80px_200px_1.2fr] gap-x-4 border-t border-slate-200 px-4 py-4 hover:bg-slate-50"> 
+                    <div class="flex items-center text-slate-700 font-medium">${item.name}</div> 
+                    <div class="flex items-center justify-start md:justify-center mt-2 md:mt-0"> 
+                        <label class="flex items-center space-x-2 md:space-x-0 cursor-pointer"> 
+                            <span class="md:hidden text-slate-500">完成狀態(主管審核):</span> 
+                            <input type="checkbox" data-index="${index}" data-username="${username}" class="h-6 w-6 text-indigo-600 border-gray-300 rounded focus:ring-indigo-500 ${disabledAttr} checkbox-detail" ${isChecked ? 'checked' : ''} ${disabledAttr}> </label> 
+                    </div> 
+                    <div class="flex flex-col space-y-1 mt-2 md:mt-0">
+                        <div class="text-xs text-slate-500 text-center md:text-sm md:text-slate-700 font-semibold detail-date-display">${completionDate ? `進度日期: ${completionDate}` : '未記錄日期'}</div>
+                        <textarea rows="5" ${disabledAttr} data-index="${index}" data-username="${username}"
+                            class="remark-input-detail w-full text-left border rounded py-1 px-2 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition text-sm resize-none" 
+                            placeholder="輸入備註">${remarkValue}</textarea>
+                    </div>
+                    <div class="mt-2 md:mt-0">
+                        ${countInputsHTML ? `<div class="md:hidden text-slate-500 mb-2">次數紀錄:</div>` : ''} 
+                        ${countInputsHTML} 
+                    </div>
+                </div>`;
+        });
+        
+        detailHtml += `</div>`;
+        detailTable.innerHTML = detailHtml;
+        
+        // 綁定詳細進度表的保存邏輯
+        detailTable.addEventListener('input', (e) => {
+            const index = e.target.dataset.index;
+            const targetUsername = e.target.dataset.username;
+            if (index === undefined || targetUsername !== username) return; // 只處理當前用戶
+
+            // 在 allProgressData 陣列中找到對應用戶的進度數據
+            const memberIndex = allProgressData.findIndex(m => m.username === username);
+            if (memberIndex === -1) return;
+            let targetProgressData = allProgressData[memberIndex].data;
+
+            if (!targetProgressData[index]) {
+                targetProgressData[index] = {};
+            }
+            
+            const isCheckbox = e.target.classList.contains('checkbox-detail');
+            const isCountInput = e.target.classList.contains('count-input-detail');
+            const isRemarkInput = e.target.classList.contains('remark-input-detail');
+
+            if (isCheckbox) {
+                targetProgressData[index].checked = e.target.checked;
+                if (e.target.checked) {
+                    const today = new Date().toISOString().split('T')[0];
+                    targetProgressData[index].completionDate = today;
+                } else {
+                    targetProgressData[index].completionDate = '';
+                }
+            } else if (isCountInput) {
+                const countName = e.target.dataset.countName;
+                if (!targetProgressData[index].counts) {
+                    targetProgressData[index].counts = {};
+                }
+                targetProgressData[index].counts[countName] = e.target.value; 
+            } else if (isRemarkInput) {
+                targetProgressData[index].remark = e.target.value;
+                const today = new Date().toISOString().split('T')[0];
+                targetProgressData[index].completionDate = today;
+                
+                // 實時更新顯示的日期
+                const itemWrapper = e.target.closest('.progress-item');
+                const dateDisplay = itemWrapper.querySelector('.detail-date-display');
+                if (dateDisplay) {
+                    dateDisplay.textContent = `進度日期: ${today}`;
+                }
+            }
+
+            // 將修改後的數據存回 Firebase
+            db.collection("progressData").doc(username).set(targetProgressData)
+                .then(() => {
+                    console.log(`寫入 Firebase 成功 for ${username}`);
+                    // 如果是勾選框，需要重新渲染日期
+                    if (isCheckbox) {
+                        renderSingleMemberDetail(username, name, targetProgressData);
+                    }
+                    // 更新 allProgressData 中的數據
+                    allProgressData[memberIndex].data = targetProgressData;
+                })
+                .catch((error) => {
+                    console.error("寫入 Firebase 失敗: ", error);
+                });
+        });
+    }
+
+    // 恢復單一進度表邏輯 (只在選擇單一業務員時顯示)
+    document.getElementById('agent-progress-content').style.display = 'block';
+    
+    // 隱藏單一業務員模式的元素
+    document.getElementById('progress-header-area').style.display = 'flex';
+    document.getElementById('certification-stamp-area').classList.add('hidden');
+    
+    // 恢復總覽列表的樣式
+    if (currentViewingUser === '__ALL_MEMBERS__') {
+        document.getElementById('progress-display-area').classList.add('hidden');
+    }
+}
+
+
 function resetAudioPlayerUI() {
     progressBar.value = 0;
     timeDisplay.textContent = '00:00 / 00:00'; 
@@ -3401,42 +3719,76 @@ function resetAudioPlayerUI() {
 const loggedInRole = sessionStorage.getItem('loggedInRole'); 
     const loggedInTeam = sessionStorage.getItem('loggedInTeam');
     let currentViewingUser = loggedInUser; // 當前查看進度的用戶，預設為自己
-    function loadProgressFromFirebase() {
-        
-        // 【修正點 4】：如果處於提示狀態，則清空數據並顯示提示
-        if (currentViewingUser === 'PROMPT_SELECT') { 
-             progressData = {};
-             if (document.getElementById('chapter0').classList.contains('active')) {
+    // 由於您在原程式碼中已經有 loadProgressFromFirebase() 函數，
+// 這裡需要修改它以處理總覽/單一模式的切換，確保單一模式的元素恢復顯示。
+// 請用以下完整的 loadProgressFromFirebase 函數替換您原有的版本。
+function loadProgressFromFirebase() {
+    
+    // 總覽模式下，隱藏單一模式的元素
+    if (currentViewingUser === '__ALL_MEMBERS__') {
+        const currentTeam = loggedInRole === 'director' ? (document.getElementById('team-filter-select')?.value || loggedInTeam) : loggedInTeam;
+        const allUsers = []; // 實際應用中，您需要從某處獲取 allUsers 數據
+        // 由於無法直接獲取 allUsers，這裡僅執行介面調整，不進行數據查詢
+        document.getElementById('progress-header-area').style.display = 'flex';
+        document.getElementById('certification-stamp-area').classList.add('hidden');
+        document.getElementById('progress-display-area').classList.add('hidden');
+        document.getElementById('agent-progress-content').classList.remove('hidden');
+        document.getElementById('agent-progress-content').innerHTML = `<p class="p-8 text-center text-slate-500">請從上方下拉選單中選擇「全部組員進度總覽」或一位業務員。</p>`;
+        return; 
+    }
+    
+    // 單一業務員模式 (或提示模式)
+    document.getElementById('progress-header-area').style.display = 'flex';
+    document.getElementById('certification-stamp-area').classList.remove('hidden');
+    document.getElementById('progress-display-area').classList.remove('hidden');
+    document.getElementById('agent-progress-content').classList.remove('hidden');
+    document.getElementById('agent-progress-content').innerHTML = `
+        <div class="bg-white p-4 sm:p-8 rounded-xl shadow-lg content-card animate-on-scroll">
+           <div class="hidden md:grid md:grid-cols-[0.8fr_80px_240px_1.2fr] gap-4 px-4 py-3 bg-slate-100 rounded-t-lg">
+                <div class="font-semibold text-slate-600">項目</div>
+                <div class="font-semibold text-slate-600 text-center">完成狀態<br>(主管審核)</div>
+                <div class="font-semibold text-slate-600 text-center">進度日期 / 備註</div>
+                <div class="font-semibold text-slate-600">次數紀錄</div>
+            </div>
+            <div id="progress-table" class="border-x border-b border-slate-200 rounded-b-lg">
+            </div>
+        </div>`;
+    
+    
+    if (currentViewingUser === 'PROMPT_SELECT') { 
+         progressData = {};
+         if (document.getElementById('chapter0')?.classList.contains('active')) {
+             renderProgressTable();
+             updateProgressDisplay();
+         }
+         return; 
+    }
+    
+    if (!currentViewingUser || typeof db === 'undefined') {
+        console.error("Firebase 或使用者未準備好。");
+        return;
+    }
+   db.collection("progressData").doc(currentViewingUser).get() // <-- 使用 currentViewingUser
+        .then(doc => {
+            if (doc.exists) {
+                progressData = doc.data();
+                console.log(`從 Firebase 載入 ${currentViewingUser} 的進度成功！`);
+            } else {
+                progressData = {};
+                console.log(`Firebase 尚未有 ${currentViewingUser} 進度，使用空白進度表。`);
+            }
+            
+            
+            if (document.getElementById('chapter0')?.classList.contains('active')) {
                  renderProgressTable();
                  updateProgressDisplay();
-             }
-             return; // 這裡直接返回，不進行 Firebase 查詢
-        }
-        if (!currentViewingUser || typeof db === 'undefined') {
-            console.error("Firebase 或使用者未準備好。");
-            return;
-        }
-       db.collection("progressData").doc(currentViewingUser).get() // <-- 使用 currentViewingUser
-            .then(doc => {
-                if (doc.exists) {
-                    progressData = doc.data();
-                    console.log(`從 Firebase 載入 ${currentViewingUser} 的進度成功！`);
-                } else {
-                    progressData = {};
-                    console.log(`Firebase 尚未有 ${currentViewingUser} 進度，使用空白進度表。`);
-                }
-                
-                
-                if (document.getElementById('chapter0').classList.contains('active')) {
-                     renderProgressTable();
-                     updateProgressDisplay();
-                }
-            })
-            .catch(error => {
-                console.error("載入 Firebase 進度失敗：", error);
-                progressData = {}; 
-            });
-    }
+            }
+        })
+        .catch(error => {
+            console.error("載入 Firebase 進度失敗：", error);
+            progressData = {}; 
+        });
+}
     
     function saveProgress() {
         if (!currentViewingUser || typeof db === 'undefined') {
@@ -4198,6 +4550,7 @@ function handleProgressLogic(sectionId) {
     
 </body>
 </html>
+
 
 
 
