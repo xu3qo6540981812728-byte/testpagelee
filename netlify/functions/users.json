@@ -3,8 +3,8 @@
         "username": "C73449",
         "password": "19940201",
         "name": "李培智",
-        "role": "manager",
-        "team": "A組"
+        "role": "director",
+        "team": "ALL"
     },
     {
         "username": "C84730",
@@ -70,6 +70,7 @@
         "team": "C組"
     }
 ]
+
 
 
 
