@@ -3242,14 +3242,15 @@ async function fetchTeamMembers(managerTeam) {
         let targetTeam = managerTeam;
         let targetUser = 'PROMPT_SELECT'; // 預設為提示狀態
         
-        if (loggedInRole === 'director') {
-            const uniqueTeams = [...new Set(allUsers.map(user => user.team))].filter(t => t);
-            
-            const currentSelectedTeam = sessionStorage.getItem('currentSelectedTeam') || 'A組';
-            targetTeam = uniqueTeams.includes(currentSelectedTeam) ? currentSelectedTeam : uniqueTeams[0];
-            
-            // 創建總監介面
-           managerControlPanel.innerHTML = `
+       if (loggedInRole === 'director') {
+const uniqueTeams = [...new Set(allUsers.map(user => user.team))].filter(t => t);
+**` const currentSelectedTeam = sessionStorage.getItem('currentSelectedTeam')
+targetTeam = uniqueTeams.includes(currentSelectedTeam) ? currentSelectedTeam : uniqueTeams[0];
+const teamMembers = allUsers.filter(
+user => user.team === targetTeam && user.role === 'agent'
+);
+// 創建總監介面
+` managerControlPanel.innerHTML = ``
                 <h5 class="font-bold text-indigo-700 mb-2">總監控制面板 (可切換組別)</h5>
                 <div id="team-and-member-controls" class="flex flex-col sm:flex-row gap-3">
                     <select id="team-filter-select" class="w-full sm:w-1/2 p-2 border border-indigo-300 rounded-lg bg-white text-slate-700 shadow-sm focus:ring-indigo-500 focus:border-indigo-500 transition">
@@ -3918,6 +3919,8 @@ function updateProgressDisplay() {
                 : styledTitle;
             motivationText.innerHTML = finalHTML;
         } else {
+            const currentNameElement = document.getElementById('current-progress-name');
+const viewingName = currentNameElement ? currentNameElement.textContent : '未選擇成員';
             // 主管/總監模式下，顯示普通進度訊息
             motivationText.innerHTML = `當前查看：<span class="font-bold">${document.getElementById('current-progress-name').textContent}</span> 的學習進度`;
         }
@@ -4340,6 +4343,7 @@ loadProgressFromFirebase();
     
 </body>
 </html>
+
 
 
 
