@@ -3173,10 +3173,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const secs = Math.floor(seconds % 60);
         return `${minutes.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
     }
-/**
-* 函數：從後端 API 獲取組員列表，並填充下拉選單
- * @param {string} managerTeam - 當前登入主管所屬的組別
- */
+
 async function fetchTeamMembers(managerTeam) {
     const loggedInUser = sessionStorage.getItem('loggedInUser');
     const loggedInRole = sessionStorage.getItem('loggedInRole');
@@ -4198,6 +4195,7 @@ function handleProgressLogic(sectionId) {
     
 </body>
 </html>
+
 
 
 
