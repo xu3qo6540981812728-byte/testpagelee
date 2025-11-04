@@ -3343,7 +3343,7 @@ async function loadAllProgressData(usernames) {
 }
 
 // 【新增函數】: 顯示全部業務員清單的邏輯
-const showAllMembersList = async (teamFilter, allUsers) => {
+window.showAllMembersList = async (teamFilter, allUsers) => {
     // 1. 介面切換
     document.getElementById('agent-progress-content').classList.add('hidden');
     document.getElementById('all-members-list-container').classList.remove('hidden');
@@ -4346,6 +4346,7 @@ loadProgressFromFirebase();
     
 </body>
 </html>
+
 
 
 
