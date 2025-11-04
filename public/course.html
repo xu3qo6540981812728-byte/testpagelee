@@ -3191,7 +3191,9 @@ async function fetchTeamMembers(managerTeam) {
         const loggedInName = sessionStorage.getItem('loggedInName');
         
         // 【修正點 1】：移除 "個人進度" 選項，並加入 "請選擇業務員" 的預設提示選項
-        let optionsHtml = `<option value="PROMPT_SELECT" disabled selected>-- 請選擇業務員 --</option>`;
+        // **新增 "所有組員清單明細" 選項**
+        let optionsHtml = `<option value="ALL_MEMBERS_LIST" class="text-red-600 font-bold">--- 所有組員清單明細 ---</option>`; 
+        optionsHtml += `<option value="PROMPT_SELECT" disabled selected>-- 請選擇業務員 --</option>`;
         
         // 填充組員選項
         teamMembers.forEach(member => {
@@ -3237,13 +3239,16 @@ async function fetchTeamMembers(managerTeam) {
             targetTeam = uniqueTeams.includes(currentSelectedTeam) ? currentSelectedTeam : uniqueTeams[0];
             
             // 創建總監介面
-            managerControlPanel.innerHTML = `
+           managerControlPanel.innerHTML = `
                 <h5 class="font-bold text-indigo-700 mb-2">總監控制面板 (可切換組別)</h5>
                 <div id="team-and-member-controls" class="flex flex-col sm:flex-row gap-3">
                     <select id="team-filter-select" class="w-full sm:w-1/2 p-2 border border-indigo-300 rounded-lg bg-white text-slate-700 shadow-sm focus:ring-indigo-500 focus:border-indigo-500 transition">
                         ${uniqueTeams.map((team, index) => `<option value="${team}" ${team === targetTeam ? 'selected' : ''}>${team} 進度</option>`).join('')}
                     </select>
                     <select id="team-member-select" class="w-full sm:w-1/2 p-2 border border-indigo-300 rounded-lg bg-white text-slate-700 shadow-sm focus:ring-indigo-500 focus:border-indigo-500 transition">
+                        <option value="ALL_MEMBERS_LIST" class="text-red-600 font-bold">--- 所有組員清單明細 ---</option> 
+                        <option value="PROMPT_SELECT" disabled selected>-- 請選擇業務員 --</option>
+                        ${teamMembers.map(member => `<option value="${member.username}">${member.name} (${member.username}) - ${member.team}</option>`).join('')}
                     </select>
                 </div>
                 <div id="current-user-info" class="w-full mt-3 p-2 bg-indigo-100 rounded-lg text-sm text-indigo-700 flex items-center justify-center">
@@ -3279,11 +3284,22 @@ async function fetchTeamMembers(managerTeam) {
         
         const memberChangeListener = (e) => {
             const selectedUsername = e.target.value;
+            
+            if (selectedUsername === 'ALL_MEMBERS_LIST') { // <-- 新增邏輯
+                showAllMembersList(targetTeam, allUsers); // 假設有一個新函數來處理列表顯示
+                return; 
+            }
+            
+            // 選擇單一業務員的邏輯 (保持不變)
             const selectedUser = allUsers.find(u => u.username === selectedUsername);
             currentViewingUser = selectedUsername;
             
             document.getElementById('current-progress-name').textContent = selectedUser ? selectedUser.name : '未選擇';
             
+            // 確保進度表容器顯示，列表容器隱藏
+            document.getElementById('agent-progress-content').classList.remove('hidden');
+            document.getElementById('all-members-list-container').classList.add('hidden'); // 假設新增的列表容器 ID
+
             loadProgressFromFirebase();
         };
         memberSelectElement.addEventListener('change', memberChangeListener);
@@ -4198,6 +4214,7 @@ function handleProgressLogic(sectionId) {
     
 </body>
 </html>
+
 
 
 
