@@ -3713,23 +3713,26 @@ function updateProgressDisplay() {
         
         let isCompleted = false;
         // 檢查是否有計數項目
+       const isCheckedByManager = itemData?.checked || false; 
+
         if (item.counts && item.counts.length > 0) {
-            const hasCounts = item.counts.length > 0;
-            let isCountCompleted = true;
-            
-            if (hasCounts) {
-                isCountCompleted = item.counts.every(countName => {
-                    const value = itemData?.counts?.[countName] || '';
-                    return value.trim() !== '';
-                });
+            // 條件 B: 檢查所有計數欄位是否有填寫
+            const allCountsFilled = item.counts.every(countName => {
+                const value = itemData?.counts?.[countName] || '';
+                return value.trim() !== ''; // 檢查欄位是否有值
+            });
+
+            // 【新邏輯】：有計數欄位的項目，必須 (A: 主管勾選 AND B: 所有計數欄位已填) 才算完成
+            if (isCheckedByManager && allCountsFilled) {
+                isCompleted = true;
             }
-            if (isCountCompleted) {
-                 isCompleted = true;
-            }
-            
         } else {
-            isCompleted = itemData?.checked || false;
+            // 【原始邏輯】：無計數欄位的項目，只看 A: 主管是否勾選
+            isCompleted = isCheckedByManager;
         }
+
+        // --- 核心修改區域 END ---
+        
         if (isCompleted) {
             completedCount++;
         }
@@ -4192,4 +4195,5 @@ function handleProgressLogic(sectionId) {
     
 </body>
 </html>
+
 
