@@ -3355,7 +3355,6 @@ function renderTeamProgressList(agents) {
             // 修正後的邏輯：避免使用 ?. 
             const allCountsFilled = (item.counts && item.counts.length > 0) 
                 ? item.counts.every(countName => {
-                    // 確保 itemData.counts 存在才能存取 [countName]
                     const countValue = (itemData.counts && itemData.counts[countName] !== undefined) ? itemData.counts[countName] : '';
                     return countValue.toString().trim() !== ''; 
                 })
@@ -3374,8 +3373,8 @@ function renderTeamProgressList(agents) {
         });
 
         const percentage = totalProgressItems > 0 ? Math.round((completedCount / totalProgressItems) * 100) : 0;
-const latestRemark = (agentProgress[progressItems.length - 1] && agentProgress[progressItems.length - 1].remark) ? agentProgress[progressItems.length - 1].remark : '';
-        const listItem = document.createElement('div');
+const lastProgressItem = agentProgress[progressItems.length - 1];
+        const latestRemark = (lastProgressItem && lastProgressItem.remark) ? lastProgressItem.remark : '';        const listItem = document.createElement('div');
         listItem.className = 'agent-list-item grid grid-cols-[1fr_80px_1fr] md:grid-cols-[1fr_120px_1fr] gap-4 border-t border-slate-200 px-4 py-4 hover:bg-indigo-50 cursor-pointer transition';
         listItem.dataset.username = agent.username;
         
@@ -4394,6 +4393,7 @@ function handleProgressLogic(sectionId) {
     
 </body>
 </html>
+
 
 
 
