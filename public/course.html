@@ -360,23 +360,6 @@
         transform: translate(-2px, -2px);
         box-shadow: 6px 6px 0 #000000;
     }
-        .note-section-wrapper {
-        grid-column: 1 / -1; /* 跨越所有欄位 */
-        padding: 0 4px;
-    }
-    .note-content-area {
-        background-color: #f8fafc; /* slate-50 */
-        border-left: 4px solid #4f46e5; /* indigo-600 */
-        padding: 8px 12px;
-        border-radius: 4px;
-        transition: all 0.2s ease;
-    }
-    .note-content-area:hover {
-        background-color: #f1f5f9; /* slate-100 */
-    }
-    .note-content-area textarea {
-        resize: vertical;
-    }
    </style>
     
 </head>
@@ -523,12 +506,11 @@
         </div>
     </div>
     <div class="bg-white p-4 sm:p-8 rounded-xl shadow-lg content-card animate-on-scroll">
-       <div class="hidden md:grid md:grid-cols-[1fr_100px_120px_2fr_180px] gap-4 px-4 py-3 bg-slate-100 rounded-t-lg">
-    <div class="font-semibold text-slate-600">項目</div>
-    <div class="font-semibold text-slate-600 text-center">完成狀態<br>(主管審核)</div>
-    <div class="font-semibold text-slate-600 text-center">完成日期</div> <div class="font-semibold text-slate-600">次數紀錄</div>
-    <div class="font-semibold text-slate-600">主管備註</div>
-</div>
+        <div class="hidden md:grid md:grid-cols-[1fr_100px_120px_2fr] gap-4 px-4 py-3 bg-slate-100 rounded-t-lg">
+            <div class="font-semibold text-slate-600">項目</div>
+            <div class="font-semibold text-slate-600 text-center">完成狀態<br>(主管審核)</div>
+            <div class="font-semibold text-slate-600 text-center">完成日期</div> <div class="font-semibold text-slate-600">次數紀錄</div>
+        </div>
         
         <div id="progress-table" class="border-x border-b border-slate-200 rounded-b-lg">
             </div>
@@ -3471,9 +3453,6 @@ const loggedInRole = sessionStorage.getItem('loggedInRole');
                 if (doc.exists) {
                     progressData = doc.data();
                     console.log(`從 Firebase 載入 ${currentViewingUser} 的進度成功！`);
-                    if (loggedInRole === 'manager' && document.getElementById('chapter0')?.classList.contains('active')) {
-                attachNoteEventListeners();
-            }
                 } else {
                     progressData = {};
                     console.log(`Firebase 尚未有 ${currentViewingUser} 進度，使用空白進度表。`);
@@ -3879,184 +3858,58 @@ function handleProgressLogic(sectionId) {
     renderProgressTable();
     updateProgressDisplay();
 }
-  function renderProgressTable() {
-    if (!progressTableBody) return; 
-    progressTableBody.innerHTML = '';
-    const isManager = loggedInRole === 'manager'; // 新增判斷是否為主管
-    const isAgent = loggedInRole === 'agent';
-    const disabledAttr = isAgent ? 'disabled' : ''; // 業務禁用進度勾選
-
-    progressItems.forEach((item, index) => {
-        if (item.type === 'header') {
-            const headerDiv = document.createElement('div');
-            // 【修改：增加欄位數，使其跨越所有欄位】
-            headerDiv.innerHTML = `<div class="py-3 px-4 bg-slate-200 text-slate-700 font-bold text-base md:col-span-5 md:rounded-none">${item.name}</div>`;
-            progressTableBody.appendChild(headerDiv);
-            return;
-        }
-
-        const itemData = progressData[index] || {};
-        const isChecked = itemData.checked || false;
-        const completionDate = itemData.completionDate || '';
-        const managerNoteContent = itemData.manager_note || ''; // 從數據中讀取備註內容
-
-        // 【修改：項目 Wrapper 增加一個欄位寬度】
-        const itemWrapper = document.createElement('div');
-        itemWrapper.className = 'progress-item grid grid-cols-1 md:grid-cols-[1fr_100px_120px_2fr_180px] gap-x-4 border-t border-slate-200 px-4 py-4 hover:bg-slate-50';
-        itemWrapper.dataset.progressIndex = index; // 設定索引，方便事件監聽器查找
-
-        let countInputsHTML = '';
-        if (item.counts) {
-            const inputs = item.counts.map(countName => {
-                const value = itemData?.counts?.[countName] || '';
-                // 業務禁用計數輸入框
-                return ` <div class="flex items-center space-x-2"> <label class="text-slate-600 w-24 text-right flex-shrink-0">${countName}:</label> <input type="text" value="${value}" ${disabledAttr} data-index="${index}" data-count-name="${countName}" class="count-input w-full text-center border rounded py-1 px-2 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition" placeholder="請輸入次數"> </div>`;
-            }).join('');
-            countInputsHTML = `<div class="grid grid-cols-1 sm:grid-cols-2 gap-2 mt-2 md:mt-0">${inputs}</div>`;
-        }
-
-        // 【新增：備註輸入/顯示區塊】
-        const noteAreaHTML = `
-            <div class="note-section">
-                <div class="note-content-area flex flex-col space-y-2">
-                    <textarea 
-                        rows="${isManager ? '3' : '1'}" 
-                        placeholder="${isManager ? '輸入對學員的學習備註...' : '無備註'}" 
-                        data-index="${index}"
-                        class="manager-note-textarea w-full p-1 text-sm text-slate-700 bg-transparent focus:outline-none focus:ring-0 ${isAgent ? 'border-0' : 'border border-slate-300 rounded'}"
-                        ${isAgent ? 'readonly' : ''}
-                    >${managerNoteContent}</textarea>
-                    ${isManager ? 
-                        `<button data-index="${index}" class="save-note-btn bg-indigo-500 text-white text-xs py-1 px-3 rounded hover:bg-indigo-600 transition">儲存備註</button>` 
-                        : (managerNoteContent ? '' : '<p class="text-xs text-slate-400">目前無主管備註</p>')}
-                </div>
-            </div>
-        `;
-
-        const dateInputHTML = `
-            <div class="flex items-center justify-start md:justify-center mt-2 md:mt-0">
-                <label class="flex items-center space-x-2 md:space-x-0 cursor-pointer">
-                    <span class="md:hidden text-slate-500">完成日期:</span>
-                    <input type="date" value="${completionDate}" ${disabledAttr} data-index="${index}" class="date-input w-full text-center border rounded py-1 px-2 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition text-sm">
-                </label>
-            </div>
-        `;
-
-        itemWrapper.innerHTML = ` 
-            <div class="flex items-center text-slate-700 font-medium"> 
-                ${item.name} 
-            </div> 
-            <div class="flex items-center justify-start md:justify-center mt-2 md:mt-0"> 
-                <label class="flex items-center space-x-2 md:space-x-0 cursor-pointer"> 
-                    <span class="md:hidden text-slate-500">完成狀態(主管審核):</span> 
-                    <input type="checkbox" data-index="${index}" class="h-6 w-6 text-indigo-600 border-gray-300 rounded focus:ring-indigo-500 ${disabledAttr}" ${isChecked ? 'checked' : ''} ${disabledAttr}> </label> 
-            </div> 
-            ${dateInputHTML} 
-            <div class="mt-2 md:mt-0"> 
-                ${countInputsHTML ? `<div class="md:hidden text-slate-500 mb-2">次數紀錄:</div>` : ''} 
-                ${countInputsHTML} 
-            </div> 
-            ${noteAreaHTML} 
-        `;
-
-        progressTableBody.appendChild(itemWrapper);
-
-        // 檢查是否有備註內容，如果有，則調整業務的 textarea 行數
-        if (isAgent && managerNoteContent.length > 30) {
-            const textarea = itemWrapper.querySelector('.manager-note-textarea');
-            if (textarea) {
-                // 簡易計算所需行數：每 30 個字元增加一行 (可自行調整)
-                const rows = Math.ceil(managerNoteContent.length / 30);
-                textarea.rows = Math.max(1, rows); 
+    function renderProgressTable() {
+        if (!progressTableBody) return; 
+        progressTableBody.innerHTML = '';
+        const isAgent = loggedInRole === 'agent';
+        const disabledAttr = isAgent ? 'disabled' : '';
+        progressItems.forEach((item, index) => {
+            if (item.type === 'header') {
+                const headerDiv = document.createElement('div');
+                headerDiv.innerHTML = `<div class="py-3 px-4 bg-slate-200 text-slate-700 font-bold text-base md:rounded-none">${item.name}</div>`;
+                progressTableBody.appendChild(headerDiv);
+                return;
             }
-        }
-    });
-
-    // 重新註冊事件監聽器
-    if (isManager) {
-        attachNoteEventListeners();
-    }
-}
-function attachNoteEventListeners() {
-    document.querySelectorAll('.save-note-btn').forEach(button => {
-        button.addEventListener('click', async (e) => {
-            const index = e.target.dataset.index;
-            const itemWrapper = e.target.closest('.progress-item');
-            const textarea = itemWrapper.querySelector('.manager-note-textarea');
-            const noteContent = textarea.value.trim();
-            
-            // 呼叫儲存函數
-            await saveManagerNote(index, noteContent, e.target);
-            
-            // 更新進度資料
-            if (!progressData[index]) progressData[index] = {};
-            progressData[index].manager_note = noteContent;
+            const isChecked = progressData[index]?.checked || false;
+            const completionDate = progressData[index]?.completionDate || '';
+            const itemWrapper = document.createElement('div');
+            itemWrapper.className = 'progress-item grid grid-cols-1 md:grid-cols-[1fr_100px_120px_2fr] gap-x-4 border-t border-slate-200 px-4 py-4 hover:bg-slate-50';
+            let countInputsHTML = '';
+            if (item.counts) {
+                const inputs = item.counts.map(countName => {
+                    const value = progressData[index]?.counts?.[countName] || '';
+                    // 【修改：次數輸入框加入 disabledAttr】
+                    return ` <div class="flex items-center space-x-2"> <label class="text-slate-600 w-24 text-right flex-shrink-0">${countName}:</label> <input type="text" value="${value}" ${disabledAttr} data-index="${index}" data-count-name="${countName}" class="count-input w-full text-center border rounded py-1 px-2 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition" placeholder="請輸入次數"> </div>`;
+                }).join('');
+                countInputsHTML = `<div class="grid grid-cols-1 sm:grid-cols-2 gap-2 mt-2 md:mt-0">${inputs}</div>`;
+            }
+            const dateInputHTML = `
+                <div class="flex items-center justify-start md:justify-center mt-2 md:mt-0">
+                    <label class="flex items-center space-x-2 md:space-x-0 cursor-pointer">
+                        <span class="md:hidden text-slate-500">完成日期:</span>
+                        <input type="date" value="${completionDate}" ${disabledAttr} data-index="${index}" class="date-input w-full text-center border rounded py-1 px-2 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition text-sm">
+                    </label>
+                </div>
+            `;
+            itemWrapper.innerHTML = ` 
+                <div class="flex items-center text-slate-700 font-medium"> 
+                    ${item.name} 
+                </div> 
+                <div class="flex items-center justify-start md:justify-center mt-2 md:mt-0"> 
+                    <label class="flex items-center space-x-2 md:space-x-0 cursor-pointer"> 
+                        <span class="md:hidden text-slate-500">完成狀態(主管審核):</span> 
+                        <input type="checkbox" data-index="${index}" class="h-6 w-6 text-indigo-600 border-gray-300 rounded focus:ring-indigo-500 ${disabledAttr}" ${isChecked ? 'checked' : ''} ${disabledAttr}> </label> 
+                </div> 
+                ${dateInputHTML} <div class="mt-2 md:mt-0"> 
+                    ${countInputsHTML ? `<div class="md:hidden text-slate-500 mb-2">次數紀錄:</div>` : ''} 
+                    ${countInputsHTML} 
+                </div> `;
+            progressTableBody.appendChild(itemWrapper);
         });
-    });
-}
-
-/**
- * 函數：將主管備註寫入後端 API
- * @param {string} progressIndex - 進度表項目索引
- * @param {string} noteContent - 備註內容
- * @param {HTMLElement} button - 觸發儲存的按鈕元素
- */
-async function saveManagerNote(progressIndex, noteContent, button) {
-    if (!loggedInUser || loggedInRole !== 'manager') {
-        alert("權限不足：只有主管才能儲存備註。");
-        return;
     }
 
-    button.disabled = true;
-    button.textContent = '儲存中...';
 
-    const payload = {
-        manager_username: loggedInUser,
-        target_username: currentViewingUser, // 儲存給當前正在查看的業務
-        chapter_id: progressIndex,          // 使用進度表索引作為 ID
-        note_content: noteContent
-    };
 
-    try {
-        // 呼叫您在 netlify/functions/save_note.js 中定義的後端服務
-        const response = await fetch('/.netlify/functions/save_note', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(payload)
-        });
-
-        const data = await response.json();
-        
-        if (data.success) {
-            button.textContent = '儲存成功！';
-            button.classList.add('bg-green-500');
-            setTimeout(() => {
-                button.textContent = '儲存備註';
-                button.classList.remove('bg-green-500');
-                button.disabled = false;
-            }, 2000);
-        } else {
-            alert(`備註儲存失敗: ${data.message}`);
-            button.textContent = '儲存失敗';
-            button.classList.add('bg-red-500');
-            setTimeout(() => {
-                button.textContent = '儲存備註';
-                button.classList.remove('bg-red-500');
-                button.disabled = false;
-            }, 3000);
-        }
-    } catch (error) {
-        console.error('Save Note Error:', error);
-        alert('網路錯誤，備註未能儲存。');
-        button.textContent = '儲存失敗';
-        button.classList.add('bg-red-500');
-        setTimeout(() => {
-            button.textContent = '儲存備註';
-            button.classList.remove('bg-red-500');
-            button.disabled = false;
-        }, 3000);
-    }
-}
     
     if (progressTableBody) {
     progressTableBody.addEventListener('input', (e) => {
