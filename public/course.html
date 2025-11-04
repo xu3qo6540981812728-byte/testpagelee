@@ -3560,6 +3560,9 @@ function showContent(sectionId, element) {
         }
         audioPlayerContainer.classList.remove('expanded');
         
+        if (sectionId === 'chapter0') {
+             loadProgressFromFirebase(); 
+        }
         handleProgressLogic(sectionId);
        
         updateFloatingButtons(sectionId);
@@ -4195,5 +4198,7 @@ function handleProgressLogic(sectionId) {
     
 </body>
 </html>
+
+
 
 
