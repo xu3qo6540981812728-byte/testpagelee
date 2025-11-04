@@ -10,8 +10,8 @@
         "username": "C84730",
         "password": "19851010",
         "name": "李志仁",
-        "role": "agent",
-        "team": "忠孝業二"
+        "role": "director",
+        "team": "ALL"
     },
     {
         "username": "C80624",
@@ -70,6 +70,7 @@
         "team": "店頭部門"
     }
 ]
+
 
 
 
