@@ -3647,8 +3647,8 @@ const loggedInRole = sessionStorage.getItem('loggedInRole');
     }
    
     const chapters = [
-        { id: 'chapter0', title: '菁英課程進度表', description: '追蹤你的學習進度' },
         { id: 'manager-dashboard', title: '團隊進度儀表板', description: '主管專用：查看團隊完成清單', role: 'manager_only' },
+        { id: 'chapter0', title: '菁英課程進度表', description: '追蹤你的學習進度' },
         { id: 'chapter1', title: '台灣房市歷史', description: '回顧過去，洞見未來' },
         { id: 'chapter2', title: '認識謄本與建物型態', description: '產權的照妖鏡，保障交易安全' },
         { id: 'chapter3', title: '代書流程', description: '從簽約到交屋的完整路徑圖' },
@@ -3805,7 +3805,9 @@ function showContent(sectionId, element) {
         
         // --- [新增卡片樣式] ---
         let cardClass = 'toc-card bg-white p-6 rounded-xl shadow-lg flex flex-col items-center text-center';
-        let iconHtml = `<div class="bg-indigo-100 text-indigo-600 rounded-full h-12 w-12 flex items-center justify-center font-bold text-xl mb-4">${index}</div>`;
+        let iconHtml = isManagerDashboard 
+    ? `<div class="bg-yellow-600 text-white rounded-full h-12 w-12 flex items-center justify-center font-bold text-xl mb-4"><i class="fas fa-chart-line"></i></div>`
+    : `<div class="bg-indigo-100 text-indigo-600 rounded-full h-12 w-12 flex items-center justify-center font-bold text-xl mb-4">${index + 1}</div>`; // 課程編號從 1 開始
 
         if (isManagerDashboard) {
             // 主管專用儀表板，使用特殊顯眼樣式
@@ -3864,7 +3866,8 @@ function showContent(sectionId, element) {
         navLink.onclick = (e) => { e.preventDefault(); showChapterView(chapter.id); };
         // --------------------------------------------------
         
-        navLink.innerHTML = `<span class="w-6 text-center mr-3">${index}</span> ${chapter.title}`;
+       const displayIndex = chapter.id === 'manager-dashboard' ? '' : index + 1;
+navLink.innerHTML = `<span class="w-6 text-center mr-3">${displayIndex}</span> ${chapter.title}`;
         sidebarNav.appendChild(navLink);
         
         // 嘗試從模板中取得內容
@@ -4431,6 +4434,7 @@ function handleProgressLogic(sectionId) {
     
 </body>
 </html>
+
 
 
 
