@@ -3407,7 +3407,6 @@ function hideProgressDetail() {
     }
 
     try {
-        // 1. 獲取所有用戶列表 (略)
         const userResponse = await fetch('/.netlify/functions/get_users');
         const userData = await userResponse.json();
         if (!userData.success) throw new Error(userData.message);
@@ -3415,12 +3414,10 @@ function hideProgressDetail() {
             user.role === 'agent' && (loggedInRole === 'director' || user.team === loggedInTeam)
         );
         if (allAgents.length === 0) {
-            // 注意：這裡 colspan 改為 3
             tableBody.innerHTML = `<tr><td colspan="3" class="p-8 text-center text-slate-500">目前團隊中沒有業務員。</td></tr>`;
             return;
         }
 
-        // 2. 獲取所有業務的進度數據 (略)
         const progressPromises = allAgents.map(agent => 
             db.collection("progressData").doc(agent.username).get().then(doc => ({
                 agent,
@@ -3429,18 +3426,15 @@ function hideProgressDetail() {
         );
         const allProgressResults = await Promise.all(progressPromises);
 
-        // 3. 準備進度計算所需的數據
         const progressItemsToCount = progressItems.filter(item => item.type !== 'header');
         const progressItemsCount = progressItemsToCount.length;
 
-        // 4. 渲染表格
-        tableBody.innerHTML = ''; // 清空載入中提示
+        tableBody.innerHTML = '';
         allProgressResults.forEach(({ agent, progress }) => {
             let completedCount = 0;
             
-           
+            // 儲存用於詳細清單的項目
             const allItemsForList = []; 
-           
 
             progressItemsToCount.forEach((item) => {
                 const index = progressItems.findIndex(i => i.name === item.name);
@@ -3449,7 +3443,7 @@ function hideProgressDetail() {
                 let isCompleted = false;
                 const isCheckedByManager = itemData?.checked || false; 
                 
-                // 計算項目是否完成的邏輯 (不變)
+                // 計算項目是否完成的邏輯
                 if (item.counts && item.counts.length > 0) {
                     const allCountsFilled = item.counts.every(countName => {
                         const value = itemData?.counts?.[countName] || '';
@@ -3466,14 +3460,27 @@ function hideProgressDetail() {
 
                 if (isCompleted) {
                     completedCount++;
-                    // ✅ 已完成項目：緊湊顯示，綠色
-                    allItemsForList.push(`<div class="text-sm py-0.5 flex items-start text-green-700 font-semibold"><i class="fas fa-check-circle text-green-500 mt-1 mr-2 flex-shrink-0"></i>${itemName}</div>`);
+                    // *** 修正點 1: 簡化 HTML 結構，解決歪斜問題 ***
+                    // 使用 flex 且確保內容靠左
+                    allItemsForList.push(`
+                        <div class="text-sm py-1 flex items-start text-green-700 font-semibold leading-snug">
+                            <i class="fas fa-check-circle text-green-500 mt-1 mr-2 flex-shrink-0"></i>
+                            ${itemName}
+                        </div>
+                    `);
                 } else {
-                    // ❌ 尚未完成項目：緊湊顯示，紅色
-                    allItemsForList.push(`<div class="text-sm py-0.5 flex items-start text-red-700"><i class="fas fa-times-circle text-red-500 mt-1 mr-2 flex-shrink-0"></i>${itemName}</div>`);
+                    // *** 修正點 1: 簡化 HTML 結構，解決歪斜問題 ***
+                    // 使用 flex 且確保內容靠左
+                    allItemsForList.push(`
+                        <div class="text-sm py-1 flex items-start text-red-700 leading-snug">
+                            <i class="fas fa-times-circle text-red-500 mt-1 mr-2 flex-shrink-0"></i>
+                            ${itemName}
+                        </div>
+                    `);
                 }
             });
 
+            const incompleteCount = progressItemsCount - completedCount;
             const percentage = progressItemsCount > 0 ? Math.round((completedCount / progressItemsCount) * 100) : 0;
             const row = document.createElement('tr');
             
@@ -3504,9 +3511,9 @@ function hideProgressDetail() {
                 </td>
                 
                 <td class="p-3">
-                    <button class="text-indigo-600 hover:underline font-semibold text-sm" onclick="showProgressDetail('${agent.name}','所有','${escapedAllItemsHtml}', '')">
+                    <button class="text-indigo-600 hover:underline font-semibold text-sm" onclick="showProgressDetail('${agent.name}','所有','${escapedAllItemsHtml}')">
                         <span class="text-green-600 font-bold">✅ ${completedCount} 項</span> / 
-                        <span class="text-red-600 font-bold">❌ ${progressItemsCount - completedCount} 項</span>
+                        <span class="text-red-600 font-bold">❌ ${incompleteCount} 項</span>
                         (共 ${progressItemsCount} 項)
                     </button>
                 </td>
@@ -3515,9 +3522,7 @@ function hideProgressDetail() {
         });
 
     } catch (error) {
-        // ... (錯誤處理，不變)
         console.error('載入所有業務進度失敗:', error);
-        // 注意：這裡 colspan 改為 3
         tableBody.innerHTML = `<tr><td colspan="3" class="p-8 text-center text-red-500">載入組員數據時發生錯誤。</td></tr>`;
     }
 }
@@ -4504,6 +4509,7 @@ function handleProgressLogic(sectionId) {
     
 </body>
 </html>
+
 
 
 
