@@ -3508,7 +3508,7 @@ window.hideProgressDetail = () => {
     }
     
     // 4. 執行畫面切換到個人進度表 (這是關鍵)
-    showChapterView('chapter0'); 
+    window.showChapterView('chapter0');
 `;
 
             // 轉義後的清單字串 (用於 onclick 參數傳遞)
@@ -3758,7 +3758,7 @@ const loggedInRole = sessionStorage.getItem('loggedInRole');
             audioPlayerContainer.style.display = 'none';
         }
     }
-    function showChapterView(chapterId) {
+    window.showChapterView = (chapterId) => {
     // 檢查是否為主管儀表板，如果是，則呼叫新函數處理
     if (chapterId === 'manager-dashboard') {
          // 透過 chapters 陣列找到標題
@@ -4522,6 +4522,7 @@ function handleProgressLogic(sectionId) {
     
 </body>
 </html>
+
 
 
 
