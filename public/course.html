@@ -3803,28 +3803,32 @@ function showContent(sectionId, element) {
     }
     
     function updateFloatingButtons(currentChapterId) {
-        const currentIndex = chapters.findIndex(chapter => chapter.id === currentChapterId);
-        if (currentIndex > 0) {
-            const prevChapterId = chapters[currentIndex - 1].id;
-            prevChapterBtn.classList.remove('hidden');
-            prevChapterBtn.onclick = () => {
-                const prevNavLink = sidebarNav.querySelector(`[data-chapter-id="${prevChapterId}"]`);
-                if (prevNavLink) showContent(prevChapterId, prevNavLink);
-            };
-        } else {
-            prevChapterBtn.classList.add('hidden');
-        }
-        if (currentIndex < chapters.length - 1) {
-            const nextChapterId = chapters[currentIndex + 1].id;
-            nextChapterBtn.classList.remove('hidden');
-            nextChapterBtn.onclick = () => {
-                const nextNavLink = sidebarNav.querySelector(`[data-chapter-id="${nextChapterId}"]`);
-                if (nextNavLink) showContent(nextChapterId, nextNavLink);
-            };
-        } else {
-            nextChapterBtn.classList.add('hidden');
-        }
+    const currentIndex = chapters.findIndex(chapter => chapter.id === currentChapterId);
+    
+    // 檢查：1. 不是第一個章節 2. 且不是進度表 (chapter0)
+    if (currentIndex > 0 && currentChapterId !== 'chapter0') { 
+        const prevChapterId = chapters[currentIndex - 1].id;
+        prevChapterBtn.classList.remove('hidden');
+        prevChapterBtn.onclick = () => {
+            const prevNavLink = sidebarNav.querySelector(`[data-chapter-id="${prevChapterId}"]`);
+            if (prevNavLink) showContent(prevChapterId, prevNavLink);
+        };
+    } else {
+        prevChapterBtn.classList.add('hidden');
     }
+    
+    // 下一章的邏輯保持不變
+    if (currentIndex < chapters.length - 1) {
+        const nextChapterId = chapters[currentIndex + 1].id;
+        nextChapterBtn.classList.remove('hidden');
+        nextChapterBtn.onclick = () => {
+            const nextNavLink = sidebarNav.querySelector(`[data-chapter-id="${nextChapterId}"]`);
+            if (nextNavLink) showContent(nextChapterId, nextNavLink);
+        };
+    } else {
+        nextChapterBtn.classList.add('hidden');
+    }
+}
     function renderTOCCards(chapterList) {
     tocContainer.innerHTML = '';
     
@@ -4534,6 +4538,7 @@ function handleProgressLogic(sectionId) {
     
 </body>
 </html>
+
 
 
 
