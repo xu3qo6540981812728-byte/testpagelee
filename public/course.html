@@ -473,15 +473,22 @@
        <p id="progress-motivation" class="text-base mt-3">
             </p>
         <div id="manager-control-panel" class="mt-4 pt-4 border-t border-indigo-200 hidden">
-            <h5 class="font-bold text-indigo-700 mb-2">主管控制面板</h5>
-            <div class="flex flex-col sm:flex-row gap-3">
-                <select id="team-member-select" class="w-full sm:w-1/2 p-2 border border-indigo-300 rounded-lg bg-white text-slate-700 shadow-sm focus:ring-indigo-500 focus:border-indigo-500 transition">
-                    </select>
-                <div id="current-user-info" class="w-full sm:w-1/2 p-2 bg-indigo-100 rounded-lg text-sm text-indigo-700 flex items-center justify-center">
-                    目前查看：<span id="current-progress-name" class="font-bold ml-1">個人進度</span>
-                </div>
+    <div class="flex items-center justify-between mb-3">
+        <h5 class="font-bold text-indigo-700">主管控制面板</h5>
+        <button id="back-to-dashboard-btn" class="inline-flex items-center px-3 py-1 bg-indigo-600 text-white text-xs font-semibold rounded-lg hover:bg-indigo-700 transition duration-200 shadow-md">
+            <i class="fas fa-arrow-left mr-2"></i>返回團隊儀表板
+        </button>
+    </div>
+    <div id="member-select-controls"> 
+        <div class="flex flex-col sm:flex-row gap-3">
+            <select id="team-member-select" class="w-full sm:w-1/2 p-2 border border-indigo-300 rounded-lg bg-white text-slate-700 shadow-sm focus:ring-indigo-500 focus:border-indigo-500 transition">
+                </select>
+            <div id="current-user-info" class="w-full sm:w-1/2 p-2 bg-indigo-100 rounded-lg text-sm text-indigo-700 flex items-center justify-center">
+                目前查看：<span id="current-progress-name" class="font-bold ml-1">個人進度</span>
             </div>
         </div>
+    </div>
+</div>
     </div>
     <div id="agent-progress-content"> 
         <div class="bg-white p-4 sm:p-8 rounded-xl shadow-lg content-card animate-on-scroll">
@@ -3236,17 +3243,22 @@ async function fetchTeamMembers(managerTeam) {
             
             // 創建總監介面
             managerControlPanel.innerHTML = `
-                <h5 class="font-bold text-indigo-700 mb-2">總監控制面板 (可切換組別)</h5>
-                <div id="team-and-member-controls" class="flex flex-col sm:flex-row gap-3">
-                    <select id="team-filter-select" class="w-full sm:w-1/2 p-2 border border-indigo-300 rounded-lg bg-white text-slate-700 shadow-sm focus:ring-indigo-500 focus:border-indigo-500 transition">
-                        ${uniqueTeams.map((team, index) => `<option value="${team}" ${team === targetTeam ? 'selected' : ''}>${team} 進度</option>`).join('')}
-                    </select>
-                    <select id="team-member-select" class="w-full sm:w-1/2 p-2 border border-indigo-300 rounded-lg bg-white text-slate-700 shadow-sm focus:ring-indigo-500 focus:border-indigo-500 transition">
-                    </select>
-                </div>
-                <div id="current-user-info" class="w-full mt-3 p-2 bg-indigo-100 rounded-lg text-sm text-indigo-700 flex items-center justify-center">
-                    目前查看：<span id="current-progress-name" class="font-bold ml-1">未選擇</span>
-                </div>
+                 <div class="flex items-center justify-between mb-3">
+                     <h5 class="font-bold text-indigo-700">總監控制面板 (可切換組別)</h5>
+                     <button id="back-to-dashboard-btn" class="inline-flex items-center px-3 py-1 bg-indigo-600 text-white text-xs font-semibold rounded-lg hover:bg-indigo-700 transition duration-200 shadow-md">
+                         <i class="fas fa-arrow-left mr-2"></i>返回團隊儀表板
+                     </button>
+                 </div>
+                 <div id="team-and-member-controls" class="flex flex-col sm:flex-row gap-3">
+                     <select id="team-filter-select" class="w-full sm:w-1/2 p-2 border border-indigo-300 rounded-lg bg-white text-slate-700 shadow-sm focus:ring-indigo-500 focus:border-indigo-500 transition">
+                         ${uniqueTeams.map((team, index) => `<option value="${team}" ${team === targetTeam ? 'selected' : ''}>${team} 進度</option>`).join('')}
+                     </select>
+                     <select id="team-member-select" class="w-full sm:w-1/2 p-2 border border-indigo-300 rounded-lg bg-white text-slate-700 shadow-sm focus:ring-indigo-500 focus:border-indigo-500 transition">
+                     </select>
+                 </div>
+                 <div id="current-user-info" class="w-full mt-3 p-2 bg-indigo-100 rounded-lg text-sm text-indigo-700 flex items-center justify-center">
+                     目前查看：<span id="current-progress-name" class="font-bold ml-1">未選擇</span>
+                 </div>
             `;
             
             // 初始填充成員清單
@@ -4396,6 +4408,13 @@ function handleProgressLogic(sectionId) {
     }
     if (logoutButtonSidebar) logoutButtonSidebar.addEventListener('click', performLogout);
     if (logoutButtonTOC) logoutButtonTOC.addEventListener('click', performLogout);
+    document.body.addEventListener('click', (e) => {
+        if (e.target.closest('#back-to-dashboard-btn')) {
+            e.preventDefault();
+            // 呼叫主管專用的儀表板顯示函數
+            window.showChapterView('manager-dashboard');
+        }
+    });
     const managerControlPanel = document.getElementById('manager-control-panel');
     const teamMemberSelect = document.getElementById('team-member-select');
     const currentProgressName = document.getElementById('current-progress-name');
@@ -4515,6 +4534,7 @@ function handleProgressLogic(sectionId) {
     
 </body>
 </html>
+
 
 
 
