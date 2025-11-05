@@ -3153,6 +3153,7 @@
     </div>
 </div>
     <script>
+        let allMemberProgressDetails = {};
 document.addEventListener('DOMContentLoaded', () => {
    
     const audioPlayerContainer = document.getElementById('audio-player-container');
@@ -3358,7 +3359,7 @@ async function showManagerDashboard(chapterId, title) {
     // 開始載入所有組員的進度數據
     await loadAllMemberProgress();
 }
-   function showProgressDetail(agentName, type, allItemsHtml, placeholder) {
+function showProgressDetail(agentName, memberKey)
     const detailView = document.getElementById('completed-items-view');
     const detailList = document.getElementById('completed-items-list');
     const dashboardTitle = document.getElementById('manager-dashboard-content').querySelector('header h2');
@@ -3373,12 +3374,11 @@ async function showManagerDashboard(chapterId, title) {
     // 清除舊內容
     detailList.innerHTML = ''; 
 
-    // 替換掉字串中的轉義符號 (\')，確保 HTML 正確渲染
-    const listHtml = allItemsHtml.replace(/\\'/g, "'");
+    const listHtml = allMemberProgressDetails[memberKey];
 
-    // 直接顯示所有項目（已完成/未完成皆在內）
+    // 直接插入 HTML
     detailList.innerHTML = listHtml;
-    
+
     if (detailList.innerHTML.trim() === '') {
         detailList.innerHTML = `<div class="p-4 bg-slate-100 rounded-lg text-slate-600 text-center">該業務員目前沒有進度記錄。</div>`;
     }
@@ -3483,6 +3483,10 @@ function hideProgressDetail() {
             const incompleteCount = progressItemsCount - completedCount;
             const percentage = progressItemsCount > 0 ? Math.round((completedCount / progressItemsCount) * 100) : 0;
             const row = document.createElement('tr');
+
+            const memberKey = agent.username; // 用戶名作為唯一鍵
+allMemberProgressDetails[memberKey] = allItemsForList.join('');
+const onViewDetailClick = `showProgressDetail('${agent.name}', '${memberKey}')`;
             
             // 點擊業務名稱的跳轉邏輯 (不變)
             const onClickHandler = `
@@ -3501,24 +3505,25 @@ function hideProgressDetail() {
 
 
             row.innerHTML = `
-                <td class="p-3">
-                    <button class="text-indigo-600 font-bold hover:text-indigo-800 transition duration-200 text-left" onclick="${onClickHandler}">
-                        ${agent.name} (${agent.team})
-                    </button>
-                </td>
-                <td class="p-3">
-                    <div class="font-bold text-lg ${percentage === 100 ? 'text-green-600' : 'text-orange-500'}">${percentage}%</div>
-                </td>
-                
-                <td class="p-3">
-                    <button class="text-indigo-600 hover:underline font-semibold text-sm" onclick="showProgressDetail('${agent.name}','所有','${escapedAllItemsHtml}')">
-                        <span class="text-green-600 font-bold">✅ ${completedCount} 項</span> / 
-                        <span class="text-red-600 font-bold">❌ ${incompleteCount} 項</span>
-                        (共 ${progressItemsCount} 項)
-                    </button>
-                </td>
-                `;
-            tableBody.appendChild(row);
+    <td class="p-3">
+        <button class="text-indigo-600 font-bold hover:text-indigo-800 transition duration-200 text-left" onclick="${onClickHandler}">
+            ${agent.name} (${agent.team})
+        </button>
+    </td>
+    <td class="p-3">
+        <div class="font-bold text-lg ${percentage === 100 ? 'text-green-600' : 'text-orange-500'}">${percentage}%</div>
+    </td>
+
+    <td class="p-3">
+        <button class="text-indigo-600 hover:underline font-semibold text-sm" onclick="${onViewDetailClick}">
+            <span class="text-green-600 font-bold">✅ ${completedCount} 項</span> /
+            <span class="text-red-600 font-bold">❌ ${incompleteCount} 項</span>
+            (共 ${progressItemsCount} 項)
+        </button>
+    </td>
+    `;
+row.onclick = (e) => { e.stopPropagation(); }; // 防止點擊 row 觸發其他事件
+tableBody.appendChild(row);
         });
 
     } catch (error) {
@@ -4509,6 +4514,7 @@ function handleProgressLogic(sectionId) {
     
 </body>
 </html>
+
 
 
 
