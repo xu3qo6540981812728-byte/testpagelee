@@ -3495,21 +3495,21 @@ window.hideProgressDetail = () => {
             // 【修正 2 核心】: 點擊業務名稱時的跳轉邏輯
             // =================================================================
             const onClickHandler = `
-                // 1. 設定當前查看用戶
-                currentViewingUser = '${agent.username}'; 
-                // 2. 儲存當前團隊 (防止總監模式下，切換團隊邏輯被誤觸)
-                sessionStorage.setItem('currentSelectedTeam', '${agent.team}'); 
+    // 1. 設定當前查看用戶
+    currentViewingUser = '${agent.username}'; 
+    // 2. 儲存當前團隊 (防止總監模式下，切換團隊邏輯被誤觸)
+    sessionStorage.setItem('currentSelectedTeam', '${agent.team}'); 
 
-                // 3. 強制更新下拉選單及名稱顯示 (防止 chapter0 載入時仍顯示舊用戶或提示)
-                const selectEl = document.getElementById('team-member-select');
-                if (selectEl) {
-                    selectEl.value = '${agent.username}';
-                    document.getElementById('current-progress-name').textContent = '${agent.name}';
-                }
-                
-                // 4. 執行畫面切換到個人進度表 (這是關鍵)
-                showChapterView('chapter0'); 
-            `;
+    // 3. 強制更新下拉選單及名稱顯示 (防止 chapter0 載入時仍顯示舊用戶或提示)
+    const selectEl = document.getElementById('team-member-select');
+    if (selectEl) {
+        selectEl.value = '${agent.username}';
+        document.getElementById('current-progress-name').textContent = '${agent.name}';
+    }
+    
+    // 4. 執行畫面切換到個人進度表 (這是關鍵)
+    showChapterView('chapter0'); 
+`;
 
             // 轉義後的清單字串 (用於 onclick 參數傳遞)
             const row = document.createElement('tr');
@@ -4522,6 +4522,7 @@ function handleProgressLogic(sectionId) {
     
 </body>
 </html>
+
 
 
 
