@@ -3328,12 +3328,11 @@ async function showManagerDashboard(chapterId, title) {
                         <tr>
                             <th class="p-3 text-left font-bold text-gray-700">業務員 (組別)</th>
                             <th class="p-3 text-left font-bold text-gray-700">總體進度</th>
-                            <th class="p-3 text-left font-bold text-gray-700">已完成項目</th>
-                            <th class="p-3 text-left font-bold text-gray-700">尚未完成項目</th>
-                        </tr>
+                            <th class="p-3 text-left font-bold text-gray-700">完成清單 (點擊查看)</th>
+                            </tr>
                     </thead>
                     <tbody id="member-progress-table" class="divide-y divide-slate-200">
-                        <tr><td colspan="4" class="p-8 text-center text-slate-500"><i class="fas fa-spinner fa-spin mr-2"></i>載入組員進度中...</td></tr>
+                        <tr><td colspan="3" class="p-8 text-center text-slate-500"><i class="fas fa-spinner fa-spin mr-2"></i>載入組員進度中...</td></tr>
                     </tbody>
                 </table>
             </div>
@@ -3359,7 +3358,7 @@ async function showManagerDashboard(chapterId, title) {
     // 開始載入所有組員的進度數據
     await loadAllMemberProgress();
 }
-    function showProgressDetail(agentName, type, allItemsHtml, placeholder) {
+   function showProgressDetail(agentName, type, allItemsHtml, placeholder) {
     const detailView = document.getElementById('completed-items-view');
     const detailList = document.getElementById('completed-items-list');
     const dashboardTitle = document.getElementById('manager-dashboard-content').querySelector('header h2');
@@ -3368,27 +3367,20 @@ async function showManagerDashboard(chapterId, title) {
     document.getElementById('member-list-container').classList.add('hidden');
     detailView.classList.remove('hidden');
     
-    // 設置標題，讓使用者知道現在正在看誰的清單
-    // 注意：這裡只顯示類型，因為 allItemsHtml 包含所有項目的 HTML
-    dashboardTitle.innerHTML = `<button class="text-indigo-600 hover:text-indigo-800" onclick="hideProgressDetail()"><i class="fas fa-arrow-left mr-2"></i>返回清單</button> / ${agentName} 的 ${type} 項目`;
+    // 設置標題：直接顯示該業務員的所有學習進度
+    dashboardTitle.innerHTML = `<button class="text-indigo-600 hover:text-indigo-800" onclick="hideProgressDetail()"><i class="fas fa-arrow-left mr-2"></i>返回清單</button> / ${agentName} 的學習清單`;
     
-    // 清除舊內容並貼上新的條列式清單
+    // 清除舊內容
     detailList.innerHTML = ''; 
 
     // 替換掉字串中的轉義符號 (\')，確保 HTML 正確渲染
     const listHtml = allItemsHtml.replace(/\\'/g, "'");
 
-    // 將所有項目貼上，並只篩選出對應狀態的項目 (綠色或紅色)
-    if (type === '已完成') {
-        // 只顯示包含 text-green-700 的項目
-        detailList.innerHTML = listHtml.split('</div>').filter(item => item.includes('text-green-700')).map(item => item + '</div>').join('');
-    } else {
-        // 只顯示包含 text-red-700 的項目
-        detailList.innerHTML = listHtml.split('</div>').filter(item => item.includes('text-red-700')).map(item => item + '</div>').join('');
-    }
+    // 直接顯示所有項目（已完成/未完成皆在內）
+    detailList.innerHTML = listHtml;
     
     if (detailList.innerHTML.trim() === '') {
-        detailList.innerHTML = `<div class="p-4 bg-slate-100 rounded-lg text-slate-600 text-center">該類別目前沒有項目。</div>`;
+        detailList.innerHTML = `<div class="p-4 bg-slate-100 rounded-lg text-slate-600 text-center">該業務員目前沒有進度記錄。</div>`;
     }
 }
 
@@ -3415,22 +3407,20 @@ function hideProgressDetail() {
     }
 
     try {
-        // 1. 獲取所有用戶列表
+        // 1. 獲取所有用戶列表 (略)
         const userResponse = await fetch('/.netlify/functions/get_users');
         const userData = await userResponse.json();
         if (!userData.success) throw new Error(userData.message);
-        
-        // 篩選出業務員，且必須是同組（或總監模式下所有組）
         const allAgents = userData.users.filter(user => 
             user.role === 'agent' && (loggedInRole === 'director' || user.team === loggedInTeam)
         );
-        
         if (allAgents.length === 0) {
-            tableBody.innerHTML = `<tr><td colspan="4" class="p-8 text-center text-slate-500">目前團隊中沒有業務員。</td></tr>`;
+            // 注意：這裡 colspan 改為 3
+            tableBody.innerHTML = `<tr><td colspan="3" class="p-8 text-center text-slate-500">目前團隊中沒有業務員。</td></tr>`;
             return;
         }
 
-        // 2. 獲取所有業務的進度數據
+        // 2. 獲取所有業務的進度數據 (略)
         const progressPromises = allAgents.map(agent => 
             db.collection("progressData").doc(agent.username).get().then(doc => ({
                 agent,
@@ -3448,10 +3438,9 @@ function hideProgressDetail() {
         allProgressResults.forEach(({ agent, progress }) => {
             let completedCount = 0;
             
-            // *** 優化點：整合後的 HTML 列表 ***
-            const completedListHtml = [];  
-            const incompleteListHtml = [];
-            // **********************************
+           
+            const allItemsForList = []; 
+           
 
             progressItemsToCount.forEach((item) => {
                 const index = progressItems.findIndex(i => i.name === item.name);
@@ -3475,15 +3464,14 @@ function hideProgressDetail() {
                 
                 const itemName = item.name;
 
-                // *** 優化點：優化列表項目的 HTML 結構與樣式 ***
                 if (isCompleted) {
                     completedCount++;
-                    completedListHtml.push(`<div class="text-sm py-1 flex items-start text-green-700 font-semibold"><i class="fas fa-check-circle text-green-500 mt-1 mr-2 flex-shrink-0"></i>${itemName}</div>`);
+                    // ✅ 已完成項目：緊湊顯示，綠色
+                    allItemsForList.push(`<div class="text-sm py-0.5 flex items-start text-green-700 font-semibold"><i class="fas fa-check-circle text-green-500 mt-1 mr-2 flex-shrink-0"></i>${itemName}</div>`);
                 } else {
-                    incompleteListHtml.push(`<div class="text-sm py-1 flex items-start text-red-700"><i class="fas fa-times-circle text-red-500 mt-1 mr-2 flex-shrink-0"></i>${itemName}</div>`);
+                    // ❌ 尚未完成項目：緊湊顯示，紅色
+                    allItemsForList.push(`<div class="text-sm py-0.5 flex items-start text-red-700"><i class="fas fa-times-circle text-red-500 mt-1 mr-2 flex-shrink-0"></i>${itemName}</div>`);
                 }
-               
-
             });
 
             const percentage = progressItemsCount > 0 ? Math.round((completedCount / progressItemsCount) * 100) : 0;
@@ -3502,9 +3490,7 @@ function hideProgressDetail() {
             `;
 
             // 轉義後的清單字串 (用於 onclick 參數傳遞)
-            // 將所有項目組合成一個列表
-            const allItemsHtml = [...completedListHtml, ...incompleteListHtml].join('');
-            const escapedAllItemsHtml = allItemsHtml.replace(/'/g, "\\'");
+            const escapedAllItemsHtml = allItemsForList.join('').replace(/'/g, "\\'");
 
 
             row.innerHTML = `
@@ -3518,14 +3504,10 @@ function hideProgressDetail() {
                 </td>
                 
                 <td class="p-3">
-                    <button class="text-green-600 hover:underline font-semibold text-sm" onclick="showProgressDetail('${agent.name}','已完成','${escapedAllItemsHtml}', '')">
-                        ✅ 已完成: ${completedListHtml.length} 項
-                    </button>
-                </td>
-                
-                <td class="p-3">
-                    <button class="text-red-600 hover:underline font-semibold text-sm" onclick="showProgressDetail('${agent.name}','未完成','${escapedAllItemsHtml}', '')">
-                        ❌ 待完成: ${incompleteListHtml.length} 項
+                    <button class="text-indigo-600 hover:underline font-semibold text-sm" onclick="showProgressDetail('${agent.name}','所有','${escapedAllItemsHtml}', '')">
+                        <span class="text-green-600 font-bold">✅ ${completedCount} 項</span> / 
+                        <span class="text-red-600 font-bold">❌ ${progressItemsCount - completedCount} 項</span>
+                        (共 ${progressItemsCount} 項)
                     </button>
                 </td>
                 `;
@@ -3533,8 +3515,10 @@ function hideProgressDetail() {
         });
 
     } catch (error) {
+        // ... (錯誤處理，不變)
         console.error('載入所有業務進度失敗:', error);
-        tableBody.innerHTML = `<tr><td colspan="4" class="p-8 text-center text-red-500">載入組員數據時發生錯誤。</td></tr>`;
+        // 注意：這裡 colspan 改為 3
+        tableBody.innerHTML = `<tr><td colspan="3" class="p-8 text-center text-red-500">載入組員數據時發生錯誤。</td></tr>`;
     }
 }
     
@@ -4520,6 +4504,7 @@ function handleProgressLogic(sectionId) {
     
 </body>
 </html>
+
 
 
 
