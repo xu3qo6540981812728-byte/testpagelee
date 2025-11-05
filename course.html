@@ -3296,6 +3296,177 @@ async function fetchTeamMembers(managerTeam) {
         }
     }
 }
+async function showManagerDashboard(chapterId, title) {
+    document.getElementById('table-of-contents').style.display = 'none';
+    chapterView.style.display = 'flex';
+    
+    // 隱藏/清除章節內容
+    mainContentArea.querySelectorAll('.content-section').forEach(section => section.classList.remove('active'));
+    
+    // 創建儀表板容器
+    const dashboardContainer = document.createElement('div');
+    dashboardContainer.id = 'manager-dashboard-content';
+    dashboardContainer.className = 'content-section active space-y-8';
+    dashboardContainer.innerHTML = `
+        <header>
+            <h2 class="text-4xl font-bold text-slate-800 border-b-4 border-indigo-500 pb-3 mb-2">${title}</h2>
+            <p class="text-slate-500">快速概覽所有組員的課程完成狀況</p>
+        </header>
+        <div id="member-list-container" class="bg-white p-6 md:p-8 rounded-xl shadow-lg content-card">
+            <h3 class="text-2xl font-semibold text-slate-700 mb-6">組員完成進度清單 (點擊業務名稱查看細節)</h3>
+            <div class="overflow-x-auto">
+                <table class="min-w-full bg-white border border-slate-200 rounded-lg">
+                    <thead class="bg-slate-200">
+                        <tr>
+                            <th class="p-3 text-left font-bold text-gray-700">業務員 (組別)</th>
+                            <th class="p-3 text-left font-bold text-gray-700">總體進度</th>
+                            <th class="p-3 text-left font-bold text-gray-700">已完成項目</th>
+                            <th class="p-3 text-left font-bold text-gray-700">尚未完成項目</th>
+                        </tr>
+                    </thead>
+                    <tbody id="member-progress-table" class="divide-y divide-slate-200">
+                        <tr><td colspan="4" class="p-8 text-center text-slate-500"><i class="fas fa-spinner fa-spin mr-2"></i>載入組員進度中...</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div id="completed-items-view" class="bg-white p-6 md:p-8 rounded-xl shadow-lg content-card hidden">
+            <h3 class="text-2xl font-semibold text-slate-700 mb-4">✅ 已完成清單細節</h3>
+            <div id="completed-items-list" class="space-y-3"></div>
+        </div>
+    `;
+    
+    // 清除舊的內容，插入新的儀表板
+    mainContentArea.innerHTML = '';
+    mainContentArea.appendChild(dashboardContainer);
+
+    // 更新導航列和標題
+    sidebarNav.querySelectorAll('.nav-link').forEach(link => link.classList.remove('active'));
+    document.getElementById('mobile-header-title').textContent = title;
+    
+    // 隱藏音頻播放器和上下章節按鈕
+    audioPlayerContainer.style.display = 'none';
+    prevChapterBtn.classList.add('hidden');
+    nextChapterBtn.classList.add('hidden');
+    
+    // 開始載入所有組員的進度數據
+    await loadAllMemberProgress();
+}
+    async function loadAllMemberProgress() {
+    const tableBody = document.getElementById('member-progress-table');
+    const loggedInRole = sessionStorage.getItem('loggedInRole');
+    const loggedInTeam = sessionStorage.getItem('loggedInTeam');
+    
+    if (!tableBody || typeof db === 'undefined') {
+        console.error("無法找到表格容器或 Firebase 未準備好。");
+        return;
+    }
+
+    try {
+        // 1. 獲取所有用戶列表
+        const userResponse = await fetch('/.netlify/functions/get_users');
+        const userData = await userResponse.json();
+        if (!userData.success) throw new Error(userData.message);
+        
+        // 篩選出業務員，且必須是同組（或總監模式下所有組）
+        const allAgents = userData.users.filter(user => 
+            user.role === 'agent' && (loggedInRole === 'director' || user.team === loggedInTeam)
+        );
+        
+        if (allAgents.length === 0) {
+            tableBody.innerHTML = `<tr><td colspan="4" class="p-8 text-center text-slate-500">目前團隊中沒有業務員。</td></tr>`;
+            return;
+        }
+
+        // 2. 獲取所有業務的進度數據
+        const progressPromises = allAgents.map(agent => 
+            db.collection("progressData").doc(agent.username).get().then(doc => ({
+                agent,
+                progress: doc.exists ? doc.data() : {}
+            }))
+        );
+        const allProgressResults = await Promise.all(progressPromises);
+
+        // 3. 準備進度計算所需的數據
+        const progressItemsToCount = progressItems.filter(item => item.type !== 'header');
+        const progressItemsCount = progressItemsToCount.length;
+
+        // 4. 渲染表格
+        tableBody.innerHTML = ''; // 清空載入中提示
+        allProgressResults.forEach(({ agent, progress }) => {
+            let completedCount = 0;
+            const completedItems = [];
+            const incompleteItems = [];
+            
+            progressItemsToCount.forEach((item, itemIndex) => {
+                const index = progressItems.findIndex(i => i.name === item.name);
+                const itemData = progress[index];
+                
+                let isCompleted = false;
+                const isCheckedByManager = itemData?.checked || false; 
+
+                if (item.counts && item.counts.length > 0) {
+                    const allCountsFilled = item.counts.every(countName => {
+                        const value = itemData?.counts?.[countName] || '';
+                        return value.trim() !== '';
+                    });
+                    if (isCheckedByManager && allCountsFilled) {
+                        isCompleted = true;
+                    }
+                } else {
+                    isCompleted = isCheckedByManager;
+                }
+                
+                const itemName = item.name;
+                
+                if (isCompleted) {
+                    completedCount++;
+                    completedItems.push(itemName);
+                } else {
+                    incompleteItems.push(itemName);
+                }
+            });
+
+            const percentage = progressItemsCount > 0 ? Math.round((completedCount / progressItemsCount) * 100) : 0;
+            const row = document.createElement('tr');
+            
+            // 點擊業務名稱的跳轉邏輯
+            const onClickHandler = `
+                // 將目標業務員的 username 存入 currentViewingUser
+                currentViewingUser = '${agent.username}';
+                // 將選取的組別存入 sessionStorage (總監模式用)
+                sessionStorage.setItem('currentSelectedTeam', '${agent.team}');
+                // 模擬選擇業務員
+                document.getElementById('current-progress-name').textContent = '${agent.name}';
+                // 顯示章節 0 (進度表)
+                showChapterView('chapter0'); 
+            `;
+
+            row.innerHTML = `
+                <td class="p-3">
+                    <button class="text-indigo-600 font-bold hover:text-indigo-800 transition duration-200 text-left" onclick="${onClickHandler}">
+                        ${agent.name} (${agent.team})
+                    </button>
+                </td>
+                <td class="p-3">
+                    <div class="font-bold text-lg ${percentage === 100 ? 'text-green-600' : 'text-orange-500'}">${percentage}%</div>
+                </td>
+                <td class="p-3 text-green-600 text-sm">
+                    ${completedItems.length > 0 ? completedItems.slice(0, 3).join('、') + (completedItems.length > 3 ? '...' : '') : '無'}
+                </td>
+                <td class="p-3 text-red-600 text-sm">
+                    ${incompleteItems.length > 0 ? incompleteItems.slice(0, 3).join('、') + (incompleteItems.length > 3 ? '...' : '') : '無'}
+                </td>
+            `;
+            tableBody.appendChild(row);
+        });
+
+    } catch (error) {
+        console.error('載入所有業務進度失敗:', error);
+        tableBody.innerHTML = `<tr><td colspan="4" class="p-8 text-center text-red-500">載入組員數據時發生錯誤。</td></tr>`;
+    }
+}
+    
 function resetAudioPlayerUI() {
     progressBar.value = 0;
     timeDisplay.textContent = '00:00 / 00:00'; 
@@ -3470,6 +3641,7 @@ const loggedInRole = sessionStorage.getItem('loggedInRole');
    
     const chapters = [
         { id: 'chapter0', title: '菁英課程進度表', description: '追蹤你的學習進度' },
+        { id: 'manager-dashboard', title: '團隊進度儀表板', description: '主管專用：查看團隊完成清單', role: 'manager_only' },
         { id: 'chapter1', title: '台灣房市歷史', description: '回顧過去，洞見未來' },
         { id: 'chapter2', title: '認識謄本與建物型態', description: '產權的照妖鏡，保障交易安全' },
         { id: 'chapter3', title: '代書流程', description: '從簽約到交屋的完整路徑圖' },
@@ -3514,13 +3686,21 @@ const loggedInRole = sessionStorage.getItem('loggedInRole');
         }
     }
     function showChapterView(chapterId) {
-        document.getElementById('table-of-contents').style.display = 'none';
-        chapterView.style.display = 'flex';
-        const navLink = sidebarNav.querySelector(`[data-chapter-id="${chapterId}"]`);
-        if (navLink) {
-            showContent(chapterId, navLink);
-        }
+    // 檢查是否為主管儀表板，如果是，則呼叫新函數處理
+    if (chapterId === 'manager-dashboard') {
+         // 透過 chapters 陣列找到標題
+         const chapter = chapters.find(c => c.id === chapterId);
+         showManagerDashboard(chapterId, chapter.title);
+         return;
     }
+
+    document.getElementById('table-of-contents').style.display = 'none';
+    chapterView.style.display = 'flex';
+    const navLink = sidebarNav.querySelector(`[data-chapter-id="${chapterId}"]`);
+    if (navLink) {
+        showContent(chapterId, navLink);
+    }
+}
   
 function showContent(sectionId, element) {
         
@@ -3596,20 +3776,57 @@ function showContent(sectionId, element) {
         }
     }
     function renderTOCCards(chapterList) {
-        tocContainer.innerHTML = '';
-        chapterList.forEach((chapter, index) => {
-            const tocCard = document.createElement('a');
-            tocCard.href = `#${chapter.id}`;
-            tocCard.className = 'toc-card bg-white p-6 rounded-xl shadow-lg flex flex-col items-center text-center';
-            tocCard.onclick = (e) => { e.preventDefault(); showChapterView(chapter.id); };
-            tocCard.innerHTML = `
-                <div class="bg-indigo-100 text-indigo-600 rounded-full h-12 w-12 flex items-center justify-center font-bold text-xl mb-4">${index}</div>
-                <h3 class="text-xl font-semibold text-slate-800 mb-2">${chapter.title}</h3>
-                <p class="text-slate-500 text-sm">${chapter.description}</p>
-            `;
-            tocContainer.appendChild(tocCard);
-        });
-    }
+    tocContainer.innerHTML = '';
+    
+    // 從 sessionStorage 獲取當前登入角色
+    const loggedInRole = sessionStorage.getItem('loggedInRole'); 
+    
+    chapterList.forEach((chapter, index) => {
+        // --- [新增判斷邏輯] ---
+        // 1. 如果章節設定了 role: 'manager_only'
+        // 2. 且當前登入者不是主管 (manager) 或總監 (director)
+        // 則直接跳過這個章節的渲染。
+        if (chapter.role === 'manager_only' && loggedInRole !== 'manager' && loggedInRole !== 'director') {
+            return;
+        }
+        // --- [新增判斷邏輯 END] ---
+        
+        const isManagerDashboard = chapter.id === 'manager-dashboard';
+        
+        const tocCard = document.createElement('a');
+        tocCard.href = `#${chapter.id}`;
+        
+        // --- [新增卡片樣式] ---
+        let cardClass = 'toc-card bg-white p-6 rounded-xl shadow-lg flex flex-col items-center text-center';
+        let iconHtml = `<div class="bg-indigo-100 text-indigo-600 rounded-full h-12 w-12 flex items-center justify-center font-bold text-xl mb-4">${index}</div>`;
+
+        if (isManagerDashboard) {
+            // 主管專用儀表板，使用特殊顯眼樣式
+            cardClass = 'toc-card p-6 rounded-xl shadow-2xl flex flex-col items-center text-center bg-yellow-50 border-4 border-yellow-500 hover:bg-yellow-100 transition duration-300 transform hover:scale-[1.02]';
+            iconHtml = `<div class="bg-yellow-600 text-white rounded-full h-12 w-12 flex items-center justify-center font-bold text-xl mb-4"><i class="fas fa-chart-line"></i></div>`;
+        }
+        // --- [新增卡片樣式 END] ---
+        
+        tocCard.className = cardClass;
+        
+        // 處理點擊事件：主管儀表板需要特別渲染
+        tocCard.onclick = (e) => { 
+            e.preventDefault(); 
+            if (isManagerDashboard) {
+                 showManagerDashboard(chapter.id, chapter.title);
+            } else {
+                 showChapterView(chapter.id); 
+            }
+        };
+        
+        tocCard.innerHTML = `
+            ${iconHtml}
+            <h3 class="text-xl font-semibold text-slate-800 mb-2">${chapter.title}</h3>
+            <p class="text-slate-500 text-sm">${chapter.description}</p>
+        `;
+        tocContainer.appendChild(tocCard);
+    });
+}
     function createSearchIndex() {
         searchableData = [];
         const contentElements = mainContentArea.querySelectorAll('h2, h3, h4, p, li, td');
@@ -4195,6 +4412,7 @@ function handleProgressLogic(sectionId) {
     
 </body>
 </html>
+
 
 
 
