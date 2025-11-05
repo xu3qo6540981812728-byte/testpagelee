@@ -3511,7 +3511,7 @@ window.hideProgressDetail = () => {
     
     // 5. 【新增修正】: 強制觸發資料載入與渲染。
     // 由於 currentViewingUser 已經更新，呼叫此函數會載入新資料。
-    window.handleProgressLogic('chapter0'); 
+    window.updateProgressDisplay();
 `;
 
             // 轉義後的清單字串 (用於 onclick 參數傳遞)
@@ -4525,6 +4525,7 @@ function handleProgressLogic(sectionId) {
     
 </body>
 </html>
+
 
 
 
