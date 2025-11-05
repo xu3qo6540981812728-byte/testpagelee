@@ -3508,30 +3508,7 @@ window.hideProgressDetail = () => {
             // 【修正 1 確保點擊呼叫正確的全域函數】
             const onViewDetailClick = `window.showProgressDetail('${agent.name}', '${memberKey}')`;
             
-            // =================================================================
-            // 【修正 2 核心】: 點擊業務名稱時的跳轉邏輯
-            // =================================================================
-           const onClickHandler = `
-    // 1. 設定當前查看用戶
-    currentViewingUser = '${agent.username}'; 
-    // 2. 儲存當前團隊 ...
-
-    // 3. 強制更新下拉選單及名稱顯示
-    const selectEl = document.getElementById('team-member-select');
-    if (selectEl) {
-        selectEl.value = '${agent.username}';
-        document.getElementById('current-progress-name').textContent = '${agent.name}';
-    }
-    
-    // 4. 執行畫面切換到個人進度表
-    window.showChapterView('chapter0'); 
-    
-    // 5. 【新增修正】: 強制觸發資料載入與渲染。
-    // 由於 currentViewingUser 已經更新，呼叫此函數會載入新資料。
-    window.loadProgressFromFirebase(); // 載入新選擇的用戶數據
-`;
-
-            // 轉義後的清單字串 (用於 onclick 參數傳遞)
+           
             const row = document.createElement('tr');
 row.innerHTML = `
     <td class="p-3">
@@ -4543,6 +4520,7 @@ function handleProgressLogic(sectionId) {
     
 </body>
 </html>
+
 
 
 
