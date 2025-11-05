@@ -3810,7 +3810,11 @@ function showContent(sectionId, element) {
         }
         audioPlayerContainer.classList.remove('expanded');
         
+        // =====================================================================
+        // 【關鍵修正點】：在進入 chapter0 時，必須重新載入進度
+        // =====================================================================
         if (sectionId === 'chapter0') {
+             // 確保這裡會呼叫 loadProgressFromFirebase()，它將使用最新的 currentViewingUser
              loadProgressFromFirebase(); 
         }
         handleProgressLogic(sectionId);
@@ -4522,6 +4526,7 @@ function handleProgressLogic(sectionId) {
     
 </body>
 </html>
+
 
 
 
