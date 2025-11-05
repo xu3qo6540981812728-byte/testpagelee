@@ -3397,6 +3397,23 @@ window.hideProgressDetail = () => {
     const chapter = chapters.find(c => c.id === 'manager-dashboard');
     document.getElementById('manager-dashboard-content').querySelector('header h2').textContent = chapter.title;
 }
+    window.viewAgentProgress = (username, name) => {
+    // 1. 設定當前查看用戶
+    currentViewingUser = username; 
+
+    // 2. 更新下拉選單及名稱顯示 (確保 UI 同步)
+    const selectEl = document.getElementById('team-member-select');
+    if (selectEl) {
+        selectEl.value = username;
+        document.getElementById('current-progress-name').textContent = name;
+    }
+    
+    // 3. 執行畫面切換到個人進度表 (並傳入用戶資訊，確保回報進度表的標題正確)
+    window.showChapterView('chapter0'); 
+    
+    // 4. 強制載入並更新進度表 (核心修正：確保載入的是新用戶的資料)
+    window.loadProgressFromFirebase();
+};
     async function loadAllMemberProgress() {
     const tableBody = document.getElementById('member-progress-table');
     const loggedInRole = sessionStorage.getItem('loggedInRole');
@@ -3516,9 +3533,9 @@ window.hideProgressDetail = () => {
 
             // 轉義後的清單字串 (用於 onclick 參數傳遞)
             const row = document.createElement('tr');
-            row.innerHTML = `
+row.innerHTML = `
     <td class="p-3">
-        <button class="text-indigo-600 font-bold hover:text-indigo-800 transition duration-200 text-left" onclick="${onClickHandler}">
+        <button class="text-indigo-600 font-bold hover:text-indigo-800 transition duration-200 text-left" onclick="window.viewAgentProgress('${agent.username}', '${agent.name}')">
             ${agent.name} (${agent.team})
         </button>
     </td>
@@ -3533,8 +3550,8 @@ window.hideProgressDetail = () => {
             (共 ${progressItemsCount} 項)
         </button>
     </td>
-    `;
-            tableBody.appendChild(row);
+`;
+tableBody.appendChild(row);
         });
 
     } catch (error) {
@@ -3671,9 +3688,10 @@ const loggedInRole = sessionStorage.getItem('loggedInRole');
                 }
                 
                 
-                if (document.getElementById('chapter0').classList.contains('active')) {
-                     renderProgressTable();
-                     updateProgressDisplay();
+                if (document.getElementById('chapter0') && document.getElementById('chapter0').classList.contains('active')) {
+                 renderProgressTable();
+                 updateProgressDisplay();
+            }
                 }
             })
             .catch(error => {
@@ -4525,6 +4543,7 @@ function handleProgressLogic(sectionId) {
     
 </body>
 </html>
+
 
 
 
