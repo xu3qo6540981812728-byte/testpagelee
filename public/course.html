@@ -3511,7 +3511,7 @@ window.hideProgressDetail = () => {
     
     // 5. 【新增修正】: 強制觸發資料載入與渲染。
     // 由於 currentViewingUser 已經更新，呼叫此函數會載入新資料。
-    window.updateProgressDisplay();
+    window.loadProgressFromFirebase(); // 載入新選擇的用戶數據
 `;
 
             // 轉義後的清單字串 (用於 onclick 參數傳遞)
@@ -3645,7 +3645,7 @@ function resetAudioPlayerUI() {
 const loggedInRole = sessionStorage.getItem('loggedInRole'); 
     const loggedInTeam = sessionStorage.getItem('loggedInTeam');
     let currentViewingUser = loggedInUser; // 當前查看進度的用戶，預設為自己
-    function loadProgressFromFirebase() {
+    window.loadProgressFromFirebase = () => {
         
         // 【修正點 4】：如果處於提示狀態，則清空數據並顯示提示
         if (currentViewingUser === 'PROMPT_SELECT') { 
@@ -4525,6 +4525,7 @@ function handleProgressLogic(sectionId) {
     
 </body>
 </html>
+
 
 
 
