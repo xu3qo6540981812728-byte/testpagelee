@@ -3359,21 +3359,23 @@ async function showManagerDashboard(chapterId, title) {
     // 開始載入所有組員的進度數據
     await loadAllMemberProgress();
 }
-function showProgressDetail(agentName, memberKey)
+function showProgressDetail(agentName, memberKey) {
+    // 之前錯誤的 'const detailView' 宣告已經被整合進這個函式體
     const detailView = document.getElementById('completed-items-view');
     const detailList = document.getElementById('completed-items-list');
     const dashboardTitle = document.getElementById('manager-dashboard-content').querySelector('header h2');
-    
+
     // 隱藏儀表板的主表格區域 (顯示細節)
     document.getElementById('member-list-container').classList.add('hidden');
     detailView.classList.remove('hidden');
-    
-    // 設置標題：直接顯示該業務員的所有學習進度
-    dashboardTitle.innerHTML = `<button class="text-indigo-600 hover:text-indigo-800" onclick="hideProgressDetail()"><i class="fas fa-arrow-left mr-2"></i>返回清單</button> / ${agentName} 的學習清單`;
-    
-    // 清除舊內容
-    detailList.innerHTML = ''; 
 
+    // 設置標題：使用 window.hideProgressDetail 函式返回
+    dashboardTitle.innerHTML = `<button class="text-indigo-600 hover:text-indigo-800" onclick="hideProgressDetail()"><i class="fas fa-arrow-left mr-2"></i>返回清單</button> / ${agentName} 的學習清單`;
+
+    // 清除舊內容
+    detailList.innerHTML = '';
+
+    // 從全域儲存區取出 HTML 內容
     const listHtml = allMemberProgressDetails[memberKey];
 
     // 直接插入 HTML
@@ -3387,7 +3389,7 @@ function showProgressDetail(agentName, memberKey)
 // 這是返回主列表的函式
 function hideProgressDetail() {
     // 顯示儀表板的主表格區域
-    document.getElementById('member-list-container').classList.remove('hidden');
+   document.getElementById('member-list-container').classList.remove('hidden');
     
     // 隱藏清單細節
     document.getElementById('completed-items-view').classList.add('hidden');
@@ -4514,6 +4516,7 @@ function handleProgressLogic(sectionId) {
     
 </body>
 </html>
+
 
 
 
