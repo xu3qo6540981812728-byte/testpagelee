@@ -3315,21 +3315,21 @@ async function showManagerDashboard(chapterId, title) {
         mainContentArea.appendChild(dashboardContainer);
     }
     
-    // 3. 重新渲染儀表板內容 (確保數據最新，每次進入都重繪)
+    // 3. 重新渲染儀表板內容 (移除舊的細節容器，並在表格標題中顯示所有項目)
     dashboardContainer.innerHTML = `
         <header>
             <h2 class="text-4xl font-bold text-slate-800 border-b-4 border-indigo-500 pb-3 mb-2">${title}</h2>
             <p class="text-slate-500">快速概覽所有組員的課程完成狀況</p>
         </header>
         <div id="member-list-container" class="bg-white p-6 md:p-8 rounded-xl shadow-lg content-card">
-            <h3 class="text-2xl font-semibold text-slate-700 mb-6">組員完成進度清單 (點擊業務名稱查看細節)</h3>
+            <h3 class="text-2xl font-semibold text-slate-700 mb-6">組員完成進度清單</h3>
             <div class="overflow-x-auto">
                 <table class="min-w-full bg-white border border-slate-200 rounded-lg">
                     <thead class="bg-slate-200">
                         <tr>
-                            <th class="p-3 text-left font-bold text-gray-700">業務員 (組別)-點擊查看</th>
-                            <th class="p-3 text-left font-bold text-gray-700">總體進度</th>
-                            <th class="p-3 text-left font-bold text-gray-700">完成清單 (點擊查看)</th>
+                            <th class="p-3 text-left font-bold text-gray-700 w-1/4">業務員 (組別) - 點擊查看進度表</th>
+                            <th class="p-3 text-left font-bold text-gray-700 w-1/6">總體進度</th>
+                            <th class="p-3 text-left font-bold text-gray-700 w-auto">學習進度細節（預設展開）</th>
                             </tr>
                     </thead>
                     <tbody id="member-progress-table" class="divide-y divide-slate-200">
@@ -3338,11 +3338,7 @@ async function showManagerDashboard(chapterId, title) {
                 </table>
             </div>
         </div>
-        <div id="completed-items-view" class="bg-white p-6 md:p-8 rounded-xl shadow-lg content-card hidden">
-            <h3 class="text-2xl font-semibold text-slate-700 mb-4">✅ 已完成清單細節</h3>
-            <div id="completed-items-list" class="space-y-3"></div>
-        </div>
-    `;
+        `;
     
     // 4. 顯示儀表板
     dashboardContainer.classList.add('active');
@@ -3359,44 +3355,7 @@ async function showManagerDashboard(chapterId, title) {
     // 開始載入所有組員的進度數據
     await loadAllMemberProgress();
 }
-window.showProgressDetail = (agentName, memberKey) => {
-    // 確保函數被掛載到 window，這樣 HTML 中的 onclick="window.showProgressDetail(...)" 才能調用
-    const detailView = document.getElementById('completed-items-view');
-    const detailList = document.getElementById('completed-items-list');
-    
-    // 從儀表板容器中獲取標題元素
-    const dashboardTitle = document.getElementById('manager-dashboard-content').querySelector('header h2');
 
-    // 1. 隱藏主表格，顯示細節清單
-    document.getElementById('member-list-container').classList.add('hidden');
-    detailView.classList.remove('hidden');
-
-    // 2. 設置標題，並提供返回按鈕 (注意：這裡的 hideProgressDetail 不需要 window.)
-    dashboardTitle.innerHTML = `<button class="text-indigo-600 hover:text-indigo-800" onclick="hideProgressDetail()"><i class="fas fa-arrow-left mr-2"></i>返回清單</button> / ${agentName} 的學習清單`;
-
-    // 3. 載入資料並插入
-    detailList.innerHTML = '';
-    const listHtml = allMemberProgressDetails[memberKey]; // 從全域變數取出
-    detailList.innerHTML = listHtml;
-
-    if (detailList.innerHTML.trim() === '') {
-        detailList.innerHTML = `<div class="p-4 bg-slate-100 rounded-lg text-slate-600 text-center">該業務員目前沒有進度記錄。</div>`;
-    }
-}
-
-// 這是返回主列表的函式 (不需要 window.，因為 HTML 中的呼叫已經被修正)
-window.hideProgressDetail = () => {
-    // 1. 顯示主表格
-   document.getElementById('member-list-container').classList.remove('hidden');
-    
-    // 2. 隱藏清單細節
-    document.getElementById('completed-items-view').classList.add('hidden');
-    
-    // 3. 恢復儀表板主標題
-    const chapters = JSON.parse(sessionStorage.getItem('allChapters') || '[]');
-    const chapter = chapters.find(c => c.id === 'manager-dashboard');
-    document.getElementById('manager-dashboard-content').querySelector('header h2').textContent = chapter.title;
-}
     window.viewAgentProgress = (username, name) => {
     // 1. 設定當前查看用戶
     currentViewingUser = username; 
@@ -3414,7 +3373,7 @@ window.hideProgressDetail = () => {
     // 4. 強制載入並更新進度表 (核心修正：確保載入的是新用戶的資料)
     window.loadProgressFromFirebase();
 };
-    async function loadAllMemberProgress() {
+async function loadAllMemberProgress() {
     const tableBody = document.getElementById('member-progress-table');
     const loggedInRole = sessionStorage.getItem('loggedInRole');
     const loggedInTeam = sessionStorage.getItem('loggedInTeam');
@@ -3444,16 +3403,15 @@ window.hideProgressDetail = () => {
         );
         const allProgressResults = await Promise.all(progressPromises);
 
+        // 重新定義進度項目，只包含需要計數的
         const progressItemsToCount = progressItems.filter(item => item.type !== 'header');
         const progressItemsCount = progressItemsToCount.length;
 
         tableBody.innerHTML = '';
         allProgressResults.forEach(({ agent, progress }) => {
             let completedCount = 0;
+            const allItemsHtml = []; // 用於儲存詳細清單的 HTML
             
-            // 儲存用於詳細清單的項目
-            const allItemsForList = []; 
-
             progressItemsToCount.forEach((item) => {
                 const index = progressItems.findIndex(i => i.name === item.name);
                 const itemData = progress[index];
@@ -3461,7 +3419,7 @@ window.hideProgressDetail = () => {
                 let isCompleted = false;
                 const isCheckedByManager = itemData?.checked || false; 
                 
-                // 計算項目是否完成的邏輯
+                // 計算是否完成的邏輯
                 if (item.counts && item.counts.length > 0) {
                     const allCountsFilled = item.counts.every(countName => {
                         const value = itemData?.counts?.[countName] || '';
@@ -3475,25 +3433,26 @@ window.hideProgressDetail = () => {
                 }
                 
                 const itemName = item.name;
+                
+                // 檢查是否有備註或次數紀錄，如果都沒有則不顯示細節
+                const hasDetails = itemData?.remark || item.counts?.some(c => itemData?.counts?.[c]);
 
                 if (isCompleted) {
                     completedCount++;
-                    // *** 修正點 1: 簡化 HTML 結構，解決歪斜問題 ***
-                    // 使用 flex 且確保內容靠左
-                    allItemsForList.push(`
-                        <div class="text-sm py-1 flex items-start text-green-700 font-semibold leading-snug">
-                            <i class="fas fa-check-circle text-green-500 mt-1 mr-2 flex-shrink-0"></i>
-                            ${itemName}
-                        </div>
+                    // 如果完成，顯示綠色勾
+                    allItemsHtml.push(`
+                        <li class="flex items-start text-sm text-green-700 leading-snug space-x-2">
+                            <i class="fas fa-check-circle text-green-500 mt-0.5 flex-shrink-0"></i>
+                            <div class="flex-1">${itemName} ${hasDetails ? `<span class="text-xs text-slate-500"> (已完成)</span>` : ''}</div>
+                        </li>
                     `);
                 } else {
-                    // *** 修正點 1: 簡化 HTML 結構，解決歪斜問題 ***
-                    // 使用 flex 且確保內容靠左
-                    allItemsForList.push(`
-                        <div class="text-sm py-1 flex items-start text-red-700 leading-snug">
-                            <i class="fas fa-times-circle text-red-500 mt-1 mr-2 flex-shrink-0"></i>
-                            ${itemName}
-                        </div>
+                    // 如果未完成，顯示紅色叉
+                    allItemsHtml.push(`
+                        <li class="flex items-start text-sm text-red-700 leading-snug space-x-2">
+                            <i class="fas fa-times-circle text-red-500 mt-0.5 flex-shrink-0"></i>
+                            <div class="flex-1">${itemName} ${hasDetails ? `<span class="text-xs text-slate-500"> (待完成)</span>` : ''}</div>
+                        </li>
                     `);
                 }
             });
@@ -3501,17 +3460,12 @@ window.hideProgressDetail = () => {
             const incompleteCount = progressItemsCount - completedCount;
             const percentage = progressItemsCount > 0 ? Math.round((completedCount / progressItemsCount) * 100) : 0;
           
-
             const memberKey = agent.username; // 用戶名作為唯一鍵
-            // 【修正 1 確保資料正確存入】
-            allMemberProgressDetails[memberKey] = allItemsForList.join(''); 
-            // 【修正 1 確保點擊呼叫正確的全域函數】
-            const onViewDetailClick = `window.showProgressDetail('${agent.name}', '${memberKey}')`;
             
-           
-            const row = document.createElement('tr');
-            // 修正：確保模板字串反引號 ` 完整
-            row.innerHTML = `
+            // 1. 創建主行
+            const mainRow = document.createElement('tr');
+            mainRow.className = 'main-progress-row'; // 新增 class 以便區分
+            mainRow.innerHTML = `
                 <td class="p-3">
                     <button class="text-indigo-600 font-bold hover:text-indigo-800 transition duration-200 text-left" onclick="window.viewAgentProgress('${agent.username}', '${agent.name}')">
                         ${agent.name} (${agent.team})
@@ -3522,14 +3476,26 @@ window.hideProgressDetail = () => {
                 </td>
     
                 <td class="p-3">
-                    <button class="text-indigo-600 hover:underline font-semibold text-sm" onclick="${onViewDetailClick}">
-                        <span class="text-green-600 font-bold">✅ ${completedCount} 項</span> /
-                        <span class="text-red-600 font-bold">❌ ${incompleteCount} 項</span>
-                        (共 ${progressItemsCount} 項)
-                    </button>
+                    <span class="text-green-600 font-bold">✅ ${completedCount} 項</span> /
+                    <span class="text-red-600 font-bold">❌ ${incompleteCount} 項</span>
+                    (共 ${progressItemsCount} 項)
                 </td>
-            `; // <--- 這裡的反引號和分號必須在正確位置
-            tableBody.appendChild(row);
+            `; 
+            tableBody.appendChild(mainRow);
+            
+            // 2. 創建詳細清單行 (預設展開)
+            const detailRow = document.createElement('tr');
+            detailRow.className = 'detail-progress-row bg-slate-50 border-b border-slate-200';
+            detailRow.innerHTML = `
+                <td colspan="3" class="p-4 pt-2">
+                    <h4 class="font-bold text-slate-700 mb-2">所有課程與實作項目：</h4>
+                    <ul class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
+                        ${allItemsHtml.join('')}
+                    </ul>
+                </td>
+            `;
+            tableBody.appendChild(detailRow);
+            
         });
 
     } catch (error) {
@@ -4521,6 +4487,7 @@ function handleProgressLogic(sectionId) {
     
 </body>
 </html>
+
 
 
 
