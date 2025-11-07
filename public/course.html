@@ -3188,6 +3188,16 @@
 </div>
     <script>
         let allMemberProgressDetails = {};
+        console.log('--- Script loaded successfully ---');
+const startQuizBtn = document.getElementById('start-quiz-btn');
+console.log('startQuizBtn found:', !!startQuizBtn); 
+
+if (startQuizBtn) {
+    startQuizBtn.addEventListener('click', () => {
+        console.log('--- Start Quiz button clicked ---');
+        // ... (原來的 fetchQuiz() 邏輯會在這裡執行)
+    });
+}
 document.addEventListener('DOMContentLoaded', () => {
    
     const audioPlayerContainer = document.getElementById('audio-player-container');
@@ -4745,6 +4755,7 @@ function handleProgressLogic(sectionId) {
     
 </body>
 </html>
+
 
 
 
