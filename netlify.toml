@@ -1,10 +1,7 @@
 [functions]
-  # 告訴 Netlify Functions 部署時，要將這個檔案一起包含進去
-
+  # 確保 quiz_data.json 被明確打包進 Functions 部署包中
+  included_files = ["netlify/functions/quiz_data.json"] 
 
 [build]
-  # 假設您的靜態網站發佈目錄是 public
   publish = "public" 
-  # 假設您的 Function 原始碼目錄是 netlify/functions
   functions = "netlify/functions"
-
