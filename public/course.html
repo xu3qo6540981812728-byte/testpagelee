@@ -3089,65 +3089,8 @@
     </div>
 </div>
        </div> <!-- Chapter 12 End -->
-            <div id="chapter13" class="content-section space-y-8">
-            <header class=" ">
-                <h2 class="text-4xl font-bold text-slate-800 border-b-4 border-indigo-500 pb-3 mb-2">菁英課程模擬考</h2>
-                <p class="text-slate-500">從 300 題題庫中，隨機抽取 10 題測試你的知識掌握度</p>
-            </header>
             
-            <div id="quiz-loading" class="bg-white p-8 rounded-xl shadow-lg content-card text-center flex flex-col items-center justify-center space-y-4">
-                <svg class="animate-spin h-8 w-8 text-indigo-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                    <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-                    <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                </svg>
-                <p class="text-xl font-semibold text-slate-700">正在為您準備測驗題目...</p>
-                <button id="start-quiz-btn" class="hidden mt-4 inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition duration-150">
-                    <i class="fas fa-redo mr-2"></i>重新載入測驗
-                </button>
-            </div>
-
-            <div id="quiz-container" class="space-y-6 hidden">
-                <div class="p-4 bg-indigo-600 text-white rounded-xl shadow-md flex justify-between items-center">
-                    <h3 class="text-2xl font-bold">模擬考試</h3>
-                    <div class="text-lg font-semibold" id="question-counter">第 1 / 10 題</div>
-                </div>
-                
-                <div id="question-display" class="bg-white p-6 rounded-xl shadow-lg content-card border-2 border-indigo-300">
-                    <p class="text-xl font-bold text-slate-800 mb-6" id="quiz-topic"></p>
-                    <div id="quiz-options" class="space-y-3">
-                        <!-- Options will be injected here -->
-                    </div>
-                </div>
-
-                <div class="flex justify-between space-x-4">
-                    <button id="prev-question-btn" class="px-6 py-3 border border-transparent text-base font-medium rounded-md text-indigo-700 bg-indigo-100 hover:bg-indigo-200 focus:outline-none transition duration-150 shadow-md">
-                        <i class="fas fa-arrow-left mr-2"></i>上一題
-                    </button>
-                    <button id="next-question-btn" class="px-6 py-3 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition duration-150">
-                        下一題<i class="fas fa-arrow-right ml-2"></i>
-                    </button>
-                </div>
-            </div>
-
-            <div id="quiz-results" class="space-y-6 hidden">
-                <div class="p-6 bg-green-600 text-white rounded-xl shadow-md text-center">
-                    <h3 class="text-3xl font-extrabold mb-1">測驗完成！</h3>
-                    <p class="text-xl" id="final-score">得分：0 分</p>
-                </div>
-
-                <div class="bg-white p-6 rounded-xl shadow-lg content-card">
-                    <h4 class="text-2xl font-bold text-slate-800 mb-4 border-b pb-2">答題詳情</h4>
-                    <div id="results-details" class="space-y-4">
-                        <!-- Results details will be injected here -->
-                    </div>
-                </div>
-
-                <button id="retake-quiz-btn" class="w-full px-6 py-3 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 transition duration-150">
-                    <i class="fas fa-redo mr-2"></i>重新開始測驗
-                </button>
-            </div>
-        </div>
-            </div><div id="chapter14" class="content-section space-y-8">
+            </div><div id="chapter13" class="content-section space-y-8">
             <header class=" ">
                 <h2 class="text-4xl font-bold text-slate-800 border-b-4 border-indigo-500 pb-3 mb-2">實用工具箱</h2>
                 <p class="text-slate-500">整合所有線上稅務與貸款計算機</p>
@@ -3747,23 +3690,22 @@ const loggedInRole = sessionStorage.getItem('loggedInRole');
     }
    
     const chapters = [
-     { id: 'manager-dashboard', title: '團隊進度儀表板', description: '主管專用：查看團隊完成清單', role: 'manager_only' },
-    { id: 'chapter0', title: '菁英課程進度表', description: '追蹤你的學習進度' },
-    { id: 'chapter1', title: '台灣房市歷史', description: '回顧過去，洞見未來' },
-    { id: 'chapter2', title: '認識謄本與建物型態', description: '產權的照妖鏡，保障交易安全' },
-    { id: 'chapter3', title: '代書流程', description: '從簽約到交屋的完整路徑圖' },
-    { id: 'chapter4', title: '房地產稅務', description: '買賣持有各階段的稅務知識' },
-    { id: 'chapter5', title: '拍照與建測圖', description: '用專業視角呈現物件' },
-    { id: 'chapter6', title: '開發篇：來源與實戰', description: '業績之母，一切成交的起點' },
-    { id: 'chapter7', title: '回報與議價', description: '贏得信任、創造價值的關鍵溝通' },
-    { id: 'chapter8', title: '銀行貸款與月還款能力評估', description: '協助客戶順利成交的金融知識' },
-    { id: 'chapter9', title: '廣告法規與注意事項', description: '避免廣告不實遭檢舉裁罰的必修課' },
-    { id: 'chapter10', title: '銷售篇：帶看與客戶探索', description: '從帶看到收斡的關鍵步驟' },
-    { id: 'chapter11', title: '引導收斡與調價', description: '臨門一腳的藝術' },
-    { id: 'chapter12', title: '總結：成為頂尖顧問的思維', description: '整合所學，內化為專業本能，成為客戶的顧問而非業務' },
-    { id: 'chapter13', title: '菁英課程模擬考', description: '隨機抽取 10 題選擇題，立即測試學習成效' }, // 新增的章節
-    { id: 'chapter14', title: '實用工具箱', description: '整合所有線上計算機' } // 原來的 Chapter 13 變成 Chapter 14
-];
+         { id: 'manager-dashboard', title: '團隊進度儀表板', description: '主管專用：查看團隊完成清單', role: 'manager_only' },
+        { id: 'chapter0', title: '菁英課程進度表', description: '追蹤你的學習進度' },
+        { id: 'chapter1', title: '台灣房市歷史', description: '回顧過去，洞見未來' },
+        { id: 'chapter2', title: '認識謄本與建物型態', description: '產權的照妖鏡，保障交易安全' },
+        { id: 'chapter3', title: '代書流程', description: '從簽約到交屋的完整路徑圖' },
+        { id: 'chapter4', title: '房地產稅務', description: '買賣持有各階段的稅務知識' },
+        { id: 'chapter5', title: '拍照與建測圖', description: '用專業視角呈現物件' },
+        { id: 'chapter6', title: '開發篇：來源與實戰', description: '業績之母，一切成交的起點' },
+        { id: 'chapter7', title: '回報與議價', description: '贏得信任、創造價值的關鍵溝通' },
+        { id: 'chapter8', title: '銀行貸款與月還款能力評估', description: '協助客戶順利成交的金融知識' },
+        { id: 'chapter9', title: '廣告法規與注意事項', description: '避免廣告不實遭檢舉裁罰的必修課' },
+        { id: 'chapter10', title: '銷售篇：帶看與客戶探索', description: '從帶看到收斡的關鍵步驟' },
+        { id: 'chapter11', title: '引導收斡與調價', description: '臨門一腳的藝術' },
+        { id: 'chapter12', title: '總結：成為頂尖顧問的思維', description: '整合所學，內化為專業本能，成為客戶的顧問而非業務' },
+        { id: 'chapter13', title: '實用工具箱', description: '整合所有線上計算機' }
+    ];
     const audioMap = {
     'chapter1': 'chapter1-history.mp3', // 台灣房市歷史
     'chapter2': 'chapter2.mp3',         // 認識謄本與建物型態
@@ -4557,256 +4499,7 @@ function handleProgressLogic(sectionId) {
     
    
 });
-        // --- 測驗相關的變數 ---
-    let quizData = []; // 從後端獲取的 10 題測驗數據
-    let answersCache = []; // 從後端獲取的答案快取 (用於提交時驗證)
-    let userAnswers = []; // 用戶的作答紀錄
-    let currentQuestionIndex = 0;
-    const quizContainer = document.getElementById('quiz-container');
-    const quizLoading = document.getElementById('quiz-loading');
-    const quizResults = document.getElementById('quiz-results');
-    const questionCounter = document.getElementById('question-counter');
-    const quizTopic = document.getElementById('quiz-topic');
-    const quizOptions = document.getElementById('quiz-options');
-    const prevQuestionBtn = document.getElementById('prev-question-btn');
-    const nextQuestionBtn = document.getElementById('next-question-btn');
-    const retakeQuizBtn = document.getElementById('retake-quiz-btn');
-    const startQuizBtn = document.getElementById('start-quiz-btn');
-    
-    // --- 輔助函式 ---
-    const OPTION_LABELS = ['A', 'B', 'C', 'D'];
-    
-    // 處理 Netlify Function 呼叫的重試機制
-    async function fetchWithRetry(url, options, retries = 3) {
-        for (let i = 0; i < retries; i++) {
-            try {
-                const response = await fetch(url, options);
-                if (response.ok) {
-                    return response;
-                } else if (response.status === 500) {
-                    throw new Error(`Server error: ${response.statusText}`);
-                }
-            } catch (error) {
-                console.error(`Fetch attempt ${i + 1} failed:`, error.message);
-                if (i < retries - 1) {
-                    // Exponential backoff: 1s, 2s, 4s delay
-                    await new Promise(resolve => setTimeout(resolve, Math.pow(2, i) * 1000));
-                } else {
-                    throw new Error('Failed to fetch data after multiple retries.');
-                }
-            }
-        }
-    }
-    
-    // --- 核心測驗邏輯 ---
-    
-    async function loadQuiz() {
-        quizLoading.classList.remove('hidden');
-        quizContainer.classList.add('hidden');
-        quizResults.classList.add('hidden');
-        startQuizBtn.classList.add('hidden');
         
-        try {
-            // 呼叫後端 Netlify Function 取得題目
-            const response = await fetchWithRetry('/.netlify/functions/get_quiz', {
-                method: 'GET',
-            });
-            const data = await response.json();
-            
-            if (data.success && data.quiz.length === 10) {
-                quizData = data.quiz;
-                answersCache = data.answersCache;
-                userAnswers = quizData.map(q => ({
-                    questionId: q.id,
-                    selectedIndex: -1 // -1 表示未作答
-                }));
-                currentQuestionIndex = 0;
-                displayQuestion(currentQuestionIndex);
-                quizLoading.classList.add('hidden');
-                quizContainer.classList.remove('hidden');
-            } else {
-                quizLoading.classList.remove('hidden');
-                startQuizBtn.classList.remove('hidden');
-                document.getElementById('quiz-topic').textContent = '無法載入測驗，請稍後再試。';
-                console.error('Quiz data error:', data);
-            }
-        } catch (error) {
-            quizLoading.classList.remove('hidden');
-            startQuizBtn.classList.remove('hidden');
-            document.getElementById('quiz-topic').textContent = `載入失敗：${error.message}`;
-            console.error('Error loading quiz:', error);
-        }
-    }
-    
-    function displayQuestion(index) {
-        const question = quizData[index];
-        const userAnswer = userAnswers[index];
-        
-        questionCounter.textContent = `第 ${index + 1} / ${quizData.length} 題`;
-        quizTopic.textContent = `${question.topic}`;
-        quizOptions.innerHTML = '';
-        
-        question.options.forEach((option, optionIndex) => {
-            const isSelected = userAnswer.selectedIndex === optionIndex;
-            
-            const optionHtml = `
-                <label class="flex items-center p-4 bg-slate-50 rounded-lg cursor-pointer transition duration-150 hover:bg-indigo-100 border ${isSelected ? 'border-indigo-600 ring-2 ring-indigo-500' : 'border-slate-200'}">
-                    <input type="radio" name="question-${index}" value="${optionIndex}" class="form-radio h-5 w-5 text-indigo-600" ${isSelected ? 'checked' : ''} data-option-index="${optionIndex}">
-                    <span class="ml-4 text-slate-800 font-medium">${OPTION_LABELS[optionIndex]}. ${option}</span>
-                </label>
-            `;
-            quizOptions.innerHTML += optionHtml;
-        });
-        
-        // 更新按鈕狀態
-        prevQuestionBtn.disabled = index === 0;
-        nextQuestionBtn.textContent = (index === quizData.length - 1) ? '提交測驗並評分' : '下一題';
-        nextQuestionBtn.classList.toggle('bg-red-600', index === quizData.length - 1);
-        nextQuestionBtn.classList.toggle('hover:bg-red-700', index === quizData.length - 1);
-        nextQuestionBtn.classList.toggle('bg-indigo-600', index !== quizData.length - 1);
-        nextQuestionBtn.classList.toggle('hover:bg-indigo-700', index !== quizData.length - 1);
-    }
-    
-    function recordAnswer() {
-        const selectedRadio = quizOptions.querySelector(`input[name="question-${currentQuestionIndex}"]:checked`);
-        if (selectedRadio) {
-            userAnswers[currentQuestionIndex].selectedIndex = parseInt(selectedRadio.value);
-        } else {
-             userAnswers[currentQuestionIndex].selectedIndex = -1;
-        }
-    }
-    
-    async function submitQuiz() {
-        quizContainer.classList.add('hidden');
-        quizLoading.classList.remove('hidden');
-        document.getElementById('quiz-loading').innerHTML = `
-            <svg class="animate-spin h-8 w-8 text-indigo-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-                <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-            </svg>
-            <p class="text-xl font-semibold text-slate-700 mt-4">正在提交並評分您的測驗...</p>
-        `;
-        
-        try {
-            const response = await fetchWithRetry('/.netlify/functions/submit_quiz', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({
-                    userAnswers: userAnswers,
-                    answersCache: answersCache
-                }),
-            });
-            const data = await response.json();
-            
-            quizLoading.classList.add('hidden');
-            if (data.success) {
-                displayResults(data);
-            } else {
-                quizResults.classList.remove('hidden');
-                document.getElementById('final-score').textContent = `評分失敗: ${data.message}`;
-            }
-        } catch (error) {
-            quizLoading.classList.add('hidden');
-            quizResults.classList.remove('hidden');
-            document.getElementById('final-score').textContent = `提交失敗：${error.message}`;
-            console.error('Error submitting quiz:', error);
-        }
-    }
-    
-    function displayResults(data) {
-        quizResults.classList.remove('hidden');
-        document.getElementById('final-score').textContent = `得分：${data.score} 分 (答對 ${data.correctCount} / ${data.totalQuestions} 題)`;
-        
-        const detailsContainer = document.getElementById('results-details');
-        detailsContainer.innerHTML = '';
-        
-        data.results.forEach((result, index) => {
-            const question = quizData.find(q => q.id === result.questionId);
-            const isCorrect = result.isCorrect;
-            const correctOptionText = question.options[result.correctSelectedIndex];
-            const userOptionText = result.userSelectedIndex !== -1 ? question.options[result.userSelectedIndex] : '未作答';
-            
-            const resultHtml = `
-                <div class="p-4 rounded-lg border-l-4 ${isCorrect ? 'bg-green-50 border-green-600' : 'bg-red-50 border-red-600'}">
-                    <p class="font-bold text-lg mb-2 ${isCorrect ? 'text-green-800' : 'text-red-800'}">
-                        ${index + 1}. ${question.topic}
-                        ${isCorrect ? '<i class="fas fa-check-circle ml-2"></i>' : '<i class="fas fa-times-circle ml-2"></i>'}
-                    </p>
-                    <p class="text-sm text-slate-700">
-                        <span class="font-semibold">您的作答：</span>
-                        <span class="${isCorrect ? 'text-green-600' : 'text-red-600'} font-bold">${result.userOption}. ${userOptionText}</span>
-                    </p>
-                    <p class="text-sm text-slate-700">
-                        <span class="font-semibold">正確答案：</span>
-                        <span class="text-green-600 font-bold">${OPTION_LABELS[result.correctSelectedIndex]}. ${correctOptionText}</span>
-                        (出處：${answersCache.find(a => a.id === result.questionId)?.source || '未知'})
-                    </p>
-                    
-                    <div class="mt-3 text-xs text-slate-600 border-t border-slate-200 pt-2">
-                        <span class="font-semibold">所有選項：</span>
-                        ${question.options.map((opt, i) => 
-                            `<span class="mr-2 ${i === result.correctSelectedIndex ? 'font-bold text-green-700' : (i === result.userSelectedIndex && !isCorrect ? 'line-through text-red-500' : 'text-slate-500')}">${OPTION_LABELS[i]}. ${opt}</span>`
-                        ).join('')}
-                    </div>
-                </div>
-            `;
-            detailsContainer.innerHTML += resultHtml;
-        });
-    }
-    
-    // --- 事件監聽器 ---
-    
-    // 初始化測驗
-    startQuizBtn.addEventListener('click', loadQuiz);
-    retakeQuizBtn.addEventListener('click', loadQuiz);
-    
-    // 上一題
-    prevQuestionBtn.addEventListener('click', () => {
-        if (currentQuestionIndex > 0) {
-            recordAnswer();
-            currentQuestionIndex--;
-            displayQuestion(currentQuestionIndex);
-        }
-    });
-    
-    // 下一題 / 提交
-    nextQuestionBtn.addEventListener('click', () => {
-        recordAnswer(); // 儲存當前作答
-        
-        if (currentQuestionIndex < quizData.length - 1) {
-            currentQuestionIndex++;
-            displayQuestion(currentQuestionIndex);
-        } else {
-            // 檢查是否有未作答的題目
-            const un answered = userAnswers.filter(a => a.selectedIndex === -1).length;
-            if (un answered > 0) {
-                 if (confirm(`您還有 ${un answered} 題未作答，確定要提交嗎？`)) {
-                    submitQuiz();
-                }
-            } else {
-                submitQuiz();
-            }
-        }
-    });
-    
-    // 選項點擊事件 (即時儲存作答)
-    if (quizOptions) {
-        quizOptions.addEventListener('change', (e) => {
-            if (e.target.type === 'radio') {
-                recordAnswer();
-                displayQuestion(currentQuestionIndex); // 重新渲染以更新選項樣式
-            }
-        });
-    }
-
-    // 當切換到 chapter13 時，自動載入測驗
-    const originalShowContent = window.showChapterView;
-    window.showChapterView = (chapterId) => {
-        originalShowContent(chapterId); 
-        if (chapterId === 'chapter13') {
-            loadQuiz();
-        }
-    };
 </script>
 <div id="elite-certification-modal" class="fixed inset-0 z-[100] hidden items-center justify-center bg-black bg-opacity-70 backdrop-blur-sm transition-opacity duration-300">
     
@@ -4845,7 +4538,6 @@ function handleProgressLogic(sectionId) {
     
 </body>
 </html>
-
 
 
 
