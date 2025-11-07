@@ -3216,15 +3216,15 @@ document.addEventListener('DOMContentLoaded', () => {
     let answersCache = []; // 儲存傳給後端的答案快取 (含答案)
     let isQuizSubmitted = false;
 
-    const quizContainer = document.getElementById('quiz-container');
-    const quizStatus = document.getElementById('quiz-status');
-    const quizQuestionsArea = document.getElementById('quiz-questions-area');
-    const startQuizBtn = document.getElementById('start-quiz-btn');
-    const submitQuizBtn = document.getElementById('submit-quiz-btn');
-    const quizResultArea = document.getElementById('quiz-result-area');
-    const retakeQuizBtn = document.getElementById('retake-quiz-btn');
-    const backToTocQuizBtn = document.getElementById('back-to-toc-quiz-btn');
-
+    // 將這些 DOM 變數改為 let，並在需要時重新賦值 (在 fetchQuiz 中重新賦值)
+    let quizContainer;
+    let quizStatus;
+    let quizQuestionsArea;
+    let startQuizBtn;
+    let submitQuizBtn;
+    let quizResultArea;
+    let retakeQuizBtn;
+    let backToTocQuizBtn;
     const optionLabels = ['A', 'B', 'C', 'D'];
     const playerPanel = document.getElementById('audio-controls-panel'); 
     const closeAudioBtn = document.getElementById('close-audio-btn'); 
@@ -3849,9 +3849,14 @@ function showContent(sectionId, element) {
         }
         audioPlayerContainer.classList.remove('expanded');
         
-        // ---- NEW: Quiz Logic & Sticky Header Adjustment ----
-        if (sectionId === 'chapter13') { // NEW: 載入測驗
-            fetchQuiz();
+        // ---- 修正重點：測驗邏輯和 Sticky Header 調整 ----
+        if (sectionId === 'chapter13') { // 載入測驗
+            
+            // 重新檢查測驗元素是否已載入 (此時 newSection 已經 active)
+            const quizStatusElement = mainContentArea.querySelector('#quiz-status');
+            if (quizStatusElement) {
+                fetchQuiz();
+            }
         }
         
         // Sticky Header Adjustment for chapter0
@@ -3872,7 +3877,7 @@ function showContent(sectionId, element) {
                 mainContent.style.paddingTop = ''; 
             }
         }
-        // ---- END NEW: Quiz Logic & Sticky Header Adjustment ----
+        // ---- END 修正重點 ----
         
         if (sectionId === 'chapter0') {
              loadProgressFromFirebase(); 
@@ -4639,6 +4644,22 @@ function handleProgressLogic(sectionId) {
     }
 
     async function fetchQuiz() {
+        
+        // 在這裡重新賦值，確保使用的是當前活動的 DOM 元素
+        quizContainer = document.getElementById('quiz-container');
+        quizStatus = document.getElementById('quiz-status');
+        quizQuestionsArea = document.getElementById('quiz-questions-area');
+        startQuizBtn = document.getElementById('start-quiz-btn');
+        submitQuizBtn = document.getElementById('submit-quiz-btn');
+        quizResultArea = document.getElementById('quiz-result-area');
+        retakeQuizBtn = document.getElementById('retake-quiz-btn');
+        backToTocQuizBtn = document.getElementById('back-to-toc-quiz-btn');
+        
+        if (!quizStatus || !startQuizBtn) {
+             console.error("Quiz elements not found in active DOM. Aborting fetchQuiz.");
+             return; 
+        }
+
         quizStatus.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i>測驗載入中，請稍候...';
         startQuizBtn.classList.add('hidden');
         submitQuizBtn.classList.add('hidden');
@@ -4858,6 +4879,7 @@ function handleProgressLogic(sectionId) {
     
 </body>
 </html>
+
 
 
 
