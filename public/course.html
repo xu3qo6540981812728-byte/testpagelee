@@ -3089,8 +3089,55 @@
     </div>
 </div>
        </div> <!-- Chapter 12 End -->
-            
-            </div><div id="chapter13" class="content-section space-y-8">
+            <div id="chapter13" class="content-section space-y-8">
+                <header class=" ">
+                    <h2 class="text-4xl font-bold text-slate-800 border-b-4 border-indigo-500 pb-3 mb-2">菁英課程模擬考</h2>
+                    <p class="text-slate-500">隨機抽取 10 題選擇題，考驗您的學習成果！</p>
+                </header>
+
+                <div id="quiz-container" class="bg-white p-6 md:p-8 rounded-xl shadow-lg content-card">
+                    <h3 class="text-2xl font-semibold text-slate-700 mb-6 flex items-center">
+                        <i class="fas fa-edit mr-3 text-red-600"></i>模擬測驗：共 10 題
+                    </h3>
+                    <div id="quiz-status" class="mb-4 p-4 bg-indigo-50 rounded-lg text-indigo-800 font-semibold text-center">
+                        <i class="fas fa-spinner fa-spin mr-2"></i>測驗載入中，請稍候...
+                    </div>
+                    <div id="quiz-questions-area" class="space-y-6">
+                        <!-- Questions will be injected here -->
+                    </div>
+                    
+                    <div id="quiz-controls" class="mt-8 pt-6 border-t border-slate-200 flex justify-center">
+                         <button id="start-quiz-btn" class="hidden py-3 px-8 bg-indigo-600 text-white font-bold rounded-lg hover:bg-indigo-700 transition duration-300 shadow-lg">
+                            開始測驗 (點擊載入題目)
+                        </button>
+                        <button id="submit-quiz-btn" class="hidden py-3 px-8 bg-red-600 text-white font-bold rounded-lg hover:bg-red-700 transition duration-300 shadow-lg" disabled>
+                            提交並查看成績
+                        </button>
+                    </div>
+                    
+                    <div id="quiz-result-area" class="mt-8 hidden">
+                        <h4 class="text-3xl font-extrabold text-center text-green-700 mb-4">
+                            ✅ 測驗結果
+                        </h4>
+                        <div id="score-display" class="p-6 bg-green-100 rounded-lg text-center shadow-inner">
+                            <p class="text-xl font-semibold text-green-800">您的得分：<span id="final-score" class="text-5xl font-extrabold text-red-600">0</span> / 100 分</p>
+                            <p id="correct-count-display" class="text-lg text-green-700 mt-2">答對題數：0 / 10 題</p>
+                        </div>
+                        <div id="detailed-results" class="mt-6 space-y-4">
+                            <!-- Detailed results will be injected here -->
+                        </div>
+                        <div class="mt-8 flex justify-center space-x-4">
+                            <button id="retake-quiz-btn" class="py-3 px-6 bg-indigo-600 text-white font-bold rounded-lg hover:bg-indigo-700 transition duration-300 shadow-md">
+                                <i class="fas fa-redo mr-2"></i>再次測驗
+                            </button>
+                            <button id="back-to-toc-quiz-btn" class="py-3 px-6 bg-slate-300 text-slate-800 font-bold rounded-lg hover:bg-slate-400 transition duration-300 shadow-md">
+                                <i class="fas fa-list-alt mr-2"></i>返回目錄
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            </div><div id="chapter14" class="content-section space-y-8">
             <header class=" ">
                 <h2 class="text-4xl font-bold text-slate-800 border-b-4 border-indigo-500 pb-3 mb-2">實用工具箱</h2>
                 <p class="text-slate-500">整合所有線上稅務與貸款計算機</p>
@@ -3689,7 +3736,7 @@ const loggedInRole = sessionStorage.getItem('loggedInRole');
         document.body.appendChild(bg);
     }
    
-    const chapters = [
+   const chapters = [
          { id: 'manager-dashboard', title: '團隊進度儀表板', description: '主管專用：查看團隊完成清單', role: 'manager_only' },
         { id: 'chapter0', title: '菁英課程進度表', description: '追蹤你的學習進度' },
         { id: 'chapter1', title: '台灣房市歷史', description: '回顧過去，洞見未來' },
@@ -3704,7 +3751,8 @@ const loggedInRole = sessionStorage.getItem('loggedInRole');
         { id: 'chapter10', title: '銷售篇：帶看與客戶探索', description: '從帶看到收斡的關鍵步驟' },
         { id: 'chapter11', title: '引導收斡與調價', description: '臨門一腳的藝術' },
         { id: 'chapter12', title: '總結：成為頂尖顧問的思維', description: '整合所學，內化為專業本能，成為客戶的顧問而非業務' },
-        { id: 'chapter13', title: '實用工具箱', description: '整合所有線上計算機' }
+        { id: 'chapter13', title: '菁英課程模擬考', description: '隨機抽取 10 題選擇題，考驗您的學習成果' }, // NEW
+        { id: 'chapter14', title: '實用工具箱', description: '整合所有線上計算機' } // Renamed from chapter13
     ];
     const audioMap = {
     'chapter1': 'chapter1-history.mp3', // 台灣房市歷史
@@ -3786,6 +3834,31 @@ function showContent(sectionId, element) {
             audio.src = "";
         }
         audioPlayerContainer.classList.remove('expanded');
+        
+        // ---- NEW: Quiz Logic & Sticky Header Adjustment ----
+        if (sectionId === 'chapter13') { // NEW: 載入測驗
+            fetchQuiz();
+        }
+        
+        // Sticky Header Adjustment for chapter0
+        const progressArea = document.getElementById('progress-display-area');
+        const mainContent = document.querySelector('main');
+        
+        if (progressArea) {
+            if (sectionId === 'chapter0') {
+                progressArea.classList.add('always-fixed-progress', 'shadow-xl');
+                // 使用延遲來確保 offsetHeight 計算正確，並設定主內容區的 padding-top
+                setTimeout(() => {
+                    const headerHeight = progressArea.offsetHeight;
+                    // 40px 是為了容納 main 區塊的 p-10 頂部間距 (2.5rem ≈ 40px)
+                    mainContent.style.paddingTop = `${headerHeight + 40}px`; 
+                }, 50);
+            } else {
+                progressArea.classList.remove('always-fixed-progress', 'shadow-xl');
+                mainContent.style.paddingTop = ''; 
+            }
+        }
+        // ---- END NEW: Quiz Logic & Sticky Header Adjustment ----
         
         if (sectionId === 'chapter0') {
              loadProgressFromFirebase(); 
@@ -4496,7 +4569,253 @@ function handleProgressLogic(sectionId) {
             }
         });
     }
-    
+    let currentQuiz = []; // 儲存傳給前端的題目 (不含答案)
+    let answersCache = []; // 儲存傳給後端的答案快取 (含答案)
+    let isQuizSubmitted = false;
+
+    const quizContainer = document.getElementById('quiz-container');
+    const quizStatus = document.getElementById('quiz-status');
+    const quizQuestionsArea = document.getElementById('quiz-questions-area');
+    const startQuizBtn = document.getElementById('start-quiz-btn');
+    const submitQuizBtn = document.getElementById('submit-quiz-btn');
+    const quizResultArea = document.getElementById('quiz-result-area');
+    const retakeQuizBtn = document.getElementById('retake-quiz-btn');
+    const backToTocQuizBtn = document.getElementById('back-to-toc-quiz-btn');
+
+    const optionLabels = ['A', 'B', 'C', 'D'];
+
+    function renderQuestion(question, index) {
+        const qDiv = document.createElement('div');
+        qDiv.className = 'quiz-question p-4 border border-slate-200 rounded-lg shadow-sm bg-white';
+        qDiv.dataset.questionId = question.id;
+        qDiv.innerHTML = `
+            <p class="font-bold text-lg text-slate-800 mb-4">
+                <span class="text-indigo-600 mr-2">${index + 1}.</span> ${question.topic}
+            </p>
+            <div class="space-y-3" id="options-${question.id}">
+                ${question.options.map((option, optIndex) => `
+                    <div class="option-item flex items-start p-3 border rounded-lg cursor-pointer transition duration-150 ease-in-out hover:bg-indigo-50" data-index="${optIndex}">
+                        <span class="option-label font-bold text-indigo-600 mr-3">${optionLabels[optIndex]}.</span>
+                        <span class="option-text text-slate-700 flex-1">${option}</span>
+                        <i class="correct-icon fas fa-check-circle text-green-500 ml-3 hidden"></i>
+                        <i class="incorrect-icon fas fa-times-circle text-red-500 ml-3 hidden"></i>
+                    </div>
+                `).join('')}
+            </div>
+        `;
+        return qDiv;
+    }
+
+    function updateSubmitButtonState() {
+        const allAnswered = currentQuiz.every(q => {
+            const qDiv = quizQuestionsArea.querySelector(`[data-question-id="${q.id}"]`);
+            return qDiv && qDiv.querySelector('.option-item.selected') !== null;
+        });
+        
+        submitQuizBtn.disabled = !allAnswered;
+    }
+
+    function handleOptionClick(event) {
+        if (isQuizSubmitted) return; 
+        
+        const optionItem = event.target.closest('.option-item');
+        if (!optionItem) return;
+        
+        const questionDiv = optionItem.closest('.quiz-question');
+        const questionId = questionDiv.dataset.questionId;
+        
+        // 移除同一個問題的其他選項的 selected 類別
+        questionDiv.querySelectorAll('.option-item').forEach(item => {
+            item.classList.remove('selected', 'bg-indigo-100', 'border-indigo-500');
+            item.classList.add('border-slate-200');
+        });
+        
+        // 將當前點選的選項設為 selected
+        optionItem.classList.add('selected', 'bg-indigo-100', 'border-indigo-500');
+        optionItem.classList.remove('border-slate-200');
+        
+        updateSubmitButtonState();
+    }
+
+    async function fetchQuiz() {
+        quizStatus.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i>測驗載入中，請稍候...';
+        startQuizBtn.classList.add('hidden');
+        submitQuizBtn.classList.add('hidden');
+        quizResultArea.classList.add('hidden');
+        quizQuestionsArea.innerHTML = '';
+        isQuizSubmitted = false;
+        currentQuiz = [];
+        answersCache = [];
+        
+        try {
+            // 呼叫後端 Netlify Function 載入題目
+            const response = await fetch('/.netlify/functions/get_quiz');
+            const data = await response.json();
+            
+            if (data.success && data.quiz && data.quiz.length > 0) {
+                currentQuiz = data.quiz;
+                answersCache = data.answersCache;
+                
+                quizStatus.className = 'mb-4 p-4 bg-green-50 rounded-lg text-green-800 font-semibold text-center';
+                quizStatus.innerHTML = `<i class="fas fa-check-circle mr-2"></i>題目已載入！請點擊下方按鈕開始作答。`;
+                
+                startQuizBtn.classList.remove('hidden');
+                startQuizBtn.textContent = `開始測驗 (${currentQuiz.length} 題)`;
+            } else {
+                quizStatus.className = 'mb-4 p-4 bg-red-100 rounded-lg text-red-800 font-semibold text-center';
+                quizStatus.innerHTML = `<i class="fas fa-exclamation-triangle mr-2"></i>載入失敗：${data.message || '後端題目庫無資料或連線錯誤。'}`;
+            }
+        } catch (error) {
+            console.error('Fetch quiz error:', error);
+            quizStatus.className = 'mb-4 p-4 bg-red-100 rounded-lg text-red-800 font-semibold text-center';
+            quizStatus.innerHTML = `<i class="fas fa-exclamation-triangle mr-2"></i>連線錯誤：無法從伺服器載入題目。`;
+        }
+    }
+
+    function startQuiz() {
+        quizQuestionsArea.innerHTML = '';
+        isQuizSubmitted = false;
+        currentQuiz.forEach((q, index) => {
+            quizQuestionsArea.appendChild(renderQuestion(q, index));
+        });
+        
+        quizStatus.className = 'mb-4 p-4 bg-indigo-50 rounded-lg text-indigo-800 font-semibold text-center';
+        quizStatus.innerHTML = `<i class="fas fa-pencil-alt mr-2"></i>請依序作答，完成後點擊提交。`;
+        startQuizBtn.classList.add('hidden');
+        submitQuizBtn.classList.remove('hidden');
+        
+        
+        submitQuizBtn.disabled = true;
+        updateSubmitButtonState();
+    }
+
+    async function submitQuiz() {
+        if (submitQuizBtn.disabled) return;
+        
+        const userAnswers = [];
+        quizQuestionsArea.querySelectorAll('.quiz-question').forEach(qDiv => {
+            const questionId = parseInt(qDiv.dataset.questionId);
+            const selectedOption = qDiv.querySelector('.option-item.selected');
+            
+            userAnswers.push({
+                questionId: questionId,
+                selectedIndex: selectedOption ? parseInt(selectedOption.dataset.index) : -1
+            });
+        });
+        
+        if (userAnswers.length !== currentQuiz.length) {
+            // 這不應該發生，但作為安全檢查
+             quizStatus.className = 'mb-4 p-4 bg-red-100 rounded-lg text-red-800 font-semibold text-center';
+             quizStatus.innerHTML = `<i class="fas fa-exclamation-triangle mr-2"></i>提交失敗：題目數量不符。`;
+             return;
+        }
+        
+        
+        quizStatus.className = 'mb-4 p-4 bg-yellow-100 rounded-lg text-yellow-800 font-semibold text-center';
+        quizStatus.innerHTML = `<i class="fas fa-upload fa-bounce mr-2"></i>成績提交與批改中，請稍候...`;
+        submitQuizBtn.disabled = true;
+        
+        try {
+            // 呼叫後端 Netlify Function 提交答案
+            const response = await fetch('/.netlify/functions/submit_quiz', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ userAnswers, answersCache })
+            });
+            const result = await response.json();
+            
+            if (result.success) {
+                isQuizSubmitted = true;
+                renderResults(result);
+            } else {
+                quizStatus.className = 'mb-4 p-4 bg-red-100 rounded-lg text-red-800 font-semibold text-center';
+                quizStatus.innerHTML = `<i class="fas fa-exclamation-triangle mr-2"></i>提交失敗：${result.message || '後端處理成績時發生錯誤。'}`;
+                submitQuizBtn.disabled = false;
+            }
+        } catch (error) {
+            console.error('Submit quiz error:', error);
+            quizStatus.className = 'mb-4 p-4 bg-red-100 rounded-lg text-red-800 font-semibold text-center';
+            quizStatus.innerHTML = `<i class="fas fa-exclamation-triangle mr-2"></i>連線錯誤：無法提交成績。`;
+            submitQuizBtn.disabled = false;
+        }
+    }
+
+    function renderResults(result) {
+        quizQuestionsArea.querySelectorAll('.option-item').forEach(item => item.classList.remove('cursor-pointer', 'hover:bg-indigo-50'));
+        
+        submitQuizBtn.classList.add('hidden');
+        quizQuestionsArea.style.pointerEvents = 'none'; // 禁用所有點擊
+
+        document.getElementById('final-score').textContent = result.score;
+        document.getElementById('correct-count-display').textContent = `答對題數：${result.correctCount} / ${result.totalQuestions} 題`;
+        
+        let detailedResultsHtml = '';
+        result.results.forEach((res, index) => {
+            const question = currentQuiz.find(q => q.id === res.questionId);
+            if (!question) return;
+            
+            const isCorrect = res.isCorrect;
+            const colorClass = isCorrect ? 'border-green-500 bg-green-50' : 'border-red-500 bg-red-50';
+            const iconClass = isCorrect ? 'fa-check-circle text-green-600' : 'fa-times-circle text-red-600';
+            const resultTitle = isCorrect ? '恭喜答對！' : '很可惜答錯了！';
+            
+            
+            quizQuestionsArea.querySelector(`[data-question-id="${question.id}"]`).classList.add(colorClass);
+            quizQuestionsArea.querySelector(`[data-question-id="${question.id}"]`).classList.remove('border-slate-200');
+
+            
+            const optionsArea = quizQuestionsArea.querySelector(`[data-question-id="${question.id}"] #options-${question.id}`);
+            optionsArea.querySelectorAll('.option-item').forEach(item => {
+                 const itemIndex = parseInt(item.dataset.index);
+                 
+                 if (itemIndex === res.correctSelectedIndex) {
+                     
+                     item.classList.add('bg-green-200', 'border-green-600');
+                     item.querySelector('.correct-icon').classList.remove('hidden');
+                 } else if (itemIndex === res.userSelectedIndex && !isCorrect) {
+                     
+                     item.classList.add('bg-red-200', 'border-red-600');
+                     item.querySelector('.incorrect-icon').classList.remove('hidden');
+                 } else {
+                     item.classList.add('opacity-50');
+                 }
+                 item.classList.remove('selected', 'bg-indigo-100', 'border-indigo-500', 'hover:bg-indigo-50');
+            });
+            
+            
+            const sourceAnswer = answersCache.find(a => a.id === res.questionId);
+            
+            detailedResultsHtml += `
+                <div class="p-4 rounded-lg border-2 ${colorClass} shadow-md">
+                    <p class="font-bold text-lg flex items-center">
+                        <i class="fas ${iconClass} mr-3"></i> 
+                        ${index + 1}. ${question.topic} - <span class="ml-2 ${isCorrect ? 'text-green-700' : 'text-red-700'}">${resultTitle}</span>
+                    </p>
+                    <div class="mt-3 text-slate-700 space-y-1 ml-6 text-sm">
+                        <p>您的作答: <span class="font-semibold text-red-600">${res.userOption}</span></p>
+                        <p>正確答案: <span class="font-semibold text-green-600">${res.correctOption || optionLabels[res.correctSelectedIndex]}</span></p>
+                        <p class="font-bold mt-2 pt-2 border-t border-slate-300">相關章節: ${sourceAnswer ? sourceAnswer.source : 'N/A'}</p>
+                    </div>
+                </div>
+            `;
+        });
+        
+        document.getElementById('detailed-results').innerHTML = detailedResultsHtml;
+        
+        quizStatus.className = 'mb-4 p-4 bg-green-50 rounded-lg text-green-800 font-semibold text-center';
+        quizStatus.innerHTML = `<i class="fas fa-trophy mr-2"></i>成績公佈：請檢視下方得分與詳解！`;
+        
+        quizResultArea.classList.remove('hidden');
+    }
+
+    // Event Listeners for Quiz Controls
+    if (startQuizBtn) startQuizBtn.addEventListener('click', startQuiz);
+    if (submitQuizBtn) submitQuizBtn.addEventListener('click', submitQuiz);
+    if (retakeQuizBtn) retakeQuizBtn.addEventListener('click', fetchQuiz);
+    if (backToTocQuizBtn) backToTocQuizBtn.addEventListener('click', showTOC); 
+
+    // Delegated listener for option clicks
+    if (quizQuestionsArea) quizQuestionsArea.addEventListener('click', handleOptionClick);
    
 });
         
@@ -4538,6 +4857,7 @@ function handleProgressLogic(sectionId) {
     
 </body>
 </html>
+
 
 
 
