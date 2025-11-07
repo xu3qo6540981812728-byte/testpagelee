@@ -4804,7 +4804,7 @@ function handleProgressLogic(sectionId) {
         document.getElementById('final-score').textContent = result.score;
         document.getElementById('correct-count-display').textContent = `答對題數：${result.correctCount} / ${result.totalQuestions} 題`;
         
-        let detailedResultsHtml = '';
+       
         result.results.forEach((res, index) => {
             const question = currentQuiz.find(q => q.id === res.questionId);
             if (!question) return;
@@ -4853,7 +4853,7 @@ function handleProgressLogic(sectionId) {
 `;
         });
         
-        document.getElementById('detailed-results').innerHTML = detailedResultsHtml;
+        document.getElementById('detailed-results').innerHTML = '';
         
         quizStatus.className = 'mb-4 p-4 bg-green-50 rounded-lg text-green-800 font-semibold text-center';
         quizStatus.innerHTML = `<i class="fas fa-trophy mr-2"></i>成績公佈：請檢視下方得分與詳解！`;
@@ -4912,6 +4912,7 @@ if (mainContentArea) {
     
 </body>
 </html>
+
 
 
 
