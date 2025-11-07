@@ -4805,7 +4805,53 @@ function handleProgressLogic(sectionId) {
         document.getElementById('correct-count-display').textContent = `答對題數：${result.correctCount} / ${result.totalQuestions} 題`;
         
         let detailedResultsHtml = '';
+        result.results.forEach((res, index) => {
+            const question = currentQuiz.find(q => q.id === res.questionId);
+            if (!question) return;
+            
+            const isCorrect = res.isCorrect;
+            const colorClass = isCorrect ? 'border-green-500 bg-green-50' : 'border-red-500 bg-red-50';
+            const iconClass = isCorrect ? 'fa-check-circle text-green-600' : 'fa-times-circle text-red-600';
+            const resultTitle = isCorrect ? '恭喜答對！' : '很可惜答錯了！';
+            
+            
+            // --- 修正區域：使用 className 賦值替代 classList.add(包含空格的字串) ---
+            const questionDiv = quizQuestionsArea.querySelector(`[data-question-id="${question.id}"]`);
+            questionDiv.className += ` ${colorClass}`; // 使用 += 附加新的類別
+            // --- 修正區域結束 ---
+
+            
+            const optionsArea = quizQuestionsArea.querySelector(`[data-question-id="${question.id}"] #options-${question.id}`);
+            optionsArea.querySelectorAll('.option-item').forEach(item => {
+                 const itemIndex = parseInt(item.dataset.index);
+                 
+                 if (itemIndex === res.correctSelectedIndex) {
+                     
+                     item.classList.add('bg-green-200', 'border-green-600');
+                     item.querySelector('.correct-icon').classList.remove('hidden');
+                 } else if (itemIndex === res.userSelectedIndex && !isCorrect) {
+                     
+                     item.classList.add('bg-red-200', 'border-red-600');
+                     item.querySelector('.incorrect-icon').classList.remove('hidden');
+                 } else {
+                     item.classList.add('opacity-50');
+                 }
+                 item.classList.remove('selected', 'bg-indigo-100', 'border-indigo-500', 'hover:bg-indigo-50');
+            });
+            
+            
+            const sourceAnswer = answersCache.find(a => a.id === res.questionId);
+            
+            detailedResultsHtml += `
+                <div class="p-4 rounded-lg border-2 ${colorClass} shadow-md">
+        <p class="font-bold text-lg flex items-center">
+            <i class="fas ${iconClass} mr-3"></i> 
+            ${index + 1}. ${question.topic} - <span class="ml-2 ${isCorrect ? 'text-green-700' : 'text-red-700'}">${resultTitle}</span>
+        </p>
         
+        </div>
+`;
+        });
         
         document.getElementById('detailed-results').innerHTML = detailedResultsHtml;
         
@@ -4866,7 +4912,6 @@ if (mainContentArea) {
     
 </body>
 </html>
-
 
 
 
