@@ -3089,7 +3089,34 @@
     </div>
 </div>
        </div> <!-- Chapter 12 End -->
-            
+            </div> <div id="chapter12_5" class="content-section space-y-8">
+            <header class=" ">
+                <h2 class="text-4xl font-bold text-slate-800 border-b-4 border-indigo-500 pb-3 mb-2">菁英課程模擬考</h2>
+                <p class="text-slate-500">隨機抽取 10 題，立即自我評量！</p>
+            </header>
+            <div class="bg-white p-8 rounded-xl shadow-lg content-card animate-on-scroll">
+                <div id="quiz-status" class="mb-6 p-4 bg-indigo-50 rounded-lg border-l-4 border-indigo-500 text-indigo-800 font-semibold">
+                    點擊「開始考試」按鈕，隨機產生 10 題測驗！
+                </div>
+
+                <button id="start-quiz-btn" class="w-full py-3 bg-green-600 text-white font-bold rounded-lg hover:bg-green-700 transition duration-300 shadow-md">
+                    🚀 開始考試
+                </button>
+
+                <div id="quiz-area" class="mt-8 space-y-8" style="display:none;">
+                    <div id="question-list" class="space-y-6">
+                        </div>
+                    <div id="quiz-controls" class="flex justify-center space-x-4 border-t pt-6">
+                        <button id="submit-quiz-btn" class="py-3 px-8 bg-red-600 text-white font-bold rounded-lg hover:bg-red-700 transition duration-300 shadow-md" disabled>
+                            提交作答 💾
+                        </button>
+                    </div>
+                </div>
+
+                <div id="quiz-result" class="mt-8" style="display:none;">
+                    </div>
+            </div>
+        </div>
             </div><div id="chapter13" class="content-section space-y-8">
             <header class=" ">
                 <h2 class="text-4xl font-bold text-slate-800 border-b-4 border-indigo-500 pb-3 mb-2">實用工具箱</h2>
@@ -3688,7 +3715,186 @@ const loggedInRole = sessionStorage.getItem('loggedInRole');
         bg.innerHTML = svg;
         document.body.appendChild(bg);
     }
-   
+   let currentQuiz = null; // 儲存當前測驗的題目和答案快取
+
+    const startQuizBtn = document.getElementById('start-quiz-btn');
+    const submitQuizBtn = document.getElementById('submit-quiz-btn');
+    const quizStatus = document.getElementById('quiz-status');
+    const quizArea = document.getElementById('quiz-area');
+    const questionList = document.getElementById('question-list');
+    const quizResult = document.getElementById('quiz-result');
+
+    // 1. 取得測驗邏輯
+    const fetchQuiz = async () => {
+        quizStatus.innerHTML = `<i class="fas fa-spinner fa-spin mr-2"></i> 正在產生試卷，請稍候...`;
+        startQuizBtn.disabled = true;
+
+        try {
+            // 注意：這裡使用 .netlify/functions/get_quiz 作為 Netlify Function 的路徑
+            const response = await fetch('/.netlify/functions/get_quiz');
+            const data = await response.json();
+
+            if (data.success && data.quiz.length === 10) {
+                currentQuiz = data; // 儲存題目和後端答案快取
+                renderQuiz(data.quiz);
+                quizStatus.className = 'mb-6 p-4 bg-green-50 rounded-lg border-l-4 border-green-500 text-green-800 font-semibold';
+                quizStatus.innerHTML = `✅ 試卷產生成功！請完成所有 10 題後提交作答。`;
+                submitQuizBtn.disabled = false;
+                startQuizBtn.textContent = '🔄 重新開始考試';
+            } else {
+                quizStatus.className = 'mb-6 p-4 bg-red-50 rounded-lg border-l-4 border-red-500 text-red-800 font-semibold';
+                quizStatus.innerHTML = `❌ 試卷產生失敗：${data.message || '無法取得 10 題。'}`;
+            }
+        } catch (error) {
+            console.error('Fetch quiz error:', error);
+            quizStatus.className = 'mb-6 p-4 bg-red-50 rounded-lg border-l-4 border-red-500 text-red-800 font-semibold';
+            quizStatus.innerHTML = `❌ 連線錯誤，請檢查網路連線或後端服務。`;
+        } finally {
+            startQuizBtn.disabled = false;
+        }
+    };
+
+    // 2. 渲染測驗介面
+    const renderQuiz = (questions) => {
+        questionList.innerHTML = '';
+        quizResult.style.display = 'none';
+        quizArea.style.display = 'block';
+
+        questions.forEach((q, index) => {
+            const questionElement = document.createElement('div');
+            questionElement.className = 'question-card p-4 border rounded-lg shadow-sm';
+            questionElement.innerHTML = `
+                <h4 class="font-bold text-lg text-slate-700 mb-3">${index + 1}. ${q.topic}</h4>
+                <div class="options-container space-y-2" data-question-id="${q.id}">
+                    ${q.options.map((option, optIndex) => `
+                        <label class="block p-3 border rounded-lg cursor-pointer hover:bg-slate-50 transition duration-150">
+                            <input type="radio" name="question-${q.id}" value="${optIndex}" class="mr-3 text-indigo-600 focus:ring-indigo-500">
+                            <span class="font-medium text-slate-600">${String.fromCharCode(65 + optIndex)}. ${option}</span>
+                        </label>
+                    `).join('')}
+                </div>
+                <div id="feedback-${q.id}" class="mt-3 text-sm font-semibold hidden"></div>
+            `;
+            questionList.appendChild(questionElement);
+        });
+    };
+
+    // 3. 提交作答邏輯
+    const submitQuiz = async () => {
+        const userAnswers = [];
+        let allAnswered = true;
+        const totalQuestions = currentQuiz.quiz.length;
+
+        // 收集用戶作答結果
+        currentQuiz.quiz.forEach(q => {
+            const selected = document.querySelector(`input[name="question-${q.id}"]:checked`);
+            if (selected) {
+                userAnswers.push({
+                    questionId: q.id,
+                    selectedIndex: parseInt(selected.value)
+                });
+            } else {
+                allAnswered = false;
+            }
+        });
+
+        if (!allAnswered) {
+            alert('請完成所有 10 題作答後再提交！');
+            return;
+        }
+
+        submitQuizBtn.disabled = true;
+        submitQuizBtn.textContent = '批改中...';
+        
+        try {
+            // 注意：這裡使用 .netlify/functions/submit_quiz 作為 Netlify Function 的路徑
+            const response = await fetch('/.netlify/functions/submit_quiz', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ 
+                    userAnswers: userAnswers,
+                    answersCache: currentQuiz.answersCache // 將後端快取傳回給後端進行比對
+                })
+            });
+            
+            const data = await response.json();
+
+            if (data.success) {
+                renderResult(data);
+            } else {
+                alert(`批改失敗: ${data.message}`);
+                submitQuizBtn.disabled = false;
+                submitQuizBtn.textContent = '提交作答 💾';
+            }
+        } catch (error) {
+            console.error('Submit quiz error:', error);
+            alert('提交或批改過程中發生錯誤。');
+            submitQuizBtn.disabled = false;
+            submitQuizBtn.textContent = '提交作答 💾';
+        }
+    };
+
+    // 4. 渲染成績與解析
+    const renderResult = (resultData) => {
+        const { score, correctCount, totalQuestions, results } = resultData;
+        
+        // 顯示成績總結
+        let scoreColor = 'text-red-600';
+        if (score >= 80) scoreColor = 'text-green-600';
+        else if (score >= 60) scoreColor = 'text-orange-600';
+
+        quizResult.innerHTML = `
+            <div class="text-center p-6 bg-indigo-100 rounded-xl shadow-lg border-4 border-indigo-400">
+                <h3 class="text-3xl font-extrabold text-indigo-800 mb-2">模擬考成績</h3>
+                <p class="text-xl text-slate-700 mb-4">總共 ${totalQuestions} 題，答對 ${correctCount} 題</p>
+                <div class="text-7xl font-black ${scoreColor}">${score} 分</div>
+            </div>
+            <h4 class="text-2xl font-bold text-slate-700 mt-8 mb-4 border-b pb-2">試題解析</h4>
+        `;
+        
+        // 顯示每題的對錯與正確答案
+        results.forEach((r, index) => {
+            const questionData = currentQuiz.quiz.find(q => q.id === r.questionId);
+            if (!questionData) return;
+
+            const isCorrect = r.isCorrect;
+            const cardClass = isCorrect ? 'border-green-500 bg-green-50' : 'border-red-500 bg-red-50';
+            const icon = isCorrect ? '✅ 答對' : '❌ 答錯';
+            const correctOptChar = String.fromCharCode(65 + r.correctSelectedIndex);
+            const userOptChar = String.fromCharCode(65 + r.userSelectedIndex);
+            const sourceInfo = currentQuiz.answersCache.find(a => a.id === r.questionId)?.source || 'N/A';
+
+
+            quizResult.innerHTML += `
+                <div class="p-4 rounded-lg shadow-md mb-4 border-l-4 ${cardClass}">
+                    <h5 class="font-bold text-lg text-slate-700 mb-2">${index + 1}. ${questionData.topic}</h5>
+                    <p class="text-sm font-semibold mb-2 ${isCorrect ? 'text-green-700' : 'text-red-700'}">
+                        ${icon} (您的作答: ${userOptChar} - 正確答案: ${correctOptChar})
+                    </p>
+                    <p class="text-sm text-slate-600"><strong>來源:</strong> ${sourceInfo}</p>
+                    <p class="text-sm text-slate-600 mt-2"><strong>正確選項詳情:</strong> ${questionData.options[r.correctSelectedIndex]}</p>
+                </div>
+            `;
+        });
+        
+        quizArea.style.display = 'none';
+        quizResult.style.display = 'block';
+        submitQuizBtn.textContent = '提交作答 💾';
+    };
+
+    // 5. 事件監聽
+    if (startQuizBtn) {
+        startQuizBtn.addEventListener('click', () => {
+             // 重設狀態並重新發題
+            quizStatus.className = 'mb-6 p-4 bg-indigo-50 rounded-lg border-l-4 border-indigo-500 text-indigo-800 font-semibold';
+            quizResult.style.display = 'none';
+            fetchQuiz();
+        });
+    }
+
+    if (submitQuizBtn) {
+        submitQuizBtn.addEventListener('click', submitQuiz);
+    }
     const chapters = [
          { id: 'manager-dashboard', title: '團隊進度儀表板', description: '主管專用：查看團隊完成清單', role: 'manager_only' },
         { id: 'chapter0', title: '菁英課程進度表', description: '追蹤你的學習進度' },
@@ -3704,6 +3910,7 @@ const loggedInRole = sessionStorage.getItem('loggedInRole');
         { id: 'chapter10', title: '銷售篇：帶看與客戶探索', description: '從帶看到收斡的關鍵步驟' },
         { id: 'chapter11', title: '引導收斡與調價', description: '臨門一腳的藝術' },
         { id: 'chapter12', title: '總結：成為頂尖顧問的思維', description: '整合所學，內化為專業本能，成為客戶的顧問而非業務' },
+        { id: 'chapter12_5', title: '菁英課程模擬考', description: '隨機抽取 10 題，自我評量！' },
         { id: 'chapter13', title: '實用工具箱', description: '整合所有線上計算機' }
     ];
     const audioMap = {
@@ -4538,6 +4745,7 @@ function handleProgressLogic(sectionId) {
     
 </body>
 </html>
+
 
 
 
