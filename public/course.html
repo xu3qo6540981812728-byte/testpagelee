@@ -3212,6 +3212,20 @@ document.addEventListener('DOMContentLoaded', () => {
    
     const audioPlayerContainer = document.getElementById('audio-player-container');
     const audioFabBtn = document.getElementById('audio-fab-btn'); 
+    let currentQuiz = []; // 儲存傳給前端的題目 (不含答案)
+    let answersCache = []; // 儲存傳給後端的答案快取 (含答案)
+    let isQuizSubmitted = false;
+
+    const quizContainer = document.getElementById('quiz-container');
+    const quizStatus = document.getElementById('quiz-status');
+    const quizQuestionsArea = document.getElementById('quiz-questions-area');
+    const startQuizBtn = document.getElementById('start-quiz-btn');
+    const submitQuizBtn = document.getElementById('submit-quiz-btn');
+    const quizResultArea = document.getElementById('quiz-result-area');
+    const retakeQuizBtn = document.getElementById('retake-quiz-btn');
+    const backToTocQuizBtn = document.getElementById('back-to-toc-quiz-btn');
+
+    const optionLabels = ['A', 'B', 'C', 'D'];
     const playerPanel = document.getElementById('audio-controls-panel'); 
     const closeAudioBtn = document.getElementById('close-audio-btn'); 
     const audio = document.getElementById('chapter-audio');
@@ -4569,20 +4583,7 @@ function handleProgressLogic(sectionId) {
             }
         });
     }
-    let currentQuiz = []; // 儲存傳給前端的題目 (不含答案)
-    let answersCache = []; // 儲存傳給後端的答案快取 (含答案)
-    let isQuizSubmitted = false;
-
-    const quizContainer = document.getElementById('quiz-container');
-    const quizStatus = document.getElementById('quiz-status');
-    const quizQuestionsArea = document.getElementById('quiz-questions-area');
-    const startQuizBtn = document.getElementById('start-quiz-btn');
-    const submitQuizBtn = document.getElementById('submit-quiz-btn');
-    const quizResultArea = document.getElementById('quiz-result-area');
-    const retakeQuizBtn = document.getElementById('retake-quiz-btn');
-    const backToTocQuizBtn = document.getElementById('back-to-toc-quiz-btn');
-
-    const optionLabels = ['A', 'B', 'C', 'D'];
+   
 
     function renderQuestion(question, index) {
         const qDiv = document.createElement('div');
@@ -4857,6 +4858,7 @@ function handleProgressLogic(sectionId) {
     
 </body>
 </html>
+
 
 
 
