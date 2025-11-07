@@ -1,39 +1,34 @@
 // netlify/functions/get_quiz.js
-
 const path = require('path');
 const fs = require('fs');
 
-// 1. 使用絕對路徑結合 __dirname，確保在任何環境下都能正確找到檔案
+// 1. 使用絕對路徑結合 __dirname 來讀取靜態 JSON 檔案
 const filePath = path.join(__dirname, 'quiz_data.json');
-
-// 2. 使用同步讀取檔案的方式，並手動解析 JSON
 let fullQuizData = [];
 
 try {
     const rawData = fs.readFileSync(filePath, 'utf8');
     fullQuizData = JSON.parse(rawData);
 } catch (error) {
+    // 如果讀取失敗，將錯誤紀錄下來，並讓 fullQuizData 保持為空陣列
     console.error("Failed to load quiz_data.json using fs:", error);
-    // 這裡我們讓 fullQuizData 保持為 []，並在 handler 內返回 500 錯誤
 }
 
-
 exports.handler = async (event) => {
-    // 這裡的邏輯將使用 try...catch 來捕獲載入失敗時的 fullQuizData = [] 狀況
     try {
         if (fullQuizData.length === 0) {
-            // 如果檔案載入失敗（無論是 fs 錯誤還是 require 錯誤），都返回 500
+            // 如果讀取失敗，返回 500 錯誤給前端
             return {
                 statusCode: 500,
-                body: JSON.stringify({ success: false, message: 'Quiz data is empty or failed to load. Check Function logs.' }),
+                body: JSON.stringify({ success: false, message: 'Quiz data failed to load or is empty.' }),
             };
         }
 
-        // 1. 隨機選取 10 題 (您的原始邏輯)
+        // 1. 隨機選取 10 題
         const shuffled = fullQuizData.sort(() => 0.5 - Math.random());
         const selectedQuestions = shuffled.slice(0, 10);
 
-        // 2. 準備傳給前端的資料 (不含答案)
+        // 2. 準備傳給前端的題目 (不含答案)
         const quizForClient = selectedQuestions.map(q => ({
             id: q.id,
             topic: q.topic,
@@ -46,7 +41,6 @@ exports.handler = async (event) => {
             answerIndex: q.answerIndex,
             source: q.source,
         }));
-
 
         return {
             statusCode: 200,
@@ -63,7 +57,7 @@ exports.handler = async (event) => {
         console.error('Error in get_quiz handler:', e);
         return {
             statusCode: 500,
-            body: JSON.stringify({ success: false, message: 'An unexpected error occurred in quiz generation.' + e.message }),
+            body: JSON.stringify({ success: false, message: 'An unexpected error occurred in quiz generation.' }),
         };
     }
 };
