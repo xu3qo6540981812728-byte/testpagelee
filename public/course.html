@@ -3089,54 +3089,8 @@
     </div>
 </div>
        </div> <!-- Chapter 12 End -->
-           <div id="chapter13" class="content-section space-y-8">
-            <header class=" ">
-                <h2 class="text-4xl font-bold text-slate-800 border-b-4 border-indigo-500 pb-3 mb-2">菁英課程模擬考</h2>
-                <p class="text-slate-500">隨機抽取 10 題選擇題，檢測學習成效</p>
-            </header>
             
-            <div id="quiz-container" class="bg-white p-8 rounded-xl shadow-lg content-card">
-                <div id="quiz-status" class="text-center mb-6">
-                    <h3 class="text-2xl font-bold text-indigo-700">準備開始考試！</h3>
-                    <p class="text-slate-600 mt-2">測驗為隨機抽取的 10 題選擇題，作答後將立即評分。</p>
-                </div>
-                
-                <div id="quiz-load-area" class="text-center p-12">
-                     <button id="start-quiz-btn" class="bg-green-600 text-white font-bold py-3 px-8 rounded-full text-xl hover:bg-green-700 transition duration-200 shadow-lg transform hover:scale-105">
-                        開始模擬考 (10 題)
-                    </button>
-                    <p id="loading-msg" class="text-indigo-600 mt-4 hidden"><i class="fas fa-spinner fa-spin mr-2"></i>載入題目中，請稍候...</p>
-                    <p id="error-msg" class="text-red-600 mt-4 hidden">載入題目失敗，請聯繫管理員。</p>
-                </div>
-
-                <div id="quiz-questions-area" class="hidden space-y-8">
-                    <!-- Questions will be injected here -->
-                </div>
-                
-                <div id="quiz-actions-area" class="hidden pt-8 border-t mt-8 flex justify-center">
-                    <button id="submit-quiz-btn" class="bg-red-600 text-white font-bold py-3 px-8 rounded-lg text-xl hover:bg-red-700 transition duration-200 shadow-lg transform hover:scale-105">
-                        提交答案並評分
-                    </button>
-                </div>
-                
-                <div id="quiz-results-area" class="hidden p-8 bg-indigo-50 rounded-xl shadow-inner space-y-6">
-                    <h4 class="text-3xl font-extrabold text-center text-indigo-800 border-b pb-2">測驗結果</h4>
-                    <div id="score-display" class="text-center">
-                        <p class="text-lg font-semibold">答對題數：<span id="correct-count-display" class="text-green-600 text-2xl font-bold"></span> / 10 題</p>
-                        <p class="text-3xl font-extrabold mt-2">總分：<span id="total-score-display" class="text-red-600 text-5xl"></span> / 100</p>
-                    </div>
-                    
-                    <div id="quiz-details-area" class="space-y-4">
-                        <!-- Detailed results will be injected here -->
-                    </div>
-                    
-                    <button id="retake-quiz-btn" class="w-full bg-indigo-600 text-white font-bold py-3 px-8 rounded-lg text-lg hover:bg-indigo-700 transition duration-200 shadow-md">
-                        再次測驗
-                    </button>
-                </div>
-            </div>
-        </div>
-        <div id="chapter14" class="content-section space-y-8">
+            </div><div id="chapter13" class="content-section space-y-8">
             <header class=" ">
                 <h2 class="text-4xl font-bold text-slate-800 border-b-4 border-indigo-500 pb-3 mb-2">實用工具箱</h2>
                 <p class="text-slate-500">整合所有線上稅務與貸款計算機</p>
@@ -3750,8 +3704,7 @@ const loggedInRole = sessionStorage.getItem('loggedInRole');
         { id: 'chapter10', title: '銷售篇：帶看與客戶探索', description: '從帶看到收斡的關鍵步驟' },
         { id: 'chapter11', title: '引導收斡與調價', description: '臨門一腳的藝術' },
         { id: 'chapter12', title: '總結：成為頂尖顧問的思維', description: '整合所學，內化為專業本能，成為客戶的顧問而非業務' },
-        { id: 'chapter13', title: '菁英課程模擬考', description: '隨機抽取 10 題選擇題，即時評分' },
-        { id: 'chapter14', title: '實用工具箱', description: '整合所有線上計算機' }
+        { id: 'chapter13', title: '實用工具箱', description: '整合所有線上計算機' }
     ];
     const audioMap = {
     'chapter1': 'chapter1-history.mp3', // 台灣房市歷史
@@ -3798,9 +3751,7 @@ const loggedInRole = sessionStorage.getItem('loggedInRole');
         showContent(chapterId, navLink);
     }
 }
-  if (chapterId === 'chapter13') {
-            resetQuizUI(); 
-        }
+  
 function showContent(sectionId, element) {
         
        localStorage.setItem('lastChapterId', sectionId);
@@ -4535,216 +4486,7 @@ function handleProgressLogic(sectionId) {
     window.onload = function() {
         updateCarousel();
     };
-     const startQuizBtn = document.getElementById('start-quiz-btn');
-    const submitQuizBtn = document.getElementById('submit-quiz-btn');
-    const retakeQuizBtn = document.getElementById('retake-quiz-btn');
-    const quizLoadArea = document.getElementById('quiz-load-area');
-    const quizQuestionsArea = document.getElementById('quiz-questions-area');
-    const quizActionsArea = document.getElementById('quiz-actions-area');
-    const quizResultsArea = document.getElementById('quiz-results-area');
-    const loadingMsg = document.getElementById('loading-msg');
-    const errorMsg = document.getElementById('error-msg');
-    const quizStatus = document.getElementById('quiz-status');
-
-    let currentQuiz = null;
-    let answersCache = null;
-
-    // A/B/C/D 選項標籤
-    const optionLabels = ['A', 'B', 'C', 'D'];
-
-    function resetQuizUI() {
-        quizLoadArea.classList.remove('hidden');
-        quizQuestionsArea.classList.add('hidden');
-        quizActionsArea.classList.add('hidden');
-        quizResultsArea.classList.add('hidden');
-        loadingMsg.classList.add('hidden');
-        errorMsg.classList.add('hidden');
-        quizStatus.innerHTML = `
-            <h3 class="text-2xl font-bold text-indigo-700">準備開始考試！</h3>
-            <p class="text-slate-600 mt-2">測驗為隨機抽取的 10 題選擇題，作答後將立即評分。</p>
-        `;
-        quizQuestionsArea.innerHTML = '';
-        currentQuiz = null;
-        answersCache = null;
-    }
-
-    async function fetchQuiz() {
-        quizLoadArea.classList.add('hidden');
-        loadingMsg.classList.remove('hidden');
-        errorMsg.classList.add('hidden');
-        
-        try {
-            const response = await fetch('/.netlify/functions/get_quiz');
-            const data = await response.json();
-
-            if (data.success && data.quiz && data.answersCache) {
-                currentQuiz = data.quiz;
-                answersCache = data.answersCache;
-                renderQuiz();
-            } else {
-                throw new Error(data.message || '後端回傳資料格式錯誤。');
-            }
-        } catch (error) {
-            console.error('Fetch quiz failed:', error);
-            loadingMsg.classList.add('hidden');
-            errorMsg.classList.remove('hidden');
-            quizLoadArea.classList.remove('hidden');
-            startQuizBtn.classList.remove('hidden');
-        }
-    }
-
-    function renderQuiz() {
-        loadingMsg.classList.add('hidden');
-        quizQuestionsArea.classList.remove('hidden');
-        quizActionsArea.classList.remove('hidden');
-        
-        quizStatus.innerHTML = `
-            <h3 class="text-2xl font-bold text-indigo-700">第 13 章 - 菁英課程模擬考</h3>
-            <p class="text-slate-600 mt-2">請仔細作答，作答完畢後點擊「提交答案並評分」。</p>
-        `;
-
-        let html = '';
-        currentQuiz.forEach((q, index) => {
-            html += `
-                <div class="question-item p-6 border border-indigo-200 rounded-lg shadow-sm bg-indigo-50" data-question-id="${q.id}">
-                    <p class="text-lg font-bold text-slate-800 mb-4">${index + 1}. ${q.topic}</p>
-                    <div class="space-y-3">
-            `;
-            q.options.forEach((option, optionIndex) => {
-                const optionId = `q${q.id}-opt${optionIndex}`;
-                html += `
-                    <label for="${optionId}" class="option-label flex items-start p-3 bg-white rounded-md cursor-pointer hover:bg-indigo-100 transition duration-150 border border-slate-200">
-                        <input type="radio" id="${optionId}" name="question-${q.id}" value="${optionIndex}" class="mt-1 h-5 w-5 text-indigo-600 border-gray-300 focus:ring-indigo-500">
-                        <span class="ml-3 text-base text-slate-700 font-medium"><span class="font-bold mr-2">${optionLabels[optionIndex]}.</span> ${option}</span>
-                    </label>
-                `;
-            });
-            html += `
-                    </div>
-                    <div class="result-feedback mt-3 text-sm font-semibold hidden"></div>
-                </div>
-            `;
-        });
-
-        quizQuestionsArea.innerHTML = html;
-
-        // 隱藏開始按鈕，顯示提交按鈕
-        startQuizBtn.classList.add('hidden');
-    }
     
-    async function submitQuiz() {
-        const userAnswers = [];
-        const questionElements = quizQuestionsArea.querySelectorAll('.question-item');
-        
-        questionElements.forEach(qEl => {
-            const questionId = parseInt(qEl.dataset.questionId);
-            const selectedOption = qEl.querySelector(`input[name="question-${questionId}"]:checked`);
-            
-            userAnswers.push({
-                questionId: questionId,
-                selectedIndex: selectedOption ? parseInt(selectedOption.value) : -1 // -1 for unanswered
-            });
-        });
-
-        if (userAnswers.length !== 10) {
-            alert("題目數量錯誤，請重新載入。");
-            return;
-        }
-
-        // 禁用提交按鈕，顯示載入中
-        submitQuizBtn.textContent = '評分中...請稍候';
-        submitQuizBtn.disabled = true;
-        
-        try {
-            const response = await fetch('/.netlify/functions/submit_quiz', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ userAnswers, answersCache })
-            });
-
-            const data = await response.json();
-            
-            if (data.success) {
-                renderResults(data);
-            } else {
-                alert(data.message || '評分失敗，請稍後再試。');
-            }
-        } catch (error) {
-            console.error('Submit quiz failed:', error);
-            alert('網路錯誤或伺服器無法連接，請稍後再試。');
-        } finally {
-            submitQuizBtn.textContent = '提交答案並評分';
-            submitQuizBtn.disabled = false;
-        }
-    }
-
-    function renderResults(data) {
-        quizQuestionsArea.classList.add('hidden');
-        quizActionsArea.classList.add('hidden');
-        quizLoadArea.classList.add('hidden');
-        quizResultsArea.classList.remove('hidden');
-
-        document.getElementById('correct-count-display').textContent = data.correctCount;
-        document.getElementById('total-score-display').textContent = data.score;
-        
-        quizStatus.innerHTML = `
-            <h3 class="text-2xl font-bold text-indigo-700">測驗完成！</h3>
-            <p class="text-slate-600 mt-2">請檢視下方詳細結果並針對錯誤處複習。</p>
-        `;
-
-        // 顯示詳細結果
-        const detailsArea = document.getElementById('quiz-details-area');
-        detailsArea.innerHTML = '';
-        
-        data.results.forEach((res, index) => {
-            const questionData = currentQuiz.find(q => q.id === res.questionId);
-            const questionTitle = questionData ? questionData.topic : `問題 ${index + 1}`;
-            
-            const correctOptionIndex = res.correctSelectedIndex;
-            const userSelectedIndex = res.userSelectedIndex;
-            
-            let resultHtml = `
-                <div class="p-4 rounded-lg shadow-sm border ${res.isCorrect ? 'bg-green-50 border-green-300' : 'bg-red-50 border-red-300'}">
-                    <p class="font-bold text-lg mb-2 ${res.isCorrect ? 'text-green-800' : 'text-red-800'}">
-                        ${index + 1}. ${questionTitle} 
-                        <span class="float-right text-sm font-extrabold">${res.isCorrect ? '✅ 正確' : '❌ 錯誤'}</span>
-                    </p>
-                    <ul class="space-y-1 text-sm text-slate-700">
-            `;
-            
-            questionData.options.forEach((option, optIndex) => {
-                let classList = '';
-                // Highlight correct answer
-                if (optIndex === correctOptionIndex) {
-                    classList = 'text-green-700 font-bold bg-green-200 p-1 rounded-md';
-                }
-                // Highlight incorrect user answer
-                if (!res.isCorrect && optIndex === userSelectedIndex && userSelectedIndex !== -1) {
-                    classList = 'text-red-700 font-bold bg-red-200 p-1 rounded-md line-through';
-                }
-                
-                resultHtml += `<li class="${classList}"> <span class="font-bold mr-2">${optionLabels[optIndex]}.</span> ${option}</li>`;
-            });
-            
-            if (res.userSelectedIndex === -1) {
-                resultHtml += `<li class="text-red-700 font-bold mt-2">作答狀況：未作答</li>`;
-            } else if (!res.isCorrect) {
-                 resultHtml += `<li class="text-red-700 font-bold mt-2">您的答案：${optionLabels[userSelectedIndex]} 錯誤</li>`;
-            }
-            
-            resultHtml += `
-                    </ul>
-                    <p class="text-xs text-slate-500 mt-3">課程章節來源: ${answersCache.find(a => a.id === res.questionId)?.source || 'N/A'}</p>
-                </div>
-            `;
-            detailsArea.innerHTML += resultHtml;
-        });
-    }
-
-    // 綁定事件監聽器
-    startQuizBtn.addEventListener('click', fetchQuiz);
-    submitQuizBtn.addEventListener('click', submitQuiz);
-    retakeQuizBtn.addEventListener('click', resetQuizUI);
    const closeCertificationModal = document.getElementById('close-certification-modal');
     const eliteCertificationModal = document.getElementById('elite-certification-modal');
     if (closeCertificationModal) {
@@ -4796,7 +4538,6 @@ function handleProgressLogic(sectionId) {
     
 </body>
 </html>
-
 
 
 
