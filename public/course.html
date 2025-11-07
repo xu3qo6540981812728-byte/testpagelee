@@ -4621,13 +4621,17 @@ function handleProgressLogic(sectionId) {
         submitQuizBtn.disabled = !allAnswered;
     }
 
-    function handleOptionClick(event) {
+   function handleOptionClick(event) {
         if (isQuizSubmitted) return; 
         
+        // --- 修正重點：使用 event.target.closest 確保找到正確的選項容器 ---
         const optionItem = event.target.closest('.option-item');
         if (!optionItem) return;
         
         const questionDiv = optionItem.closest('.quiz-question');
+        // 如果題目容器不存在（例如點擊到區域外），則停止
+        if (!questionDiv) return;
+        
         const questionId = questionDiv.dataset.questionId;
         
         // 移除同一個問題的其他選項的 selected 類別
@@ -4712,13 +4716,7 @@ function handleProgressLogic(sectionId) {
         submitQuizBtn.disabled = true;
         updateSubmitButtonState();
         
-        // --- 修正重點：在這裡綁定選項點擊事件 ---
-        if (quizQuestionsArea) {
-             // 先移除舊的綁定（如果有的話，雖然理論上應該沒有），然後綁定新的
-             quizQuestionsArea.removeEventListener('click', handleOptionClick); 
-             quizQuestionsArea.addEventListener('click', handleOptionClick);
-        }
-        // --- 修正重點結束 ---
+       
     }
 
     async function submitQuiz() {
@@ -4847,7 +4845,10 @@ function handleProgressLogic(sectionId) {
     if (submitQuizBtn) submitQuizBtn.addEventListener('click', submitQuiz);
     if (retakeQuizBtn) retakeQuizBtn.addEventListener('click', fetchQuiz);
     if (backToTocQuizBtn) backToTocQuizBtn.addEventListener('click', showTOC); 
-
+if (mainContentArea) {
+        
+        mainContentArea.addEventListener('click', handleOptionClick); 
+    }
 
    
 });
@@ -4890,6 +4891,7 @@ function handleProgressLogic(sectionId) {
     
 </body>
 </html>
+
 
 
 
