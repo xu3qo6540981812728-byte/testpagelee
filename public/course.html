@@ -4782,6 +4782,10 @@ function handleProgressLogic(sectionId) {
             if (result.success) {
                 isQuizSubmitted = true;
                 renderResults(result);
+            const quizContainer = document.getElementById('quiz-container');
+                if (quizContainer) {
+                    quizContainer.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
             } else {
                 quizStatus.className = 'mb-4 p-4 bg-red-100 rounded-lg text-red-800 font-semibold text-center';
                 quizStatus.innerHTML = `<i class="fas fa-exclamation-triangle mr-2"></i>提交失敗：${result.message || '後端處理成績時發生錯誤。'}`;
@@ -4912,6 +4916,7 @@ if (mainContentArea) {
     
 </body>
 </html>
+
 
 
 
