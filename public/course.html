@@ -3368,12 +3368,13 @@ async function showManagerDashboard(chapterId, title) {
     // 1. 清除任何由 JS 設置的行內 paddingTop (避免 chapter0 殘留)
     mainContentArea.style.paddingTop = ''; 
     
-    // 2. 移除大的 pt-24/md:pt-10 (適用於沒有 sticky header 的頁面)
-    mainContentArea.classList.remove('pt-24');
-    mainContentArea.classList.remove('md:pt-10'); 
+   // 2. 確保手機版使用 pt-24 (避開 Header)，桌面版使用 md:pt-10
+    mainContentArea.classList.remove('pt-6'); // 移除 pt-6
+    mainContentArea.classList.add('pt-24', 'md:pt-10'); // 確保恢復預期的 CSS 類別
     
-    // 3. 確保有基本的頂部間距 (例如 pt-6 或 pt-8)
-    mainContentArea.classList.add('pt-6'); // 使用 pt-6 作為基本間距
+    // 恢復桌面版的基本 padding (pt-10 ≈ 40px)
+    mainContentArea.classList.remove('md:pt-10');
+    mainContentArea.classList.add('md:pt-10');
     
     mainContentArea.querySelectorAll('.content-section').forEach(section => section.classList.remove('active'));
     
@@ -4930,6 +4931,7 @@ if (mainContentArea) {
     
 </body>
 </html>
+
 
 
 
