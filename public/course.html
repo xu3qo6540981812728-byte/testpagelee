@@ -3865,10 +3865,7 @@ function showContent(sectionId, element) {
         const mainContent = document.querySelector('main');
         
         if (progressArea) {
-    if (sectionId === 'chapter0') {
-        // 【修正】: 僅確保移除掉 pt-24，讓內容從頂部開始
-        mainContent.classList.remove('pt-24'); 
-        
+    if (sectionId === 'chapter0') {        
         // 移除所有 JS 設置的行內樣式
         mainContent.style.paddingTop = ''; 
         
@@ -3884,8 +3881,6 @@ function showContent(sectionId, element) {
         
         // 清除行內樣式並恢復預設 CSS class
         mainContent.style.paddingTop = ''; 
-        mainContent.classList.remove('pt-24', 'pt-6'); 
-        mainContent.classList.add('pt-24'); // 恢復到原始 CSS 預期狀態
     }
 }
         
@@ -4931,6 +4926,7 @@ if (mainContentArea) {
     
 </body>
 </html>
+
 
 
 
