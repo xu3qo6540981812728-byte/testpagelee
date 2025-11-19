@@ -1313,15 +1313,19 @@ const loggedInRole = sessionStorage.getItem('loggedInRole');
 function showContent(sectionId, element) {
         
        localStorage.setItem('lastChapterId', sectionId);
-        mainContentArea.querySelectorAll('.content-section').forEach(section => section.classList.remove('active'));
-        const newSection = mainContentArea.querySelector(`#${sectionId}`);
-        if(newSection) newSection.classList.add('active');
+                      mainContentArea.querySelectorAll('.content-section').forEach(section => section.classList.remove('active'));
+                const newSection = mainContentArea.querySelector(`#${sectionId}`); 
+        if(newSection) {
+             setTimeout(() => {
+                 newSection.classList.add('active');
+             }, 50);
+        }
         
         document.body.scrollTop = 0;
         document.documentElement.scrollTop = 0;
         
         
-        sidebarNav.querySelectorAll('.nav-link').forEach(link => link.classList.remove('active'));
+       sidebarNav.querySelectorAll('.nav-link').forEach(link => link.classList.remove('active'));
         if(element) element.classList.add('active');
         
         if(element) mobileHeaderTitle.textContent = element.textContent.trim().substring(2);
@@ -2529,6 +2533,7 @@ function bindQuizEventListeners() {
     </script>
 </body>
 </html>
+
 
 
 
