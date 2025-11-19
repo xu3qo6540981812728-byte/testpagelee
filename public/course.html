@@ -1362,6 +1362,60 @@ function showContent(sectionId, element) {
         updateFloatingButtons(sectionId);
        
         if (sectionId === 'chapter12') {
+    // 確保內容已動態載入，這裡延遲執行以確保 DOM 元素存在
+    setTimeout(() => {
+        // 重新獲取輪播圖元素，確保它們是當前 DOM 中的元素
+        const currentCarouselTitle = document.getElementById('carousel-title');
+        const currentClickLayer = document.getElementById('carousel-click-layer');
+        const currentSlides = document.querySelectorAll('#chapter12 .carousel-slide');
+        const currentTotalSlides = currentSlides.length; 
+        
+        let currentSlideIndex = 0; // 重置輪播索引
+        
+        function updateCarousel() {
+            currentSlides.forEach((slide, index) => {
+                const slideElement = document.querySelector(`#chapter12 .carousel-slide[data-index="${index}"]`);
+                if (index === currentSlideIndex) {
+                    slideElement.classList.remove('opacity-0');
+                    slideElement.classList.add('opacity-100');
+                } else {
+                    slideElement.classList.remove('opacity-100');
+                    slideElement.classList.add('opacity-0');
+                }
+            });
+            
+            // 調整容器高度
+            const currentSlideImage = document.querySelector(`#chapter12 .carousel-slide[data-index="${currentSlideIndex}"]`);
+            const carouselSlidesContainer = document.getElementById('carousel-slides');
+            if (currentSlideImage && carouselSlidesContainer) {
+                carouselSlidesContainer.style.height = currentSlideImage.offsetHeight + 'px';
+            }
+        }
+        
+        function nextSlide() {
+            currentSlideIndex++;
+            if (currentSlideIndex >= currentTotalSlides) {
+                currentSlideIndex = 0; 
+            }
+            updateCarousel();
+        }
+
+        // 移除舊的事件監聽器（如果存在）
+        if (currentClickLayer) {
+            currentClickLayer.onclick = nextSlide;
+        }
+        if (currentCarouselTitle) {
+            currentCarouselTitle.onclick = () => {
+                currentSlideIndex = 0; 
+                updateCarousel();
+            };
+        }
+        
+        // 初始化輪播圖狀態
+        updateCarousel();
+        
+    }, 200); // 使用一個短暫的延遲，確保動態載入的內容已經渲染
+}
             
             if (typeof resetCarousel === 'function') {
                 resetCarousel();
@@ -2011,56 +2065,7 @@ function handleProgressLogic(sectionId) {
         }
     }
        
-    const carouselTitle = document.getElementById('carousel-title');
-    const clickLayer = document.getElementById('carousel-click-layer');
-    const slides = document.querySelectorAll('.carousel-slide');
-    const totalSlides = slides.length; 
-    let currentSlideIndex = 0;
-    function updateCarousel() {
-        slides.forEach((slide, index) => {
-           
-            const slideElement = document.querySelector(`.carousel-slide[data-index="${index}"]`);
-            
-            if (index === currentSlideIndex) {
-                slideElement.classList.remove('opacity-0');
-                slideElement.classList.add('opacity-100');
-            } else {
-                slideElement.classList.remove('opacity-100');
-                slideElement.classList.add('opacity-0');
-            }
-        });
-        
-        
-        const currentSlideImage = document.querySelector(`.carousel-slide[data-index="${currentSlideIndex}"]`);
-        if (currentSlideImage) {
-            document.getElementById('carousel-slides').style.height = currentSlideImage.offsetHeight + 'px';
-        }
-    }
-    function nextSlide() {
-        currentSlideIndex++;
-        if (currentSlideIndex >= totalSlides) {
-            currentSlideIndex = 0; 
-        }
-        updateCarousel();
-    }
-    
-    function resetCarousel() {
-        currentSlideIndex = 0;
-        updateCarousel();
-    }
    
-    clickLayer.addEventListener('click', nextSlide);
-    carouselTitle.addEventListener('click', () => {
-        currentSlideIndex = 0; 
-        updateCarousel();
-    });
-    
-    window.addEventListener('resize', updateCarousel);
-    
-    window.onload = function() {
-        updateCarousel();
-    };
-    
    const closeCertificationModal = document.getElementById('close-certification-modal');
     const eliteCertificationModal = document.getElementById('elite-certification-modal');
     if (closeCertificationModal) {
@@ -2500,6 +2505,7 @@ function bindQuizEventListeners() {
     </script>
 </body>
 </html>
+
 
 
 
