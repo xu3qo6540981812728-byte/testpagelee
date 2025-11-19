@@ -121,13 +121,28 @@
         }
         
         
-        .content-card, .toc-card {
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
-        .content-card:hover, .toc-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
-        }
+        .toc-card {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    /* 增加基礎發光效果 */
+    box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1), 
+                0 0 5px rgba(79, 70, 229, 0.2); /* 預設較柔和 */
+}
+.toc-card:hover {
+    transform: translateY(-5px);
+    /* 滑鼠懸停時，讓影子變得更明顯，帶有藍紫色發光 */
+    box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1), 
+                0 8px 10px -6px rgb(0 0 0 / 0.1),
+                0 0 15px rgba(79, 70, 229, 0.6), /* 主要發光體 */
+                0 0 25px rgba(79, 70, 229, 0.4);
+}
+
+/* 特別樣式的卡片 (例如：實戰模擬考/團隊儀表板/工具箱) 可以考慮套用 `scribble-border` 的發光 */
+.scribble-border:hover {
+    transform: translate(-2px, -2px);
+    box-shadow: 6px 6px 0 #000000, 
+                0 0 10px rgba(255, 193, 7, 0.8), /* 讓這個特殊的邊框也發光，這裡使用黃色/金色 */
+                0 0 20px rgba(255, 193, 7, 0.5);
+}
         
         
         
@@ -2574,6 +2589,7 @@ function bindQuizEventListeners() {
     </script>
 </body>
 </html>
+
 
 
 
