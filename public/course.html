@@ -1663,7 +1663,6 @@ function showContent(sectionId, element) {
 
 // 在 DOMContentLoaded 監聽器內執行，對所有課程卡片應用效果
 document.querySelectorAll('.toc-card').forEach(setupTranslationParallaxEffect);
-const mainContentArea = document.querySelector('main');
 const MAX_GLOBAL_MOVEMENT = 3; // 頁面元素最大移動像素 (數值要小於卡片，製造層次感)
 const MAX_BACKGROUND_MOVEMENT = 5; // 背景元素最大移動像素
 
@@ -2701,6 +2700,7 @@ function bindQuizEventListeners() {
     </script>
 </body>
 </html>
+
 
 
 
