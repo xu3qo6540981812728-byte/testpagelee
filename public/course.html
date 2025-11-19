@@ -1316,7 +1316,7 @@ function showContent(sectionId, element) {
                       mainContentArea.querySelectorAll('.content-section').forEach(section => section.classList.remove('active'));
                 const newSection = mainContentArea.querySelector(`#${sectionId}`); 
         if(newSection) {
-             setTimeout(() => {
+            
                  newSection.classList.add('active');
              }, 50);
         }
@@ -2533,6 +2533,7 @@ function bindQuizEventListeners() {
     </script>
 </body>
 </html>
+
 
 
 
