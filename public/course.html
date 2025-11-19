@@ -1294,13 +1294,8 @@ function showContent(sectionId, element) {
         });
     }
     let searchableData = [];
-    // 全域變數，用於儲存從 API 獲取的完整課程內容 { 'chapter1': '<html>...', ... }
-    let fullCourseContent = {}; 
-
-    function createSearchIndex() {
-        // ... (略過原有的 createSearchIndex 邏輯)
-        // 注意：原有的 createSearchIndex 會在後面執行，您不需要動它，它會自動使用載入後的內容。
-    }
+    
+function createSearchIndex() {}
     
     // 【新增函數：從後端 API 獲取課程內容】
     async function fetchCourseContent() {
@@ -2366,6 +2361,7 @@ function bindQuizEventListeners() {
     </script>
 </body>
 </html>
+
 
 
 
