@@ -655,7 +655,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (targetDiv && chapterId.startsWith('chapter') && chapterId !== 'chapter0' && chapterId !== 'chapter13' && chapterId !== 'chapter14') {
         
-        const htmlString = dynamicContent[chapterId];
+        const htmlString = dynamicContent[chapterId].trim();
         
         // 🚨 替換成更直接的 DOM 節點處理方式
         
@@ -2538,6 +2538,7 @@ function bindQuizEventListeners() {
     </script>
 </body>
 </html>
+
 
 
 
