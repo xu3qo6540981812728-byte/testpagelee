@@ -35,7 +35,7 @@
                         300: '#c2bcae',
                         400: '#a79d8b',
                         500: '#91826f',
-                        600: '#7e6c5c', // 我們要用的主要顏色
+                        600: '#7e6c5c', 
                         700: '#6d5a4c',
                         800: '#5f4e41',
                         900: '#53443a',
@@ -648,28 +648,50 @@
 </div>
     <script>
         let allMemberProgressDetails = {};
-        document.addEventListener('keydown', function(e) {
-    // 阻止 Ctrl+U (查看原始碼，keyCode 85)
-    // 阻止 F12 (開啟開發者工具，keyCode 123)
-    // 阻止 Ctrl+Shift+I 或 Cmd+Option+I (開啟開發者工具，keyCode 73)
-    // 阻止 Ctrl+C 或 Cmd+C (複製)
-    if (e.ctrlKey && (e.keyCode === 85 || e.keyCode === 73 || e.keyCode === 67) || e.keyCode === 123) { 
-        e.preventDefault(); 
-        // 可以增加一個提示訊息，例如：
-        // alert("本課程內容受版權保護，禁止複製和檢查元素。");
-    }
-});
+       
 document.addEventListener('DOMContentLoaded', () => {
+    document.addEventListener('contextmenu', function(e) {
+        e.preventDefault(); 
+        console.log("右鍵選單已禁用。"); 
+    });
+
+    
+    document.addEventListener('keydown', function(e) {
+        
+        const isMac = (navigator.platform.toUpperCase().indexOf('MAC') >= 0);
+        const commandOrCtrl = isMac ? e.metaKey : e.ctrlKey;
+
+        
+        if (e.key === 'F12') {
+            e.preventDefault();
+        }
+        
+        
+        if ((commandOrCtrl && e.shiftKey && e.key === 'I') || (commandOrCtrl && e.shiftKey && e.key === 'i')) {
+            e.preventDefault();
+        }
+
+        
+        if (commandOrCtrl && (e.key === 'U' || e.key === 'u')) {
+             e.preventDefault();
+        }
+        
+        
+        if (commandOrCtrl && (e.key === 'C' || e.key === 'c')) {
+             e.preventDefault();
+        }
+        
+    });
    async function loadDynamicContent() {
     try {
-        // 呼叫 Netlify Function
+        
         const response = await fetch('/.netlify/functions/get_course_detail');
         const data = await response.json();
         
         if (data.success && data.content) {
             const dynamicContent = data.content;
             
-            // 遍歷後端傳來的內容
+            
             Object.keys(dynamicContent).forEach(chapterId => {
     const targetDiv = document.getElementById(chapterId);
 
@@ -677,39 +699,33 @@ document.addEventListener('DOMContentLoaded', () => {
         
         const htmlString = dynamicContent[chapterId].trim();
         
-        // 🚨 替換成更直接的 DOM 節點處理方式
         
-        // 1. 創建一個臨時容器
         const tempDiv = document.createElement('div');
-        // 2. 將包含整個章節 div 的 HTML 放入臨時容器
+        
         tempDiv.innerHTML = htmlString;
         
-        // 3. 取得臨時容器內的第一個子元素 (也就是 JSON 裡帶 ID 的那個容器)
+        
         const contentContainer = tempDiv.firstElementChild; 
         
         if (contentContainer) {
-            // 4. 將 contentContainer 的所有子節點 (Nodes) 逐一移動到 targetDiv
-            // 這是最安全且最不會發生解析錯誤的方法
             
-            // **清除 targetDiv 內所有現有內容 (如果有的話)**
             targetDiv.innerHTML = '';
             
-            // **將所有子節點移動到目標 DIV**
+            
             while (contentContainer.firstChild) {
                 targetDiv.appendChild(contentContainer.firstChild);
             }
             
         } else {
-            // 如果解析失敗，將整個 HTML 字串（包含外層 DIV）當作文字內容注入
-            // 這可能會導致 ID 重複但確保內容不會遺失
+           
             targetDiv.innerHTML = htmlString;
         }
-                    // ---------------------------------------------
+                   
                 }
             });
             console.log('✅ 課程內容已從後端載入並插入完成！');
             
-            // 重新建立搜尋索引
+            
             createSearchIndex();
         } else {
             console.error('❌ 從後端載入內容失敗:', data.message);
@@ -718,7 +734,7 @@ document.addEventListener('DOMContentLoaded', () => {
         console.error('❌ 載入動態內容時發生錯誤:', error);
     }
 }
-// --- 確保在應用程式啟動時呼叫此函式 ---
+
 loadDynamicContent();
     const audioPlayerContainer = document.getElementById('audio-player-container');
     const audioFabBtn = document.getElementById('audio-fab-btn'); 
@@ -1415,15 +1431,15 @@ function showContent(sectionId, element) {
         updateFloatingButtons(sectionId);
        
         if (sectionId === 'chapter12') {
-    // 確保內容已動態載入，這裡延遲執行以確保 DOM 元素存在
+    
     setTimeout(() => {
-        // 重新獲取輪播圖元素，確保它們是當前 DOM 中的元素
+        
         const currentCarouselTitle = document.getElementById('carousel-title');
         const currentClickLayer = document.getElementById('carousel-click-layer');
         const currentSlides = document.querySelectorAll('#chapter12 .carousel-slide');
         const currentTotalSlides = currentSlides.length; 
         
-        let currentSlideIndex = 0; // 重置輪播索引
+        let currentSlideIndex = 0; 
         
         function updateCarousel() {
             currentSlides.forEach((slide, index) => {
@@ -1437,7 +1453,7 @@ function showContent(sectionId, element) {
                 }
             });
             
-            // 調整容器高度
+            
             const currentSlideImage = document.querySelector(`#chapter12 .carousel-slide[data-index="${currentSlideIndex}"]`);
             const carouselSlidesContainer = document.getElementById('carousel-slides');
             if (currentSlideImage && carouselSlidesContainer) {
@@ -1453,7 +1469,7 @@ function showContent(sectionId, element) {
             updateCarousel();
         }
 
-        // 移除舊的事件監聽器（如果存在）
+       
         if (currentClickLayer) {
             currentClickLayer.onclick = nextSlide;
         }
@@ -1464,10 +1480,10 @@ function showContent(sectionId, element) {
             };
         }
         
-        // 初始化輪播圖狀態
+        
         updateCarousel();
         
-    }, 200); // 使用一個短暫的延遲，確保動態載入的內容已經渲染
+    }, 200); 
 }
             
             if (typeof resetCarousel === 'function') {
@@ -2514,32 +2530,32 @@ function bindQuizEventListeners() {
         const modalImage = document.getElementById('modal-image');
         const closeModalBtn = document.getElementById('close-modal-btn');
 
-        // 點擊圖片時開啟 Modal
+        
         window.openModal = function(element) {
             const src = element.getAttribute('data-src');
             if (src) {
                 modalImage.src = src;
                 imageModal.classList.remove('hidden');
                 imageModal.classList.add('flex');
-                // 阻止背景滾動
+                
                 document.body.style.overflow = 'hidden';
             }
         }
 
-        // 關閉 Modal 的函式
+        
         function closeModal() {
             imageModal.classList.add('hidden');
             imageModal.classList.remove('flex');
-            // 恢復背景滾動
+
             document.body.style.overflow = 'auto';
         }
 
-        // 綁定關閉事件
+        
         if (closeModalBtn) {
             closeModalBtn.addEventListener('click', closeModal);
         }
         
-        // 點擊 Modal 外部 (黑色背景) 也會關閉
+       
         if (imageModal) {
             imageModal.addEventListener('click', (e) => {
                 if (e.target === imageModal) {
@@ -2548,16 +2564,19 @@ function bindQuizEventListeners() {
             });
         }
 
-        // 按下 ESC 鍵關閉 Modal
+        
         document.addEventListener('keydown', (e) => {
             if (e.key === 'Escape' && imageModal.classList.contains('flex')) {
                 closeModal();
             }
         });
-        // ^^^^ 圖片放大功能程式碼結束 ^^^^
+        
     </script>
 </body>
 </html>
+
+
+
 
 
 
