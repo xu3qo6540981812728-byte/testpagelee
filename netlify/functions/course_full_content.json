@@ -148,7 +148,7 @@
 </div>
         </div>",
         
-        "chapter3": "<div id=\"chapter3\" class=\"content-section space-y-8">
+        "chapter2": "<div id=\"chapter2\" class=\"content-section space-y-8">
             <header class=" ">
                 <h2 class="text-4xl font-bold text-slate-800 border-b-4 border-indigo-500 pb-3 mb-2">認識謄本與建物型態</h2>
                 <p class="text-slate-500">產權的照妖鏡，保障交易安全的第一步</p>
@@ -499,6 +499,125 @@
 </div>
                 </div>
             </div>",
+        
+        "chapter3": "<div id=\"chapter3\" class=\"content-section space-y-8">
+            <header class=" ">
+                <h2 class="text-4xl font-bold text-slate-800 border-b-4 border-indigo-500 pb-3 mb-2">代書流程</h2>
+                <p class="text-slate-500">從簽約到交屋的完整路徑圖</p>
+            </header>
+            <div class="bg-white p-8 rounded-xl shadow-lg content-card animate-on-scroll">
+            <h3 class="text-2xl font-semibold text-slate-700 mb-4">代書流程的重要性</h3>
+            <p class="text-slate-600 mb-4 leading-relaxed">代書流程中業務有主動回報的義務，且非常適用於接委託及收斡旋時，展現專業予客戶，因此身為專業的房仲業務，要非常了解代書流程。</p>
+            <div class="space-y-3">
+                <div class="p-4 bg-indigo-50 rounded-lg">
+                    <p class="font-bold text-indigo-800">重點一：告知現在進行狀況</p>
+                </div>
+                <div class="p-4 bg-indigo-50 rounded-lg">
+                    <p class="font-bold text-indigo-800">重點二：預計後續進行事項</p>
+                    <p class="text-sm text-slate-600 mt-2">在回報過程中，要為後續流程預留比較寬鬆的時間給客戶，避免因流程延誤造成客戶預期落差！</p>
+                </div>
+            </div>
+        </div>
+            <div class="bg-white p-8 rounded-xl shadow-lg content-card  ">
+                <h3 class="text-2xl font-semibold text-slate-700 mb-4">買賣過戶流程總覽</h3>
+                <img src="images/image_578e5e.png" alt="買賣過戶流程圖" class="w-full rounded-lg shadow-md mb-8 border">
+                <div class="relative">
+                    <!-- Timeline line -->
+                    <div class="absolute left-4 top-0 h-full w-0.5 bg-slate-300"></div>
+                    <!-- Timeline items -->
+                    <div class="space-y-8">
+                        <div class="relative pl-10">
+                            <div class="absolute left-0 top-1.5 w-5 h-5 bg-indigo-500 rounded-full border-4 border-white shadow"></div>
+                            <h4 class="font-bold text-lg">1. 簽約</h4>
+                            <p class="text-slate-600">買賣雙方簽訂契約，確認標的、價金、付款方式。買方於三天內匯入第一成的款項-簽約款，並開始申請貸款(約莫1個月~2個月或以上)。簽約前務必調閱當日謄本，確認產權無限制登記。</p>
+                        </div>
+                        <div class="relative pl-10">
+                            <div class="absolute left-0 top-1.5 w-5 h-5 bg-indigo-500 rounded-full border-4 border-white shadow"></div>
+                            <h4 class="font-bold text-lg">2. 用印/報稅</h4>
+                            <p class="text-slate-600">備齊文件（身分證、印鑑章、印鑑證明等），待買方貸款找得差不多了，代書會向稅捐機關申報土地增值稅、契稅。稅務申報約需7-21個工作天。</p>
+                        </div>
+                        <div class="relative pl-10">
+                            <div class="absolute left-0 top-1.5 w-5 h-5 bg-indigo-500 rounded-full border-4 border-white shadow"></div>
+                            <h4 class="font-bold text-lg">3. 完稅</h4>
+                            <p class="text-slate-600">稅單核發後，買方支付第二成款項-完稅款。若貸款金額不足尾款，需補足差額。代書繳納相關稅費。</p>
+                        </div>
+                        <div class="relative pl-10">
+                            <div class="absolute left-0 top-1.5 w-5 h-5 bg-indigo-500 rounded-full border-4 border-white shadow"></div>
+                            <h4 class="font-bold text-lg">4. 過戶/設定</h4>
+                            <p class="text-slate-600">至地政事務所辦理所有權移轉登記（過戶），及買方貸款的抵押權設定。此階段約需3-5天。</p>
+                        </div>
+                        <div class="relative pl-10">
+                            <div class="absolute left-0 top-1.5 w-5 h-5 bg-indigo-500 rounded-full border-4 border-white shadow"></div>
+                            <h4 class="font-bold text-lg">5. 撥款/代償/塗銷</h4>
+                            <p class="text-slate-600">買方銀行撥款至履保帳戶，優先清償賣方原貸款(代償)，並向賣方銀行領取清償證明，辦理塗銷原抵押權設定。</p>
+                        </div>
+                        <div class="relative pl-10">
+                            <div class="absolute left-0 top-1.5 w-5 h-5 bg-indigo-500 rounded-full border-4 border-white shadow"></div>
+                            <h4 class="font-bold text-lg">6. 交屋</h4>
+                            <p class="text-slate-600">代償後剩餘款項二次撥款至屢保專戶後，約雙方點交房屋、鑰匙，結算水電瓦斯管理費，完成履保結案，賣方取得扣除相關費用之售屋剩餘款項。</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+             <div class="bg-white p-8 rounded-xl shadow-lg content-card  ">
+                 <h3 class="text-2xl font-semibold text-slate-700 mb-4">簽約與稅務前置作業</h3>
+                 <div class="space-y-6">
+                    <div>
+                        <h4 class="font-bold text-lg text-indigo-600 mb-2">簽約要帶什麼？</h4>
+                        <div class="grid md:grid-cols-2 gap-4 text-slate-600">
+                            <div>
+                                <p class="font-semibold">買方：</p>
+                                <ul class="list-disc list-inside ml-4"><li>身分證、印章</li></ul>
+                            </div>
+                             <div>
+                                <p class="font-semibold">賣方：</p>
+                                <ul class="list-disc list-inside ml-4"><li>身分證、印鑑章、權狀、印鑑證明</li></ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="border-t pt-4">
+                        <h4 class="font-bold text-lg text-indigo-600 mb-2">產權確認</h4>
+                        <ul class="list-disc list-inside text-slate-600 space-y-1">
+                            <li>簽約前應申請<span class="font-bold">當天</span>的土地及建物謄本。</li>
+                            <li>確認坪數是否正確 (平方公尺 * 0.3025 = 坪)。</li>
+                            <li>是否有限制登記 (如假扣押、假處分) 尚未塗銷。</li>
+                            <li>是否有私人設定 (租賃公司、自然人)。</li>
+                            <li>土地使用分區是否為住宅區、工業區等。</li>
+                        </ul>
+                    </div>
+                    <div class="border-t pt-4">
+                        <h4 class="font-bold text-lg text-indigo-600 mb-2">印鑑證明</h4>
+                         <div class="flex flex-col md:flex-row gap-6 items-center">
+                            <ul class="list-disc list-inside text-slate-600 space-y-1 flex-1">
+                                <li>申請人需年滿18歲，未成年人須由法定代理人辦理。</li>
+                                <li>攜帶國民身分證、印章至戶籍所在地戶政事務所辦理，申請印鑑證明後，申請的印章即為印鑑章。</li>
+                                <li>注意申請日期須為登記原因發生日期前1年內。</li>
+                            </ul>
+                            <img src="images/image_578e83.jpg" alt="印鑑證明範本" class="w-full md:w-1/2 rounded-lg shadow-md border">
+                         </div>
+                    </div>
+                    <div class="border-t pt-4">
+                        <h4 class="font-bold text-lg text-indigo-600 mb-2">完稅重點</h4>
+                         <ul class="list-disc list-inside text-slate-600 space-y-1">
+                            <li><span class="font-bold">買方服務費：</span>可提醒買方於完稅款匯入時一併支付。</li>
+                            <li>若買方不貸款，完稅款須全數匯入履保才能辦理過戶。</li>
+                            <li><span class="font-bold">貸款差額：</span>若核貸金額少於尾款，買方須以現金補足差額。</li>
+                            <li><span class="font-bold">其他費用：</span>稅規費、代書費、代墊款 (如印花稅、契稅、設定費、保險費等)。</li>
+                            <li>賣方應繳的土增稅等，將由履保帳戶中扣除。</li>
+                        </ul>
+                    </div>
+                    <div class="border-t pt-4">
+                        <h4 class="font-bold text-lg text-indigo-600 mb-2">交屋重點</h4>
+                         <ul class="list-disc list-inside text-slate-600 space-y-3">
+                            <li><span class="font-bold">費用切算：</span>水、電、瓦斯、管理費，以及地價稅(以8/31為基準日)與房屋稅(以課稅期間分算)，依使用天數比例分算。</li>
+                            <li><span class="font-bold">戶籍遷出：</span>確認賣方戶籍已遷出，並提醒買方遷入以申請自用住宅稅率。</li>
+                            <li><span class="font-bold">點交確認：</span>詳細檢視屋況（如滲漏水）、核對附贈設備項目。「看屋不是驗屋」，中古屋驗屋重在排查重大瑕疵。</li>
+                             <li><span class="font-bold">簽署文件：</span>簽立履保結案單、水電瓦斯更名文件。</li>
+                        </ul>
+                    </div>
+                 </div>
+            </div>
+        </div>",
         
         "chapter4": "<div id=\"chapter4\" class=\"content-section space-y-8">
                 <header class=" ">
