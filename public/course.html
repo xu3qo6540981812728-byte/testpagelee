@@ -122,14 +122,17 @@
         
         
         .toc-card {
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    /* 增加基礎發光效果 */
+    /* 確保 transform 有過渡效果 */
+    transition: transform 0.3s ease-out, box-shadow 0.3s ease;
+    cursor: pointer; /* 讓使用者知道可以互動 */
+    /* 增加基礎發光效果 (來自您上一個請求的保留) */
     box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1), 
-                0 0 5px rgba(79, 70, 229, 0.2); /* 預設較柔和 */
+                0 0 5px rgba(79, 70, 229, 0.2);
 }
 .toc-card:hover {
-    transform: translateY(-5px);
-    /* 滑鼠懸停時，讓影子變得更明顯，帶有藍紫色發光 */
+    /* 移除 transform: translateY(-5px); 讓 JS 全權管理移動 */
+    
+    /* 保留懸停發光效果 */
     box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1), 
                 0 8px 10px -6px rgb(0 0 0 / 0.1),
                 0 0 15px rgba(79, 70, 229, 0.6), /* 主要發光體 */
@@ -1615,7 +1618,48 @@ function showContent(sectionId, element) {
     appWrapper.style.display = 'block'; 
     renderTOCCards(chapters);
 
+    function setupTranslationParallaxEffect(card) {
+    const MAX_MOVEMENT = 8; // 設定卡片最大平移像素
+
+    // 1. 滑鼠移動事件：計算移動距離並應用 transform
+    card.addEventListener('mousemove', (e) => {
+        const rect = card.getBoundingClientRect();
+        
+        // 計算滑鼠在卡片中的相對位置
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+
+        // 計算中心點的偏差 (normalized to -1 to 1)
+        const centerX = rect.width / 2;
+        const centerY = rect.height / 2;
+        
+        const offsetX = (x - centerX) / centerX;
+        const offsetY = (y - centerY) / centerY;
+
+        // 計算平移距離 (使用負號產生漂浮效果，卡片會往滑鼠的**反方向**移動)
+        const moveX = -offsetX * MAX_MOVEMENT;
+        const moveY = -offsetY * MAX_MOVEMENT;
+
+        // 應用 transform: 包含懸停抬升 5px (translateY(-5px)) 和平移效果
+        card.style.transform = `translateY(-5px) translateX(${moveX}px) translateY(${moveY}px)`;
+    });
     
+    // 2. 滑鼠進入事件：設置基礎抬升效果
+    card.addEventListener('mouseenter', () => {
+        // 進入時先設置基礎抬升，讓 transform transition 生效
+        card.style.transform = 'translateY(-5px)'; 
+    });
+
+    // 3. 滑鼠移出事件：將卡片歸位
+    card.addEventListener('mouseleave', () => {
+        // 移出時將 transform 歸零
+        card.style.transform = 'translateY(0px) translateX(0px)';
+    });
+}
+
+
+// 在 DOMContentLoaded 監聽器內執行，對所有課程卡片應用效果
+document.querySelectorAll('.toc-card').forEach(setupTranslationParallaxEffect);
 
     let navChapterCount = 0; 
 
@@ -2589,6 +2633,7 @@ function bindQuizEventListeners() {
     </script>
 </body>
 </html>
+
 
 
 
