@@ -1,16 +1,8 @@
 // netlify/functions/get_course_detail.js
-const path = require('path');
-const fs = require('fs');
 
-const filePath = path.join(__dirname, 'course_full_content.json');
-let fullCourseContent = {};
-
-try {
-    const rawData = fs.readFileSync(filePath, 'utf8');
-    fullCourseContent = JSON.parse(rawData).content; // 僅提取 "content" 鍵下的內容
-} catch (error) {
-    console.error("Failed to load course_full_content.json:", error);
-}
+// ** 關鍵修正：使用 require 直接載入 JSON 內容 **
+// 這裡假設 course_full_content.json 已經位於同一目錄
+const fullCourseContent = require('./course_full_content.json').content;
 
 exports.handler = async (event) => {
     try {
@@ -20,6 +12,20 @@ exports.handler = async (event) => {
                 body: JSON.stringify({ message: 'Method Not Allowed' })
             };
         }
+        
+        // 檢查內容是否成功載入
+        if (!fullCourseContent || Object.keys(fullCourseContent).length === 0) {
+             console.error("Content is empty or failed to load via require.");
+             // 確保即使內容為空，回傳格式也是正確的
+             return {
+                 statusCode: 200,
+                 headers: { 'Content-Type': 'application/json' },
+                 body: JSON.stringify({ 
+                     success: false, 
+                     message: 'Course content is empty.'
+                 }),
+             };
+        }
 
         // 成功回傳所有章節的 HTML 內容
         return {
@@ -27,7 +33,7 @@ exports.handler = async (event) => {
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ 
                 success: true, 
-                content: fullCourseContent // { "chapter0": "<div>...", "chapter1": "<div>..." }
+                content: fullCourseContent 
             }),
         };
     } catch (e) {
