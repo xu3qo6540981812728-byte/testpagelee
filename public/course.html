@@ -28,6 +28,19 @@
                     '平均-灰': '#9CA3AF', 
                     '核心公寓-綠': '#FBBF24', 
                     '其他公寓-棕': '#78350F', 
+                    stone: {
+                        50: '#f9f7f4',
+                        100: '#edeae6',
+                        200: '#dbd6d1',
+                        300: '#c2bcae',
+                        400: '#a79d8b',
+                        500: '#91826f',
+                        600: '#7e6c5c', // 我們要用的主要顏色
+                        700: '#6d5a4c',
+                        800: '#5f4e41',
+                        900: '#53443a',
+                        950: '#2f2b26',
+                    },
                 }
             }
         }
@@ -989,70 +1002,10 @@
                 </ul>
              </div>
              </div>
+            
+</div>
+                </div>
             </div>
-            <div class="bg-white p-8 rounded-xl shadow-lg content-card animate-on-scroll mt-12">
-    <header class="text-center mb-8 md:mb-12">
-        <h1 class="text-3xl md:text-5xl font-bold text-gray-800 border-b-4 border-yellow-400 inline-block pb-1">
-            各建物型態相對於市場漲幅長期趨勢示意圖
-        </h1>
-        <p class="mt-4 text-lg text-gray-600">
-            本圖旨在視覺化呈現不同建物型態隨著屋齡增加，其房價累積漲幅相對於 市場平均漲幅 (0%) 的理論趨勢。正值代表跑贏大盤，負值代表跑輸大盤。
-        </p>
-    </header>
-    <div class="mb-8">
-        <img src="images/building_types.jpg" alt="台灣房地產各建物型態相對於市場平均漲幅的長期趨勢示意圖" class="w-full rounded-lg shadow-xl border">
-        <p class="text-center text-sm text-gray-500 mt-3">圖示：不同住宅類型累積漲幅相對於市場平均漲幅的走勢。</p>
-    </div>
-    <div class="container-card p-4 md:p-8 rounded-xl shadow-2xl">
-        <h2 class="text-2xl font-bold text-gray-800 mb-4 border-l-4 border-indigo-500 pl-3">各建物型態長期價值趨勢說明</h2>
-        <p class="text-gray-700 leading-relaxed mb-6">
-            本圖表呈現台灣房地產市場中，不同建物型態相對於整體市場平均漲幅的長期趨勢。<span class="font-bold text-red-600">Y軸0%代表此圖以市場平均漲幅為基準(不代表市場沒有漲跌變動)</span>，高於0%表示跑贏市場，低於0%表示跑輸市場。購屋者的年齡偏好也是影響建物型態長期價值的重要因素。
-        </p>
-        <div class="mb-4 pb-4 border-b">
-            <h3 class="text-lg font-semibold text-gray-800 mb-1">1. 透天 (<span class="text-透天-綠 font-semibold">綠線</span>：長期領跑者，受年長者與高資產族青睞)</h3>
-            <ul class="text-sm text-gray-600 space-y-1 list-disc list-inside ml-4">
-                <li>初期至中期 (0-20年)： 由於其高土地持分特性，價值受建物折舊影響小，能穩定跟隨並略微跑贏市場平均。</li>
-                <li>後期 (20-40年)： 仍持續跑贏市場平均，但漲幅斜率會趨緩。高屋齡、高總價可能限制了潛在買家數量，但<span class="font-bold">「有土斯有財」的傳統觀念，使其深受年長者及高資產族群青睞</span>。這類買家更看重土地、隱私與空間自主性，願意為此支付較高價值。</li>
-            </ul>
-        </div>
-        <div class="mb-4 pb-4 border-b">
-            <h3 class="text-lg font-semibold text-gray-800 mb-1">2. 公寓 A (雙北精華區公寓，<span class="font-bold text-公寓-黃">黃線</span>：潛力發酵型，高房價下選擇)</h3>
-            <ul class="text-sm text-gray-600 space-y-1 list-disc list-inside ml-4">
-                <li>初期 (0-10年)： 初期表現可能在市場平均線附近或略低。雖然地段佳，但缺乏新屋溢價和電梯便利性，價值累積需要時間。</li>
-                <li>中期 (10-25年)： 開始超越市場平均。此類公寓因其在雙北精華區的稀缺土地價值、完善的生活機能，以及潛在的都更/危老改建預期，其價值會逐漸被市場重估。在雙北高房價壓力下，也成為年輕族群留在市區的「相對低總價替代品」。</li>
-                <li>後期 (25-40年)： 持續跑贏市場平均，但漲幅斜率會趨緩。其增值動能主要來自土地增值與都更話題，但都更整合的難度和不確定性，以及建物本身的折舊與居住不便性，會限制其漲幅的極限。</li>
-            </ul>
-        </div>
-        <div class="mb-4 pb-4 border-b">
-            <h3 class="text-lg font-semibold text-gray-800 mb-1">3. 電梯大樓 (<span class="text-大樓-藍 font-semibold">藍線</span>：先盛後衰型，年輕族群首選)</h3>
-            <ul class="text-sm text-gray-600 space-y-1 list-disc list-inside ml-4">
-                <li>初期 (0-15年)： 受惠於新屋溢價、現代設計、優良屋況與完善公設，漲幅顯著領先市場平均。這類物件尤其受到追求便利性、公設和時尚生活的年輕族群青睞。</li>
-                <li>中期 (15-25年)： 隨著屋齡增長，新屋光環消退，建物折舊和公共設施維護成本增加，其相對優勢迅速減弱，並在約 15-20 年時下穿市場平均線。</li>
-                <li>後期 (25-40年)： 持續跑輸市場平均，漲幅放緩。低土地持分使其難以藉由土地增值來抵銷建物的老化影響。然而，有電梯和管理服務，仍使其價值表現優於沒有電梯且無管理的非精華區公寓，對各年齡層的買家仍有基本吸引力。</li>
-            </ul>
-        </div>
-        <div class="mb-4 pb-4 border-b">
-            <h3 class="text-lg font-semibold text-gray-800 mb-1">4. 華廈 (<span class="text-華廈-橘 font-semibold">橘線</span>：中壯齡保值型，各年齡層適中選擇)</h3>
-            <ul class="text-sm text-gray-600 space-y-1 list-disc list-inside ml-4">
-                <li>初期 (0-10年)： 略微領先市場平均。相較於電梯大樓，華廈初期溢價較低，但有電梯且公設比較低是優勢。</li>
-                <li>中期 (10-20年)： 表現維持在市場平均線附近。華廈的實用坪數、較低的管理費和有電梯的便利性，使其在中壯齡期仍具備良好的市場接受度，保值性較佳。其兼具電梯便利性與較低管理費的特性，使其成為各年齡層購屋者較為平衡且務實的選擇。</li>
-                <li>後期 (20-40年)： 開始下穿市場平均線並持續跑輸。如同電梯大樓，建物折舊最終會影響其增值潛力，但由於有電梯和相對低的管理費，其跑輸幅度不會像非精華區公寓那麼大。</li>
-            </ul>
-        </div>
-        <div class="mb-4 pb-4">
-            <h3 class="text-lg font-semibold text-gray-800 mb-1">5. 公寓 B (其他地區公寓，<span class="font-bold text-其他公寓-棕">棕線</span>：持續落後型，市場接受度低)</h3>
-            <ul class="list-disc list-inside ml-4 text-sm text-gray-600 space-y-1">
-                <li>整體趨勢： 從初期到後期，其累積漲幅始終位於市場平均線之下，且差距持續擴大。</li>
-                <li>主要原因： 缺乏精華區地段的土地增值優勢，都更潛力極低或幾乎為零。同時，無電梯、無管理、屋況老舊和高額修繕成本等問題，使其在與其他建物型態的競爭中處於劣勢，市場流動性差。這類型物件對所有年齡層的購屋者吸引力都較低，除非價格極度低廉或有特定用途需求，否則難以吸引買盤。</li>
-            </ul>
-        </div>
-        <p class="text-sm text-gray-500 mt-4 italic">
-            *此為理論概念圖，Y 軸為相對漲跌幅 (%)。實際表現仍需考量地段、管理、屋況和市場供需等具體因素。
-        </p>
-    </div>
-</div>
-</div>
-</div>
 <div id="chapter3" class="content-section space-y-8">
             <header class=" ">
                 <h2 class="text-4xl font-bold text-slate-800 border-b-4 border-indigo-500 pb-3 mb-2">代書流程</h2>
@@ -1214,7 +1167,7 @@
             <tr class="border-b bg-green-50">
                 <td class="p-2 md:p-3 font-medium text-green-800"><strong>自住用</strong></td>
                 <td class="p-2 md:p-3 font-medium text-green-800 text-sm"><strong>1.2%</strong> (特定條件下可降至1%)</td>
-                <td class="p-2 md:p-3 text-green-800 text-xs md:text-sm">本人、配偶或直系親屬實際居住，且全國合計<strong>不超過3戶</strong>。</td>
+                <td class="p-2 md:p-3 text-green-800 text-xs md:text-sm">本人、配偶或直系親屬實際居住且於該屋辦竣戶籍登記，且全國合計<strong>不超過3戶</strong>。</td>
             </tr>
             <tr class="border-b highlight-update">
                 <td class="p-2 md:p-3 font-medium text-amber-800"><strong>非自住用<br>(囤房稅2.0)</strong></td>
@@ -1336,7 +1289,18 @@
                 </tr>
                 <tr class="bg-yellow-50">
                     <td class="p-2 md:p-3 font-semibold text-sm">優惠申請</td>
-                    <td class="p-2 md:p-3 text-sm"><strong>需要主動申報</strong>，每期開徵40日(即3月22日，遇假日順延)前申報。</td>
+                    <td class="p-2 md:p-3 text-sm">
+    <strong>需要主動申報</strong>，每期開徵40日(即3月22日，遇假日順延)前申報。
+    <span class="text-xs text-indigo-600 mt-1 block">
+        (詳見 
+        <a href="https://www.mof.gov.tw/singlehtml/384fb3077bb349ea973e7fc6f13b6974?cntId=965e55a0e428495da48fe227b079353b" 
+           target="_blank" 
+           class="underline hover:no-underline font-semibold">
+           財政部 2025-01-08 發佈之新聞稿
+        </a>
+        )
+    </span>
+</td>
                     <td class="p-2 md:p-3 text-sm"><strong class="text-red-600">需要主動申請！</strong><br>(每年9/22前)</td>
                     <td class="p-2 md:p-3 text-xs md:text-sm text-gray-600 font-bold">地價稅優惠一定要自己申請！</td>
                 </tr>
@@ -1356,7 +1320,7 @@
                     <h3 class="text-xl font-semibold text-slate-700 mb-4">買方應繳稅費</h3>
                      <ul class="list-disc list-inside space-y-3 text-slate-600">
                         <li><span class="font-bold">契稅：</span>建物核定契價 × 6%</li>
-                        <li><span class="font-bold">印花稅：</span>土地及建物核定契價 × 0.1%</li>
+                        <li><span class="font-bold">印花稅：</span>土地及建物買賣契約內之價款 × 0.1%</li>
                         <li><span class="font-bold">地政登記規費：</span>(建物核定契價+土地申報地價) × 0.1% + 書狀費</li>
                     </ul>
                 </div>
@@ -1619,30 +1583,30 @@
         </div>
         <div class="p-6 bg-amber-50 rounded-lg border border-amber-200">
             <h4 class="font-semibold text-xl text-amber-800 mb-4">【範例二】已知期望淨利，回推底價 (逆向計算)</h4>
-            <p class="text-sm text-slate-600 mb-4"><strong>情境：</strong>屋主107年取得560萬，109年想賣，期望<span class="font-bold">實賺50萬</span>，底價該開多少？</p>
+            <p class="text-sm text-slate-600 mb-4"><strong>情境：</strong>屋主107年1月取得560萬，109年5月想賣，期望<span class="font-bold">實賺50萬</span>，底價該開多少？</p>
             
             <div class="space-y-4">
                 <div class="p-4 bg-white rounded-lg shadow-sm">
                     <p class="font-bold text-gray-800">✅ 步驟一：還原「稅前所得」</p>
-                    <p class="text-xs text-gray-500 mt-1">持有2年內，適用稅率為45%。實賺50萬是稅後金額，需除以 (1 - 45%) 來還原。</p>
-                    <p class="font-mono text-center text-lg mt-2">50萬 ÷ 0.55 ≈ <strong class="text-indigo-600">90.91萬</strong></p>
+                    <p class="text-xs text-gray-500 mt-1">持有2年多，適用稅率為35%。實賺50萬是稅後金額，需除以 (1 - 35%) 來還原。</p>
+                    <p class="font-mono text-center text-lg mt-2">50萬 ÷ 0.65 ≈ <strong class="text-indigo-600">76.92萬</strong></p>
                 </div>
                 <div class="p-4 bg-white rounded-lg shadow-sm">
                     <p class="font-bold text-gray-800">✅ 步驟二：計算屋主「實拿目標」</p>
                     <p class="text-xs text-gray-500 mt-1">這個金額是成交後扣除仲介費，必須拿到的錢，用來支付成本與稅金，並留下淨利。</p>
-                    <p class="font-mono text-center text-lg mt-2">560萬 (成本) + 90.91萬 (稅前所得) = <strong class="text-indigo-600">650.91萬</strong></p>
+                    <p class="font-mono text-center text-lg mt-2">560萬 (成本) + 76.92萬 (稅前所得) = <strong class="text-indigo-600">636.92萬</strong></p>
                 </div>
                  <div class="p-4 bg-white rounded-lg shadow-sm">
                     <p class="font-bold text-gray-800">✅ 步驟三：倒推「成交底價」</p>
                     <p class="text-xs text-gray-500 mt-1">「實拿目標」是扣除4%仲介費後的金額 (即成交價的96%)，所以要除以0.96。</p>
-                    <p class="font-mono text-center text-lg mt-2">650.91萬 ÷ 0.96 ≈ <strong class="text-indigo-600">678.03萬</strong></p>
+                    <p class="font-mono text-center text-lg mt-2">636.92萬 ÷ 0.96 ≈ <strong class="text-indigo-600">663.46萬</strong></p>
                 </div>
             </div>
             <div class="mt-6 p-4 bg-green-100 border-t-2 border-green-300 rounded-b-lg">
                 <h5 class="font-bold text-green-800 text-center">🎉 最終答案</h5>
                 <ul class="list-none text-center mt-2 space-y-1">
-                    <li><span class="font-semibold">屋主實拿目標：</span><span class="font-bold text-lg">650.91萬</span></li>
-                    <li><span class="font-semibold">成交底價(建議)：</span><span class="font-bold text-red-600 text-xl">679萬</span></li>
+                    <li><span class="font-semibold">屋主實拿目標：</span><span class="font-bold text-lg">636.92萬</span></li>
+                    <li><span class="font-semibold">成交底價(建議)：</span><span class="font-bold text-red-600 text-xl">664萬</span></li>
                 </ul>
                 <p class="text-xs text-center text-slate-500 mt-2">※ 實務上底價會無條件進位到「萬」，確保計算誤差不會影響屋主，讓他能「完整實賺」50萬！</p>
             </div>
@@ -1791,19 +1755,9 @@
                     </div>
                 </div>
             </div>
-            <div class="bg-white p-8 rounded-xl shadow-lg content-card  ">
-                <h3 class="text-2xl font-semibold text-slate-700 mb-4">如何讓每一次出門都成為有效跑線</h3>
-                <p class="text-slate-600 mb-6">有效跑線的目標只有一個：<span class="font-bold text-indigo-600">取得所有權人的姓名與電話</span>。圍繞這個目標，可以運用以下方法：</p>
-                <ul class="list-disc list-inside space-y-3 text-slate-600">
-                    <li><strong>夢幻25：</strong>鎖定目標物件的同巷、同棟、同層鄰居進行拜訪，擴大情報網。</li>
-                    <li><strong>信箱：</strong>注意信箱上的收件人全名，這是重要的線索。</li>
-                    <li><strong>管理室：</strong>這是最重要的情報站。搭配平日的社區經營，若遇第一次接觸的社區，每次拜訪善用「三進三出」，日班不行就攻夜班，送小禮物或禮品+信請管理室轉交屋主、聊天，想辦法請管理員協助聯繫或提供線索。</li>
-                    <li><strong>親友策略：</strong>若遇到親友擋駕，可以禮貌地請求：「那可以麻煩您幫我撥通電話給屋主嗎？我直接跟他說明，就不會為難您了。」</li>
-                </ul>
-            </div>
             <div class="bg-white p-8 rounded-xl shadow-lg content-card animate-on-scroll">
                 <h3 class="text-2xl font-semibold text-slate-700 mb-4">募集作業系統化</h3><p class="font-bold text-red-600">※關鍵:養成客戶建檔記錄的習慣並設定提醒</p>
-                <p class="text-slate-600 mb-4">每天覆盤每條募集線，不但可以記得自己做了哪些事、說了哪些話，也可以在價格有變化的時候，第一時間知道，並思考還能多做哪些努力。建立自己的追蹤表單，欄位可包含：</p>
+                <p class="text-slate-600 mb-4">利用i智慧、個人習慣之表單...等建檔記錄，每天覆盤每條募集線，不但可以記得自己做了哪些事、說了哪些話，也可以在價格有變化的時候，第一時間知道，並思考還能多做哪些努力。建立自己的追蹤表單，欄位可包含：</p>
                 <ul class="list-disc list-inside space-y-2 text-slate-600 bg-slate-50 p-4 rounded-md">
                     <li>建檔日</li>
                     <li>物件網址</li>
@@ -1813,31 +1767,76 @@
                     <li>是否已加LINE</li>
                     <li>備註 (每次互動紀錄)</li>
                 </ul>
+                <div class="mt-8 grid grid-cols-1 md:grid-cols-3 gap-6">
+    <img src="images/ex1.jpg" data-src="images/ex1.jpg" alt="募集系統範例：i智慧客戶系統" class="w-full h-auto rounded-lg shadow-md border border-slate-200 cursor-pointer transition hover:scale-[1.02] hover:shadow-xl" onclick="openModal(this)">
+    <img src="images/ex2.jpg" data-src="images/ex2.jpg" alt="募集系統範例：個人追蹤表單" class="w-full h-auto rounded-lg shadow-md border border-slate-200 cursor-pointer transition hover:scale-[1.02] hover:shadow-xl" onclick="openModal(this)">
+    <img src="images/ex3.jpg" data-src="images/ex3.jpg" alt="募集系統範例：社區樓層表單" class="w-full h-auto rounded-lg shadow-md border border-slate-200 cursor-pointer transition hover:scale-[1.02] hover:shadow-xl" onclick="openModal(this)">
+</div>
             </div>
             <div class="bg-white p-8 rounded-xl shadow-lg content-card animate-on-scroll">
-                <h3 class="text-2xl font-semibold text-slate-700 mb-4">開發邏輯思維</h3>
-                <div class="space-y-4">
-                    <div>
-                        <h4 class="font-bold text-lg text-indigo-600">募集轉追蹤思維</h4>
-                        <p class="text-slate-600">從一個地址開始，層層深入，找出屋主是誰。</p>
-                        <ol class="list-decimal list-inside ml-4 mt-2 text-slate-600">
-                            <li><span class="font-bold">地址A (物件地址)</span> → 調閱電傳 → <span class="font-bold">地址B (戶籍地)</span></li>
-                            <li><span class="font-bold">地址B</span> → 調閱電傳 → <span class="font-bold">地址C, D, E...</span> (直到沒有新地址)</li>
-                            <li>將所有地址、屋主姓氏等資訊 → <span class="font-bold">Google / Facebook 搜尋</span> → 交叉比對，尋找可能的公司、電話、相關人脈。</li>
-                        </ol>
-                    </div>
-                    <div class="border-t pt-4">
-                        <h4 class="font-bold text-lg text-indigo-600">跑線邏輯思維</h4>
-                        <p class="text-slate-600">有效規劃路線，最大化開發效益。</p>
-                         <ul class="list-disc list-inside ml-4 mt-2 text-slate-600">
-                            <li><span class="font-bold">緊急開發 (目標明確)：</span>買方指定代尋、重點專案開發。</li>
-                            <li><span class="font-bold">商圈內必踩 (高價值目標)：</span>高指名度社區 (稀有)、高移轉率社區 (肉多)、屋齡新社區 (未來性)。</li>
-                            <li><span class="font-bold">非緊急開發 (分段跑線)：</span>將商圈外的戶籍地址，按區域分組，安排時間一次跑完，提高效率。</li>
-                        </ul>
-                    </div>
-                </div>
+    <h3 class="text-2xl font-semibold text-slate-700 mb-4">開發邏輯思維：追蹤與跑線策略圖解</h3>
+    
+    <div class="space-y-8">
+        
+        <div class="p-4 bg-indigo-50 rounded-lg">
+            <h4 class="font-bold text-lg text-indigo-700 mb-2">1. 募集轉追蹤思維（情報探勘）</h4>
+            <p class="text-slate-600 mb-4">從單一地址出發，追蹤戶籍轉址，直到沒有新的線索為止，再利用網路工具進行交叉比對，獲取所有權人的姓名與電話。</p>
+            <img src="images/image_df1388.jpg" alt="募集轉追蹤流程圖：戶籍地追蹤與網路情報探勘" class="w-full rounded-lg shadow-md border cursor-pointer transition hover:scale-[1.01]" onclick="openModal(this)" data-src="images/image_df1388.jpg">
+        </div>
+
+        <div class="p-4 bg-green-50 rounded-lg">
+            <h4 class="font-bold text-lg text-green-700 mb-2">2. 跑線策略總覽（緊急與非緊急開發）</h4>
+            <p class="text-slate-600 mb-4">開發分為「緊急開發」（買代尋、專案開發）與「非緊急開發」（商圈內必踩、商圈外分段跑線）兩大類。確保每一趟跑線都有明確目標。</p>
+            <img src="images/image_df13ea.jpg" alt="跑線開發策略總覽圖" class="w-full rounded-lg shadow-md border cursor-pointer transition hover:scale-[1.01]" onclick="openModal(this)" data-src="images/image_df13ea.jpg">
+        </div>
+
+        <div class="p-4 bg-yellow-50 rounded-lg">
+    <h4 class="font-bold text-lg text-yellow-700 mb-2">3. 跑線邏輯地圖（分區與集中策略）</h4>
+    <p class="text-slate-600 mb-4">將目標物件的追蹤地址按區域集中分組，確保跑線效率最大化，避免浪費時間往返於不同行政區。以下為範例。</p>
+    
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        
+        <div>
+            <p class="text-sm font-semibold text-center text-slate-700 mb-2">原始地址數據分組</p>
+            <img src="images/image_df7545.jpg" 
+                 alt="跑線邏輯地圖原始數據：物件A到F的追蹤地址分組" 
+                 class="w-full rounded-lg shadow-md border cursor-pointer transition hover:scale-[1.01]" 
+                 onclick="openModal(this)" 
+                 data-src="images/image_df7545.jpg">
+        </div>
+
+        <div>
+            <p class="text-sm font-semibold text-center text-slate-700 mb-2">對應地圖分區</p>
+            <img src="images/image_df1405.jpg" 
+                 alt="跑線邏輯地圖：物件地址分區與集中策略" 
+                 class="w-full rounded-lg shadow-md border cursor-pointer transition hover:scale-[1.01]" 
+                 onclick="openModal(this)" 
+                 data-src="images/image_df1405.jpg">
+        </div>
+        
+    </div>
+    </div>
+        
+    </div>
+</div>
+            <div class="bg-white p-8 rounded-xl shadow-lg content-card  ">
+                <h3 class="text-2xl font-semibold text-slate-700 mb-4">如何讓每一次出門都成為有效跑線</h3>
+                <div class="mb-6 grid grid-cols-1 md:grid-cols-2 gap-4 items-center">
+    <div class="bg-red-50 p-4 rounded-lg shadow-inner">
+        <img src="images/image_dea3c1.png" alt="開發目標：所有權人姓名與電話" class="w-full h-auto rounded-lg">
+    </div>
+    <div class="bg-white p-4 rounded-lg shadow-md border">
+        <img src="images/image_dea689.jpg" alt="國民身分證統一編號英文字代碼與配賦縣市對照表" class="w-full h-auto rounded-lg">
+    </div>
+</div>
+                <p class="text-slate-600 mb-6">有效跑線的目標只有一個：<span class="font-bold text-indigo-600">取得所有權人的姓名與電話</span>。圍繞這個目標，可以運用以下方法：</p>
+                <ul class="list-disc list-inside space-y-3 text-slate-600">
+                    <li><strong>夢幻25：</strong>鎖定目標物件的同巷、同棟、同層鄰居進行拜訪，擴大情報網。</li>
+                    <li><strong>信箱：</strong>注意信箱上的收件人全名，這是重要的線索。</li>
+                    <li><strong>管理室：</strong>這是最重要的情報站。搭配平日的社區經營，若遇第一次接觸的社區，每次拜訪善用「三進三出」，日班不行就攻夜班，送小禮物或禮品+信請管理室轉交屋主、聊天，想辦法請管理員協助聯繫或提供線索。</li>
+                    <li><strong>親友策略：</strong>若遇到親友擋駕，可以禮貌地請求：「那可以麻煩您幫我撥通電話給屋主嗎？我直接跟他說明，就不會為難您了。」</li>
+                </ul>
             </div>
-            
             
             <div class="bg-white p-8 rounded-xl shadow-lg content-card  ">
                 <h3 class="text-2xl font-semibold text-slate-700 mb-4">電話開發實戰技巧</h3>
@@ -3202,11 +3201,11 @@ document.addEventListener('DOMContentLoaded', () => {
    
     const audioPlayerContainer = document.getElementById('audio-player-container');
     const audioFabBtn = document.getElementById('audio-fab-btn'); 
-    let currentQuiz = []; // 儲存傳給前端的題目 (不含答案)
-    let answersCache = []; // 儲存傳給後端的答案快取 (含答案)
+    let currentQuiz = []; 
+    let answersCache = []; 
     let isQuizSubmitted = false;
 
-    // 將這些 DOM 變數改為 let，並在需要時重新賦值 (在 fetchQuiz 中重新賦值)
+    
     let quizContainer;
     let quizStatus;
     let quizQuestionsArea;
@@ -3365,14 +3364,14 @@ async function showManagerDashboard(chapterId, title) {
     chapterView.style.display = 'flex';
     const mainContentArea = chapterView.querySelector('main');
     
-    // 1. 清除任何由 JS 設置的行內 paddingTop (避免 chapter0 殘留)
+    
     mainContentArea.style.paddingTop = ''; 
     
-   // 2. 確保手機版使用 pt-24 (避開 Header)，桌面版使用 md:pt-10
-    mainContentArea.classList.remove('pt-6'); // 移除 pt-6
-    mainContentArea.classList.add('pt-24', 'md:pt-10'); // 確保恢復預期的 CSS 類別
+   
+    mainContentArea.classList.remove('pt-6'); 
+    mainContentArea.classList.add('pt-24', 'md:pt-10'); 
     
-    // 恢復桌面版的基本 padding (pt-10 ≈ 40px)
+    
     mainContentArea.classList.remove('md:pt-10');
     mainContentArea.classList.add('md:pt-10');
     
@@ -3725,7 +3724,7 @@ const loggedInRole = sessionStorage.getItem('loggedInRole');
         }
         db.collection("progressData").doc(currentViewingUser).set(progressData) 
             .then(() => {
-                // console.log("寫入 Firebase 成功");
+                 console.log("寫入 Firebase 成功");
             })
             .catch((error) => {
                 console.error("寫入 Firebase 失敗: ", error);
@@ -3766,8 +3765,8 @@ const loggedInRole = sessionStorage.getItem('loggedInRole');
         { id: 'chapter10', title: '銷售篇：帶看與客戶探索', description: '從帶看到收斡的關鍵步驟' },
         { id: 'chapter11', title: '引導收斡與調價', description: '臨門一腳的藝術' },
         { id: 'chapter12', title: '總結：成為頂尖顧問的思維', description: '整合所學，內化為專業本能，成為客戶的顧問而非業務' },
-        { id: 'chapter13', title: '菁英課程模擬考', description: '隨機抽取 10 題選擇題，考驗您的學習成果' }, // NEW
-        { id: 'chapter14', title: '實用工具箱', description: '整合所有線上計算機' } // Renamed from chapter13
+        { id: 'chapter13', title: '菁英課程模擬考', description: '隨機抽取 10 題選擇題，考驗您的學習成果' }, 
+        { id: 'chapter14', title: '實用工具箱', description: '整合所有線上計算機' } 
     ];
     const audioMap = {
     'chapter1': 'chapter1-history.mp3', // 台灣房市歷史
@@ -3850,36 +3849,35 @@ function showContent(sectionId, element) {
         }
         audioPlayerContainer.classList.remove('expanded');
         
-        // ---- 修正重點：測驗邏輯和 Sticky Header 調整 ----
-        if (sectionId === 'chapter13') { // 載入測驗
+       
+        if (sectionId === 'chapter13') { 
             
-            // 重新檢查測驗元素是否已載入 (此時 newSection 已經 active)
+            
             const quizStatusElement = mainContentArea.querySelector('#quiz-status');
             if (quizStatusElement) {
                 fetchQuiz();
             }
         }
         
-        // Sticky Header Adjustment for chapter0
+       
         const progressArea = document.getElementById('progress-display-area');
         const mainContent = document.querySelector('main');
         
         if (progressArea) {
     if (sectionId === 'chapter0') {        
-        // 移除所有 JS 設置的行內樣式
+     
         mainContent.style.paddingTop = ''; 
         
-        // 移除 fixed class (因為我們想用 sticky)
+        
         progressArea.classList.remove('always-fixed-progress', 'shadow-xl'); 
 
-        // 確保進度條的樣式 (sticky top-0 z-10) 已經在 HTML 模板中設定好
-        // 我們無需額外計算 padding-top，因為 sticky 元素不會影響內容流
+      
         
     } else {
-        // 清除 sticky header
+        
         progressArea.classList.remove('always-fixed-progress', 'shadow-xl');
         
-        // 清除行內樣式並恢復預設 CSS class
+        
         mainContent.style.paddingTop = ''; 
     }
 }
@@ -3942,7 +3940,8 @@ function showContent(sectionId, element) {
        
         
         const isManagerDashboard = chapter.id === 'manager-dashboard';
-        
+        const isQuizChapter = chapter.id === 'chapter13';
+        const isToolbox = chapter.id === 'chapter14';
         const tocCard = document.createElement('a');
         tocCard.href = `#${chapter.id}`;
         
@@ -3953,7 +3952,13 @@ function showContent(sectionId, element) {
            
             cardClass = 'toc-card p-6 rounded-xl shadow-2xl flex flex-col items-center text-center bg-yellow-50 border-4 border-yellow-500 hover:bg-yellow-100 transition duration-300 transform hover:scale-[1.02]';
             iconHtml = `<div class="bg-yellow-600 text-white rounded-full h-12 w-12 flex items-center justify-center font-bold text-xl mb-4"><i class="fas fa-chart-line"></i></div>`;
-        } else {
+        } else if (isQuizChapter) {
+                cardClass = 'toc-card p-6 rounded-xl shadow-2xl flex flex-col items-center text-center bg-red-100 border-4 border-red-600 hover:bg-red-200 transition duration-300 transform hover:scale-[1.02]';
+                iconHtml = `<div class="bg-red-600 text-white rounded-full h-12 w-12 flex items-center justify-center font-bold text-xl mb-4"><i class="fas fa-file-signature"></i></div>`;
+          } else if (isToolbox) {
+                cardClass = 'toc-card p-6 rounded-xl shadow-2xl flex flex-col items-center text-center bg-stone-100 border-4 border-stone-600 hover:bg-stone-200 transition duration-300 transform hover:scale-[1.02]';
+                iconHtml = `<div class="bg-stone-600 text-white rounded-full h-12 w-12 flex items-center justify-center font-bold text-xl mb-4"><i class="fas fa-tools"></i></div>`; 
+            } else {
             
             iconHtml = `<div class="bg-indigo-100 text-indigo-600 rounded-full h-12 w-12 flex items-center justify-center font-bold text-xl mb-4">${chapterCount}</div>`;
             chapterCount++; 
@@ -4634,23 +4639,23 @@ function handleProgressLogic(sectionId) {
    function handleOptionClick(event) {
         if (isQuizSubmitted) return; 
         
-        // --- 修正重點：使用 event.target.closest 確保找到正確的選項容器 ---
+        
         const optionItem = event.target.closest('.option-item');
         if (!optionItem) return;
         
         const questionDiv = optionItem.closest('.quiz-question');
-        // 如果題目容器不存在（例如點擊到區域外），則停止
+       
         if (!questionDiv) return;
         
         const questionId = questionDiv.dataset.questionId;
         
-        // 移除同一個問題的其他選項的 selected 類別
+       
         questionDiv.querySelectorAll('.option-item').forEach(item => {
             item.classList.remove('selected', 'bg-indigo-100', 'border-indigo-500');
             item.classList.add('border-slate-200');
         });
         
-        // 將當前點選的選項設為 selected
+        
         optionItem.classList.add('selected', 'bg-indigo-100', 'border-indigo-500');
         optionItem.classList.remove('border-slate-200');
         
@@ -4658,9 +4663,9 @@ function handleProgressLogic(sectionId) {
     }
 
     async function fetchQuiz() {
-        document.body.scrollTop = 0; // For Safari
-    document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
-        // 在這裡重新賦值，確保使用的是當前活動的 DOM 元素
+        document.body.scrollTop = 0; 
+    document.documentElement.scrollTop = 0; 
+       
         quizContainer = document.getElementById('quiz-container');
         quizStatus = document.getElementById('quiz-status');
         quizQuestionsArea = document.getElementById('quiz-questions-area');
@@ -4685,7 +4690,7 @@ function handleProgressLogic(sectionId) {
         answersCache = [];
         
         try {
-            // 呼叫後端 Netlify Function 載入題目
+            
             const response = await fetch('/.netlify/functions/get_quiz');
             const data = await response.json();
             
@@ -4709,7 +4714,7 @@ function handleProgressLogic(sectionId) {
     quizStatus.className = 'mb-4 p-4 bg-red-100 rounded-lg text-red-800 font-semibold text-center';
     quizStatus.innerHTML = `<i class="fas fa-exclamation-triangle mr-2"></i>連線錯誤：無法從伺服器載入題目。請<b class="text-red-900">重新整理頁面</b>後再試！`;
     
-    // 【關鍵點】: 即使載入失敗，也要讓使用者可以重新嘗試點擊開始按鈕
+    
     startQuizBtn.classList.remove('hidden'); 
     startQuizBtn.textContent = '重新載入題目'; 
             bindQuizEventListeners();
@@ -4720,34 +4725,33 @@ function handleProgressLogic(sectionId) {
 const loggedInUser = sessionStorage.getItem('loggedInUser');
     if (!loggedInUser) {
         alert("系統閒置超時，您的登入狀態已失效，請重新登入！");
-        // 假設 performLogout() 函數存在於您的全局範圍內
+        
         window.performLogout(); 
         return;
     }
     
-    // 檢查 2：確認題目是否已成功載入
+   
     if (!currentQuiz || currentQuiz.length === 0) {
         alert("題目載入失敗或尚未準備好，請稍候片刻或點擊重試。");
-        // 可以選擇重新呼叫 fetchQuiz() 來嘗試修復
+        
         fetchQuiz(); 
         return;
     }
-    // 1. 清除題目內容並重置提交狀態
+    
     quizQuestionsArea.innerHTML = '';
     isQuizSubmitted = false;
 
-    // 2. 【關鍵修正】恢復點擊事件
+   
     if (quizQuestionsArea) {
         quizQuestionsArea.style.pointerEvents = 'auto'; 
     }
 
-    // 3. 【關鍵修正】清除舊的成績樣式（確保 quizContainer 已被正確賦值）
-    //    注意：這個迴圈必須遍歷所有舊選項，將其還原為初始狀態
+  
     quizQuestionsArea.querySelectorAll('.quiz-question').forEach(q => {
-        // 清除題目區塊的邊框和背景色
+        
         q.classList.remove('border-green-500', 'bg-green-50', 'border-red-500', 'bg-red-50');
         
-        // 遍歷選項，清除選中、對錯標誌、背景色和透明度
+        
         q.querySelectorAll('.option-item').forEach(item => {
             item.classList.remove('selected', 'bg-indigo-100', 'border-indigo-500', 'opacity-50', 'bg-green-200', 'border-green-600', 'bg-red-200', 'border-red-600');
             item.classList.add('border-slate-200', 'cursor-pointer', 'hover:bg-indigo-50');
@@ -4756,11 +4760,11 @@ const loggedInUser = sessionStorage.getItem('loggedInUser');
         });
     });
     
-    // 4. 【關鍵修正】切換按鈕顯示狀態
-    quizResultArea.classList.add('hidden');      // 隱藏上次的測驗結果
-    submitQuizBtn.classList.remove('hidden');    // 顯示提交按鈕
     
-    // 渲染題目
+    quizResultArea.classList.add('hidden');      
+    submitQuizBtn.classList.remove('hidden');   
+    
+    
         currentQuiz.forEach((q, index) => {
             quizQuestionsArea.appendChild(renderQuestion(q, index));
         });
@@ -4792,7 +4796,7 @@ const loggedInUser = sessionStorage.getItem('loggedInUser');
         });
         
         if (userAnswers.length !== currentQuiz.length) {
-            // 這不應該發生，但作為安全檢查
+           
              quizStatus.className = 'mb-4 p-4 bg-red-100 rounded-lg text-red-800 font-semibold text-center';
              quizStatus.innerHTML = `<i class="fas fa-exclamation-triangle mr-2"></i>提交失敗：題目數量不符。`;
              return;
@@ -4804,7 +4808,7 @@ const loggedInUser = sessionStorage.getItem('loggedInUser');
         submitQuizBtn.disabled = true;
         
         try {
-            // 呼叫後端 Netlify Function 提交答案
+           
             const response = await fetch('/.netlify/functions/submit_quiz', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
@@ -4836,7 +4840,7 @@ const loggedInUser = sessionStorage.getItem('loggedInUser');
         quizQuestionsArea.querySelectorAll('.option-item').forEach(item => item.classList.remove('cursor-pointer', 'hover:bg-indigo-50'));
         
         submitQuizBtn.classList.add('hidden');
-        quizQuestionsArea.style.pointerEvents = 'none'; // 禁用所有點擊
+        quizQuestionsArea.style.pointerEvents = 'none'; 
 
         document.getElementById('final-score').textContent = result.score;
         document.getElementById('correct-count-display').textContent = `答對題數：${result.correctCount} / ${result.totalQuestions} 題`;
@@ -4852,10 +4856,10 @@ const loggedInUser = sessionStorage.getItem('loggedInUser');
             const resultTitle = isCorrect ? '恭喜答對！' : '很可惜答錯了！';
             
             
-            // --- 修正區域：使用 className 賦值替代 classList.add(包含空格的字串) ---
+            
             const questionDiv = quizQuestionsArea.querySelector(`[data-question-id="${question.id}"]`);
-            questionDiv.className += ` ${colorClass}`; // 使用 += 附加新的類別
-            // --- 修正區域結束 ---
+            questionDiv.className += ` ${colorClass}`; 
+            
 
             
             const optionsArea = quizQuestionsArea.querySelector(`[data-question-id="${question.id}"] #options-${question.id}`);
@@ -4898,20 +4902,19 @@ const loggedInUser = sessionStorage.getItem('loggedInUser');
         quizResultArea.classList.remove('hidden');
     }
 
-    // Event Listeners for Quiz Controls
+   
 if (mainContentArea) {
         
         mainContentArea.addEventListener('click', handleOptionClick); 
     }
 function bindQuizEventListeners() {
-    // 在這裡，我們再次獲取最新的 DOM 元素，因為它們已經被渲染到畫面上
+    
     const startBtn = document.getElementById('start-quiz-btn');
     const submitBtn = document.getElementById('submit-quiz-btn');
     const retakeBtn = document.getElementById('retake-quiz-btn');
     const backToTocBtn = document.getElementById('back-to-toc-quiz-btn');
 
-    // 1. 確保按鈕存在後，先移除舊的監聽器（防止重複綁定導致點擊兩次）
-    // 2. 再附加新的監聽器
+
 
     if (startBtn) {
         startBtn.removeEventListener('click', startQuiz);
@@ -4932,7 +4935,7 @@ function bindQuizEventListeners() {
 }
    
 });
-        
+ 
 </script>
 <div id="elite-certification-modal" class="fixed inset-0 z-[100] hidden items-center justify-center bg-black bg-opacity-70 backdrop-blur-sm transition-opacity duration-300">
     
@@ -4953,6 +4956,14 @@ function bindQuizEventListeners() {
         </button>
     </div>
 </div>
+    <div id="image-modal" class="fixed inset-0 z-[100] hidden items-center justify-center bg-black bg-opacity-90 backdrop-blur-sm transition-opacity duration-300">
+    <div class="relative w-11/12 max-w-6xl mx-auto p-4">
+        <button id="close-modal-btn" class="absolute top-0 right-0 m-4 text-white text-3xl font-bold opacity-75 hover:opacity-100 transition-opacity">
+            &times;
+        </button>
+        <img id="modal-image" src="" alt="放大圖" class="w-full h-auto max-h-[90vh] object-contain mx-auto rounded-lg shadow-2xl cursor-pointer">
+    </div>
+</div>
 <style>
     @keyframes zoomIn {
         from {
@@ -4968,9 +4979,80 @@ function bindQuizEventListeners() {
         animation: zoomIn 0.5s ease-out;
     }
 </style>
-    
+    <script>
+        const imageModal = document.getElementById('image-modal');
+        const modalImage = document.getElementById('modal-image');
+        const closeModalBtn = document.getElementById('close-modal-btn');
+
+        // 點擊圖片時開啟 Modal
+        window.openModal = function(element) {
+            const src = element.getAttribute('data-src');
+            if (src) {
+                modalImage.src = src;
+                imageModal.classList.remove('hidden');
+                imageModal.classList.add('flex');
+                // 阻止背景滾動
+                document.body.style.overflow = 'hidden';
+            }
+        }
+
+        // 關閉 Modal 的函式
+        function closeModal() {
+            imageModal.classList.add('hidden');
+            imageModal.classList.remove('flex');
+            // 恢復背景滾動
+            document.body.style.overflow = 'auto';
+        }
+
+        // 綁定關閉事件
+        if (closeModalBtn) {
+            closeModalBtn.addEventListener('click', closeModal);
+        }
+        
+        // 點擊 Modal 外部 (黑色背景) 也會關閉
+        if (imageModal) {
+            imageModal.addEventListener('click', (e) => {
+                if (e.target === imageModal) {
+                    closeModal();
+                }
+            });
+        }
+
+        // 按下 ESC 鍵關閉 Modal
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && imageModal.classList.contains('flex')) {
+                closeModal();
+            }
+        });
+        // ^^^^ 圖片放大功能程式碼結束 ^^^^
+    </script>
 </body>
 </html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
