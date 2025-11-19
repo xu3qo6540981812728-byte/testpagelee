@@ -1638,7 +1638,7 @@ function showContent(sectionId, element) {
 
     
 // --- 調整浮動層次與幅度 ---
-const MAX_MOVEMENT = 5; // 統一設定所有元素的最大平移幅度
+const MAX_MOVEMENT = 10; // 統一設定所有元素的最大平移幅度 (只影響主內容區和內部卡片)
 // ----------------------------
 
 function setupGlobalParallax() {
@@ -1646,12 +1646,10 @@ function setupGlobalParallax() {
     // 監聽整個頁面 body 的滑鼠移動事件
     document.body.addEventListener('mousemove', (e) => {
         
-        // 變數在函數內部宣告，避免衝突
-        const sidebar = document.getElementById('sidebar');
+        // 變數在函數內部宣告
+        // 側邊欄現在僅用於判斷是否存在，不再對其應用 transform
         const chapterView = document.getElementById('chapter-view');
         const tocCards = document.querySelectorAll('.toc-card'); 
-        const logoutButtonSidebar = document.getElementById('logout-button'); // 🌟 每次移動時重新獲取
-
         const elementsToMove = chapterView ? chapterView.querySelectorAll('header h2, .content-card, #progress-display-area') : [];
 
         // 使用 window 尺寸作為參考點
@@ -1665,43 +1663,34 @@ function setupGlobalParallax() {
         const totalMoveX = -offsetX * MAX_MOVEMENT;
         const totalMoveY = -offsetY * MAX_MOVEMENT;
         
-        // 1. 應用到側邊欄和主內容區 (整體同步浮動)
-        if (sidebar) {
-             sidebar.style.transform = `translateX(${totalMoveX}px) translateY(${totalMoveY}px)`;
-        }
-
+       
+       
         if (chapterView) {
              chapterView.style.transform = `translateX(${totalMoveX}px) translateY(${totalMoveY}px)`;
         }
         
-        // 2. 應用到內層元素 (卡片和標題) - 保持與父元素一致
+       
         elementsToMove.forEach(el => {
             el.style.transform = `translateX(${totalMoveX}px) translateY(${totalMoveY}px)`;
         });
         
-        // 目錄卡片也跟隨一致浮動
+        
         tocCards.forEach(card => {
             card.style.transform = `translateX(${totalMoveX}px) translateY(${totalMoveY}px)`;
         });
         
-        // 🌟 3. 修正登出按鈕：讓其靜止不動 (應用相反的平移)
-        if (logoutButtonSidebar) {
-            logoutButtonSidebar.style.transform = `translateX(${-totalMoveX}px) translateY(${-totalMoveY}px)`;
-        }
+        
         
     });
 
     // 當滑鼠移出視窗或靜止時，將所有 transform 歸位
     document.body.addEventListener('mouseleave', () => {
-        const sidebar = document.getElementById('sidebar');
         const chapterView = document.getElementById('chapter-view');
-        const logoutButtonSidebar = document.getElementById('logout-button'); // 🌟 再次獲取
         
         const elementsToReset = document.querySelectorAll('.content-section h2, .content-card, #progress-display-area, .toc-card');
         
-        if (sidebar) {
-            sidebar.style.transform = 'none';
-        }
+        // 🌟 移除了對 sidebar 的重置，因為它沒有移動 🌟
+        
         if (chapterView) {
             chapterView.style.transform = 'none';
         }
@@ -1710,11 +1699,6 @@ function setupGlobalParallax() {
         elementsToReset.forEach(el => {
             el.style.transform = 'none';
         });
-        
-        // 重置登出按鈕
-        if (logoutButtonSidebar) {
-            logoutButtonSidebar.style.transform = 'none';
-        }
     });
 }
 
@@ -2693,6 +2677,7 @@ function bindQuizEventListeners() {
     </script>
 </body>
 </html>
+
 
 
 
