@@ -1638,20 +1638,8 @@ function showContent(sectionId, element) {
 
     
 
-// 在 DOMContentLoaded 監聽器內部，所有初始化程式碼之後貼上
-
-
-// --- 調整浮動層次與幅度 ---
-const MAX_PAGE_MOVEMENT = 10; // 側邊欄和主內容區的整體平移幅度 (底層)
-const MAX_TITLE_MOVEMENT = 10;  // 標題 (中層) 的相對浮動幅度
-const MAX_CARD_MOVEMENT = 10;   // 內容卡片 (前景) 的相對浮動幅度
+const MAX_MOVEMENT = 10; // 統一設定所有元素的最大平移幅度 (您可以調大到 15 或 20 讓效果更明顯)
 // ----------------------------
-
-// 確保所有變數都已經在上面宣告完成，這裡只需要使用它們
-// 注意：tocCards 必須重新查詢，因為在 renderTOCCards 之後 DOM 結構可能會變化。
-
-// 重新查詢 tocCards，以確保準確性
-const tocCardsForParallax = document.querySelectorAll('.toc-card');
 
 function setupGlobalParallax() {
     
@@ -1660,6 +1648,7 @@ function setupGlobalParallax() {
         
         const sidebar = document.getElementById('sidebar');
         const chapterView = document.getElementById('chapter-view');
+        const tocCards = document.querySelectorAll('.toc-card'); // 再次查詢以確保準確性
 
         // 使用 window 尺寸作為參考點
         const centerX = window.innerWidth / 2;
@@ -1668,47 +1657,40 @@ function setupGlobalParallax() {
         const offsetX = (e.clientX - centerX) / centerX; // -1 (左) 到 1 (右)
         const offsetY = (e.clientY - centerY) / centerY; // -1 (上) 到 1 (下)
 
-        // 1. 整體平移 (移動幅度最大): 應用於側邊欄和主內容區 (Page and Sidebar)
-        const pageMoveX = -offsetX * MAX_PAGE_MOVEMENT;
-        const pageMoveY = -offsetY * MAX_PAGE_MOVEMENT;
+        // 計算整體平移距離 (使用負號讓頁面往滑鼠的反方向移動，產生漂浮感)
+        const totalMoveX = -offsetX * MAX_MOVEMENT;
+        const totalMoveY = -offsetY * MAX_MOVEMENT;
         
+        // 1. 應用到側邊欄和主內容區 (整體同步浮動)
         if (sidebar) {
-             sidebar.style.transform = `translateX(${pageMoveX}px) translateY(${pageMoveY}px)`;
+             sidebar.style.transform = `translateX(${totalMoveX}px) translateY(${totalMoveY}px)`;
         }
 
         if (chapterView) {
-             chapterView.style.transform = `translateX(${pageMoveX}px) translateY(${pageMoveY}px)`;
+             chapterView.style.transform = `translateX(${totalMoveX}px) translateY(${totalMoveY}px)`;
         }
         
-        // 2. 內容內層次浮動: 應用於主內容區內部的元素 (Parallax effect)
+        // 2. 應用到主內容區內部的元素 (中景/前景)
+        // 由於整個 chapterView 已經移動，這裡的移動應該是額外的/相對的
+        
         const activeChapter = chapterView ? chapterView.querySelector('.content-section.active') : null;
+        
         if (activeChapter) {
             
-            // A) 標題 (中景): 移動幅度較大 (MAX_TITLE_MOVEMENT)
-            const titleMoveX = offsetX * MAX_TITLE_MOVEMENT;
-            const titleMoveY = offsetY * MAX_TITLE_MOVEMENT;
-            
-            const chapterTitle = activeChapter.querySelector('header h2');
-            if (chapterTitle) {
-                 chapterTitle.style.transform = `translateX(${titleMoveX}px) translateY(${titleMoveY}px)`;
-            }
-            
-            // B) 一般內容卡片 & 進度表卡片 (前景): 移動幅度最小
-            const cardMoveX = offsetX * MAX_CARD_MOVEMENT;
-            const cardMoveY = offsetY * MAX_CARD_MOVEMENT;
-            
-            const contentCards = activeChapter.querySelectorAll('.content-card, #progress-display-area');
-            contentCards.forEach(card => {
-                card.style.transform = `translateX(${cardMoveX}px) translateY(${cardMoveY}px)`;
+            // 讓內容卡片、標題等元素也浮動，以創造整體感
+            const elementsToMove = activeChapter.querySelectorAll(
+                'header h2, .content-card, #progress-display-area' 
+            );
+
+            // 讓內層元素跟隨頁面一起平移，創造一致的浮動效果
+            elementsToMove.forEach(el => {
+                el.style.transform = `translateX(${totalMoveX}px) translateY(${totalMoveY}px)`;
             });
             
-            // C) 目錄卡片 (如果當前在目錄頁) - 額外的幅度
-            if (activeChapter.id === 'table-of-contents') {
-                tocCardsForParallax.forEach(card => {
-                    // 讓目錄卡片比一般卡片移動幅度更大一點
-                    card.style.transform = `translateX(${offsetX * (MAX_CARD_MOVEMENT + 2)}px) translateY(${offsetY * (MAX_CARD_MOVEMENT + 2)}px)`;
-                });
-            }
+            // 目錄卡片也跟隨一致浮動
+            tocCards.forEach(card => {
+                card.style.transform = `translateX(${totalMoveX}px) translateY(${totalMoveY}px)`;
+            });
         }
     });
 
@@ -1716,7 +1698,8 @@ function setupGlobalParallax() {
     document.body.addEventListener('mouseleave', () => {
         const sidebar = document.getElementById('sidebar');
         const chapterView = document.getElementById('chapter-view');
-
+        const elementsToReset = document.querySelectorAll('.content-section h2, .content-card, #progress-display-area, .toc-card');
+        
         if (sidebar) {
             sidebar.style.transform = 'none';
         }
@@ -1725,13 +1708,13 @@ function setupGlobalParallax() {
         }
 
         // 重置所有內層元素的 transform
-        document.querySelectorAll('.content-section h2, .content-card, #progress-display-area, .toc-card').forEach(el => {
+        elementsToReset.forEach(el => {
             el.style.transform = 'none';
         });
     });
 }
 
-// 在 DOMContentLoaded 結束前執行全域浮動設置
+// 執行全域浮動設置
 setupGlobalParallax();
 
     let navChapterCount = 0; 
@@ -2706,6 +2689,7 @@ function bindQuizEventListeners() {
     </script>
 </body>
 </html>
+
 
 
 
