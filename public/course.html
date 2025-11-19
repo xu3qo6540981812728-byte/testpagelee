@@ -1294,8 +1294,7 @@ function showContent(sectionId, element) {
         });
     }
 
-    
-function createSearchIndex() {}
+
     
     // 【新增函數：從後端 API 獲取課程內容】
     async function fetchCourseContent() {
@@ -1320,7 +1319,8 @@ function createSearchIndex() {}
                         mainContentArea.appendChild(chapterSection);
                     }
                 }
-
+progressTableBody = document.getElementById('progress-table'); 
+    resetProgressButton = document.getElementById('reset-progress');
                 // 2. 重新生成搜尋索引 (現在內容已經在 DOM 中)
                 createSearchIndex();
                 
@@ -1442,8 +1442,8 @@ function createSearchIndex() {}
     '引導收斡與調價': 'chapter11',
     '總結：成為頂尖顧問的思維': 'chapter12'
 };
-    const progressTableBody = document.getElementById('progress-table');
-    const resetProgressButton = document.getElementById('reset-progress');
+    let progressTableBody = document.getElementById('progress-table');
+    let resetProgressButton = document.getElementById('reset-progress');
     let progressData = {};
 const motivationMessages = [
     { percent: 100, message: "🎉 房仲傳奇: 恭喜！您已完成所有課程，您的專業成就已成為行業典範！" },
@@ -2361,6 +2361,7 @@ function bindQuizEventListeners() {
     </script>
 </body>
 </html>
+
 
 
 
