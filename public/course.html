@@ -51,6 +51,9 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <style>
+        .content-section h2, .content-card {
+    transition: transform 0.3s ease-out;
+}
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&family=Noto+Sans+TC:wght@100..900&display=swap');
         body {
             font-family: 'Inter', 'Noto Sans TC', sans-serif;
@@ -1660,7 +1663,72 @@ function showContent(sectionId, element) {
 
 // 在 DOMContentLoaded 監聽器內執行，對所有課程卡片應用效果
 document.querySelectorAll('.toc-card').forEach(setupTranslationParallaxEffect);
+const mainContentArea = document.querySelector('main');
+const MAX_GLOBAL_MOVEMENT = 3; // 頁面元素最大移動像素 (數值要小於卡片，製造層次感)
+const MAX_BACKGROUND_MOVEMENT = 5; // 背景元素最大移動像素
 
+if (mainContentArea) {
+    // 監聽主內容區域的滑鼠移動
+    mainContentArea.addEventListener('mousemove', (e) => {
+        const rect = mainContentArea.getBoundingClientRect();
+        
+        // 計算滑鼠在主內容區中的相對位置 (x: 0~1, y: 0~1)
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+
+        // 計算中心點的偏差 (normalized to -1 to 1)
+        const centerX = rect.width / 2;
+        const centerY = rect.height / 2;
+        
+        const offsetX = (x - centerX) / centerX;
+        const offsetY = (y - centerY) / centerY;
+
+        // 計算平移距離
+        // 🌟 浮動效果：內容移動與滑鼠同向 (正值)，感覺內容離你較遠
+        const moveX = offsetX * MAX_GLOBAL_MOVEMENT;
+        const moveY = offsetY * MAX_GLOBAL_MOVEMENT;
+        
+        // 🌟 背景視差效果：背景移動與滑鼠反向 (負值)，感覺內容離你較近
+        const backgroundX = -offsetX * MAX_BACKGROUND_MOVEMENT;
+        const backgroundY = -offsetY * MAX_BACKGROUND_MOVEMENT;
+
+        // 應用效果到前景元素 (例如：當前章節的 h2 標題)
+        const activeChapter = mainContentArea.querySelector('.content-section.active');
+        if (activeChapter) {
+            // 讓章節標題微幅浮動
+            const chapterTitle = activeChapter.querySelector('header h2');
+            if (chapterTitle) {
+                 chapterTitle.style.transform = `translateX(${moveX}px) translateY(${moveY}px)`;
+            }
+        }
+        
+        // 應用效果到頁面背景 (如果您的背景是固定在 body 上的)
+        // 這裡我們假設可以對 body 應用 transform 來模擬背景移動，但更安全的是對 body 應用微幅的位移。
+        // body.style.backgroundPosition = `calc(50% + ${backgroundX}px) calc(50% + ${backgroundY}px)`;
+        
+        // 更簡單的做法：讓頁面上的所有卡片產生整體漂移 (除了目錄卡片，因為它們已經有獨立的mousemove)
+        const contentCards = activeChapter.querySelectorAll('.content-card');
+        contentCards.forEach(card => {
+            // 這裡移動的幅度要比標題小，或者與標題方向相反
+            card.style.transform = `translateX(${moveX / 2}px) translateY(${moveY / 2}px)`;
+        });
+    });
+
+    // 離開主內容區時，將所有 transform 歸位
+    mainContentArea.addEventListener('mouseleave', () => {
+        const activeChapter = mainContentArea.querySelector('.content-section.active');
+        if (activeChapter) {
+            const chapterTitle = activeChapter.querySelector('header h2');
+            if (chapterTitle) {
+                 chapterTitle.style.transform = 'none';
+            }
+            const contentCards = activeChapter.querySelectorAll('.content-card');
+            contentCards.forEach(card => {
+                card.style.transform = 'none';
+            });
+        }
+    });
+}
     let navChapterCount = 0; 
 
     chapters.forEach((chapter, index) => {
@@ -2633,6 +2701,7 @@ function bindQuizEventListeners() {
     </script>
 </body>
 </html>
+
 
 
 
