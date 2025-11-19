@@ -353,6 +353,15 @@
         transform: translate(-2px, -2px);
         box-shadow: 6px 6px 0 #000000;
     }
+        body {
+        font-family: 'Inter', 'Noto Sans TC', sans-serif;
+        background-color: #f0f4f8;
+        /* 🌟 修正點：禁用文字選取 🌟 */
+        -webkit-user-select: none; 
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+    }
    </style>
     
 </head>
@@ -639,6 +648,17 @@
 </div>
     <script>
         let allMemberProgressDetails = {};
+        document.addEventListener('keydown', function(e) {
+    // 阻止 Ctrl+U (查看原始碼，keyCode 85)
+    // 阻止 F12 (開啟開發者工具，keyCode 123)
+    // 阻止 Ctrl+Shift+I 或 Cmd+Option+I (開啟開發者工具，keyCode 73)
+    // 阻止 Ctrl+C 或 Cmd+C (複製)
+    if (e.ctrlKey && (e.keyCode === 85 || e.keyCode === 73 || e.keyCode === 67) || e.keyCode === 123) { 
+        e.preventDefault(); 
+        // 可以增加一個提示訊息，例如：
+        // alert("本課程內容受版權保護，禁止複製和檢查元素。");
+    }
+});
 document.addEventListener('DOMContentLoaded', () => {
    async function loadDynamicContent() {
     try {
@@ -2538,6 +2558,7 @@ function bindQuizEventListeners() {
     </script>
 </body>
 </html>
+
 
 
 
