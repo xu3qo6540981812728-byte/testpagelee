@@ -2,7 +2,7 @@
 const path = require('path');
 const fs = require('fs');
 
-const filePath = path.join(__dirname, 'course_full_content.json');
+const filePath = path.resolve(__dirname, 'course_full_content.json');
 let fullCourseContent = {};
 
 try {
@@ -46,3 +46,4 @@ exports.handler = async (event) => {
     }
 
 };
+
