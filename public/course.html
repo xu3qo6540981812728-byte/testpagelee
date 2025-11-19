@@ -1637,18 +1637,21 @@ function showContent(sectionId, element) {
     renderTOCCards(chapters);
 
     
-const logoutButtonSidebar = document.getElementById('logout-button');
-
 // --- 調整浮動層次與幅度 ---
-const MAX_MOVEMENT = 5; 
+const MAX_MOVEMENT = 5; // 統一設定所有元素的最大平移幅度
+// ----------------------------
+
 function setupGlobalParallax() {
     
     // 監聽整個頁面 body 的滑鼠移動事件
     document.body.addEventListener('mousemove', (e) => {
         
+        // 變數在函數內部宣告，避免衝突
         const sidebar = document.getElementById('sidebar');
         const chapterView = document.getElementById('chapter-view');
         const tocCards = document.querySelectorAll('.toc-card'); 
+        const logoutButtonSidebar = document.getElementById('logout-button'); // 🌟 每次移動時重新獲取
+
         const elementsToMove = chapterView ? chapterView.querySelectorAll('header h2, .content-card, #progress-display-area') : [];
 
         // 使用 window 尺寸作為參考點
@@ -1672,7 +1675,6 @@ function setupGlobalParallax() {
         }
         
         // 2. 應用到內層元素 (卡片和標題) - 保持與父元素一致
-        // 由於這些元素是子元素，它們會繼承父元素的 transform，但為了邏輯一致性，我們也對它們應用相同的 transform 值。
         elementsToMove.forEach(el => {
             el.style.transform = `translateX(${totalMoveX}px) translateY(${totalMoveY}px)`;
         });
@@ -1693,7 +1695,8 @@ function setupGlobalParallax() {
     document.body.addEventListener('mouseleave', () => {
         const sidebar = document.getElementById('sidebar');
         const chapterView = document.getElementById('chapter-view');
-        // 為了重置所有元素，需要重新查詢所有浮動的元素
+        const logoutButtonSidebar = document.getElementById('logout-button'); // 🌟 再次獲取
+        
         const elementsToReset = document.querySelectorAll('.content-section h2, .content-card, #progress-display-area, .toc-card');
         
         if (sidebar) {
@@ -2690,6 +2693,7 @@ function bindQuizEventListeners() {
     </script>
 </body>
 </html>
+
 
 
 
