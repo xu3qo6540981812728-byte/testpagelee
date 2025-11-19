@@ -6,6 +6,20 @@
     <title>菁英班教育訓練 - 登入</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
+        #password-modal {
+    /* 設定視角，讓變換看起來是 3D 的 */
+    perspective: 1000px;
+}
+.parallax-card {
+    /* 定義旋轉的 CSS 變量 */
+    --rotateX: 0deg;
+    --rotateY: 0deg;
+    /* 應用 3D 變換 */
+    transform: rotateX(var(--rotateX)) rotateY(var(--rotateY));
+    /* 讓變換更流暢 */
+    transition: transform 0.1s ease-out;
+    transform-style: preserve-3d; /* 保留子元素的 3D 位置 */
+}
         .glowing-box {
     box-shadow: 0 0 10px rgba(79, 70, 229, 0.5), 0 0 20px rgba(79, 70, 229, 0.3), 0 10px 30px rgba(0, 0, 0, 0.1);
     transition: box-shadow 0.3s ease-in-out;
@@ -28,7 +42,7 @@
 </head>
 <body>
     <div id="password-modal" class="fixed inset-0 z-50 flex items-center justify-center bg-gray-900 bg-opacity-75 backdrop-blur-sm">
-        <div class="bg-white p-8 rounded-2xl shadow-2xl w-full max-w-sm text-center glowing-box" style="animation: zoomIn 0.3s ease-out;">
+        <div class="bg-white p-8 rounded-2xl shadow-2xl w-full max-w-sm text-center glowing-box parallax-card" style="animation: zoomIn 0.3s ease-out;">
             <h2 class="text-2xl font-bold text-slate-800 mb-4">課程系統登入</h2>
             <p class="text-slate-500 mb-6">此為內部訓練課程，請輸入您的帳號密碼。</p>
             <input type="text" id="username-input" class="w-full px-4 py-3 border-2 border-slate-300 rounded-lg text-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition mb-4" placeholder="請輸入帳號">
@@ -88,10 +102,48 @@
         submitButton.addEventListener('click', handleLogin);
         passwordInput.addEventListener('keydown', (e) => { if (e.key === 'Enter') handleLogin(); });
         usernameInput.addEventListener('keydown', (e) => { if (e.key === 'Enter') passwordInput.focus(); });
+    const loginCard = document.querySelector('.parallax-card');
+const loginContainer = document.getElementById('password-modal'); // 使用父容器作為事件監聽
+
+if (loginCard && loginContainer) {
+    loginContainer.addEventListener('mousemove', (e) => {
+        // 獲取容器和卡片的大小與位置
+        const rect = loginContainer.getBoundingClientRect();
+        
+        // 計算滑鼠在容器中的相對位置 (x: 0~1, y: 0~1)
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+
+        // 計算中心點的偏差 (normalized to -0.5 to 0.5)
+        const centerX = rect.width / 2;
+        const centerY = rect.height / 2;
+        
+        const offsetX = (x - centerX) / centerX;
+        const offsetY = (y - centerY) / centerY;
+
+        // 設定最大旋轉角度 (MAX_ROTATION)
+        const MAX_ROTATION = 5; 
+
+        // 計算旋轉角度 (X 軸旋轉與 Y 軸滑鼠相反，Y 軸旋轉與 X 軸滑鼠相反)
+        const rotateY = offsetX * MAX_ROTATION;
+        const rotateX = -offsetY * MAX_ROTATION;
+
+        // 應用 CSS 變量
+        loginCard.style.setProperty('--rotateX', `${rotateX}deg`);
+        loginCard.style.setProperty('--rotateY', `${rotateY}deg`);
+    });
+
+    // 當滑鼠移出容器時，將卡片歸位
+    loginContainer.addEventListener('mouseleave', () => {
+        loginCard.style.setProperty('--rotateX', '0deg');
+        loginCard.style.setProperty('--rotateY', '0deg');
+    });
+}
     });
    </script>
 </body>
 
 </html>
+
 
 
