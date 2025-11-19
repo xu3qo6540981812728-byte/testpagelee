@@ -51,6 +51,21 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <style>
+        body {
+    /* 設置視角，讓 transform 作用於整個視窗 */
+    perspective: 1000px; 
+    transform-style: preserve-3d;
+}
+
+.sidebar {
+    /* 確保 transform 有過渡效果 */
+    transition: left 0.3s ease-in-out, transform 0.3s ease-out; 
+}
+
+/* 讓主內容區的變換平滑 */
+#chapter-view {
+    transition: transform 0.3s ease-out;
+}
         .content-section h2, .content-card {
     transition: transform 0.3s ease-out;
 }
@@ -1621,113 +1636,100 @@ function showContent(sectionId, element) {
     appWrapper.style.display = 'block'; 
     renderTOCCards(chapters);
 
-    function setupTranslationParallaxEffect(card) {
-    const MAX_MOVEMENT = 8; // 設定卡片最大平移像素
-
-    // 1. 滑鼠移動事件：計算移動距離並應用 transform
-    card.addEventListener('mousemove', (e) => {
-        const rect = card.getBoundingClientRect();
-        
-        // 計算滑鼠在卡片中的相對位置
-        const x = e.clientX - rect.left;
-        const y = e.clientY - rect.top;
-
-        // 計算中心點的偏差 (normalized to -1 to 1)
-        const centerX = rect.width / 2;
-        const centerY = rect.height / 2;
-        
-        const offsetX = (x - centerX) / centerX;
-        const offsetY = (y - centerY) / centerY;
-
-        // 計算平移距離 (使用負號產生漂浮效果，卡片會往滑鼠的**反方向**移動)
-        const moveX = -offsetX * MAX_MOVEMENT;
-        const moveY = -offsetY * MAX_MOVEMENT;
-
-        // 應用 transform: 包含懸停抬升 5px (translateY(-5px)) 和平移效果
-        card.style.transform = `translateY(-5px) translateX(${moveX}px) translateY(${moveY}px)`;
-    });
     
-    // 2. 滑鼠進入事件：設置基礎抬升效果
-    card.addEventListener('mouseenter', () => {
-        // 進入時先設置基礎抬升，讓 transform transition 生效
-        card.style.transform = 'translateY(-5px)'; 
-    });
 
-    // 3. 滑鼠移出事件：將卡片歸位
-    card.addEventListener('mouseleave', () => {
-        // 移出時將 transform 歸零
-        card.style.transform = 'translateY(0px) translateX(0px)';
-    });
-}
+// 在 DOMContentLoaded 監聽器內部，所有初始化程式碼之後貼上
 
+const sidebar = document.getElementById('sidebar');
+const chapterView = document.getElementById('chapter-view'); // 包含 main 的父容器
+const tocCards = document.querySelectorAll('.toc-card');
 
-// 在 DOMContentLoaded 監聽器內執行，對所有課程卡片應用效果
-document.querySelectorAll('.toc-card').forEach(setupTranslationParallaxEffect);
-const MAX_GLOBAL_MOVEMENT = 15; // 頁面元素最大移動像素 (數值要小於卡片，製造層次感)
-const MAX_BACKGROUND_MOVEMENT = 15; // 背景元素最大移動像素
+// --- 調整浮動層次與幅度 ---
+const MAX_PAGE_MOVEMENT = 10; // 側邊欄和主內容區的整體平移幅度 (底層)
+const MAX_TITLE_MOVEMENT = 5;  // 標題 (中層) 的相對浮動幅度
+const MAX_CARD_MOVEMENT = 3;   // 內容卡片 (前景) 的相對浮動幅度
+// ----------------------------
 
-if (mainContentArea) {
-    // 監聽主內容區域的滑鼠移動
-    mainContentArea.addEventListener('mousemove', (e) => {
-        const rect = mainContentArea.getBoundingClientRect();
+function setupGlobalParallax() {
+    
+    // 監聽整個頁面 body 的滑鼠移動事件
+    document.body.addEventListener('mousemove', (e) => {
         
-        // 計算滑鼠在主內容區中的相對位置 (x: 0~1, y: 0~1)
-        const x = e.clientX - rect.left;
-        const y = e.clientY - rect.top;
+        // 使用 window 尺寸作為參考點
+        const centerX = window.innerWidth / 2;
+        const centerY = window.innerHeight / 2;
 
-        // 計算中心點的偏差 (normalized to -1 to 1)
-        const centerX = rect.width / 2;
-        const centerY = rect.height / 2;
+        const offsetX = (e.clientX - centerX) / centerX; // -1 (左) 到 1 (右)
+        const offsetY = (e.clientY - centerY) / centerY; // -1 (上) 到 1 (下)
+
+        // 1. 整體平移 (移動幅度最大): 應用於側邊欄和主內容區 (Page and Sidebar)
+        // 使用負號讓頁面往滑鼠的反方向移動，產生整個介面漂浮的感覺。
+        const pageMoveX = -offsetX * MAX_PAGE_MOVEMENT;
+        const pageMoveY = -offsetY * MAX_PAGE_MOVEMENT;
         
-        const offsetX = (x - centerX) / centerX;
-        const offsetY = (y - centerY) / centerY;
+        if (sidebar) {
+             sidebar.style.transform = `translateX(${pageMoveX}px) translateY(${pageMoveY}px)`;
+        }
 
-        // 計算平移距離
-        // 🌟 浮動效果：內容移動與滑鼠同向 (正值)，感覺內容離你較遠
-        const moveX = offsetX * MAX_GLOBAL_MOVEMENT;
-        const moveY = offsetY * MAX_GLOBAL_MOVEMENT;
-        
-        // 🌟 背景視差效果：背景移動與滑鼠反向 (負值)，感覺內容離你較近
-        const backgroundX = -offsetX * MAX_BACKGROUND_MOVEMENT;
-        const backgroundY = -offsetY * MAX_BACKGROUND_MOVEMENT;
-
-        // 應用效果到前景元素 (例如：當前章節的 h2 標題)
-        const activeChapter = mainContentArea.querySelector('.content-section.active');
-        if (activeChapter) {
-            // 讓章節標題微幅浮動
-            const chapterTitle = activeChapter.querySelector('header h2');
-            if (chapterTitle) {
-                 chapterTitle.style.transform = `translateX(${moveX}px) translateY(${moveY}px)`;
-            }
+        // chapterView 已經在上方宣告為 const，這裡直接使用
+        if (chapterView) {
+             chapterView.style.transform = `translateX(${pageMoveX}px) translateY(${pageMoveY}px)`;
         }
         
-        // 應用效果到頁面背景 (如果您的背景是固定在 body 上的)
-        // 這裡我們假設可以對 body 應用 transform 來模擬背景移動，但更安全的是對 body 應用微幅的位移。
-        // body.style.backgroundPosition = `calc(50% + ${backgroundX}px) calc(50% + ${backgroundY}px)`;
+        // 2. 內容內層次浮動: 應用於主內容區內部的元素 (Parallax effect)
+        // 由於整個 chapterView 已經移動，這裡的移動應該是額外的/相對的
         
-        // 更簡單的做法：讓頁面上的所有卡片產生整體漂移 (除了目錄卡片，因為它們已經有獨立的mousemove)
-        const contentCards = activeChapter.querySelectorAll('.content-card');
-        contentCards.forEach(card => {
-            // 這裡移動的幅度要比標題小，或者與標題方向相反
-            card.style.transform = `translateX(${moveX / 2}px) translateY(${moveY / 2}px)`;
+        const activeChapter = chapterView.querySelector('.content-section.active');
+        if (activeChapter) {
+            
+            // A) 標題 (中景): 移動幅度較大 (MAX_TITLE_MOVEMENT)
+            const titleMoveX = offsetX * MAX_TITLE_MOVEMENT;
+            const titleMoveY = offsetY * MAX_TITLE_MOVEMENT;
+            
+            const chapterTitle = activeChapter.querySelector('header h2');
+            if (chapterTitle) {
+                 chapterTitle.style.transform = `translateX(${titleMoveX}px) translateY(${titleMoveY}px)`;
+            }
+            
+            // B) 一般內容卡片 & 進度表卡片 (前景): 移動幅度最小
+            const cardMoveX = offsetX * MAX_CARD_MOVEMENT;
+            const cardMoveY = offsetY * MAX_CARD_MOVEMENT;
+            
+            // 選擇所有內容卡片和進度表容器
+            const contentCards = activeChapter.querySelectorAll('.content-card, #progress-display-area');
+            contentCards.forEach(card => {
+                card.style.transform = `translateX(${cardMoveX}px) translateY(${cardMoveY}px)`;
+            });
+            
+            // C) 目錄卡片 (如果當前在目錄頁) - 額外的幅度
+            if (activeChapter.id === 'table-of-contents') {
+                tocCards.forEach(card => {
+                    // 讓目錄卡片比一般卡片移動幅度更大一點
+                    card.style.transform = `translateX(${offsetX * (MAX_CARD_MOVEMENT + 2)}px) translateY(${offsetY * (MAX_CARD_MOVEMENT + 2)}px)`;
+                });
+            }
+        }
+    });
+
+    // 當滑鼠移出視窗或靜止時，將所有 transform 歸位
+    document.body.addEventListener('mouseleave', () => {
+        if (sidebar) {
+            sidebar.style.transform = 'none';
+        }
+        if (chapterView) {
+            chapterView.style.transform = 'none';
+        }
+
+        // 重置所有內層元素的 transform
+        document.querySelectorAll('.content-section h2, .content-card, #progress-display-area, .toc-card').forEach(el => {
+            el.style.transform = 'none';
         });
     });
-
-    // 離開主內容區時，將所有 transform 歸位
-    mainContentArea.addEventListener('mouseleave', () => {
-        const activeChapter = mainContentArea.querySelector('.content-section.active');
-        if (activeChapter) {
-            const chapterTitle = activeChapter.querySelector('header h2');
-            if (chapterTitle) {
-                 chapterTitle.style.transform = 'none';
-            }
-            const contentCards = activeChapter.querySelectorAll('.content-card');
-            contentCards.forEach(card => {
-                card.style.transform = 'none';
-            });
-        }
-    });
 }
+
+// 在 DOMContentLoaded 結束前執行全域浮動設置
+setupGlobalParallax();
+
     let navChapterCount = 0; 
 
     chapters.forEach((chapter, index) => {
@@ -2700,6 +2702,7 @@ function bindQuizEventListeners() {
     </script>
 </body>
 </html>
+
 
 
 
