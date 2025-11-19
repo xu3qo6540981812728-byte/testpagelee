@@ -20,9 +20,9 @@
     transition: transform 0.1s ease-out;
     transform-style: preserve-3d; /* 保留子元素的 3D 位置 */
 }
-        .glowing-box {
+       .glowing-box {
     box-shadow: 0 0 10px rgba(79, 70, 229, 0.5), 0 0 20px rgba(79, 70, 229, 0.3), 0 10px 30px rgba(0, 0, 0, 0.1);
-    transition: box-shadow 0.3s ease-in-out;
+    transition: box-shadow 0.3s ease-in-out, transform 0.3s ease-out; /* 這裡加入了 transform 的過渡效果 */
 }
 .glowing-box:hover {
     box-shadow: 0 0 15px rgba(79, 70, 229, 0.7), 0 0 30px rgba(79, 70, 229, 0.5), 0 15px 40px rgba(0, 0, 0, 0.2);
@@ -107,36 +107,35 @@ const loginContainer = document.getElementById('password-modal'); // 使用父�
 
 if (loginCard && loginContainer) {
     loginContainer.addEventListener('mousemove', (e) => {
-        // 獲取容器和卡片的大小與位置
+        // 獲取容器的大小與位置
         const rect = loginContainer.getBoundingClientRect();
         
         // 計算滑鼠在容器中的相對位置 (x: 0~1, y: 0~1)
         const x = e.clientX - rect.left;
         const y = e.clientY - rect.top;
 
-        // 計算中心點的偏差 (normalized to -0.5 to 0.5)
+        // 計算中心點的偏差 (normalized to -1 to 1)
         const centerX = rect.width / 2;
         const centerY = rect.height / 2;
         
-        const offsetX = (x - centerX) / centerX;
-        const offsetY = (y - centerY) / centerY;
+        const offsetX = (x - centerX) / centerX; // -1 (左) 到 1 (右)
+        const offsetY = (y - centerY) / centerY; // -1 (上) 到 1 (下)
 
-        // 設定最大旋轉角度 (MAX_ROTATION)
-        const MAX_ROTATION = 5; 
+        // 設定最大移動像素
+        const MAX_MOVEMENT = 10; 
 
-        // 計算旋轉角度 (X 軸旋轉與 Y 軸滑鼠相反，Y 軸旋轉與 X 軸滑鼠相反)
-        const rotateY = offsetX * MAX_ROTATION;
-        const rotateX = -offsetY * MAX_ROTATION;
+        // 計算移動距離。
+        // 使用負號 (-) 讓卡片往滑鼠的**反方向**移動，這會產生卡片像在漂浮，或滑鼠在推動卡片的視覺效果。
+        const moveX = -offsetX * MAX_MOVEMENT;
+        const moveY = -offsetY * MAX_MOVEMENT;
 
-        // 應用 CSS 變量
-        loginCard.style.setProperty('--rotateX', `${rotateX}deg`);
-        loginCard.style.setProperty('--rotateY', `${rotateY}deg`);
+        // 應用 2D 平移 (TranslateX/Y)
+        loginCard.style.transform = `translateX(${moveX}px) translateY(${moveY}px)`;
     });
 
     // 當滑鼠移出容器時，將卡片歸位
     loginContainer.addEventListener('mouseleave', () => {
-        loginCard.style.setProperty('--rotateX', '0deg');
-        loginCard.style.setProperty('--rotateY', '0deg');
+        loginCard.style.transform = `translateX(0px) translateY(0px)`;
     });
 }
     });
@@ -144,6 +143,7 @@ if (loginCard && loginContainer) {
 </body>
 
 </html>
+
 
 
 
