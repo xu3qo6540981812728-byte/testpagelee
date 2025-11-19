@@ -965,7 +965,8 @@ function resetAudioPlayerUI() {
     const nextChapterBtn = document.getElementById('next-chapter-btn');
     let searchableData = [];
     let currentHighlight = null;
-   
+   let fullCourseContent = {}; 
+    let progressData = {};
    
     const loggedInUser = sessionStorage.getItem('loggedInUser');
 const loggedInRole = sessionStorage.getItem('loggedInRole'); 
@@ -1442,8 +1443,7 @@ progressTableBody = document.getElementById('progress-table');
     '引導收斡與調價': 'chapter11',
     '總結：成為頂尖顧問的思維': 'chapter12'
 };
-    let progressTableBody = document.getElementById('progress-table');
-    let resetProgressButton = document.getElementById('reset-progress');
+    
     let progressData = {};
 const motivationMessages = [
     { percent: 100, message: "🎉 房仲傳奇: 恭喜！您已完成所有課程，您的專業成就已成為行業典範！" },
@@ -2361,6 +2361,7 @@ function bindQuizEventListeners() {
     </script>
 </body>
 </html>
+
 
 
 
