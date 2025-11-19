@@ -1811,26 +1811,39 @@ async function initializePage() {
         // 1. 先從後端載入課程內容
         await fetchCourseContent();
         
-        // 2. 重新執行課程內容的渲染和搜尋索引的創建
-        // 由於 fullCourseContent 已有內容，重新執行這段邏輯會將內容注入 mainContentArea
-        // 這裡需要重新呼叫一次渲染邏輯來建立內容，然後再建立搜尋索引。
-        
+        const backToTocBtn = document.getElementById('back-to-toc-desktop');
+    const loadingInd = document.getElementById('loading-indicator');
+    
+    // 清空 mainContentArea 中所有舊的內容和章節
+    mainContentArea.innerHTML = ''; 
+    
+    // 將控制元素重新放回最頂部
+    mainContentArea.appendChild(backToTocBtn);
+    mainContentArea.appendChild(loadingInd);
         let navChapterCount = 0; 
         
-        // 清空原先的 mainContentArea，並重新遍歷 chapters 來建立內容
-        mainContentArea.innerHTML = ''; 
-        mainContentArea.appendChild(document.getElementById('back-to-toc-desktop'));
-        mainContentArea.appendChild(document.getElementById('loading-indicator'));
+   chapters.forEach((chapter) => {
+        // 確保跳過主管儀表板和不符合角色的項目
+        if (chapter.id === 'manager-dashboard') {
+             const isManagerOrDirector = loggedInRole === 'manager' || loggedInRole === 'director';
+             if (!isManagerOrDirector) return;
+        }
+
+        const chapterContentHtml = fullCourseContent[chapter.id];
         
-        chapters.forEach((chapter) => {
-            const chapterContentHtml = fullCourseContent[chapter.id];
-            if (chapterContentHtml) {
-                const tempDiv = document.createElement('div');
-                tempDiv.innerHTML = chapterContentHtml;
-                const contentElement = tempDiv.firstChild; 
+        if (chapterContentHtml) {
+            // 關鍵步驟：使用 DOMParser 將 HTML 字串安全地解析成節點
+            const parser = new DOMParser();
+            const doc = parser.parseFromString(chapterContentHtml, 'text/html');
+            
+            // 取得解析後 body 裡的第一個子節點（即 <div id="chapterX">）
+            const contentElement = doc.body.firstChild; 
+            
+            if (contentElement) {
                 mainContentArea.appendChild(contentElement);
             }
-        });
+        }
+    });
         
         // 3. 創建搜尋索引
         createSearchIndex();
@@ -2373,6 +2386,7 @@ function bindQuizEventListeners() {
     </script>
 </body>
 </html>
+
 
 
 
