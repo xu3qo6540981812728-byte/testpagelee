@@ -1,0 +1,2606 @@
+{
+    "content": {
+        "chapter0": "<div id=\"chapter1\" class=\"content-section space-y-8">
+    
+    <div id="progress-header-area" class="relative flex justify-between items-center mb-8">
+        
+        <header class="animate-on-scroll flex-1">
+            <h2 id="progress-table-title" class="text-4xl font-bold text-slate-800 border-b-4 border-indigo-500 pb-3 mb-2">菁英課程進度表</h2>
+            <p id="progress-subtitle" class="text-slate-500">追蹤並記錄你的學習與實戰進度</p>
+        </header>
+        <div id="certification-stamp-area" class="w-32 h-32 md:w-48 md:h-48 flex-shrink-0 ml-4 relative">
+            <img id="stamp-image-placeholder" src="images/elite_certified.png" alt="菁英認證蓋章圖" class="absolute inset-0 w-full h-full object-cover opacity-0 transform -rotate-12 transition-opacity duration-700 ease-in-out">
+            <div id="stamp-placeholder-border" class="absolute inset-0 border-4 border-dashed border-gray-400 rounded-full flex items-center justify-center text-xs text-gray-500 p-2">
+                100%菁英認證
+            </div>
+        </div>
+        
+    </div> 
+    <div id="progress-display-area" class="mb-6 p-4 bg-indigo-50 rounded-lg sticky top-0 z-10">
+        <h4 id="progress-percentage" class="text-xl font-bold text-indigo-800 mb-2">
+            </h4>
+        <div class="w-full bg-slate-200 rounded-full h-2.5">
+            <div id="progress-bar-visual" class="bg-indigo-600 h-2.5 rounded-full transition-all duration-500" style="width: 0%"></div>
+        </div>
+       <p id="progress-motivation" class="text-base mt-3">
+            </p>
+        <div id="manager-control-panel" class="mt-4 pt-4 border-t border-indigo-200 hidden">
+    <div class="flex items-center justify-between mb-3">
+                     <h5 class="font-bold text-indigo-700">主管控制面板</h5>
+                     <button id="back-to-dashboard-btn" class="inline-flex items-center px-3 py-1 bg-amber-600 text-white text-xs font-semibold rounded-lg hover:bg-amber-700 transition duration-200 shadow-md">
+                         <i class="fas fa-arrow-left mr-2"></i>返回團隊儀表板
+                     </button>
+                 </div>
+    <div id="member-select-controls"> 
+        <div class="flex flex-col sm:flex-row gap-3">
+            <select id="team-member-select" class="w-full sm:w-1/2 p-2 border border-indigo-300 rounded-lg bg-white text-slate-700 shadow-sm focus:ring-indigo-500 focus:border-indigo-500 transition">
+                </select>
+            <div id="current-user-info" class="w-full sm:w-1/2 p-2 bg-indigo-100 rounded-lg text-sm text-indigo-700 flex items-center justify-center">
+                目前查看：<span id="current-progress-name" class="font-bold ml-1">個人進度</span>
+            </div>
+        </div>
+    </div>
+</div>
+    </div>
+    <div id="agent-progress-content"> 
+        <div class="bg-white p-4 sm:p-8 rounded-xl shadow-lg content-card animate-on-scroll">
+           <div class="hidden md:grid md:grid-cols-[0.8fr_80px_240px_1.2fr] gap-4 px-4 py-3 bg-slate-100 rounded-t-lg">
+    <div class="font-semibold text-slate-600">項目</div>
+    <div class="font-semibold text-slate-600 text-center">完成狀態<br>(主管審核)</div>
+    <div class="font-semibold text-slate-600 text-center">進度日期 / 備註</div>
+    <div class="font-semibold text-slate-600">次數紀錄</div>
+</div>
+            
+            <div id="progress-table" class="border-x border-b border-slate-200 rounded-b-lg">
+                </div>
+            
+        </div>
+    </div>
+    </div>",
+        "chapter1": "<div id=\"chapter1\" class=\"content-section space-y-8">
+            <header class=" ">
+                <h2 class="text-4xl font-bold text-slate-800 border-b-4 border-indigo-500 pb-3 mb-2">台灣房市歷史</h2>
+                <p class="text-slate-500">回顧過去，洞見未來</p>
+            </header>
+            <div class="bg-white p-8 rounded-xl shadow-lg content-card  ">
+                <h3 class="text-2xl font-semibold text-slate-700 mb-4">房地產短週期 vs. 房價</h3>
+                <p class="text-slate-600 mb-6 leading-relaxed">從歷史數據來看，台灣的房市買賣熱度通常隨著全球製造業週期而波動，呈現週期性的起伏。然而，儘管交易量有高有低，代表房價的指數卻呈現長期穩定向上的趨勢。這告訴我們，短期交易量受經濟景氣影響，但長期來看，房地產仍是保值的資產。</p>
+                <img src="images/image_578a86.jpg" alt="房地產週期與房價走勢圖" class="w-full rounded-lg shadow-md border">
+                <p class="text-center text-sm text-slate-500 mt-3">圖表顯示，房市交易量有週期性波動，但房價長期向上。</p>
+            </div>
+            <div class="bg-white p-8 rounded-xl shadow-lg content-card  ">
+                <h3 class="text-2xl font-semibold text-slate-700 mb-4">歷次房市波動原因分析</h3>
+                <div class="space-y-4">
+                    <div class="p-4 bg-slate-50 rounded-lg border-l-4 border-red-400">
+                        <h4 class="font-bold text-lg">第一次下跌 (1989年)：房市管制</h4>
+                        <p class="text-slate-600">80年代通膨導致搶購潮，臺幣漸趨氾濫，投資客興起，臺北房價迅速上升。政府為抑制房價，祭出查稅、選擇性信用管制等措施。</p>
+                    </div>
+                    <div class="p-4 bg-slate-50 rounded-lg border-l-4 border-red-400">
+                        <h4 class="font-bold text-lg">第二次下跌 (1996年)：臺海危機</h4>
+                        <p class="text-slate-600">前總統李登輝訪美，引發中共不滿，發動軍事演習。撤僑潮引發富人拋售在臺資產，房價迅速下跌。</p>
+                    </div>
+                     <div class="p-4 bg-slate-50 rounded-lg border-l-4 border-red-400">
+                        <h4 class="font-bold text-lg">第三次下跌 (1999年)：九二一大地震</h4>
+                        <p class="text-slate-600">強震重創台灣，造成民眾對房屋結構安全的疑慮以及經濟的衝擊，導致房市交易停滯。</p>
+                    </div>
+                    <div class="p-4 bg-slate-50 rounded-lg border-l-4 border-red-400">
+                        <h4 class="font-bold text-lg">第四次下跌 (2003年)：SARS 爆發</h4>
+                        <p class="text-slate-600">SARS 疫情使市場信心萎縮，買方不敢購屋，賣方恐慌性拋售，全臺房價在短短兩季內大跌12%。</p>
+                    </div>
+                     <div class="p-4 bg-slate-50 rounded-lg border-l-4 border-blue-400">
+                        <h4 class="font-bold text-lg">第五次下跌 (2008年)：金融海嘯</h4>
+                        <p class="text-slate-600">美國次貸風暴引發全球金融海嘯，市場趨於保守觀望，台灣房市也隨之降溫。</p>
+                    </div>
+                    <div class="p-4 bg-slate-50 rounded-lg border-l-4 border-blue-400">
+                        <h4 class="font-bold text-lg">第六次下跌 (2015年)：聯準會縮表與房地合一稅</h4>
+                        <p class="text-slate-600">2015年聯準會進入升息循環，同時政府於2016年祭出取代奢侈稅的房地合一稅，讓投機客無法短期炒作，房市迎來空頭期。</p>
+                    </div>
+                     <div class="p-4 bg-slate-50 rounded-lg border-l-4 border-green-400">
+                        <h4 class="font-bold text-lg">市場再起 (2020年)：COVID-19 疫情</h4>
+                        <p class="text-slate-600">台商大量回臺，資金大量回流，疫情逐漸緩和後，2021年掀起一波報復性購屋潮。</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="bg-white p-8 rounded-xl shadow-lg content-card  ">
+                <h3 class="text-2xl font-semibold text-slate-700 mb-4">近期重要政策與市場影響</h3>
+                <div class="space-y-8">
+                    <div class="p-4 bg-indigo-50 rounded-lg">
+                        <h4 class="font-bold text-xl mb-3 text-indigo-800">2023年《平均地權條例》修法</h4>
+                        <img src="images/image_578d6c.jpg" alt="平均地權條例修法圖" class="w-full rounded-lg shadow-md border">
+                    </div>
+                    <div class="p-4 bg-indigo-50 rounded-lg">
+                        <h4 class="font-bold text-xl mb-3 text-indigo-800">2024年 新青年安心成家貸款 (新青安)</h4>
+                         <img src="images/image_578ac3.jpg" alt="新青安貸款方案圖" class="w-full rounded-lg shadow-md border">
+                    </div>
+                    <div class="p-4 bg-indigo-50 rounded-lg">
+                        <h4 class="font-bold text-xl mb-3 text-indigo-800">2024年 銀行房貸限縮與信用管制</h4>
+                        <p class="text-slate-600 mb-4">因應銀行法規與央行政策，部分銀行開始緊縮房貸條件，特別是針對多屋族。下圖為9月20日後不同身分的貸款資格變化。</p>
+                        <img src="images/image_578da9.jpg" alt="房貸資格圖" class="w-full rounded-lg shadow-md border">
+                    </div>
+                </div>
+            </div>
+            <div class="bg-white p-8 rounded-xl shadow-lg content-card">
+    <h3 class="text-3xl font-extrabold text-amber-700 mb-6 border-b-2 pb-2 border-gray-200">
+        🏠 用數據看歷史 🗓️
+    </h3>
+    
+    <div class="space-y-4 mb-8">
+        <h4 class="text-xl font-bold text-slate-700 mb-4">25年數據總結 (2000-2025)</h4>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <div class="bg-amber-50 p-4 rounded-lg shadow-sm border-l-4 border-amber-600">
+                <p class="text-sm font-medium text-gray-700">整體房價累計上漲</p>
+                <p class="text-2xl font-extrabold text-amber-800 mt-1">150% - 283%</p>
+            </div>
+            <div class="bg-amber-50 p-4 rounded-lg shadow-sm border-l-4 border-amber-600">
+                <p class="text-sm font-medium text-gray-700">平均年增長率</p>
+                <p class="text-2xl font-extrabold text-amber-800 mt-1">7.3%</p>
+            </div>
+            <div class="bg-slate-50 p-4 rounded-lg shadow-sm border-l-4 border-slate-400">
+                <p class="text-sm font-medium text-gray-500">最新房貸違約率</p>
+                <p class="text-2xl font-extrabold text-gray-800 mt-1">僅 0.07%</p>
+            </div>
+        </div>
+        <div class="mt-4 bg-gray-100 border-l-4 border-amber-500 text-gray-700 p-3 rounded-r-lg">
+            <p class="text-base font-semibold">回檔不是危機，現在就是絕佳買點！這正是對抗「短週期波動」的最佳寫照。</p>
+        </div>
+    </div>
+    
+ <h4 class="text-2xl font-bold text-slate-700 mb-4 border-t pt-4">歷次危機下的房價軌跡 (時間軸)</h4>
+<div class="relative pt-4 pl-8 md:pl-12">
+    <div class="absolute left-4 md:left-6 top-0 h-full w-1 bg-indigo-300"></div>
+    <div class="relative mb-8 pb-4">
+        <div class="absolute left-1 md:left-3 top-0 w-6 h-6 bg-indigo-500 rounded-full border-4 border-white shadow"></div>
+        <div class="bg-slate-50 p-4 rounded-lg shadow-md ml-4 md:ml-8 border-l-4 border-amber-500">
+            <h5 class="font-bold text-lg text-amber-700 mb-1">2000-2003：金融危機與SARS恐慌期</h5>
+            <p class="text-slate-600 text-sm mt-1">🔴 危機：亞洲金融危機餘波、SARS爆發 (房價兩季大跌12%)。</p>
+            <p class="text-green-600 font-semibold text-sm">🟢 結果：房價從基期100穩升到108。啟示：負面事件過後，房市馬上復甦！</p>
+        </div>
+    </div>
+    
+    <div class="relative mb-8 pb-4">
+        <div class="absolute left-1 md:left-3 top-0 w-6 h-6 bg-indigo-500 rounded-full border-4 border-white shadow"></div>
+        <div class="bg-slate-50 p-4 rounded-lg shadow-md ml-4 md:ml-8 border-l-4 border-amber-500">
+            <h5 class="font-bold text-lg text-amber-700 mb-1">2004-2009：全球金融海嘯大考驗</h5>
+            <p class="text-slate-600 text-sm mt-1">🔴 危機：美國次貸危機、雷曼兄弟倒閉 (媒體預測跌20%+)。</p>
+            <p class="text-green-600 font-semibold text-sm">🟢 結果：房價基期從112漲到136。啟示：長期趨勢是上漲，等崩盤錯過最佳買點！</p>
+        </div>
+    </div>
+    
+    <div class="relative mb-8 pb-4">
+        <div class="absolute left-1 md:left-3 top-0 w-6 h-6 bg-indigo-500 rounded-full border-4 border-white shadow"></div>
+        <div class="bg-slate-50 p-4 rounded-lg shadow-md ml-4 md:ml-8 border-l-4 border-amber-500">
+            <h5 class="font-bold text-lg text-amber-700 mb-1">2010-2015：奢侈稅與泡沫疑慮高峰</h5>
+            <p class="text-slate-600 text-sm mt-1">🔴 危機：奢侈稅上路，2014-2015年稅改低迷，交易量創低。</p>
+            <p class="text-green-600 font-semibold text-sm">🟢 結果：房價基期從142漲到180。啟示：供給短缺和低稅環境，讓房價穩如泰山。</p>
+        </div>
+    </div>
+    <div class="relative mb-8 pb-4">
+        <div class="absolute left-1 md:left-3 top-0 w-6 h-6 bg-indigo-500 rounded-full border-4 border-white shadow"></div>
+        <div class="bg-slate-50 p-4 rounded-lg shadow-md ml-4 md:ml-8 border-l-4 border-amber-500">
+            <h5 class="font-bold text-lg text-amber-700 mb-1">2016-2019：唯一小跌後強勁反彈</h5>
+            <p class="text-slate-600 text-sm mt-1">🔴 危機：2016年房價跌-6%，預測崩30%以上。貿易戰、人口紅利結束。</p>
+            <p class="text-green-600 font-semibold text-sm">🟢 結果：2017年馬上反彈+1.8%，到2019年房價基期漲到181。啟示：回檔買點經典重現！</p>
+        </div>
+    </div>
+    
+    <div class="relative mb-8 pb-4">
+        <div class="absolute left-1 md:left-3 top-0 w-6 h-6 bg-indigo-500 rounded-full border-4 border-white shadow"></div>
+        <div class="bg-slate-50 p-4 rounded-lg shadow-md ml-4 md:ml-8 border-l-4 border-amber-500">
+            <h5 class="font-bold text-lg text-amber-700 mb-1">2020-2024：疫情與升息雙重打擊</h5>
+            <p class="text-slate-600 text-sm mt-1">🔴 危機：COVID、升息、高通膨/交易跌破30萬。</p>
+            <p class="text-green-600 font-semibold text-sm">🟢 結果：房價基期從190狂飆到254。啟示：台灣經濟韌性無敵，打破一切利空預測。</p>
+        </div>
+    </div>
+    
+    <div class="relative pb-4">
+        <div class="absolute left-1 md:left-3 top-0 w-6 h-6 bg-red-600 rounded-full border-4 border-white shadow"></div>
+        <div class="bg-amber-100 p-4 rounded-lg shadow-md ml-4 md:ml-8 border-l-4 border-red-500">
+            <h5 class="font-bold text-xl text-red-700 mb-1">2025 (現在)：政策觀望期延續</h5>
+            <p class="text-slate-700 text-sm mt-1">🔴 危機：政策觀望期延續，Q3交易量年減近三成，媒體喊「泡沫元年」。</p>
+            <p class="text-red-700 font-extrabold text-sm">🚨 結論：現在就是絕佳買點！小幅回落是政策控穩結果，抓住波谷，就是人生贏家！</p>
+        </div>
+    </div>
+</div>
+</div>
+        </div>",
+        
+        "chapter3": "<div id=\"chapter3\" class=\"content-section space-y-8">
+            <header class=" ">
+                <h2 class="text-4xl font-bold text-slate-800 border-b-4 border-indigo-500 pb-3 mb-2">認識謄本與建物型態</h2>
+                <p class="text-slate-500">產權的照妖鏡，保障交易安全的第一步</p>
+            </header>
+            <div class="bg-white p-8 rounded-xl shadow-lg content-card  ">
+                 <h3 class="text-2xl font-semibold text-slate-700 mb-4">謄本的重要性</h3>
+                 <p class="text-slate-600 leading-relaxed">房屋權狀僅代表申請當下的產權狀態，後續的權利變動（如貸款設定、查封）不會即時更新。因此，查閱「土地謄本」與「建物謄本」才能了解不動產最新的產權狀態，在法律糾紛中，也一律以謄本記載為準。看懂謄本，是保障客戶與自身權益的第一步。</p>
+            </div>
+             <div class="grid md:grid-cols-2 gap-8">
+                <div class="bg-white p-8 rounded-xl shadow-lg content-card  ">
+                    <h3 class="text-xl font-semibold text-slate-700 mb-4">權狀 vs 謄本</h3>
+                    <ul class="list-disc list-inside space-y-3 text-slate-600">
+                        <li><span class="font-bold">詳細程度：</span>謄本較全面，權狀較簡略。</li>
+                        <li><span class="font-bold">更新速度：</span>謄本更新快（即時反應登記狀態），權狀慢。</li>
+                        <li><span class="font-bold">法律效力：</span>謄本是主要的法律文件，權狀為輔助。</li>
+                    </ul>
+                </div>
+                <div class="bg-white p-8 rounded-xl shadow-lg content-card  ">
+                    <h3 class="text-xl font-semibold text-slate-700 mb-4">謄本分類</h3>
+                     <ul class="list-disc list-inside space-y-3 text-slate-600">
+                        <li><span class="font-bold">第一類：</span>所有權人本人申請，顯示完整個資。</li>
+                        <li><span class="font-bold">第二類：</span>任何人皆可申請，部分個資隱匿，是我們最常用的類型。</li>
+                        <li><span class="font-bold">第三類：</span>利害關係人申請，顯示完整姓名及地址。</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="bg-white p-8 rounded-xl shadow-lg content-card  ">
+                <h3 class="text-2xl font-semibold text-slate-700 mb-6">謄本範例與解析</h3>
+                <div class="space-y-8">
+                    <div>
+                        <h4 class="font-bold text-xl text-indigo-600 mb-3">1. 標示部 (房子的身分證)</h4>
+                        <img src="images/image_578e08.jpg" alt="謄本標示部" class="w-full rounded-lg shadow-md border">
+                    </div>
+                    <div>
+                        <h4 class="font-bold text-xl text-indigo-600 mb-3">2. 所有權部 (房子的戶口名簿)</h4>
+                        <img src="images/image_578e21.jpg" alt="謄本所有權部" class="w-full rounded-lg shadow-md border">
+                    </div>
+                    <div>
+                        <h4 class="font-bold text-xl text-indigo-600 mb-3">3. 他項權利部 (房子的信用報告)</h4>
+                        <img src="images/image_578e24.jpg" alt="謄本他項權利部" class="w-full rounded-lg shadow-md border">
+                    </div>
+                </div>
+            </div>
+        <div class="bg-white p-8 rounded-xl shadow-lg content-card animate-on-scroll">
+    <h3 class="text-2xl font-semibold text-slate-700 mb-4">為何權狀的坪數標示容易混淆？</h3>
+    <p class="text-slate-600 mb-4 leading-relaxed">
+        初次接觸不動產時，對權狀的判讀總有諸多疑問。這主要是因為權狀的標示方式與我們日常習慣不同，容易造成買賣雙方的認知糾紛。
+    </p>
+    <ul class="list-disc list-inside space-y-3 text-slate-600 bg-slate-50 p-4 rounded-md">
+        <li>權狀面積單位為「平方公尺」，而非慣用的「坪」。</li>
+        <li>「總面積」僅指主建物，不含陽台、公設，這些項目會分開標示。</li>
+        <li>「共用部分」（公設）的登記複雜，有時還包含車位，且分為「大公」與「小公」。</li>
+    </ul>
+</div>
+<div class="grid md:grid-cols-2 gap-8">
+    <div class="bg-white p-8 rounded-xl shadow-lg content-card animate-on-scroll">
+        <h3 class="text-xl font-semibold text-slate-700 mb-4">地坪是什麼？</h3>
+        <p class="text-slate-600 leading-relaxed">
+            指土地的總面積。地坪通常比建坪小，不包含陽台、騎樓、公設等面積。
+        </p>
+    </div>
+    <div class="bg-white p-8 rounded-xl shadow-lg content-card animate-on-scroll">
+        <h3 class="text-xl font-semibold text-slate-700 mb-4">建坪是什麼？</h3>
+        <p class="text-slate-600 leading-relaxed">
+            指建築物所有樓層的面積總和，包含室內、陽台、公設等。
+        </p>
+    </div>
+</div>
+            <div class="bg-white p-8 rounded-xl shadow-lg content-card animate-on-scroll">
+    <h3 class="text-2xl font-semibold text-slate-700 mb-6">公設比的歷史沿革</h3>
+    <div class="space-y-4 text-slate-600">
+        <div class="p-4 bg-slate-50 rounded-lg border-l-4 border-slate-400">
+            <h4 class="font-bold">1987年前：小公合併於主建物</h4>
+            <p class="mt-1">房屋的公設（小公）多合併在主建物內，建物平面圖並無標示公設，老公寓常被誤認為零公設，但其實是佔比不高，只是為目前室內使用坪數最高的產品。</p>
+        </div>
+        <div class="p-4 bg-slate-50 rounded-lg border-l-4 border-slate-400">
+            <h4 class="font-bold">1994年10月後：公設需分開登記</h4>
+            <p class="mt-1">凡是共用部分就必須另外採用「公設登記」，不可與主建物混同登記。</p>
+        </div>
+        <div class="p-4 bg-slate-50 rounded-lg border-l-4 border-slate-400">
+            <h4 class="font-bold">2005年後：建築法規趨嚴</h4>
+            <p class="mt-1">建築法規修正後，8樓以上須設置雙逃生梯、11樓以上須有排煙室等，因此公設比愈來愈高。如今公設比30%起已是普遍標準。但須留意，沒有頂蓋的設施（如中庭花園、露天泳池）都是屬於「法定空地」，不計入公設面積。</p>
+        </div>
+        <div class="p-4 bg-slate-50 rounded-lg border-l-4 border-slate-400">
+            <h4 class="font-bold">2018年起：屋簷、雨遮不登記不計價</h4>
+            <p class="mt-1">申請建造執照者，屋簷、雨遮不登記也不計價，這也將影響舊建築買賣時若有登記之屋簷、雨遮可能不再列入計價範圍。</p>
+        </div>
+    </div>
+</div>
+        <div class="bg-white p-8 rounded-xl shadow-lg content-card animate-on-scroll">
+    <h3 class="text-2xl font-semibold text-slate-700 mb-6">如何計算權狀坪數？</h3>
+    
+    <div class="mb-6">
+        <h4 class="font-bold text-lg text-indigo-600 mb-2">基本換算公式</h4>
+        <p class="text-slate-600 bg-indigo-50 p-4 rounded-lg font-mono text-center text-lg">
+            平方公尺 × 0.3025 = 坪
+        </p>
+    </div>
+    <div class="mb-8">
+        <h4 class="font-bold text-lg text-indigo-600 mb-2">權狀坪數總公式</h4>
+        <p class="text-slate-600 bg-slate-100 p-4 rounded-lg font-mono text-center">
+            (總面積 + 附屬建物面積 + (共用部分面積 × 權利範圍)) × 0.3025
+        </p>
+        <ul class="list-decimal list-inside text-slate-600 mt-4 space-y-2">
+            <li><b>總面積：</b>即主建物面積。</li>
+            <li><b>附屬建物：</b>通常為陽台、花台、露台等。</li>
+            <li><b>共用部分：</b>即公共設施。</li>
+            <li><b>權利範圍：</b>您所持有的公設比例。</li>
+        </ul>
+    </div>
+    
+    <div class="border-t pt-6">
+        <h4 class="font-bold text-xl text-slate-800 mb-4">實戰範例：權狀判讀與計算</h4>
+        <p class="text-slate-600 mb-4">以下圖的權狀為例，我們來實際計算房屋與車位的坪數。</p>
+        <img src="images/scimgF0At1e.webp" alt="權狀範例圖" class="w-full rounded-lg shadow-md border mb-6">
+        <div class="space-y-4">
+            <div class="p-4 bg-red-50 rounded-lg">
+                <h5 class="font-semibold text-red-800">權狀總坪數計算：</h5>
+                <p class="font-mono mt-2"> (71.88 [主建物] + 8.99 [附屬建物] + (459.46 [公設] × 42/1000 [權利範圍])+(328.33[車位公設] × 1/10[權利範圍])) × 0.3025 = <b>40.23 坪</b> </p>
+            </div>
+            <div class="p-4 bg-blue-50 rounded-lg">
+                <h5 class="font-semibold text-blue-800">房屋坪數計算(不含車位)：</h5>
+                <p class="font-mono mt-2"> (71.88 [主建物] + 8.99 [附屬建物] + (459.46 [公設] × 42/1000 [權利範圍])) × 0.3025 = <b>30.30 坪</b> </p>
+            </div>
+            <div class="p-4 bg-green-50 rounded-lg">
+                <h5 class="font-semibold text-green-800">車位坪數計算：</h5>
+                <p class="font-mono mt-2"> (328.33 [車位公設] × 1/10 [權利範圍]) × 0.3025 = <b>9.93 坪</b></p>
+            </div>
+            <div class="p-4 bg-amber-50 rounded-lg">
+                <h5 class="font-semibold text-amber-800">總價計算範例：</h5>
+                <p class="text-slate-700 mt-2">假設該地區單坪30萬，一個車位100萬：</p>
+                <p class="font-mono mt-1"> (30.30 坪[房屋坪數] × 30 萬) + 100 萬 (車位價) = <b>1,009 萬元</b></p>
+            </div>
+        </div>
+    </div>
+</div>
+        <div class="bg-white p-8 rounded-xl shadow-lg content-card animate-on-scroll">
+    <h3 class="text-2xl font-semibold text-slate-700 mb-6">深入解析：公共設施 (公設)</h3>
+    
+    <div class="mb-6">
+        <h4 class="font-bold text-lg text-indigo-600 mb-2">公設比如何計算？</h4>
+<p class="text-slate-600 bg-indigo-50 p-4 rounded-lg font-mono text-center">
+    持有公設坪數(扣除車位) ÷ 房屋坪數 × 100%
+</p>
+<div class="mt-4 p-4 bg-green-50 rounded-lg border border-green-200">
+    <h5 class="font-semibold text-green-800">實戰範例 (沿用上方權狀)：</h5>
+    <ul class="list-disc list-inside text-sm text-slate-700 mt-2 space-y-1">
+        <li><b>房屋坪數：</b> 30.30 坪</li>
+        <li><b>持有公設坪數 (不含車位)：</b><br> (459.46 × 42/1000) × 0.3025 ≈ 5.84 坪</li>
+    </ul>
+    <div class="mt-3 pt-3 border-t border-green-300">
+        <p class="font-mono text-center">5.84 坪 ÷ 30.30 坪 × 100% = <b class="text-lg text-red-600">19.2%</b></p>
+    </div>
+</div>
+        <div class="mt-6 p-4 bg-amber-100 border-l-4 border-amber-500 text-amber-800 rounded-r-lg">
+    <div class="flex items-start">
+        <div class="flex-shrink-0">
+            <svg class="h-6 w-6 text-amber-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                <path fill-rule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM10 13a1 1 0 110-2 1 1 0 010 2zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clip-rule="evenodd" />
+            </svg>
+        </div>
+        <div class="ml-3">
+            <h4 class="font-bold text-lg text-amber-900">公設內含車位，該如何判斷及計算？</h4>
+            <div class="mt-2 text-sm text-amber-700 space-y-2">
+                <p><strong class="text-red-600">【核心觀念】</strong>車位一定要分開報價，不以坪計價，而是獨立的「個」為單位。</p>
+                <ul class="list-disc list-inside">
+                    <li>公設若包含車位，請記得分開計算，不計入「房屋本身」的公設比或權狀坪數內。</li>
+                    <li>若權狀無明確標示車位面積，可比對正上下樓層無車位的戶別來判斷車位面積，或確認車位是否為獨立權狀。</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+    <div class="mb-8">
+        <h4 class="font-bold text-lg text-indigo-600 mb-3">公設比判斷</h4>
+        <div class="overflow-x-auto">
+            <table class="min-w-full bg-white border border-slate-200 rounded-lg">
+                <thead class="bg-slate-200">
+                    <tr>
+                        <th class="p-3 text-left font-bold text-gray-700">房子種類</th>
+                        <th class="p-3 text-left font-bold text-gray-700">大多的公設比</th>
+                    </tr>
+                </thead>
+                <tbody class="divide-y divide-slate-200">
+                    <tr><td class="p-3">公寓</td><td class="p-3 font-medium">5% ~ 12%</td></tr>
+                    <tr class="bg-slate-50"><td class="p-3">舊式電梯華廈</td><td class="p-3 font-medium">12% ~ 18%</td></tr>
+                    <tr><td class="p-3">舊式住宅大廈</td><td class="p-3 font-medium">20% ~ 25%</td></tr>
+                    <tr class="bg-slate-50"><td class="p-3">新式大廈或社區</td><td class="p-3 font-medium">30% ~ 40%</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    
+    <div class="border-t pt-6">
+        <h4 class="font-bold text-lg text-indigo-600 mb-3">大公 vs 小公</h4>
+        <p class="text-slate-600 leading-relaxed mb-4">
+            大家常以為老公寓零公設，其實不然。公設分為大公與小公兩種：
+        </p>
+        <div class="grid md:grid-cols-2 gap-6">
+            <div class="p-4 bg-slate-100 rounded-lg">
+                <h5 class="font-semibold text-slate-800">大公</h5>
+                <p class="text-sm mt-1">全體住戶共同持有與使用的公共空間，例如大廳、管理室、機械房、水箱等</p>
+            </div>
+            <div class="p-4 bg-slate-100 rounded-lg">
+                <h5 class="font-semibold text-slate-800">小公</h5>
+                <p class="text-sm mt-1">部分住戶（例如同樓層住戶）共同使用的空間，例如各樓層的電梯間、樓梯間、走廊和通道等</p>
+            </div>
+        </div>
+    </div>
+</div>
+            </div>
+            <div class="bg-white p-8 rounded-xl shadow-lg content-card animate-on-scroll mt-12">
+                 <header class="text-center mb-8 md:mb-12">
+                     <h1 class="text-3xl md:text-5xl font-bold text-gray-800 border-b-4 border-yellow-400 inline-block pb-1">
+                         台灣常見四大住宅類型：立體圖解與持分比較
+                     </h1>
+                     <p class="mt-4 text-lg text-gray-600">
+                         深入了解透天厝、公寓、華廈、大樓在土地持分、價值與都更潛力上的差異
+                     </p>
+                 </header>
+                <div class="container-card p-6 md:p-8 rounded-xl scribble-border mb-12">
+        <h2 class="text-2xl font-bold mb-6 border-l-4 border-indigo-500 pl-3">🏠 四大住宅類型圖解與說明</h2>
+        <div id="housing-grid" class="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <!-- 1. 透天厝 -->
+            <div class="container-card p-6 rounded-xl scribble-border border-2 border-green-600 hover:bg-green-50">
+                <div class="svg-container">
+    <svg viewBox="0 0 120 120" class="w-full h-full">
+        <path d="M 10 100 L 110 100 L 110 115 L 10 115 Z" fill="#bfa060" class="shared-land" opacity="0.1" />
+        <path d="M 10 100 L 110 100 L 105 110 L 5 110 Z" class="unit-land" stroke="#333" stroke-width="2"/>
+        <path d="M 110 100 L 110 40 L 105 45 L 105 110 Z" class="unit-land-shadow" opacity="0.8"/>
+        <rect x="25" y="55" width="70" height="45" fill="#FFFFFF" stroke="#333" stroke-width="2"/>
+        <path d="M 95 55 L 105 45 L 105 95 L 95 100 Z" fill="#f07167" stroke="#333" stroke-width="2"/>
+        <path d="M 25 55 L 60 25 L 95 55 L 105 45 L 60 15 L 25 55 Z" fill="#f07167" stroke="#333" stroke-width="2"/>
+        <rect x="55" y="85" width="10" height="15" fill="#333" stroke="#333" stroke-width="1.5"/>
+        <rect x="35" y="65" width="10" height="10" fill="#fcf6bd" stroke="#333" stroke-width="1.5"/>
+        <rect x="75" y="65" width="10" height="10" fill="#fcf6bd" stroke="#333" stroke-width="1.5"/>
+    </svg>
+</div>
+                <h3 class="text-xl font-bold mb-2 text-green-700">透天厝</h3>
+                <p class="text-gray-600 mb-2">特色： 獨棟或連棟建築，樓層低，通常無電梯。</p>
+                <ul class="list-disc list-inside space-y-1 text-sm">
+                    <li>土地持分： 完整獨立。屋主擁有整塊基地所有權，權益最單純。</li>
+                    <li>公設比： 極低，近乎 0%。</li>
+                    <li>都更潛力： 極高。因土地持分完整，價值高，集體改建潛力強。</li>
+                    <li>價值： 土地佔比高，保值性強。</li>
+                </ul>
+            </div>
+            <!-- 2. 公寓 -->
+            <div class="container-card p-6 rounded-xl scribble-border border-2 border-blue-600 hover:bg-blue-50">
+               <div class="svg-container">
+    <svg viewBox="0 0 120 120" class="w-full h-full">
+        <path d="M 15 100 L 105 100 L 100 110 L 10 110 Z" class="shared-land" stroke="#333" stroke-width="2"/>
+        <path d="M 37.5 100 L 60 100 L 55 110 L 32.5 110 Z" class="unit-land" stroke="#333" stroke-width="2"/>
+        <path d="M 60 100 L 60 55 L 55 65 L 55 110 Z" class="unit-land-shadow" opacity="0.8"/>
+        <rect x="30" y="60" width="55" height="40" fill="#a0c4ff" stroke="#333" stroke-width="2"/>
+        <path d="M 85 60 L 90 55 L 90 95 L 85 100 Z" fill="#6a87d0" stroke="#333" stroke-width="2"/>
+        <path d="M 30 60 L 85 60 L 90 55 L 35 55 Z" fill="#8f9dfd" stroke="#333" stroke-width="2"/>
+        <rect x="52.5" y="85" width="10" height="15" fill="#333" stroke="#333" stroke-width="1.5"/>
+        <line x1="57.5" y1="60" x2="57.5" y2="100" stroke="#333" stroke-width="1.5"/>
+        <rect x="35" y="65" width="10" height="7" fill="#fcf6bd" stroke="#333" stroke-width="1"/>
+        <rect x="70" y="65" width="10" height="7" fill="#fcf6bd" stroke="#333" stroke-width="1"/>
+        <rect x="35" y="75" width="10" height="7" fill="#fcf6bd" stroke="#333" stroke-width="1"/>
+        <rect x="70" y="75" width="10" height="7" fill="#fcf6bd" stroke="#333" stroke-width="1"/>
+        <rect x="35" y="85" width="10" height="7" fill="#fcf6bd" stroke="#333" stroke-width="1"/>
+        <rect x="70" y="85" width="10" height="7" fill="#fcf6bd" stroke="#333" stroke-width="1"/>
+        <rect x="35" y="95" width="10" height="4" fill="#fcf6bd" stroke="#333" stroke-width="1"/>
+        <rect x="70" y="95" width="10" height="4" fill="#fcf6bd" stroke="#333" stroke-width="1"/>
+    </svg>
+</div>
+                <h3 class="text-xl font-bold mb-2 text-blue-700">公寓</h3>
+                <p class="text-gray-600 mb-2">特色： 5層樓以下集合住宅，無電梯、無管理員。</p>
+                <ul class="list-disc list-inside space-y-1 text-sm">
+                    <li>土地持分： 相對較大。戶數少，公設比低，每戶分攤到的基地面積較高。</li>
+                    <li>公設比： 最低 (約 5%-12%)。</li>
+                    <li>都更潛力： 高。因土地持分大，是建商進行都更危老整合的目標。</li>
+                    <li>價值： 地點通常優越 (市中心)，且土地價值高。</li>
+                </ul>
+            </div>
+            <!-- 3. 華廈 -->
+            <div class="container-card p-6 rounded-xl scribble-border border-2 border-purple-600 hover:bg-purple-50">
+              <div class="svg-container">
+    <svg viewBox="0 0 120 120" class="w-full h-full">
+        <path d="M 15 100 L 105 100 L 100 110 L 10 110 Z" class="shared-land" stroke="#333" stroke-width="2"/>
+        <path d="M 45 100 L 55 100 L 50 110 L 40 110 Z" class="unit-land" stroke="#333" stroke-width="2"/>
+         <path d="M 55 100 L 55 20 L 50 30 L 50 110 Z" class="unit-land-shadow" opacity="0.8"/>
+        <rect x="40" y="25" width="40" height="75" fill="#c3b1e1" stroke="#333" stroke-width="2"/>
+        <path d="M 80 25 L 85 20 L 85 95 L 80 100 Z" fill="#8a73b2" stroke="#333" stroke-width="2"/>
+        <path d="M 40 25 L 80 25 L 85 20 L 45 20 Z" fill="#a493c4" stroke="#333" stroke-width="2"/>
+        <rect x="58" y="25" width="4" height="75" fill="#333" opacity="0.1"/>
+        <rect x="55" y="90" width="10" height="10" fill="#333" stroke="#333" stroke-width="1.5"/>
+        <rect x="45" y="30" width="8" height="6" fill="#fcf6bd" stroke="#333" stroke-width="1"/>
+        <rect x="67" y="30" width="8" height="6" fill="#fcf6bd" stroke="#333" stroke-width="1"/>
+    
+        <rect x="45" y="40" width="8" height="6" fill="#fcf6bd" stroke="#333" stroke-width="1"/>
+        <rect x="67" y="40" width="8" height="6" fill="#fcf6bd" stroke="#333" stroke-width="1"/>
+    
+        <rect x="45" y="50" width="8" height="6" fill="#fcf6bd" stroke="#333" stroke-width="1"/>
+        <rect x="67" y="50" width="8" height="6" fill="#fcf6bd" stroke="#333" stroke-width="1"/>
+    
+        <rect x="45" y="60" width="8" height="6" fill="#fcf6bd" stroke="#333" stroke-width="1"/>
+        <rect x="67" y="60" width="8" height="6" fill="#fcf6bd" stroke="#333" stroke-width="1"/>
+    
+        <rect x="45" y="70" width="8" height="6" fill="#fcf6bd" stroke="#333" stroke-width="1"/>
+        <rect x="67" y="70" width="8" height="6" fill="#fcf6bd" stroke="#333" stroke-width="1"/>
+        <rect x="45" y="80" width="8" height="6" fill="#fcf6bd" stroke="#333" stroke-width="1"/>
+        <rect x="67" y="80" width="8" height="6" fill="#fcf6bd" stroke="#333" stroke-width="1"/>
+        <rect x="45" y="90" width="8" height="6" fill="#fcf6bd" stroke="#333" stroke-width="1"/>
+        <rect x="67" y="90" width="8" height="6" fill="#fcf6bd" stroke="#333" stroke-width="1"/>
+        <rect x="45" y="95" width="8" height="5" fill="#fcf6bd" stroke="#333" stroke-width="1"/>
+        <rect x="67" y="95" width="8" height="5" fill="#fcf6bd" stroke="#333" stroke-width="1"/>
+    </svg>
+</div>
+                <h3 class="text-xl font-bold mb-2 text-purple-700">華廈</h3>
+                <p class="text-gray-600 mb-2">特色： 6-10層樓，有電梯，有簡易管理。</p>
+                <ul class="list-disc list-inside space-y-1 text-sm">
+                    <li>土地持分： 中等。有電梯、樓梯等公設，持分面積較公寓小，但比大樓高。</li>
+                    <li>公設比： 中低 (約 15%-25%)。</li>
+                    <li>都更潛力： 中等。屋齡較老的華廈仍有潛力，但因有電梯，住戶改建意願可能較低。</li>
+                    <li>價值： 兼具電梯便利性與較高的得房率。</li>
+                </ul>
+            </div>
+            <!-- 4. 電梯大樓 -->
+            <div class="container-card p-6 rounded-xl scribble-border border-2 border-red-600 hover:bg-red-50">
+                <div class="svg-container">
+    <svg viewBox="0 0 120 120" class="w-full h-full">
+        <path d="M 15 100 L 105 100 L 100 110 L 10 110 Z" class="shared-land" stroke="#333" stroke-width="2"/>
+        <path d="M 50 100 L 53 100 L 48 110 L 45 110 Z" class="unit-land" stroke="#333" stroke-width="2"/>
+        <path d="M 53 100 L 53 10 L 48 20 L 48 110 Z" class="unit-land-shadow" opacity="0.8"/>
+        <rect x="40" y="15" width="40" height="85" fill="#fca3b7" stroke="#333" stroke-width="2"/>
+        <path d="M 80 15 L 85 10 L 85 95 L 80 100 Z" fill="#d8849b" stroke="#333" stroke-width="2"/>
+        <path d="M 40 15 L 80 15 L 85 10 L 45 10 Z" fill="#e898ae" stroke="#333" stroke-width="2"/>
+        <rect x="42" y="15" width="10" height="70" fill="#fcf6bd" opacity="0.5" stroke="#333" stroke-width="1"/>
+        <rect x="68" y="15" width="10" height="70" fill="#fcf6bd" opacity="0.5" stroke="#333" stroke-width="1"/>
+        <rect x="50" y="90" width="20" height="10" fill="#333" stroke="#333" stroke-width="1.5"/>
+    </svg>
+</div>
+                <h3 class="text-xl font-bold mb-2 text-red-700">電梯大樓</h3>
+                <p class="text-gray-600 mb-2">特色： 11層樓以上，有完善的公設與警衛管理。</p>
+                <ul class="list-disc list-inside space-y-1 text-sm">
+                    <li>土地持分： 相對較小。戶數多，且公設（如中庭、設施）佔用基地面積較大，導致每戶持分被高度稀釋。</li>
+                    <li>公設比： 最高 (通常 30% 以上)。</li>
+                    <li>都更潛力： 最低。戶數多，整合困難，且每戶分回土地權益較少。</li>
+                    <li>價值： 主要體現在完善的管理、公設機能和新穎的屋齡上。</li>
+                </ul>
+             </div>
+             </div>
+            
+</div>
+                </div>
+            </div>",
+        
+        "chapter4": "<div id=\"chapter4\" class=\"content-section space-y-8">
+                <header class=" ">
+                    <h2 class="text-4xl font-bold text-slate-800 border-b-4 border-indigo-500 pb-3 mb-2">房地產稅務</h2>
+                    <p class="text-slate-500">買賣持有各階段的稅務知識</p>
+                </header>
+                <div class="bg-white p-8 rounded-xl shadow-lg content-card  ">
+                    <h3 class="text-2xl font-semibold text-slate-700 mb-4">稅務總覽</h3>
+                    <img src="images/image_57912c.jpg" alt="房地產稅務分類圖" class="w-full max-w-lg mx-auto rounded-lg shadow-md border">
+                </div>
+    <div class="bg-white p-8 rounded-xl shadow-lg content-card">
+        <h3 class="text-2xl font-bold text-slate-700 mb-6 flex items-center"><i class="fas fa-home mr-3 text-blue-600"></i>PART 1：房屋稅</h3>
+        <p class="mb-6 text-slate-600">房屋稅是針對「房屋本身」價值的稅。可以把它想像成是房子每年的持有成本。</p>
+        <h4 class="text-xl font-semibold mb-4 text-indigo-600">一張圖看懂如何計算</h4>
+        <div class="flex flex-col sm:flex-row items-center justify-center space-y-4 sm:space-y-0 sm:space-x-4 text-center mb-6">
+            <div class="bg-blue-50 p-4 rounded-lg border border-blue-200">
+                <p class="font-bold text-blue-800">房屋課稅現值</p>
+                <p class="text-sm text-gray-600">(由稅捐機關評定)</p>
+            </div>
+            <div class="text-2xl font-bold text-gray-500">×</div>
+            <div class="bg-blue-50 p-4 rounded-lg border border-blue-200">
+                <p class="font-bold text-blue-800">稅率</p>
+            </div>
+            <div class="text-2xl font-bold text-gray-500">=</div>
+            <div class="bg-blue-100 p-4 rounded-lg border border-blue-300">
+                <p class="font-bold text-blue-900">應繳房屋稅</p>
+            </div>
+        </div>
+        <p class="text-sm bg-slate-50 p-3 rounded-md mb-6 text-slate-600">※ <strong>房屋課稅現值</strong>：這不是您的買房市價，而是政府根據房屋的建材、地點、大小等因素評估出來的價值。</p>
+        <h4 class="text-xl font-semibold mb-4 text-indigo-600">稅率有多少？(含囤房稅2.0)</h4>
+        <p class="mb-4 text-slate-600">稅率會根據您的「使用方式」而不同，自 2025 年 5 月起將適用新制：</p>
+        <div class="overflow-x-auto">
+        <table class="min-w-full bg-white border border-gray-200 rounded-lg">
+            <thead class="bg-gray-200">
+                <tr>
+                    <th class="p-2 md:p-3 text-left font-bold text-gray-700">使用類型</th>
+                    <th class="p-2 md:p-3 text-left font-bold text-gray-700">稅率</th>
+                    <th class="p-2 md:p-3 text-left font-bold text-gray-700">說明</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="border-b bg-green-50">
+                    <td class="p-2 md:p-3 font-medium text-green-800"><strong>自住用</strong></td>
+                    <td class="p-2 md:p-3 font-medium text-green-800 text-sm"><strong>1.2%</strong> (特定條件下可降至1%)</td>
+                    <td class="p-2 md:p-3 text-green-800 text-xs md:text-sm">本人、配偶或直系親屬實際居住且於該屋辦竣戶籍登記，且全國合計<strong>不超過3戶</strong>。</td>
+                </tr>
+                <tr class="border-b highlight-update">
+                    <td class="p-2 md:p-3 font-medium text-amber-800"><strong>非自住用<br>(囤房稅2.0)</strong></td>
+                    <td class="p-2 md:p-3 font-medium text-amber-800 text-sm"><strong>2% ~ 4.8%</strong></td>
+                    <td class="p-2 md:p-3 text-amber-800 text-xs md:text-sm">俗稱「囤房稅2.0」，依全國持有戶數採差別稅率，自 <strong>2025 年 5 月</strong>起適用。</td>
+                </tr>
+                <tr>
+                    <td class="p-2 md:p-3">營業用</td>
+                    <td class="p-2 md:p-3 text-sm">3% ~ 5%</td>
+                    <td class="p-2 md:p-3 text-xs md:text-sm">公司、商店等使用。</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+        <div class="mt-6 bg-green-100 border-l-4 border-green-500 text-green-700 p-4 rounded-r-lg">
+            <p class="font-bold">關鍵：自住用的稅率最優惠！</p>
+        </div>
+    </div>
+    <div class="bg-white p-8 rounded-xl shadow-lg content-card">
+        <h3 class="text-2xl font-bold text-slate-700 mb-6 flex items-center"><i class="fas fa-tree mr-3 text-green-600"></i>PART 2：地價稅</h3>
+        <p class="mb-6 text-slate-600">地價稅是針對「土地本身」價值的稅。可以理解為持有<strong>土地</strong>的成本。</p>
+        
+        <h4 class="text-xl font-semibold mb-4 text-indigo-600">一張圖看懂如何計算</h4>
+         <div class="flex flex-col sm:flex-row items-center justify-center space-y-4 sm:space-y-0 sm:space-x-4 text-center mb-6">
+            <div class="bg-green-50 p-4 rounded-lg border border-green-200">
+                <p class="font-bold text-green-800">課稅地價</p>
+                <p class="text-sm text-gray-600">(申報地價 × 面積)</p>
+            </div>
+            <div class="text-2xl font-bold text-gray-500">×</div>
+            <div class="bg-green-50 p-4 rounded-lg border border-green-200">
+                <p class="font-bold text-green-800">稅率</p>
+            </div>
+            <div class="text-2xl font-bold text-gray-500">=</div>
+            <div class="bg-green-100 p-4 rounded-lg border border-green-300">
+                <p class="font-bold text-green-900">應繳地價稅</p>
+            </div>
+        </div>
+        <p class="text-sm bg-slate-50 p-3 rounded-md mb-6 text-slate-600">※ <strong>課稅地價</strong>：政府會公告一個「公告地價」，您可以參考它來「申報地價」，稅捐機關會根據您的申報地價來計算。</p>
+        <h4 class="text-xl font-semibold mb-4 text-indigo-600">自用住宅優惠稅率</h4>
+        <p class="mb-4 text-slate-600">地價稅的一般稅率是累進的 (10‰ ~ 55‰)，稅率較高。但只要符合條件，就能申請超優惠的「自用住宅稅率」！</p>
+        <div class="overflow-x-auto">
+            <table class="min-w-full bg-white border border-gray-200 rounded-lg">
+                <thead class="bg-slate-200">
+                    <tr>
+                        <th class="p-3 text-left font-bold text-gray-700">項目</th>
+                        <th class="p-3 text-left font-bold text-gray-700">稅率</th>
+                        <th class="p-3 text-left font-bold text-gray-700">條件</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="border-b bg-yellow-50">
+                        <td class="p-3 font-medium text-yellow-800"><strong>自用住宅</strong></td>
+                        <td class="p-3 font-medium text-yellow-800"><strong>2‰ (千分之二)</strong></td>
+                        <td class="p-3 text-sm text-yellow-800">
+                            <ol class="list-decimal list-inside space-y-1">
+                                <li>土地上有自己、配偶或直系親屬的戶籍。</li>
+                                <li>房屋沒有出租或營業。</li>
+                                <li>土地所有權人、配偶及未成年子女，全國限<strong>一處</strong>適用。</li>
+                                <li>都市土地面積不超過300平方公尺(約90.75坪)。</li>
+                                <li>需在<strong>每年9月22日前</strong>提出申請，逾期申請者，自申請之次年開始適用，若已核定而用途沒有改變，以後可以不必再申請。。</li>
+                            </ol>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="p-3">一般用地</td>
+                        <td class="p-3">10‰ ~ 55‰</td>
+                        <td class="p-3 text-sm">未申請或不符合自用住宅條件者。</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="mt-6 bg-red-100 border-l-4 border-red-500 text-red-700 p-4 rounded-r-lg">
+            <p class="font-bold">關鍵：地價稅的自用優惠稅率省超多，但<span class="underline">一定要記得主動申請</span>！</p>
+        </div>
+    </div>
+    <section id="comparison" class="bg-white p-6 rounded-xl shadow-lg transition-all hover:shadow-2xl">
+        <h2 class="text-2xl font-bold text-purple-600 flex items-center"><i class="fas fa-balance-scale mr-3"></i>PART 3：兩種稅，超級比一比！</h2>
+        <p class="mb-6">用一個總表格，讓您快速看懂兩者的核心差異。</p>
+        <div class="overflow-x-auto">
+            <table class="min-w-full bg-white border border-gray-200 rounded-lg">
+                <thead class="bg-gray-200">
+                    <tr>
+                        <th class="p-2 md:p-3 text-left font-bold text-gray-700 text-sm md:text-base">項目</th>
+                        <th class="p-2 md:p-3 text-left font-bold text-gray-700 text-sm md:text-base">房屋稅 🏠</th>
+                        <th class="p-2 md:p-3 text-left font-bold text-gray-700 text-sm md:text-base">地價稅 🌳</th>
+                        <th class="p-2 md:p-3 text-left font-bold text-gray-700 text-sm md:text-base">備註</th>
+                    </tr>
+                </thead>
+                <tbody class="divide-y divide-gray-200">
+                    <tr>
+                        <td class="p-2 md:p-3 font-semibold text-sm">課稅對象</td>
+                        <td class="p-2 md:p-3 text-sm">房屋、建物</td>
+                        <td class="p-2 md:p-3 text-sm">土地</td>
+                        <td class="p-2 md:p-3 text-xs md:text-sm text-gray-600">一個對房，一個對地。</td>
+                    </tr>
+                    <tr class="bg-gray-50">
+        <td class="p-2 md:p-3 font-semibold text-sm">繳納時間</td>
+        <td class="p-2 md:p-3 font-bold text-red-600 text-sm">每年 5 月<span class="text-xs font-normal text-gray-600">(課稅期間：前一年 7/1 至當年 6/30)</span></td>
+        <td class="p-2 md:p-3 font-bold text-red-600 text-sm">每年 11 月<span class="text-xs font-normal text-gray-600">(課稅期間：當年 1/1 至當年 12/31)</span></td>
+        <td class="p-2 md:p-3 text-xs md:text-sm text-gray-600">上半年繳房，下半年繳地。</td>
+    </tr>
+    <tr>
+        <td class="p-2 md:p-3 font-semibold text-sm">誰要繳？</td>
+        <td class="p-2 md:p-3 text-sm">每年2月末日房屋所有權人</td>
+        <td class="p-2 md:p-3 text-sm">８月３１日當天土地所有權人</td>
+        <td class="p-2 md:p-3 text-xs md:text-sm text-red-600 font-bold">【實務重點】不論誰繳，交屋時皆按日分算。</td>
+    </tr>
+                    <tr class="bg-gray-50">
+                        <td class="p-2 md:p-3 font-semibold text-sm">計算基礎</td>
+                        <td class="p-2 md:p-3 text-sm">房屋課稅現值</td>
+                        <td class="p-2 md:p-3 text-sm">申報地價</td>
+                        <td class="p-2 md:p-3 text-xs md:text-sm text-gray-600">皆由政府評估或公告。</td>
+                    </tr>
+                     <tr>
+                        <td class="p-2 md:p-3 font-semibold text-sm">最優惠稅率</td>
+                        <td class="p-2 md:p-3 text-green-600 font-bold text-sm">1.2% (自住)</td>
+                        <td class="p-2 md:p-3 text-green-600 font-bold text-sm">2‰ (自用住宅)</td>
+                        <td class="p-2 md:p-3"></td>
+                    </tr>
+                    <tr class="bg-yellow-50">
+                        <td class="p-2 md:p-3 font-semibold text-sm">優惠申請</td>
+                        <td class="p-2 md:p-3 text-sm">
+        <strong>需要主動申報</strong>，每期開徵40日(即3月22日，遇假日順延)前申報。
+        <span class="text-xs text-indigo-600 mt-1 block">
+            (詳見 
+            <a href="https://www.mof.gov.tw/singlehtml/384fb3077bb349ea973e7fc6f13b6974?cntId=965e55a0e428495da48fe227b079353b" 
+               target="_blank" 
+               class="underline hover:no-underline font-semibold">
+               財政部 2025-01-08 發佈之新聞稿
+            </a>
+            )
+        </span>
+    </td>
+                        <td class="p-2 md:p-3 text-sm"><strong class="text-red-600">需要主動申請！</strong><br>(每年9/22前)</td>
+                        <td class="p-2 md:p-3 text-xs md:text-sm text-gray-600 font-bold">地價稅優惠一定要自己申請！</td>
+                    </tr>
+                     <tr>
+                        <td class="p-2 md:p-3 font-semibold text-sm">優惠戶數</td>
+                        <td class="p-2 md:p-3 text-sm">全國合計<strong>3戶</strong>以內</td>
+                        <td class="p-2 md:p-3 text-sm">全國限<strong>1處</strong></td>
+                        <td class="p-2 md:p-3 text-xs md:text-sm text-gray-600">房屋稅比較寬鬆，地價稅較嚴格。</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+    <hr class="my-8 border-slate-300">
+                <div class="grid md:grid-cols-2 gap-8">
+                    <div class="bg-white p-8 rounded-xl shadow-lg content-card  ">
+                        <h3 class="text-xl font-semibold text-slate-700 mb-4">買方應繳稅費</h3>
+                         <ul class="list-disc list-inside space-y-3 text-slate-600">
+                            <li><span class="font-bold">契稅：</span>建物核定契價 × 6%</li>
+                            <li><span class="font-bold">印花稅：</span>土地及建物買賣契約內之價款 × 0.1%</li>
+                            <li><span class="font-bold">地政登記規費：</span>(建物核定契價+土地申報地價) × 0.1% + 書狀費</li>
+                        </ul>
+                    </div>
+                    <div class="bg-white p-8 rounded-xl shadow-lg content-card  ">
+                        <h3 class="text-xl font-semibold text-slate-700 mb-4">賣方應繳稅費</h3>
+                         <ul class="list-disc list-inside space-y-3 text-slate-600">
+                            <li><span class="font-bold">土地增值稅：</span>依土地公告現值漲價總數額課徵，自用住宅優惠稅率10%。</li>
+                            <li><span class="font-bold">房地合一稅(新制)：</span>依房地交易總利得課徵，稅率依持有期間分 10%~45%。(105/1/1後取得適用)</li>
+                             <li><span class="font-bold">財產交易所得稅(舊制)：</span>僅就房屋部分獲利課稅，併入個人綜合所得稅申報。(104/12/31前取得適用)</li>
+                        </ul>
+                        <div class="mt-6 p-4 bg-slate-50 rounded-lg border border-slate-200">
+        <h5 class="font-semibold text-slate-700">實用工具：房地合一稅2.0試算</h5>
+        <p class="text-sm text-slate-500 mt-1 mb-3">您可以點擊下方按鈕，前往線上房地合一稅2.0計算機快速估算。</p>
+        <a href="https://www.etax.nat.gov.tw/etwmain/etw158w/2506" target="_blank" rel="noopener noreferrer" class="inline-flex items-center bg-indigo-600 text-white font-semibold py-2 px-5 rounded-lg hover:bg-indigo-700 transition shadow-sm">
+            前往房地合一稅2.0計算機
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 ml-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+            </svg>
+        </a>
+    </div>
+                        <div class="mt-6 p-4 bg-slate-50 rounded-lg border border-slate-200">
+        <h5 class="font-semibold text-slate-700">實用工具：土地增值稅試算</h5>
+        <p class="text-sm text-slate-500 mt-1 mb-3">您可以點擊下方按鈕，前往線上土地增值稅計算機快速估算。</p>
+        <a href="https://www.etax.nat.gov.tw/etwmain/etw158w/51" target="_blank" rel="noopener noreferrer" class="inline-flex items-center bg-indigo-600 text-white font-semibold py-2 px-5 rounded-lg hover:bg-indigo-700 transition shadow-sm">
+            前往土地增值稅計算機
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 ml-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+            </svg>
+        </a>
+    </div>
+                    </div>
+                </div>
+                <div class="bg-white p-8 rounded-xl shadow-lg content-card  ">
+                    <h3 class="text-2xl font-semibold text-slate-700 mb-4">舊制財產交易所得稅詳解</h3>
+                    <div class="space-y-6">
+                        <div>
+                            <h4 class="font-bold text-lg text-indigo-600 mb-2">一、核實認定 (有成本證明)</h4>
+                            <p class="text-slate-600 bg-slate-100 p-4 rounded-lg font-mono text-center">(售屋利得 - 取得費用) × (房屋評定現值 / (房屋評定現值 + 土地公告現值))</p>
+                        </div>
+                        <div class="border-t pt-4">
+                            <h4 class="font-bold text-lg text-indigo-600 mb-2">二、設算課稅 (無成本證明)</h4>
+                             <div class="p-4 bg-amber-50 rounded-lg">
+                                <h5 class="font-semibold">非高價住宅</h5>
+                                <p class="text-slate-700 mt-2">財產交易所得額 = 房屋評定現值 × 各縣市的設算百分比。</p>
+                                <p class="text-xs text-slate-500 mt-1">（假設：桃園市桃園區目前為34%）</p>
+                             </div>
+                        </div>
+                        <div class="border-t pt-4">
+                            <h4 class="font-bold text-lg text-red-600 mb-2">三、高價住宅課稅方式 (豪宅稅)</h4>
+                            <p class="text-slate-600 mb-2">若無法證明成本，但符合以下標準者，須以特殊方式計算：</p>
+                            <ul class="list-disc list-inside text-sm text-slate-600">
+                                <li>台北市：總價超過6000萬</li>
+                                <li>新北市：總價超過4000萬</li>
+                                <li>桃園、新竹、台中、台南、高雄：總價超過3000萬</li>
+                                <li>其他縣市：總價超過2200萬</li>
+                            </ul>
+                             <p class="text-slate-600 bg-slate-100 p-4 rounded-lg font-mono text-center mt-4">售屋所得 = 售價 × 房地比 × 20%</p>
+                        </div>
+                    </div>
+                </div>
+                 <div class="bg-white p-8 rounded-xl shadow-lg content-card  ">
+                    <h3 class="text-2xl font-semibold text-slate-700 mb-4">房地合一稅 2.0 詳解</h3>
+                    <div class="space-y-8">
+                        <div>
+                            <h4 class="font-bold text-lg text-indigo-600 mb-2">新舊制區分</h4>
+                            <p class="text-slate-600">原則上依「取得日」判斷：<br>
+                                - <span class="font-bold">舊制：</span>民國104年12月31日(含)以前取得。<br>
+                                - <span class="font-bold">新制：</span>民國105年1月1日起取得。</p>
+                        </div>
+                        <div class="border-t pt-6">
+                            <h4 class="font-bold text-lg text-indigo-600 mb-2">取得日與持有期間認定 (繼承/贈與)</h4>
+                            <p class="text-slate-600 mb-4">因繼承或贈與取得的房地，在計算持有期間時，可以將被繼承人或贈與人的持有期間合併計算，以適用較優惠的稅率。</p>
+                            <img src="images/fdi_acquisition_rules.jpg" alt="房地合一稅取得日認定圖" class="w-full rounded-lg shadow-md border">
+                        </div>
+                        <div class="border-t pt-6">
+                            <h4 class="font-bold text-lg text-indigo-600 mb-2">稅率表</h4>
+                            <div class="overflow-x-auto">
+                                <table class="min-w-full bg-white">
+                                    <thead class="bg-slate-200">
+                                        <tr>
+                                            <th class="py-3 px-4 text-left">持有期間</th>
+                                            <th class="py-3 px-4 text-left">稅率</th>
+                                        </tr>
+                                    </thead>
+                                <tbody>
+                                    <tr class="border-b"><td class="py-3 px-4">2年以內</td><td class="py-3 px-4 font-bold text-red-600">45%</td></tr>
+                                    <tr class="border-b"><td class="py-3 px-4">超過2年，未逾5年</td><td class="py-3 px-4 font-bold text-orange-600">35%</td></tr>
+                                    <tr class="border-b"><td class="py-3 px-4">超過5年，未逾10年</td><td class="py-3 px-4 font-bold text-yellow-600">20%</td></tr>
+                                    <tr><td class="py-3 px-4">超過10年</td><td class="py-3 px-4 font-bold text-green-600">15%</td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="border-t pt-6">
+                         <h4 class="font-bold text-lg text-indigo-600 mb-2">課稅所得計算</h4>
+                         <p class="text-slate-600 bg-slate-100 p-4 rounded-lg font-mono text-center">課稅所得 = 成交價 - (取得成本 + 相關費用) - 土地漲價總數額</p>
+                         <div class="p-4 mt-4 bg-amber-50 rounded-lg">
+                            <p class="font-semibold">【範例】</p>
+                            <p class="text-sm text-slate-700">小明購買一戶1,000萬房產，持有3年後以1,460萬賣出，仲介費等相關費用及土地漲價總數額合計60萬元。</p>
+                            <p class="text-sm font-bold mt-2">課稅所得 = 1,460萬 - 1,000萬 - 60萬 = 400萬</p>
+                            <p class="text-sm font-bold">應納稅額 (持有3年適用35%) = 400萬 × 35% = 140萬元</p>
+                         </div>
+                         <div class="grid md:grid-cols-2 gap-6 mt-6">
+                            <div>
+                                <h5 class="font-semibold mb-2">可扣除費用 (務必保留單據)</h5>
+                                <img src="images/fdi_cost_details.jpg" alt="房地合一稅可列成本費用圖" class="w-full rounded-lg shadow-sm border mb-4">
+                                <ul class="list-disc list-inside text-sm text-slate-600 space-y-1">
+    <li><span class="font-bold">購房時：</span>契稅、印花稅、代書費、仲介費、公證費等。</li>
+    <li><span class="font-bold">出售時：</span>仲介費、廣告費、清潔費、搬運費等。</li>
+    <li><span class="font-bold text-red-600">改良修繕（資本支出）：</span>必須是能增加房屋價值或效能的資本支出 (如防水層重做、管線重拉等) 且非 2 年內所能耗竭。系統櫃、家具家電通常不被認可。</li>
+</ul>
+<div class="mt-4 p-4 bg-red-50 rounded-lg border-l-4 border-red-500">
+    <h5 class="font-semibold text-red-800">🚨 法律風險與專業底線</h5>
+    <ul class="list-disc list-inside text-sm text-red-700 mt-2 space-y-1">
+        <li>勿做承諾： 絕不向賣方客戶保證裝潢費一定能扣除。多數裝潢常被視為生活費用，不被認列。</li>
+        <li>專業分工： 業務的職責是提醒客戶「務必保留所有發票/收據」，並請代書或會計師判斷。</li>
+        <li>無法舉證： 若無法提供成本證明，稽徵機關將可能依房屋評定現值推算成本，導致高稅負。</li>
+    </ul>
+</div>
+                            </div>
+                            <div>
+                                 <h5 class="font-semibold mb-2 text-red-600">不可扣除費用</h5>
+                                 <ul class="list-disc list-inside text-sm text-slate-600 space-y-1">
+                                    <li>土地增值稅</li>
+                                    <li>地價稅、房屋稅</li>
+                                    <li>管理費、水電瓦斯費</li>
+                                    <li>金融機構借款利息</li>
+                                </ul>
+                            </div>
+                         </div>
+                    </div>
+                     <div class="border-t pt-6">
+                         <h4 class="font-bold text-lg text-indigo-600 mb-2">自用住宅優惠</h4>
+                         <p class="text-slate-600">符合3大要件，即享<span class="font-bold">400萬元免稅額</span>，超過部分稅率為<span class="font-bold">10%</span>。</p>
+                         <ul class="list-decimal list-inside text-slate-600 mt-2">
+                            <li>個人或其配偶、未成年子女辦竣戶籍登記、持有並<span class="text-red-600 font-bold">居住連續滿6年</span>。</li>
+                            <li>交易前6年內，無出租、供營業或執行業務使用。</li>
+                            <li>個人與其配偶及未成年子女於交易前6年內未曾適用本項優惠。</li>
+                         </ul>
+                    </div>
+                       <div class="border-t pt-6">
+                         <h4 class="font-bold text-lg text-indigo-600 mb-2">免稅額適用</h4>
+                         <p class="text-slate-600 mb-4">房地合一稅採「申報制」，無論盈虧，所有權移轉登記日的次日起算30日內，都必須自行申報。下圖為新舊制及免稅額適用說明：</p>
+                         <img src="images/fdi_declaration_step3.jpg" alt="房地合一稅申報步驟圖" class="w-full rounded-lg shadow-md border">
+                    </div>
+                    </div>
+                 </div>
+                   <div class="bg-white p-8 rounded-xl shadow-lg content-card animate-on-scroll">
+    <h3 class="text-2xl font-bold text-slate-700 mb-6 flex items-center">
+        <i class="fas fa-landmark mr-3 text-green-600"></i>賣方稅費補充：土地增值稅
+    </h3>
+    <div class="space-y-6 text-slate-700">
+        <p>土地增值稅，是在土地所有權移轉時發生的一種稅賦。它的計算方式是從買進到賣出這一段期間，土地公告現值的漲價總數額，依漲價倍數採用累進稅率計徵。因此，稅額會與地段、公告土地現值、持有期間長短及使用情形有關。</p>
+        <p>土地漲價總額越多，就得按漲價倍數累進課徵 20%~40% 的稅率。但別擔心，如果符合土地自用條件，則能適用 10% 優惠稅率，比起非自用的一般稅率，可以節省至少一半的稅金！</p>
+        
+        <div class="bg-green-50 p-6 rounded-lg border-l-4 border-green-500">
+            <h4 class="font-bold text-xl text-green-800 mb-4 flex items-center">
+                <i class="fas fa-hand-holding-usd mr-2"></i>10%自用優惠稅率：一生一次
+            </h4>
+            <div class="lg:flex lg:items-start lg:space-x-8">
+                <div class="flex-1 mb-4 lg:mb-0">
+                    <p class="mb-2">每人一生只有使用 <strong class="text-red-600">1次</strong> 的機會，需符合以下條件：</p>
+                    <ul class="list-disc list-inside space-y-2 text-slate-700">
+                        <li><strong>用途：</strong>出售前 <strong class="font-bold">一年內</strong> 沒有供營業或出租使用的住宅用地。</li>
+                        <li><strong>戶籍登記：</strong>地上建物必須是土地所有權人或配偶、直系親屬所有，並已在該地辦妥戶籍登記。</li>
+                        <li><strong>面積限制：</strong>都市土地未超過300平方公尺 (約90坪)；非都市土地未超過700平方公尺 (約211坪)。</li>
+                    </ul>
+                </div>
+                <div class="lg:w-2/5 flex-shrink-0 flex justify-center">
+                    <img src="images/imagesland_tax_once.jpg" alt="土地增值稅一生一次優惠" class="rounded-lg shadow-md max-w-full h-auto">
+                </div>
+            </div>
+        </div>
+        <div class="bg-blue-50 p-6 rounded-lg border-l-4 border-blue-500">
+            <h4 class="font-bold text-xl text-blue-800 mb-4 flex items-center">
+                <i class="fas fa-home mr-2"></i>10%自用優惠稅率：一生一屋
+            </h4>
+           <div class="lg:flex lg:items-start lg:space-x-8 flex-row-reverse">
+                <div class="flex-1 mb-4 lg:mb-0">
+                    <p class="mb-2">此優惠<strong class="text-green-600">沒有使用次數限制</strong>，但必須使用過「一生一次」後才能使用，且條件更嚴格：</p>
+                    <ul class="list-disc list-inside space-y-2 text-slate-700">
+                        <li>前置條件：必須先使用過「一生一次」優惠稅率。</li>
+                        <li><strong>用途：</strong>出售前 <strong class="font-bold">5年內</strong> 未曾提供出租或營業的住宅用地。</li>
+                        <li><strong>持有與戶籍：</strong>土地所有權人或配偶、未成年子女在出售前，需持有該土地 <strong class="font-bold">6年以上</strong>，並在該地設有戶籍 <strong class="font-bold">連續滿6年</strong>。</li>
+                        <li><strong>房屋持有：</strong>需持有自用住宅滿 <strong class="font-bold">6年</strong>。</li>
+                        <li><strong>唯一房產：</strong>出售時，土地所有權人與其配偶及未成年子女名下 <strong class="font-bold">沒有該自用住宅以外房屋</strong>。</li>
+                        <li><strong>面積限制：</strong>都市土地未超過150平方公尺 (約45坪)；非都市土地未超過350平方公尺 (約105坪)。</li>
+                    </ul>
+                </div>
+                <div class="lg:w-2/5 flex-shrink-0 flex justify-center">
+                    <img src="images/imagesland_tax_one_house.jpg" alt="土地增值稅一生一屋優惠" class="rounded-lg shadow-md max-w-full h-auto">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+                     <div class="border-t pt-6">
+                         <h4 class="font-bold text-lg text-indigo-600 mb-2">重購退稅</h4>
+                        <img src="images/image_5791c4.jpg" alt="重購退稅條件比較表" class="w-full rounded-lg shadow-md border">
+                    </div>
+                     <div class="border-t pt-6">
+                        <h4 class="font-bold text-lg text-indigo-600 mb-2">實戰範例</h4>
+                        <div class="space-y-8 mt-4">
+                            <div class="p-4 bg-slate-50 rounded-lg">
+                                <h5 class="font-semibold text-slate-800 mb-3">【範例一】出售繼承房地</h5>
+                                <img src="images/fdi_example_1.jpg" alt="房地合一稅範例一" class="w-full rounded-lg shadow-md border">
+                            </div>
+                            <div class="p-4 bg-slate-50 rounded-lg">
+                                <h5 class="font-semibold text-slate-800 mb-3">【範例二】出售配偶贈與房地 (配偶繼承取得)</h5>
+                                <img src="images/fdi_example_2.jpg" alt="房地合一稅範例二" class="w-full rounded-lg shadow-md border">
+                            </div>
+                             <div class="p-4 bg-slate-50 rounded-lg">
+                                <h5 class="font-semibold text-slate-800 mb-3">【範例三】買賣/贈與/繼承怎麼選?</h5>
+                                <img src="images/fdi_example_3.jpg" alt="房地合一稅範例三" class="w-full rounded-lg shadow-md border">
+                            </div>
+                        </div>
+                         </div>
+                
+                 <div class="bg-white p-8 rounded-xl shadow-lg content-card animate-on-scroll">
+    <h3 class="text-2xl font-bold text-slate-700 mb-6 flex items-center">
+        <i class="fas fa-calculator mr-3 text-indigo-600"></i>房地合一稅【實戰進階】: 從期望淨利回推底價
+    </h3>
+    <div class="bg-indigo-50 p-6 rounded-lg border-l-4 border-indigo-500 mb-8">
+        <h4 class="font-bold text-lg text-indigo-800">🎯 實戰核心觀念：引導屋主從「實拿」到「實賺」</h4>
+        <div class="mt-4 space-y-3 text-slate-700">
+            <p><strong class="text-red-600">【常見錯誤觀念】</strong>很多屋主會說：「我這間房子要『實拿』1000萬，房地合一稅跟仲介費你們自己加上去。」</p>
+            <p><strong class="text-green-600">【正確引導邏輯】</strong>這種說法不合邏輯，因為房地合一稅是依據你的「獲利」來計算課稅，我們無法預先知道。所以，身為專業的業務，我們必須引導屋主思考最核心的問題：<strong class="text-green-800">「大哥/姊，我們不談實拿，我們來聊聊，這間房子您期望『淨賺』多少錢？」</strong></p>
+            <p>當我們確定了「期望淨利」，才能夠精準地為他倒推出最合理的「成交底價」，這才是真正專業的服務！</p>
+        </div>
+    </div>
+    <div class="space-y-8">
+        
+        <div class="p-6 bg-slate-50 rounded-lg border border-slate-200">
+            <h4 class="font-semibold text-xl text-slate-800 mb-4">【範例一】已知售價，計算稅額 (正向計算)</h4>
+            <div class="grid md:grid-cols-2 gap-6">
+                <div>
+                    <h5 class="font-bold text-slate-600 mb-2">✅ 屋主條件</h5>
+                    <ul class="list-disc list-inside space-y-1 text-slate-600">
+                        <li><strong>取得年份：</strong>110年 (持有3年)</li>
+                        <li><strong>適用稅率：</strong><span class="font-bold text-orange-600">35%</span> (超過2年未滿5年)</li>
+                        <li><strong>取得成本：</strong>800萬 + 2%服務費 = <span class="font-bold">816萬</span></li>
+                        <li><strong>銷售價格：</strong>1200萬 (成交價)</li>
+                        <li><strong>實收金額：</strong>1200萬 - 4%服務費 = <span class="font-bold">1152萬</span></li>
+                    </ul>
+                </div>
+                <div>
+                    <h5 class="font-bold text-slate-600 mb-2">🧮 計算步驟</h5>
+                    <div class="space-y-4">
+                        <div class="p-3 bg-white rounded-md border">
+                            <p class="text-sm font-semibold text-gray-700">1️⃣ 計算課稅所得</p>
+                            <p class="font-mono text-center mt-1">1152萬 - 816萬 = <strong class="text-indigo-600">336萬</strong></p>
+                        </div>
+                        <div class="p-3 bg-white rounded-md border">
+                            <p class="text-sm font-semibold text-gray-700">2️⃣ 計算應繳稅額</p>
+                            <p class="font-mono text-center mt-1">336萬 × 35% = <strong class="text-red-600 text-lg">117.6萬</strong></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="p-6 bg-amber-50 rounded-lg border border-amber-200">
+            <h4 class="font-semibold text-xl text-amber-800 mb-4">【範例二】已知期望淨利，回推底價 (逆向計算)</h4>
+            <p class="text-sm text-slate-600 mb-4"><strong>情境：</strong>屋主107年1月取得560萬，109年5月想賣，期望<span class="font-bold">實賺50萬</span>，底價該開多少？</p>
+            
+            <div class="space-y-4">
+                <div class="p-4 bg-white rounded-lg shadow-sm">
+                    <p class="font-bold text-gray-800">✅ 步驟一：還原「稅前所得」</p>
+                    <p class="text-xs text-gray-500 mt-1">持有2年多，適用稅率為35%。實賺50萬是稅後金額，需除以 (1 - 35%) 來還原。</p>
+                    <p class="font-mono text-center text-lg mt-2">50萬 ÷ 0.65 ≈ <strong class="text-indigo-600">76.92萬</strong></p>
+                </div>
+                <div class="p-4 bg-white rounded-lg shadow-sm">
+                    <p class="font-bold text-gray-800">✅ 步驟二：計算屋主「實拿目標」</p>
+                    <p class="text-xs text-gray-500 mt-1">這個金額是成交後扣除仲介費，必須拿到的錢，用來支付成本與稅金，並留下淨利。</p>
+                    <p class="font-mono text-center text-lg mt-2">560萬 (成本) + 76.92萬 (稅前所得) = <strong class="text-indigo-600">636.92萬</strong></p>
+                </div>
+                 <div class="p-4 bg-white rounded-lg shadow-sm">
+                    <p class="font-bold text-gray-800">✅ 步驟三：倒推「成交底價」</p>
+                    <p class="text-xs text-gray-500 mt-1">「實拿目標」是扣除4%仲介費後的金額 (即成交價的96%)，所以要除以0.96。</p>
+                    <p class="font-mono text-center text-lg mt-2">636.92萬 ÷ 0.96 ≈ <strong class="text-indigo-600">663.46萬</strong></p>
+                </div>
+            </div>
+            <div class="mt-6 p-4 bg-green-100 border-t-2 border-green-300 rounded-b-lg">
+                <h5 class="font-bold text-green-800 text-center">🎉 最終答案</h5>
+                <ul class="list-none text-center mt-2 space-y-1">
+                    <li><span class="font-semibold">屋主實拿目標：</span><span class="font-bold text-lg">636.92萬</span></li>
+                    <li><span class="font-semibold">成交底價(建議)：</span><span class="font-bold text-red-600 text-xl">664萬</span></li>
+                </ul>
+                <p class="text-xs text-center text-slate-500 mt-2">※ 實務上底價會無條件進位到「萬」，確保計算誤差不會影響屋主，讓他能「完整實賺」50萬！</p>
+            </div>
+        </div>
+    </div>
+</div>
+            </div>
+        </div>
+            </div> ",
+        
+        "chapter5": "<div id=\"chapter5\" class=\"content-section space-y-8">
+            <header class=" ">
+                <h2 class="text-4xl font-bold text-slate-800 border-b-4 border-indigo-500 pb-3 mb-2">拍照與建測圖</h2>
+                <p class="text-slate-500">用專業視角呈現物件，確認產權細節</p>
+            </header>
+            <div class="bg-white p-8 rounded-xl shadow-lg content-card  ">
+                <h3 class="text-2xl font-semibold text-slate-700 mb-4">室內拍照技巧：拍出房子的價值感</h3>
+                <div class="grid md:grid-cols-2 gap-8">
+                    <div>
+                        <h4 class="text-xl font-bold mb-2">1. 正拍技巧</h4>
+                        <img src="images/image_579206.jpg" alt="室內正拍技巧圖" class="w-full rounded-lg shadow-md border">
+                        <p class="mt-2 text-slate-600">秘訣：天、地、壁佔比平衡，牆壁垂直，天地水平，視覺匯聚於中心點。</p>
+                    </div>
+                    <div>
+                        <h4 class="text-xl font-bold mb-2">2. 對角拍技巧 (適合小空間)</h4>
+                        <img src="images/image_579222.jpg" alt="室內對角拍技巧圖" class="w-full rounded-lg shadow-md border">
+                        <p class="mt-2 text-slate-600">秘訣：站對角，拉長空間感，兩側壁剛好在畫面兩側(不佔畫面為優)，兩側壁與中線垂直畫面，地=天or地>天。</p>
+                    </div>
+                </div>
+            </div>
+            <div class="bg-white p-8 rounded-xl shadow-lg content-card  ">
+                <h3 class="text-2xl font-semibold text-slate-700 mb-4">建測圖確認要點</h3>
+                <div class="grid md:grid-cols-2 gap-6 items-center">
+                    <img src="images/image_579241.jpg" alt="建測圖範例" class="w-full rounded-lg shadow-md border">
+                    <img src="images/image_579247.jpg" alt="格局圖範例" class="w-full rounded-lg shadow-md border">
+                </div>
+                <ul class="list-decimal list-inside text-slate-600 space-y-3 mt-6 text-lg">
+                    <li><span class="font-bold">確認座向：</span>比對建測圖左上的小圖與現場狀況，了解房屋座向，(通常以客廳窗戶，看出去的方向為朝向)。</li>
+                    <li><span class="font-bold text-red-600">確認增違建：</span>仔細核對建物測量成果圖與現場屋況，特別注意陽台外推、頂樓加蓋、露台加窗、是否有大小公等常見增建情況，並誠實告知買方。</li>
+                    <li><span class="font-bold">現場丈量(透天或公寓)：</span>若是透天厝或公寓，建議攜帶量尺，實際丈量現場尺寸，以確認圖面與現況是否相符。</li>
+                </ul>
+            </div>
+        </div>",
+        
+        "chapter6": "<div id=\"chapter6\" class=\"content-section space-y-8">
+            <header class=" ">
+                 <h2 class="text-4xl font-bold text-slate-800 border-b-4 border-indigo-500 pb-3 mb-2">開發篇：來源與實戰</h2>
+                 <p class="text-slate-500">業績之母，一切成交的起點</p>
+            </header>
+             <div class="bg-white p-8 rounded-xl shadow-lg content-card   text-center">
+                 <p class="text-2xl font-bold text-indigo-600">「開發為業績之母」</p>
+                 <p class="text-slate-600 mt-2">一切成交的起點，源自於有效的開發。</p>
+                 <img src="images/image_579526.png" alt="開發漏斗圖" class="w-full max-w-md mx-auto my-6">
+                 <p class="text-slate-500 text-sm">開發就像一個漏斗，需要大量的募集，才能篩選出最終成交的案件。</p>
+            </div>
+            <div class="bg-white p-8 rounded-xl shadow-lg content-card  ">
+                <h3 class="text-xl font-semibold text-slate-700 mb-4">簽委託前準備</h3>
+                <ul class="list-disc list-inside space-y-3 text-slate-600">
+                    <li>熟悉委託契約與公司表單</li>
+                    <li>精通代書流程與賣方相關稅費</li>
+                    <li>掌握物件社區行情與周遭成交價</li>
+                    <li>了解大環境市場趨勢</li>
+                    <li>準備個人化服務與行銷工具</li>
+                </ul>
+            </div>
+<div class="bg-white p-8 rounded-xl shadow-lg content-card animate-on-scroll">
+    <h3 class="text-2xl font-semibold text-slate-700 mb-4">物件估價核心方法</h3>
+    <p class="text-slate-500 mb-6">提出專業且有說服力的建議售價，是贏得屋主信任的關鍵第一步。以下是兩種最核心的估價方法。</p>
+    <div class="p-6 bg-blue-50 rounded-lg border-l-4 border-blue-500 mb-8">
+        <h4 class="font-bold text-xl text-blue-800 mb-3">1. 市場比較法</h4>
+        <p class="text-slate-600 mb-4">這是最常用、最主流的估價方式，透過比較性質和區域相近的物件來推估合理價格。</p>
+        <ol class="list-decimal list-inside space-y-3 text-slate-700">
+            <li><strong class="font-semibold">步驟一：蒐集比較標的</strong><br>依公寓、華廈、大樓、透天等分類，找出性質相同、區域相近的成交資料。善用公司行情資訊系統。<br><span class="text-xs text-red-600">※ 不同性質的標的僅能參考，勿當成估價標準。</span></li>
+            <li><strong class="font-semibold">步驟二：加入物件優缺點</strong><br>考量物件本身的內部環境（格局、屋況、採光）和外部環境（嫌惡設施、交通）。</li>
+            <li><strong class="font-semibold">步驟三：考量市場因素</strong><br>加入近期的政策、法規、利率、經濟等「二政二經」因素對市場的影響。</li>
+            <li><strong class="font-semibold">步驟四：推估合理區間</strong><br>綜合以上資訊，推估出物件合理的成交單價與總價區間。</li>
+        </ol>
+    </div>
+    <div class="p-6 bg-green-50 rounded-lg border-l-4 border-green-500">
+        <h4 class="font-bold text-xl text-green-800 mb-3">2. 租金還原法</h4>
+        <p class="text-slate-600 mb-4">主要用於評估店面、辦公室、套房等具有租金收益性質的不動產。</p>
+        <div class="bg-white p-4 rounded-lg shadow-sm mb-4">
+            <h5 class="font-semibold text-center mb-2">計算公式</h5>
+            <p class="font-mono text-center text-lg text-indigo-600">P (不動產價格) = [ R (月租金) × 12 ] / Y (合理報酬率)</p>
+        </div>
+        <h5 class="font-semibold mb-2">注意事項：</h5>
+        <ul class="list-disc list-inside space-y-2 text-slate-700">
+            <li><strong>R (月租金):</strong> 需訪查周遭同類產品的合理單坪租金，或參考現有租約（但需考量其合理性）。</li>
+            <li><strong>Y (合理報酬率):</strong> 參考目前一年期定存利率 (約1.6%)，評估該物件應有的市場合理報酬率 (可能介於1.9%~5%依地區可能高或低)，才能吸引投資客。報酬率會依地點、收租難易度而異。</li>
+            <li><strong>P (不動產價格):</strong> 此方法算出的價格，可與市場比較法推估的價格互相驗證其合理性。</li>
+            <li class="font-bold">投報率越高，價格越低；投報率越低，價格越高。</li>
+        </ul>
+         <div class="mt-4 pt-4 border-t border-green-300">
+            <p class="font-bold text-red-600 text-center">※ 小提醒：記得要回歸市場比較法、各商圈屬性、國內銀行利率判斷估出的價位是否合理！</p>
+        </div>
+    </div>
+</div>
+            <div class="bg-white p-8 rounded-xl shadow-lg content-card  ">
+                <h3 class="text-xl font-semibold text-slate-700 mb-4">募集來源</h3>
+                 <ul class="list-disc list-inside space-y-3 text-slate-600">
+                     <li>自售電話 (591等平台)</li>
+                     <li>派報、發名片 (商圈耕耘)</li>
+                     <li>社區經營 (管理員、社區活動)</li>
+                     <li>電梯廣告 (梯廣)</li>
+                     <li>開發信</li>
+                     <li>踩線 (反開發)</li>
+                     <li>租轉售案件</li>
+                     <li>老客戶介紹</li>
+                     <li>空屋查找 (電表、信箱)</li>
+                </ul>
+            </div>
+            
+            <div class="bg-white p-8 rounded-xl shadow-lg content-card  ">
+                <h3 class="text-2xl font-semibold text-slate-700 mb-4">深度經營：商圈耕耘與社區活動</h3>
+                <div class="mb-8 p-6 bg-yellow-50 rounded-lg border-l-4 border-yellow-500">
+    <h4 class="font-bold text-xl text-yellow-800 mb-3">社區與商圈情報網佈署</h4>
+    <p class="text-slate-700 mb-4 leading-relaxed">
+        社區經營的核心是建立自己的「情報網」。每一個接觸點，如管理員、鄰里長、社區商家、資深住戶等，都是您的情報節點。
+        透過長期經營和提供價值，形成完整的情報覆蓋網路（如下圖），能大幅增加情報的覆蓋率，減少情報空缺，讓您在商圈內具備比同業更快的反應速度與成交機會。
+    </p>
+    <img src="images/community.jpg" alt="商圈情報網覆蓋地圖" class="w-full rounded-lg shadow-xl border border-yellow-300">
+    <p class="text-center text-sm text-slate-600 mt-3">圖示：以自己為中心，佈署多層次的社區情報站，形成情報網。</p>
+</div>
+                <p class="text-slate-600 mb-6 leading-relaxed">開發不僅是打電話和踩線，更深層次的耕耘來自於建立信任與連結。以下是兩種高效的深度經營策略：</p>
+                <div class="space-y-6">
+                    <div class="p-6 bg-indigo-50 rounded-lg">
+                        <h4 class="font-bold text-lg text-indigo-700">1. 商圈耕耘：成為鄰里的好朋友</h4>
+                        <ul class="list-disc list-inside ml-4 mt-3 text-slate-600 space-y-2">
+                            <li><strong>建立關係網絡：</strong>與商圈內的店家（如早餐店、便利商店、管理員）建立良好關係，他們是情報的重要來源。</li>
+                            <li><strong>定期拜訪：</strong>定期發放名片、DM，或帶點小禮物拜訪，讓大家對您有印象。</li>
+                            <li><strong>提供價值：</strong>主動提供房市資訊或社區成交行情，讓自己成為該區域的房地產顧問。</li>
+                        </ul>
+                    </div>
+                    <div class="p-6 bg-green-50 rounded-lg">
+                        <h4 class="font-bold text-lg text-green-700">2. 社區經營與節慶活動</h4>
+                        <p class="text-slate-600 mt-3">透過舉辦社區活動，可以有效拉近與住戶的距離，建立專業又親切的形象。</p>
+                        <ul class="list-disc list-inside ml-4 mt-3 text-slate-600 space-y-2">
+                            <li><strong>節慶活動企劃：</strong>針對重大節日舉辦小型社區活動，是建立品牌好感的絕佳機會。
+                                <ul class="list-['-_'] list-inside ml-6 mt-2 text-sm space-y-1">
+                                    <li><strong>中秋節：</strong>舉辦小型烤肉會、贈送柚子或月餅。</li>
+                                    <li><strong>端午節：</strong>發放粽子或舉辦立蛋活動。</li>
+                                    <li><strong>聖誕節：</strong>發送小糖果、舉辦抽獎活動。</li>
+                                    <li><strong>兒童節：</strong>舉辦著色比賽、發送小玩具。</li>
+                                </ul>
+                            </li>
+                            <li><strong>活動效益：</strong>這些活動不僅能增加曝光，更能讓您在輕鬆的氛圍中與潛在客戶建立連結，為未來的委託埋下種子。</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="bg-white p-8 rounded-xl shadow-lg content-card animate-on-scroll">
+                <h3 class="text-2xl font-semibold text-slate-700 mb-4">募集作業系統化</h3><p class="font-bold text-red-600">※關鍵:養成客戶建檔記錄的習慣並設定提醒</p>
+                <p class="text-slate-600 mb-4">利用i智慧、個人習慣之表單...等建檔記錄，每天覆盤每條募集線，不但可以記得自己做了哪些事、說了哪些話，也可以在價格有變化的時候，第一時間知道，並思考還能多做哪些努力。建立自己的追蹤表單，欄位可包含：</p>
+                <ul class="list-disc list-inside space-y-2 text-slate-600 bg-slate-50 p-4 rounded-md">
+                    <li>建檔日</li>
+                    <li>物件網址</li>
+                    <li>電傳地址</li>
+                    <li>總價 / 社區</li>
+                    <li>姓名 / 電話</li>
+                    <li>是否已加LINE</li>
+                    <li>備註 (每次互動紀錄)</li>
+                </ul>
+                <div class="mt-8 grid grid-cols-1 md:grid-cols-3 gap-6">
+    <img src="images/ex1.jpg" data-src="images/ex1.jpg" alt="募集系統範例：i智慧客戶系統" class="w-full h-auto rounded-lg shadow-md border border-slate-200 cursor-pointer transition hover:scale-[1.02] hover:shadow-xl" onclick="openModal(this)">
+    <img src="images/ex2.jpg" data-src="images/ex2.jpg" alt="募集系統範例：個人追蹤表單" class="w-full h-auto rounded-lg shadow-md border border-slate-200 cursor-pointer transition hover:scale-[1.02] hover:shadow-xl" onclick="openModal(this)">
+    <img src="images/ex3.jpg" data-src="images/ex3.jpg" alt="募集系統範例：社區樓層表單" class="w-full h-auto rounded-lg shadow-md border border-slate-200 cursor-pointer transition hover:scale-[1.02] hover:shadow-xl" onclick="openModal(this)">
+</div>
+            </div>
+            <div class="bg-white p-8 rounded-xl shadow-lg content-card animate-on-scroll">
+    <h3 class="text-2xl font-semibold text-slate-700 mb-4">開發邏輯思維：追蹤與跑線策略圖解</h3>
+    
+    <div class="space-y-8">
+        
+        <div class="p-4 bg-indigo-50 rounded-lg">
+            <h4 class="font-bold text-lg text-indigo-700 mb-2">1. 募集轉追蹤思維（情報探勘）</h4>
+            <p class="text-slate-600 mb-4">從單一地址出發，追蹤戶籍轉址，直到沒有新的線索為止，再利用網路工具進行交叉比對，獲取所有權人的姓名與電話。</p>
+            <img src="images/image_df1388.jpg" alt="募集轉追蹤流程圖：戶籍地追蹤與網路情報探勘" class="w-full rounded-lg shadow-md border cursor-pointer transition hover:scale-[1.01]" onclick="openModal(this)" data-src="images/image_df1388.jpg">
+        </div>
+
+        <div class="p-4 bg-green-50 rounded-lg">
+            <h4 class="font-bold text-lg text-green-700 mb-2">2. 跑線策略總覽（緊急與非緊急開發）</h4>
+            <p class="text-slate-600 mb-4">開發分為「緊急開發」（買代尋、專案開發）與「非緊急開發」（商圈內必踩、商圈外分段跑線）兩大類。確保每一趟跑線都有明確目標。</p>
+            <img src="images/image_df13ea.jpg" alt="跑線開發策略總覽圖" class="w-full rounded-lg shadow-md border cursor-pointer transition hover:scale-[1.01]" onclick="openModal(this)" data-src="images/image_df13ea.jpg">
+        </div>
+
+        <div class="p-4 bg-yellow-50 rounded-lg">
+    <h4 class="font-bold text-lg text-yellow-700 mb-2">3. 跑線邏輯地圖（分區與集中策略）</h4>
+    <p class="text-slate-600 mb-4">將目標物件的追蹤地址按區域集中分組，確保跑線效率最大化，避免浪費時間往返於不同行政區。以下為範例。</p>
+    
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        
+        <div>
+            <p class="text-sm font-semibold text-center text-slate-700 mb-2">原始地址數據分組</p>
+            <img src="images/image_df7545.jpg" 
+                 alt="跑線邏輯地圖原始數據：物件A到F的追蹤地址分組" 
+                 class="w-full rounded-lg shadow-md border cursor-pointer transition hover:scale-[1.01]" 
+                 onclick="openModal(this)" 
+                 data-src="images/image_df7545.jpg">
+        </div>
+
+        <div>
+            <p class="text-sm font-semibold text-center text-slate-700 mb-2">對應地圖分區</p>
+            <img src="images/image_df1405.jpg" 
+                 alt="跑線邏輯地圖：物件地址分區與集中策略" 
+                 class="w-full rounded-lg shadow-md border cursor-pointer transition hover:scale-[1.01]" 
+                 onclick="openModal(this)" 
+                 data-src="images/image_df1405.jpg">
+        </div>
+        
+    </div>
+    </div>
+        
+    </div>
+</div>
+            <div class="bg-white p-8 rounded-xl shadow-lg content-card  ">
+                <h3 class="text-2xl font-semibold text-slate-700 mb-4">如何讓每一次出門都成為有效跑線</h3>
+                <div class="mb-6 grid grid-cols-1 md:grid-cols-2 gap-4 items-center">
+    <div class="bg-red-50 p-4 rounded-lg shadow-inner">
+        <img src="images/image_dea3c1.png" alt="開發目標：所有權人姓名與電話" class="w-full h-auto rounded-lg">
+    </div>
+    <div class="bg-white p-4 rounded-lg shadow-md border">
+        <img src="images/image_dea689.jpg" alt="國民身分證統一編號英文字代碼與配賦縣市對照表" class="w-full h-auto rounded-lg">
+    </div>
+</div>
+                <p class="text-slate-600 mb-6">有效跑線的目標只有一個：<span class="font-bold text-indigo-600">取得所有權人的姓名與電話</span>。圍繞這個目標，可以運用以下方法：</p>
+                <ul class="list-disc list-inside space-y-3 text-slate-600">
+                    <li><strong>夢幻25：</strong>鎖定目標物件的同巷、同棟、同層鄰居進行拜訪，擴大情報網。</li>
+                    <li><strong>信箱：</strong>注意信箱上的收件人全名，這是重要的線索。</li>
+                    <li><strong>管理室：</strong>這是最重要的情報站。搭配平日的社區經營，若遇第一次接觸的社區，每次拜訪善用「三進三出」，日班不行就攻夜班，送小禮物或禮品+信請管理室轉交屋主、聊天，想辦法請管理員協助聯繫或提供線索。</li>
+                    <li><strong>親友策略：</strong>若遇到親友擋駕，可以禮貌地請求：「那可以麻煩您幫我撥通電話給屋主嗎？我直接跟他說明，就不會為難您了。」</li>
+                </ul>
+            </div>
+            
+            <div class="bg-white p-8 rounded-xl shadow-lg content-card  ">
+                <h3 class="text-2xl font-semibold text-slate-700 mb-4">電話開發實戰技巧</h3>
+                <div class="space-y-6">
+                    <div class="p-6 bg-slate-50 rounded-lg">
+                        <h4 class="font-bold text-lg text-indigo-700">屋主不理我怎麼辦？</h4>
+                         <p class="text-slate-600 mt-3 mb-4">關鍵在於整合你的<span class="font-bold">纏鬥力、專業力、業務力</span>。</p>
+                         <img src="images/three_powers_funnel.png" alt="三力整合圖" class="w-full max-w-sm mx-auto my-4">
+                         <ul class="list-disc list-inside ml-4 mt-3 text-slate-600 space-y-2">
+                            <li><strong>學會自言自語：</strong>即使屋主已讀不回，也要持續傳送有價值的資訊，如市場分析、回報給其他庫存屋主的內容、或是自己努力工作的照片。</li>
+                            <li><strong>展現專業與努力：</strong>將日常作業（如派報、內部會議推案）拍照傳給追蹤中的屋主，讓他看見你的付出。</li>
+                            <li><strong>持續追蹤：</strong>每天堅持打電話，保持接觸熱度。</li>
+                        </ul>
+                        <div class="grid md:grid-cols-2 gap-4 mt-6">
+                           <img src="images/line_chat_example.jpg" alt="LINE對話範例" class="w-full rounded-lg shadow-md border">
+                           <img src="images/daily_work_collage.jpg" alt="工作照組合圖" class="w-full rounded-lg shadow-md border">
+                        </div>
+                    </div>
+                </div>
+            </div>
+<div class="bg-white p-8 rounded-xl shadow-lg content-card animate-on-scroll">
+    <h3 class="text-2xl font-semibold text-slate-700 mb-4">開發心態與常見問題</h3>
+    <div class="space-y-6">
+        <div class="p-6 bg-slate-50 rounded-lg border-l-4 border-indigo-300">
+            <p class="font-bold text-slate-800 text-lg">Q: 開發要做好多事情喔! 這樣我怎麼可能做得完?</p>
+            <p class="text-slate-700 mt-3"><span class="font-semibold">【心法】:</span> 社區經營、反開發的作業是相輔相成的。社區經營的成功，反開發的速度就會比別人快；平常在反開發的同時，也能做到社區經營的效果!</p>
+        </div>
+        <div class="p-6 bg-slate-50 rounded-lg border-l-4 border-indigo-300">
+            <p class="font-bold text-slate-800 text-lg">Q: 做哪些事情可以趕快成交呢?</p>
+            <p class="text-slate-700 mt-3"><span class="font-semibold">【心法】:</span> 我們做的所有事情，都是在<span class="font-bold text-indigo-600">提高成交的機率</span>。不會有捷徑可以快速成交，而是因為做了很多事情，而讓成交發生。例如：</p>
+            <ul class="list-decimal list-inside ml-4 mt-2 text-slate-600 space-y-1">
+                <li><strong>三進三出：</strong>培養不怕被拒絕的能力，持續拜訪。</li>
+                <li><strong>委託陪同帶看：</strong>增加自己向潛在客戶曝光的好機會。</li>
+            </ul>
+        </div>
+        
+        <div class="p-6 bg-amber-50 rounded-lg border-l-4 border-amber-400">
+            <h4 class="font-bold text-slate-800 text-lg mb-3">Q: 住戶電話如何開頭？</h4>
+            <div class="space-y-4">
+                <div>
+                    <h5 class="font-semibold text-slate-700">➢ 從銷售帶入開發:</h5>
+                    <p class="text-slate-600 mt-1 italic pl-2 border-l-2 border-slate-300">「大哥/小姐您好，我這邊想要介紹您一間還不錯的房子，想說詢問看看您有沒有興趣參考一下？(以物件附近去做推薦)」</p>
+                </div>
+                <div>
+                    <h5 class="font-semibold text-slate-700">➢ 旁敲式:</h5>
+                    <p class="text-slate-600 mt-1 italic pl-2 border-l-2 border-slate-300">「大哥/小姐您好，我今天去XXX地方發廣告，有聽一個阿姨說您有房子在出售，給我這支電話，我想說打打看，您是有房子想要處理嗎?」</p>
+                </div>
+                 <div>
+                    <h5 class="font-semibold text-slate-700">➢ 開門見山:</h5>
+                    <p class="text-slate-600 mt-1 pl-2 border-l-2 border-slate-300">直接、誠懇地向對方要求一個能夠為他服務的機會。</p>
+                </div>
+            </div>
+            <div class="mt-4 pt-4 border-t border-amber-300">
+                <p class="font-bold text-red-600 text-center">【關鍵】: 30秒內抓住客戶想繼續聽下去的興趣，不要開頭就直接說自己是XX不動產的誰誰誰。</p>
+            </div>
+        </div>
+    </div>
+</div>
+            <div class="bg-white p-8 rounded-xl shadow-lg content-card  ">
+                <h3 class="text-2xl font-semibold text-slate-700 mb-4">簽訂委託的關鍵流程</h3>
+                <div class="space-y-4">
+                    <div class="p-6 rounded-lg bg-blue-50">
+                        <h4 class="font-bold text-lg text-blue-700">1. 探索</h4>
+                        <p class="text-slate-600 mt-2">估價時，先了解屋主售屋動機、期望價格及原因。分析目前行情，強調我們的目標是「為他賣到理想價格」，而不是像其他業務一樣報天價卻賣不掉。</p>
+                    </div>
+                    <div class="p-6 rounded-lg bg-green-50">
+                        <h4 class="font-bold text-lg text-green-700">2. 提議 (設定三種價格)</h4>
+                        <p class="text-slate-600 mt-2">與屋主共同設定三種價格：<span class="font-bold">★建議談、★建議賣、★一定要賣</span>。並取得共識：「如果買方出了一個接近行情的價格，代表他很有誠意，我們至少要願意見面談，給彼此一個機會。」</p>
+                    </div>
+                    <div class="p-6 rounded-lg bg-yellow-50">
+                        <h4 class="font-bold text-lg text-yellow-700">3. 預應</h4>
+                        <p class="text-slate-600 mt-2">為後續議價鋪路。告知屋主：「委託進來後會先送銀行鑑價，讓買方清楚自備款，避免後續糾紛。」、「剛開賣前兩週帶看量會很大，是公司累積的誠意買方，但不一定出價漂亮，請平常心看待。」也同時避免屋主認為很多人看屋是因為賣太便宜。</p>
+                    </div>
+                    <div class="p-6 rounded-lg bg-purple-50">
+                        <h4 class="font-bold text-lg text-purple-700">4. 委託完成後</h4>
+                        <p class="text-slate-600 mt-2">立刻換位思考，想像自己是買方，會問哪些問題。將這些問題（如：為何要賣？租金多少？瑕疵是否處理？）與屋主確認後，整理成文字，主動提供給帶看的同仁，增加收斡機會。</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="grid md:grid-cols-2 gap-8">
+                <div class="bg-white p-8 rounded-xl shadow-lg content-card  ">
+                    <h3 class="text-xl font-semibold text-slate-700 mb-4">自我行銷工具</h3>
+                    <p class="text-slate-600 mb-4">提供有別於其他房仲的差異化服務，展現您的專業價值：</p>
+                    <ul class="list-disc list-inside space-y-2 text-slate-600">
+                        <li><a href="https://pagehouse324.my.canva.site/" target="_blank" class="text-indigo-600 hover:underline font-bold">專業行銷企劃書 (點我看範本)</a></li>
+                        <li>精美格局傢配圖</li>
+                        <li>AI語音導覽影片</li>
+                        <li>360度環景拍攝</li>
+                        <li>過往得獎紀錄</li>
+                        <li>客戶好評推薦截圖</li>
+                    </ul>
+                    <img src="images/marketing_tools.jpg" alt="自我行銷工具範例" class="w-full rounded-lg shadow-md border mt-4">
+                </div>
+                <div class="bg-white p-8 rounded-xl shadow-lg content-card  ">
+                    <h3 class="text-xl font-semibold text-slate-700 mb-4">商圈耕耘地圖</h3>
+                     <img src="images/neighborhood_map.jpg" alt="商圈耕耘地圖" class="w-full rounded-lg shadow-md border">
+                </div>
+            </div>
+             <div class="bg-white p-8 rounded-xl shadow-lg content-card  ">
+                <h3 class="text-2xl font-semibold text-slate-700 mb-4">開發常見問題應對話術</h3>
+                <div class="space-y-6">
+                     <div class="p-6 bg-slate-50 rounded-lg border-l-4 border-indigo-300">
+                        <p class="font-bold text-slate-800 text-lg">Q: 「我目前只想自售。」</p>
+                        <p class="text-sm text-slate-500 mt-1"><span class="font-semibold">【翻譯機】:</span> 不想被抽服務費，賣房子的錢想自己全賺。</p>
+                        <p class="text-slate-700 mt-3"><span class="font-semibold">【解決辦法】:</span> 強調委託仲介的<span class="font-bold text-indigo-600">四大價值</span>：<br>
+                            1. <span class="font-bold">交易安全：</span>我們有履約保證、專業代書把關，避免買賣糾紛。<br>
+                            2. <span class="font-bold">人身安全：</span>由我們過濾客戶並陪同帶看，您不需親自面對陌生人。<br>
+                            3. <span class="font-bold">時間成本：</span>省去您自己刊登廣告、接聽電話、帶看的時間與金錢成本。<br>
+                            4. <span class="font-bold">價格優勢：</span>我們有龐大買方資料庫與專業議價能力，能幫您賣個理想的價格(重點:這裡不保證幫客戶賣更高價，請勿為了接委託而拱高價格)。
+                        </p>
+                    </div>
+                    <div class="p-6 bg-slate-50 rounded-lg border-l-4 border-indigo-300">
+                        <p class="font-bold text-slate-800 text-lg">Q: 「我給很多間在賣了，你有客戶再帶來。」</p>
+                         <p class="text-sm text-slate-500 mt-1"><span class="font-semibold">【翻譯機】:</span> 你們仲介都只想簽委託，不一定會認真賣。</p>
+                        <p class="text-slate-700 mt-3"><span class="font-semibold">【解決辦法】:</span> 「大哥/姊，你對你的房子沒有信心嗎?怎麼會覺得沒有客戶呢?我們公司有幾百位業務，每個人手上都有長期經營的誠意買方，您這麼好的案子，我恨不得能正式接下來，讓我們全公司的資源都來幫您介紹！而且依規定，我們必須取得委託書才能合法帶看，這也是對您產權的保障。」</p>
+                    </div>
+                     <div class="p-6 bg-slate-50 rounded-lg border-l-4 border-indigo-300">
+                        <p class="font-bold text-slate-800 text-lg">Q: 「你們一定要收4%服務費嗎？別人只收2%」</p>
+                        <p class="text-sm text-slate-500 mt-1"><span class="font-semibold">【翻譯機】:</span> 能省則省，想測試你的底線。</p>
+                        <p class="text-slate-700 mt-3"><span class="font-semibold">【解決辦法】:</span> 「大哥/姊，如果連我們自己該賺的服務費都這麼容易被砍，您覺得您的房價，我能幫您守得住嗎？您真正在意的，應該是能實拿的96%，而不是我們這4%的服務品質吧！」</p>
+                    </div>
+                    <div class="p-6 bg-slate-50 rounded-lg border-l-4 border-indigo-300">
+                        <p class="font-bold text-slate-800 text-lg">Q: 「不想給你專任。」</p>
+                        <p class="text-sm text-slate-500 mt-1"><span class="font-semibold">【翻譯機】:</span> 怕被你綁住，萬一你賣不掉怎麼辦？多給幾家賣比較快。</p>
+                        <p class="text-slate-700 mt-3"><span class="font-semibold">【解決辦法】:</span> 分析一般委託的缺點：「一般委託會讓買方貨比三家，到处探您的底價，價格容易賣亂。專任委託才能讓我們<span class="font-bold">集中火力</span>做最大的行銷曝光，由我統一窗口為您<span class="font-bold">強力守價</span>，才能真正賣到理想的價格！」</p>
+                    </div>
+                     <div class="p-6 bg-slate-50 rounded-lg border-l-4 border-indigo-300">
+                        <p class="font-bold text-slate-800 text-lg">Q: 「我有親友在做仲介啦，不好意思不給他賣。」</p>
+                        <p class="text-slate-700 mt-3"><span class="font-semibold">【解決辦法】:</span> 「您想想，您連委託這件事情都不好意思拒絕了，那到時候談到價格的時候呢？您是不是也會不好意思不降價？想要賣好的價格，更應該讓我們這樣的第三方來努力您想要的價格。」</p>
+                    </div>
+                    <div class="p-6 bg-slate-50 rounded-lg border-l-4 border-indigo-300">
+                        <p class="font-bold text-slate-800 text-lg">Q: 「請我們去找同行配案。」</p>
+                         <p class="text-sm text-slate-500 mt-1"><span class="font-semibold">【翻譯機】:</span> 不想太複雜，想單純一點。</p>
+                        <p class="text-slate-700 mt-3"><span class="font-semibold">【解決辦法】:</span> 「我們都找到您了，代表我們有最直接的買方。由我們直接對您，資訊最透明。之前遇過同行說歡迎合作，但為了自己成交，結果買方出了很漂亮的價格卻沒回報，最後他們自己賣得比我的買方還低。」</p>
+                    </div>
+                </div>
+            </div>
+         <div class="bg-white p-8 rounded-xl shadow-lg content-card animate-on-scroll">
+                <h3 class="text-2xl font-semibold text-slate-700 mb-4">提供銷售帶看注意事項</h3>
+                <p class="text-slate-600 mb-4">為了讓友店或同事更願意且更方便帶看您的物件，主動提供清晰的「帶看注意事項」非常重要。這能減少他們帶看前的疑慮，增加銷售效率。</p>
+                <div class="grid md:grid-cols-2 gap-6 text-sm">
+                    <div class="p-4 bg-slate-100 rounded-lg">
+                        <p class="font-bold mb-2">【範例一：社區大樓】</p>
+                        <ul class="list-disc list-inside space-y-1">
+                            <li>地址：桃園市中壢區元生三街</li>
+                            <li>開價/底價：1780萬 / 底價</li>
+                            <li>帶看方式：開發需陪同，空屋有磁扣(密碼鎖)</li>
+                            <li>注意事項：屋內有監視器！請提醒客戶參觀完再發表評論。離開時請關閉電源門窗(勿關總閘)。</li>
+                            <li>屋主售屋原因：閒置資產。</li>
+                            <li>公設/車位/垃圾處理位置說明...</li>
+                        </ul>
+                    </div>
+                     <div class="p-4 bg-slate-100 rounded-lg">
+                        <p class="font-bold mb-2">【範例二：透天】</p>
+                        <ul class="list-disc list-inside space-y-1">
+                            <li>地址：二聖路225號旁巷子</li>
+                            <li>開價/底價：1398萬 / </li>
+                            <li>帶看方式：鑰匙在門口電錶旁小盒子(密碼)</li>
+                            <li>注意事項：離開時請將密碼轉亂！除一樓外，其餘樓層總電源需關閉。</li>
+                             <li>屋主售屋原因：閒置資產。</li>
+                            <li>垃圾處理時間：每日17:30在巷口。</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+</div>",
+        
+        "chapter7": "<div id=\"chapter7\" class=\"content-section space-y-8">
+             <header class=" ">
+                 <h2 class="text-4xl font-bold text-slate-800 border-b-4 border-indigo-500 pb-3 mb-2">回報與議價</h2>
+                 <p class="text-slate-500">贏得信任、創造價值的關鍵溝通</p>
+            </header>
+            <div class="bg-white p-8 rounded-xl shadow-lg content-card  ">
+                <h3 class="text-2xl font-semibold text-slate-700 mb-4">庫存經營 (朔案)</h3>
+                <p class="text-slate-600 mb-6">從委託到續約，不同階段有不同的經營重點，目標是贏得信任，達成再次服務。</p>
+                <img src="images/inventory_timeline.png" alt="庫存經營時間軸" class="w-full rounded-lg shadow-md border mb-6">
+                <ul class="list-disc list-inside space-y-3 text-slate-600">
+                    <li><strong>蜜月期：</strong>產權調查、廣告上網、完成答應屋主的事。</li>
+                    <li><strong>努力期：</strong>各式行銷、流程回報、客戶反應彙整。</li>
+                    <li><strong>市場分析期：</strong>分析人況(屋主)、屋況、價況，將賣不掉的原因導向唯一可變動的「價況」。</li>
+                    <li><strong>續約期：</strong>贏得信任，爭取續約，達成再次服務的機會。</li>
+                </ul>
+            </div>
+            <div class="bg-white p-8 rounded-xl shadow-lg content-card animate-on-scroll">
+                <h3 class="text-2xl font-semibold text-slate-700 mb-4">庫存經營【回報】</h3>
+                <p class="text-slate-600 mb-6">贏得屋主信任的關鍵在於綿密且真誠的回報，讓他感覺到我們不僅是仲介，更是和他站在同一陣線的夥伴。即使屋主已讀不回，也要學會「自言自語」，持續傳遞價值。</p>
+                <div class="space-y-8">
+                    <div>
+                        <h4 class="font-bold text-lg text-indigo-600 mb-3">1. 簽約後立即回報進度</h4>
+                        <p class="text-slate-600 mb-4">簽約後立即將所有具備決定權的 KEYMAN 拉入群組，告知後續作業進度。包含拍照、繪製格局圖、廣告上架等每個環節，都要主動回報並提供成品給屋主參考。</p>
+                        <img src="images/report_flow_collage.jpg" alt="回報流程組合圖" class="w-full rounded-lg shadow-md border">
+                    </div>
+                    <div class="border-t pt-6">
+                        <h4 class="font-bold text-lg text-indigo-600 mb-3">2. 展現努力過程</h4>
+                        <p class="text-slate-600 mb-4">將製作的派報DM、內部會議推案、地毯式曝光(如信箱派報)的過程拍照回傳，甚至額外花費的廣告，都要讓屋主「看見」我們的辛苦付出。</p>
+                        <div class="grid md:grid-cols-2 gap-4 mt-4">
+                            <img src="images/effort_showcase_collage_1.jpg" alt="展現努力過程組合圖 1" class="w-full rounded-lg shadow-md border">
+                            <img src="images/effort_showcase_collage_2.jpg" alt="展現努力過程組合圖 2" class="w-full rounded-lg shadow-md border">
+                        </div>
+                    </div>
+                     <div class="border-t pt-6">
+                        <h4 class="font-bold text-lg text-indigo-600 mb-3">3. 分享市場資訊與客戶反應</h4>
+                        <p class="text-slate-600">定期回報帶看狀況、客戶的真實反應（不論好壞），以及最新的銀行貸款政策、市場新聞，為後續的議價做專業鋪陳。</p>
+                    </div>
+                </div>
+            </div>
+            <div class="my-8 p-6 bg-red-100 border-2 border-red-500 rounded-xl text-center animate-on-scroll">
+    <h4 class="text-2xl font-bold text-red-700 tracking-wider">《 回報的重要性遠大於議價 》</h4>
+</div>
+            <div class="bg-white p-8 rounded-xl shadow-lg content-card  ">
+                <h3 class="text-2xl font-semibold text-slate-700 mb-4">議價的藝術</h3>
+                <div class="space-y-8">
+                    <div>
+                        <h4 class="font-bold text-lg text-indigo-600 mb-3">議價起手式：排除屋主疑慮</h4>
+                        <p class="text-slate-600">在談價格前，先排除屋主認為「房子賣不掉是仲介不努力」的想法。</p>
+                        <ol class="list-decimal list-inside ml-4 mt-3 text-slate-600 space-y-2">
+                            <li>重述我們做了哪些行銷包裝。</li>
+                            <li>彙整客戶的真實回饋 (屋況優缺點)。</li>
+                            <li>說明我們如何幫他轉化缺點。</li>
+                            <li>最後導向結論：人況(屋主)、屋況都沒問題，唯一可以變動的就是「價況」。</li>
+                        </ol>
+                    </div>
+                    <div class="border-t pt-6">
+                        <h4 class="font-bold text-lg text-indigo-600 mb-3">策略分析：讓屋主自己想通</h4>
+                        <p class="text-slate-600">最高境界的議價，是讓屋主覺得我們在跟他「討論策略」，而不是在「殺他價」。</p>
+                         <div class="mt-4 p-6 bg-slate-50 rounded-lg">
+                            <h5 class="font-semibold text-slate-800">客群與貸款分析法</h5>
+                            <p class="text-slate-600 mt-2 leading-relaxed">分析目標客群的自備款能力。例如，屋主想賣1200萬的房子，銀行鑑價1000萬(可貸8成)，代表買方需自備高達400萬。此時可以引導屋主思考：「大哥/姊，講坦白的，有400萬自備款預算的買方，其實都可以去看接近2000萬的案子了！您覺得符合『急迫需求』、『只看兩房車』、且『自備款超多』這三個條件的買方多嗎？」</p>
+                         </div>
+                         <div class="mt-6 p-6 bg-slate-50 rounded-lg">
+                            <h5 class="font-semibold text-slate-800">五段式議價 (放價格前請示主管)</h5>
+                            <p class="text-slate-600 mt-2">透過層層推進的佈局，引導屋主做出決定。</p>
+                            <ol class="list-decimal list-inside ml-4 mt-3 text-slate-600 space-y-2">
+                                <li><span class="font-bold">描述買方：</span>介紹買方來源、背景、購屋動機，建立好感。</li>
+                                <li><span class="font-bold">試探反應：</span>在電話中模擬買方現場，口頭出價，觀察屋主反應，製造臨場感。</li>
+                                <li><span class="font-bold">明確出價：</span>正式提出價格，並要求屋主降價，視情況可來回數次。</li>
+                                <li><span class="font-bold">適度冷卻：</span>告知屋主「買方回去思考一下」，暫時放冷屋主，避免逼迫感。</li>
+                                <li><span class="font-bold">佈局收場：</span>提出最終價格，營造「最後機會」的氛圍，促使屋主下決定。</li>
+                            </ol>
+                         </div>
+                    </div>
+                </div>
+            </div>
+            <div class="bg-white p-8 rounded-xl shadow-lg content-card  ">
+                <h3 class="text-2xl font-semibold text-slate-700 mb-4">常見議價問題</h3>
+                <div class="space-y-6">
+                    <div class="p-6 bg-amber-50 rounded-lg">
+    <p class="font-bold text-slate-800 text-lg">Q: 「同業今天有出價xxx萬了？」</p>
+    <div class="mt-3 space-y-3">
+        <div>
+            <p class="font-semibold text-slate-700">【第一時間回應】:</p>
+            <p class="text-slate-600 mt-1 italic pl-2 border-l-2 border-slate-400">（先判斷真假）「那大哥/姊，這個價格您會想要賣嗎？您自己心目中的價格是多少呢？（搭配之前的辛苦度回報）希望您看在我這麼努力，給我們一個機會，以我們這邊為主。」</p>
+        </div>
+        <div>
+            <p class="font-semibold text-slate-700">【若確認同業出的價格已沒在談了】:</p>
+            <p class="text-slate-600 mt-1 italic pl-2 border-l-2 border-slate-400">「哇！那您應該當時要賣的…」</p>
+        </div>
+    </div>
+</div>
+                     <div class="p-6 bg-amber-50 rounded-lg">
+                        <p class="font-bold text-slate-800">Q: 「啊我降了，買方加得上來嗎？」</p>
+                        <p class="text-slate-700 mt-2"><span class="font-semibold">A:</span> 「大哥/姊，我們仲介不會去跟客戶保證任何價格，就像我們也不會跟買方說，您一定會降到什麼價錢一樣，這些都是要去努力談出來的！」</p>
+                    </div>
+                </div>
+            </div>
+              <div class="bg-white p-8 rounded-xl shadow-lg content-card animate-on-scroll">
+                <h3 class="text-2xl font-semibold text-slate-700 mb-4">議價完防止跳價</h3>
+                <div class="space-y-6">
+                    <div class="p-6 bg-blue-50 rounded-lg">
+                        <h4 class="font-bold text-lg text-blue-700">1. 議價完有多組帶看時</h4>
+                        <p class="text-slate-600 mt-2 italic bg-white p-4 rounded">「大哥/姊，跟您分析討論完價格後，我這邊回來有趕快再追蹤之前本來有興趣但沒看的買方，也有再打給同事，跟每個同事都再次推薦您這間，那這幾天同事都再大力幫我們約看，所以這幾天約看還蠻多組的，希望能夠好好幫您處理個理想價格。」</p>
+                    </div>
+                    <div class="p-6 bg-blue-50 rounded-lg">
+                        <h4 class="font-bold text-lg text-blue-700">2. 議價完有斡旋出價，先佈局</h4>
+                        <p class="text-slate-600 mt-2 italic bg-white p-4 rounded">「大哥/姊，跟您討論完價格後，我這邊有再去找之前所有看過房子的買方，盤看看每一組買方，是否還會想要再看一次，或考慮出價看看，那有一組有表示其實還蠻有興趣的，我這邊有跟他約 xx 時間碰面，看是否有沒有機會，後續有消息隨時跟您回報。」</p>
+                    </div>
+                </div>
+            </div>
+            <div class="bg-white p-8 rounded-xl shadow-lg content-card animate-on-scroll">
+                <h3 class="text-2xl font-semibold text-slate-700 mb-4">開發被收斡後的洽談 (對屋主)</h3>
+                <p class="text-slate-600 mb-4">在洽談價格時，務必將自己定位為屋主的「策略顧問」，引導屋主將價格問題視為「共同解決方案」，而非單純的降價要求。</p>
+                <p class="font-bold text-red-600 mb-6">【核心重點】此階段務必依各主管協助為主，並採用顧問式引導。</p>
+                 
+                <div class="space-y-6">
+                    <div class="p-6 bg-indigo-50 rounded-lg border-l-4 border-indigo-600">
+                        <h4 class="font-bold text-lg text-indigo-700 mb-2">1. 探索：重新錨定售屋動機</h4>
+                        <p class="text-slate-600">委託時需了解的售屋動機，深入探討。</p>
+                        <p class="text-sm text-slate-500 mt-2">（此舉是重新確立談判的底層籌碼，避免價格僵局。）</p>
+                    </div>
+                    <div class="p-6 bg-indigo-50 rounded-lg border-l-4 border-indigo-600">
+                        <h4 class="font-bold text-lg text-indigo-700 mb-2">2. 提議：將問題歸因於「客觀因素」</h4>
+                        <p class="text-slate-600">提出問題與解決方式，點出價值所在，引導屋主給予回饋。</p>
+                        <div class="mt-3 p-3 bg-white rounded-md border">
+                            <h5 class="font-semibold text-slate-700">【策略歸因】</h5>
+                            <p class="text-slate-600 mt-1 italic">EX:因為...，所以似乎要找到更多的理由才有辦法說服買方出的更高。</p>
+                        </div>
+                    </div>
+                    <div class="p-6 bg-indigo-50 rounded-lg border-l-4 border-indigo-600">
+                        <h4 class="font-bold text-lg text-indigo-700 mb-2">3. 締造雙贏：回到共同目標</h4>
+                        <p class="text-slate-600">再次利用售屋動機說到：我們來找個方案，看看能否雙方都滿意，最後製造雙贏。</p>
+                        <p class="text-sm text-slate-500 mt-2">（此話術將焦點從價格對立轉移到「共同解決方案」，強化業務的合作者角色。）</p>
+                    </div>
+                </div>
+            </div>
+     </div>",
+        
+        "chapter8": "<div id=\"chapter8\" class=\"content-section space-y-8">
+            <header class=" ">
+                <h2 class="text-4xl font-bold text-slate-800 border-b-4 border-indigo-500 pb-3 mb-2">銀行貸款與月還款能力評估</h2>
+                <p class="text-slate-500">協助客戶順利成交的金融知識</p>
+            </header>
+            <div class="bg-white p-8 rounded-xl shadow-lg content-card  ">
+                <h3 class="text-2xl font-semibold text-slate-700 mb-4">銀行貸款流程</h3>
+                <ol class="list-decimal list-inside space-y-3 text-slate-600">
+                    <li>寫申請書 (附上財資力證明)</li>
+                    <li>進件審核</li>
+                    <li>貸款核准</li>
+                    <li>對保</li>
+                    <li>收取銀行設定契約書</li>
+                    <li>過戶 + 抵押權設定「連件」辦理</li>
+                    <li>買方銀行撥款代償賣方銀行</li>
+                    <li>領賣方銀行清償證明、塗銷同意書</li>
+                    <li>塗銷賣方銀行抵押權</li>
+                    <li>貸款二次撥款 (解圈)</li>
+                </ol>
+                <div class="mt-6 p-4 bg-slate-50 rounded-lg border border-slate-200">
+    <h5 class="font-semibold text-slate-700">實用工具：房貸月還款試算</h5>
+    <p class="text-sm text-slate-500 mt-1 mb-3">您可以點擊下方按鈕，前往線上房貸月還款計算機快速估算每月還款金額。</p>
+    <a href="https://pip.moi.gov.tw/Publicize/Info/C1040" target="_blank" rel="noopener noreferrer" class="inline-flex items-center bg-indigo-600 text-white font-semibold py-2 px-5 rounded-lg hover:bg-indigo-700 transition shadow-sm">
+        前往房貸月還款計算機
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 ml-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+        </svg>
+    </a>
+</div>
+            </div>
+            <div class="bg-white p-8 rounded-xl shadow-lg content-card  ">
+                <h3 class="text-2xl font-semibold text-slate-700 mb-4">影響貸款的五大要素</h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <div class="p-4 bg-slate-50 rounded-lg">
+                        <h4 class="font-bold text-lg">1. 成交價</h4>
+                        <p class="text-sm text-slate-600">契約書上的價格。</p>
+                    </div>
+                    <div class="p-4 bg-slate-50 rounded-lg">
+                        <h4 class="font-bold text-lg">2. 銀行估價</h4>
+                        <p class="text-sm text-slate-600">銀行對房子的價值評估。貸款成數會以成交價和估價中的較低者計算。</p>
+                    </div>
+                    <div class="p-4 bg-slate-50 rounded-lg">
+                        <h4 class="font-bold text-lg">3. 人的財力</h4>
+                        <p class="text-sm text-slate-600">個人的還款能力，重視穩定、經常性的收入。EX:提供至少6個月的薪轉證明，證明您有足夠的還款能力</p>
+                    </div>
+                    <div class="p-4 bg-slate-50 rounded-lg">
+                        <h4 class="font-bold text-lg">4. 人的信用</h4>
+                        <p class="text-sm text-slate-600">聯徵中心的信用紀錄，包含遲繳、呆帳、債務協商等。</p>
+                    </div>
+                     <div class="p-4 bg-slate-50 rounded-lg">
+                        <h4 class="font-bold text-lg">5. 銀行政策</h4>
+                        <p class="text-sm text-slate-600">各家銀行對不同不動產型態（如小套房、工業宅）的承作意願與成數。</p>
+                    </div>
+                </div>
+            </div>
+            <div class="bg-white p-8 rounded-xl shadow-lg content-card  ">
+                <h3 class="text-2xl font-semibold text-slate-700 mb-4">銀行物件估價注意事項</h3>
+                <div class="space-y-4">
+                    <p><span class="font-semibold text-red-500 bg-red-100 px-2 py-1 rounded">小套房：</span>多數銀行不承作或成數偏低(7成以下)、利率較高。坪數認定標準各家銀行不同。</p>
+                    <p><span class="font-semibold text-orange-500 bg-orange-100 px-2 py-1 rounded">店面：</span>銀行估價常遠低於市價，可貸額度可能是成交價的5至6成。</p>
+                     <div class="p-4 border border-yellow-200 rounded-lg">
+                        <p class="mb-2"><span class="font-semibold text-yellow-600 bg-yellow-100 px-2 py-1 rounded">隔間套房：</span>大部分銀行不承作，少數願意承作的銀行成數也偏低。</p>
+                         <img src="images/multi_unit_layout.jpg" alt="隔間套房格局圖" class="w-full max-w-md mx-auto rounded-lg shadow-sm border">
+                     </div>
+                    <p><span class="font-semibold text-green-500 bg-green-100 px-2 py-1 rounded">工業住宅：</span>俗稱乙工住宅，通常貸款7成內，少部分銀行可到8成。</p>
+                    <p><span class="font-semibold text-blue-500 bg-blue-100 px-2 py-1 rounded">未保存登記建物：</span>土地上有建物但無建物權狀，大部分銀行無法貸款。</p>
+                </div>
+            </div>
+             <div class="bg-white p-8 rounded-xl shadow-lg content-card  ">
+                <h3 class="text-2xl font-semibold text-slate-700 mb-4">人的因素：財力、負債與信用</h3>
+                <div class="space-y-6">
+                    <div class="p-6 bg-green-50 rounded-lg">
+                        <h4 class="font-bold text-lg text-green-700">財力證明</h4>
+                         <p class="text-slate-600 mt-2 leading-relaxed">銀行重視「經常性」收入。證明方式包含：薪資扣繳憑單、薪資轉帳紀錄、存款基數、公司財務報表(自營商)、穩定被動收入(租金、股利)等。</p>
+                    </div>
+                    <div class="p-6 bg-orange-50 rounded-lg">
+                        <h4 class="font-bold text-lg text-orange-700">負債狀況</h4>
+                        <p class="text-slate-600 mt-2 leading-relaxed">房貸、車貸、信貸、信用卡債等都會影響收支比。經常性收入扣除負債月付金後，仍需大於新貸款的月付金。</p>
+                    </div>
+                     <div class="p-6 bg-red-50 rounded-lg">
+                        <h4 class="font-bold text-lg text-red-700">信用紀錄</h4>
+                        <p class="text-slate-600 mt-2 leading-relaxed">聯徵紀錄是關鍵。若有呆帳、催收、債務協商等紀錄，基本上無法貸款，需更換信用正常的登記名義人。</p>
+                    </div>
+                </div>
+            </div>
+     <div class="bg-white p-8 rounded-xl shadow-lg content-card animate-on-scroll mt-12">
+                <header class="text-center mb-8">
+                    <h2 class="text-3xl font-bold text-indigo-700 border-b-4 border-indigo-400 inline-block pb-1">房貸負擔能力快速估算</h2>
+                    <p class="mt-2 text-lg text-slate-600">運用「月收入比例」快速評估房貸負擔上限 <span class="bg-yellow-100 text-red-600 px-2 py-1 rounded-md text-sm font-bold">此為提供評估自身的月付金負擔是否過重的簡單方式，非銀行貸款審核標準。</span></p>
+                </header>
+                <div class="mb-8 p-6 bg-blue-50 rounded-lg border-l-4 border-blue-500">
+                    <h4 class="font-bold text-xl text-blue-800 flex items-center mb-3">
+                        <i class="fas fa-chart-line mr-3"></i>核心概念：償債能力
+                    </h4>
+                    <p class="text-slate-700 leading-relaxed">
+                        穩健的個人財務管理建議，應將每月房貸（本金加利息）金額控制在每月總收入的 <span class="font-bold text-red-600">1/3 左右</span>。
+                    </p>
+                </div>
+                <h3 class="text-2xl font-semibold text-slate-700 mb-6 border-b pb-2">第一部分：四步驟估算</h3>
+                
+                <div class="grid md:grid-cols-2 gap-8 mb-8">
+                    <div class="space-y-6">
+                        <!-- Step 1 -->
+                        <div class="p-4 bg-indigo-50 rounded-lg border-l-4 border-indigo-400">
+                            <h4 class="font-bold text-lg text-indigo-700">步驟 1: 計算每月房貸上限 (40%)</h4>
+                            <p class="text-sm text-slate-600 mt-1">公式：月收入(這裡假設10萬) &times; 負擔目標比例</p>
+                            <p class="font-mono text-center mt-2 p-2 bg-white rounded">
+                                案例： 100,000 &times; 40% = 40,000 元
+                            </p>
+                        </div>
+                        <!-- Step 2 -->
+                        <div class="p-4 bg-indigo-50 rounded-lg border-l-4 border-indigo-400">
+                            <h4 class="font-bold text-lg text-indigo-700">步驟 2: 確立單位還款基準 (100 萬元)</h4>
+                            <p class="text-sm text-slate-600 mt-1">基準： 貸款 100 萬元、30 年期、利率 2.303%，每月還款額為 <span class="font-bold text-red-600">3,850 元</span>。</p>
+                            <!-- Using the uploaded image: image_f85be8.png -->
+                            <img src="images/loan_calculation_base.png" alt="貸款 100 萬元單位還款試算圖" class="w-full rounded-lg shadow-sm border mt-3">
+                        </div>
+                    </div>
+                    <div class="space-y-6">
+                        <!-- Step 3 -->
+                        <div class="p-4 bg-indigo-50 rounded-lg border-l-4 border-indigo-400">
+                            <h4 class="font-bold text-lg text-indigo-700">步驟 3: 推算建議貸款總額</h4>
+                            <p class="text-sm text-slate-600 mt-1">公式： 步驟 1 結果 &divide; 步驟 2 結果 &times; 100 萬元</p>
+                            <p class="font-mono text-center mt-2 p-2 bg-white rounded">
+                                案例： 40,000 &divide; 3,850 &asymp; 10.39 (10.39個100萬元)
+                            </p>
+                        </div>
+                        <!-- Step 4 -->
+                        <div class="p-4 bg-indigo-50 rounded-lg border-l-4 border-indigo-400">
+                            <h4 class="font-bold text-lg text-indigo-700">步驟 4: 回推可購屋參考總價</h4>
+                            <p class="text-sm text-slate-600 mt-1">公式： 建議貸款總額 &divide; 貸款成數</p>
+                            <p class="font-mono text-center mt-2 p-2 bg-white rounded">
+                                8 成： 1039 萬 &divide; 0.80 &asymp; 1,299 萬元(左右)
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <h3 class="text-2xl font-semibold text-slate-700 mb-6 border-b pb-2">第二部分：訓練範例與應用</h3>
+                <div class="overflow-x-auto mb-8">
+                    <table class="min-w-full bg-slate-50 border border-gray-200 rounded-lg">
+                        <thead class="bg-indigo-100">
+                            <tr>
+                                <th class="p-3 text-left font-bold text-indigo-700">範例</th>
+                                <th class="p-3 text-left font-bold text-indigo-700">月收入</th>
+                                <th class="p-3 text-left font-bold text-indigo-700">月房貸上限 (40%)</th>
+                                <th class="p-3 text-left font-bold text-indigo-700">建議貸款總額</th>
+                                <th class="p-3 text-left font-bold text-indigo-700">可購屋參考總價 (成數)</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-gray-200">
+                            <tr class="hover:bg-white">
+                                <td class="p-3 font-bold text-slate-800">範例一</td>
+                                <td class="p-3">60,000 元</td>
+                                <td class="p-3">24,000 元</td>
+                                <td class="p-3 text-red-600 font-semibold">623 萬元</td>
+                                <td class="p-3 text-blue-600 font-semibold">779 萬元 (8 成)</td>
+                            </tr>
+                            <tr class="hover:bg-white">
+                                <td class="p-3 font-bold text-slate-800">範例二</td>
+                                <td class="p-3">80,000 元</td>
+                                <td class="p-3">32,000 元</td>
+                                <td class="p-3 text-red-600 font-semibold">831 萬元</td>
+                                <td class="p-3 text-blue-600 font-semibold">1,039 萬元 (8 成)</td>
+                            </tr>
+                            <tr class="hover:bg-white">
+                                <td class="p-3 font-bold text-slate-800">範例三</td>
+                                <td class="p-3">120,000 元</td>
+                                <td class="p-3">48,000 元</td>
+                                <td class="p-3 text-red-600 font-semibold">1,247 萬元</td>
+                                <td class="p-3 text-blue-600 font-semibold">1,558 萬元 (8 成)</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="mt-8">
+                    <h3 class="text-2xl font-semibold text-slate-700 mb-6 border-b pb-2"><i class="fas fa-exclamation-triangle mr-2 text-red-500"></i>重要假設與風險提示</h3>
+                    <ul class="list-disc list-inside space-y-4 text-slate-600 ml-4">
+                        <li> 
+                            <span class="font-bold text-red-600">自備款確認 (頭期款)：</span>雖然計算了貸款上限，但客戶仍需準備足夠的現金來支付「總價與貸款金額之間的差額」，這是購屋成功的首要前提。
+                        </li>
+                        <li>
+                            <span class="font-bold text-red-600">寬限期風險：</span>若使用寬限期，結束後每月還款金額會大幅提高。計算時應以無寬限期或寬限期結束後的還款額為準。
+                        </li>
+                        <li>
+                            <span class="font-bold text-red-600">負債比 (DBR)：</span>銀行審核時會將所有債務（車貸、信貸、卡債）一併考量，其他債務會限制核貸總額。
+                        </li>
+                        <li>
+                            <span class="font-bold text-red-600">購屋雜費：</span>必須額外準備總價約 3% &asymp; 5% 的現金，用於支付仲介費、契稅、代書費、保險費等費用，此筆資金無法包含在房貸內。
+                        </li>
+                        <li>
+                            <span class="font-bold text-red-600">房貸比例調整：</span>若客戶有高額學貸或車貸，建議的房貸比例（40%）應向下調整至 30% 或 35%，以確保現金流安全。
+                        </li>
+                    </ul>
+                </div>
+                <div class="mt-8 p-6 bg-yellow-100 rounded-lg text-center border-2 border-yellow-400">
+                    <p class="text-xl font-bold text-yellow-800">
+                        🔑 課程總結語 
+                    </p>
+                    <p class="mt-2 text-slate-700">
+                        「1039 萬元」是客戶在評估個人收入即每月可負擔還款金額下的最大貸款能力，而「1299 萬」則是可鎖定的房屋總價參考。掌握這四個步驟並考慮所有變動因素，才能幫助客戶做出穩健的購屋決策。
+                    </p>
+                </div>
+            </div>
+         </div>",
+        
+        "chapter9": "<div id=\"chapter9\" class=\"content-section space-y-8">
+            <header>
+                <h2 class="text-4xl font-bold text-slate-800 border-b-4 border-indigo-500 pb-3 mb-2">廣告法規與注意事項</h2>
+                <p class="text-slate-500">避免因廣告不實而遭檢舉裁罰的必修課</p>
+            </header>
+            <div class="bg-white p-8 rounded-xl shadow-lg content-card">
+                <h3 class="text-2xl font-semibold text-slate-700 mb-4">前言：常見社群平台廣告檢舉態樣</h3>
+                <p class="text-slate-600 mb-6 leading-relaxed">近期各縣市陸續傳出多起社群平台（如Facebook、IG）的物件廣告遭檢舉。常見的違規態樣包含：<span class="font-bold text-red-600">廣告不實</span>、<span class="font-bold text-red-600">未註明經紀業名稱</span>、以及<span class="font-bold text-red-600">違規刊登預售屋</span>。了解正確的刊登方式，是保護自己與公司的第一步。</p>
+                <div class="p-4 bg-red-100 border-l-4 border-red-500 text-red-700">
+                    <p class="font-bold">重點提醒：個人臉書、IG、抖音等自媒體PO物件，皆屬於廣告行為，受不動產經紀業管理條例規範。</p>
+                </div>
+            </div>
+            <div class="bg-white p-8 rounded-xl shadow-lg content-card">
+                <h3 class="text-2xl font-semibold text-slate-700 mb-6">一、廣告不實</h3>
+                <div class="space-y-8">
+                    <div>
+                        <h4 class="font-bold text-xl text-indigo-600 mb-3">【錯誤態樣一】訴求「使用坪數」</h4>
+                        <p class="text-slate-600 mb-4">廣告文案中訴求「使用坪數約90坪」，若遭檢舉，地政局會要求提出合法證明，否則將直接裁罰。任何<span class="font-bold">增建、頂樓加蓋、可使用大庭院</span>等訴求，都屬於此類風險範圍。</p>
+                        <div class="overflow-x-auto border rounded-lg">
+                            <table class="min-w-full">
+                                <thead class="bg-slate-100"><tr class="text-left"><th class="p-3 font-semibold text-slate-600 w-1/4">項目</th><th class="p-3 font-semibold text-slate-600">內容</th></tr></thead>
+                                <tbody>
+                                    <tr class="border-t"><td class="p-3 font-bold bg-red-50 text-red-700">面積標示 (錯誤)</td><td class="p-3 bg-red-50">使用面積、室內面積、增建面積等非法定用語。</td></tr>
+                                    <tr class="border-t"><td class="p-3 font-bold bg-green-50 text-green-700">面積標示 (正確)</td><td class="p-3 bg-green-50">應使用「謄本面積」、「登記面積」、「權狀面積」。換算為坪時，建議取至小數點後兩位。</td></tr>
+                                    <tr class="border-t"><td class="p-3 font-bold bg-red-50 text-red-700">增建訴求 (錯誤)</td><td class="p-3 bg-red-50">可增建XX坪、頂加增建使用空間多一倍。</td></tr>
+                                    <tr class="border-t"><td class="p-3 font-bold bg-green-50 text-green-700">增建訴求 (正確)</td><td class="p-3 bg-green-50">僅能描述現況，如「現有頂樓增建」，且不得保證可永久使用。</td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="border-t pt-6">
+                        <h4 class="font-bold text-xl text-indigo-600 mb-3">【錯誤態樣二】訴求「門口可停車」</h4>
+                        <p class="text-slate-600 mb-4">若物件門口停車並非具有合法產權或使用權，訴求「門口可停車」會被認定為廣告不實。所有停車位的訴求，都必須基於其<span class="font-bold">合法性</span>與<span class="font-bold">產權登記</span>。</p>
+                        <div class="overflow-x-auto border rounded-lg">
+                             <table class="min-w-full">
+                                <thead class="bg-slate-100"><tr class="text-left"><th class="p-3 font-semibold text-slate-600 w-1/4">項目</th><th class="p-3 font-semibold text-slate-600">內容</th></tr></thead>
+                                <tbody>
+                                    <tr class="border-t"><td class="p-3 font-bold bg-red-50 text-red-700">停車位 (錯誤)</td><td class="p-3 bg-red-50">門前可停車、子母車位(常為違法變更)、有車位(若無產權)、車位可租。</td></tr>
+                                    <tr class="border-t"><td class="p-3 font-bold bg-green-50 text-green-700">停車位 (正確)</td><td class="p-3 bg-green-50">車位須有產權登記才能訴求。建議可標註車位長、寬、高供消費者參考。</td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="border-t pt-6">
+                        <h4 class="font-bold text-xl text-indigo-600 mb-3">【錯誤態樣三】工業住宅訴求住家</h4>
+                        <p class="text-slate-600 mb-4">若物件登記用途非住宅（如：一般事務所、乙種工業區），廣告中不得出現引導做住宅使用的文字或照片。例如，放置有床或洗衣機的室內照，都屬於違規行為。</p>
+                        <div class="overflow-x-auto border rounded-lg">
+                             <table class="min-w-full">
+                                <thead class="bg-slate-100"><tr class="text-left"><th class="p-3 font-semibold text-slate-600 w-1/4">項目</th><th class="p-3 font-semibold text-slate-600">內容</th></tr></thead>
+                                <tbody>
+                                    <tr class="border-t"><td class="p-3 font-bold bg-red-50 text-red-700">非住宅用途 (錯誤)</td><td class="p-3 bg-red-50">使用「可放雙人床」、「一卡皮箱可入住」、「雅居」等字眼；刊登有床、曬衣場的照片。</td></tr>
+                                    <tr class="border-t"><td class="p-3 font-bold bg-green-50 text-green-700">非住宅用途 (正確)</td><td class="p-3 bg-green-50">應註明清楚登記用途與土地使用分區。廣告用詞可為「建案名稱」、「社區名稱」、「大樓」、「邊間」。</td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                     <div class="border-t pt-6">
+                        <h4 class="font-bold text-xl text-indigo-600 mb-3">【錯誤態樣四】訴求「百萬經紀人」</h4>
+                        <p class="text-slate-600 mb-4">依不動產經紀業管理條例，「經紀人」是專有名詞，必須領有不動產經紀人證照者才能使用。若無證照，則應使用「經紀人員」或其他稱謂。</p>
+                        <div class="overflow-x-auto border rounded-lg">
+                             <table class="min-w-full">
+                                <thead class="bg-slate-100"><tr class="text-left"><th class="p-3 font-semibold text-slate-600 w-1/4">項目</th><th class="p-3 font-semibold text-slate-600">內容</th></tr></thead>
+                                <tbody>
+                                    <tr class="border-t"><td class="p-3 font-bold bg-red-50 text-red-700">職稱 (錯誤)</td><td class="p-3 bg-red-50">（若無證照）自稱百萬經紀人、千萬經紀人。徵才廣告寫「誠徵經紀人」。</td></tr>
+                                    <tr class="border-t"><td class="p-3 font-bold bg-green-50 text-green-700">職稱 (正確)</td><td class="p-3 bg-green-50">百萬經紀<span class="font-bold">人員</span>、千萬經紀<span class="font-bold">人員</span>、百萬戰將。徵才廣告寫「誠徵經紀<span class="font-bold">人員</span>」。</td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="bg-white p-8 rounded-xl shadow-lg content-card">
+                 <h3 class="text-2xl font-semibold text-slate-700 mb-4">二、未註明經紀業及加盟品牌名稱</h3>
+                 <p class="text-slate-600 mb-4 leading-relaxed">只要是物件廣告，不論刊登在任何平台（包含個人臉書），都必須清楚註明「經紀業公司全稱」及「加盟品牌名稱」。若未註明，即使是個人頁面也會被認定為廣告行為並開罰，<span class="font-bold">罰鍰為 6 至 30 萬，且為一案一罰，累罰無上限。</span></p>
+                 <div class="p-4 bg-slate-100 rounded-lg">
+                    <p class="font-bold">正確標示範例：</p>
+                    <ul class="list-disc list-inside ml-4 mt-2 text-slate-700">
+                        <li>經紀業名稱：大安仲介有限公司</li>
+                        <li>加盟店名稱：XX不動產XX加盟店</li>
+                    </ul>
+                 </div>
+            </div>
+            <div class="bg-white p-8 rounded-xl shadow-lg content-card">
+                 <h3 class="text-2xl font-semibold text-slate-700 mb-4">三、預售屋案件</h3>
+                 <p class="text-slate-600 leading-relaxed">依平均地權條例規定，<span class="font-bold">112年7月1日後取得的預售屋</span>，禁止轉售。若符合特定條件（如非自願離職、重大傷病等）並向政府申請取得「轉售核准函」，才可進行委託銷售。在收到屋主提供的許可函之前，不得進行任何廣告銷售行為，否則<span class="font-bold">賣方及經紀業將被裁罰 50 至 300 萬。</span></p>
+            </div>
+             <div class="bg-white p-8 rounded-xl shadow-lg content-card">
+                <h3 class="text-2xl font-semibold text-slate-700 mb-4">總結重點提醒</h3>
+                <ul class="list-decimal list-inside space-y-3 text-slate-600">
+                    <li>個人FB、IG、抖音等自媒體皆被視為行銷平台，受法規管制。</li>
+                    <li>物件廣告皆須註明「經紀業公司全稱」及「加盟品牌名稱」。</li>
+                    <li>廣告內容須與事實及產權資料相符。</li>
+                    <li>過期或已成交的案件，應立即下架，避免誤導。</li>
+                </ul>
+            </div>
+        </div>",
+        
+        "chapter10": "<div id=\"chapter10\" class=\"content-section space-y-8">
+            <header class=" ">
+                <h2 class="text-4xl font-bold text-slate-800 border-b-4 border-indigo-500 pb-3 mb-2">銷售篇：帶看與客戶探索</h2>
+                <p class="text-slate-500">從帶看到收斡的關鍵步驟</p>
+            </header>
+            <div class="bg-white p-8 rounded-xl shadow-lg content-card animate-on-scroll space-y-8">
+    <div class="text-center">
+        <h3 class="text-3xl font-bold text-indigo-600">銷售核心哲學</h3>
+        <p class="text-slate-600 mt-2 text-lg">從「點」的銷售，到「面」的經營</p>
+    </div>
+    <p class="text-slate-700 leading-relaxed">許多業務的思維是「點狀」的：一個客戶（點）、一個特定物件類型（點）、一個特定區域（點）。觀念要提升到「平面」的層次，追求的是客戶群與物件類型的廣度。</p>
+    
+    <div class="p-6 bg-slate-50 rounded-lg border-l-4 border-indigo-300">
+        <h4 class="text-2xl font-semibold text-slate-800 mb-3">觀念一：對「客戶需求」不設限</h4>
+        <p class="font-medium text-slate-600 mb-4">—— 成為需求的探險家，而非訂單的執行者</p>
+        <p class="text-slate-600 mb-4"><span class="font-bold">【分析】:</span> 買方的需求是流動且充滿彈性的。設限客戶，就是設限自己的成交機會。</p>
+        <div class="space-y-3">
+            <p><span class="font-bold text-indigo-700">顧問式引導：</span>我們的角色不只是找到「符合條件」的房子，而是要引導客戶探索「最適合」他們的生活方式。一位想買三房的客戶，其深層需求可能是「家庭空間」與「生活品質」，而一間格局好的透天或許更能滿足這個核心需求。</p>
+            <p><span class="font-bold text-indigo-700">機會的播種：</span>每一次帶看、每一次推薦，即使不完全符合客戶開出的條件，都是一次「播種」。您正在開拓客戶的視野，同時也為自己創造意想不到的成交機會。您的心態是：「任何推薦都是機會」，這正是頂尖顧問的思維。</p>
+        </div>
+    </div>
+    <div class="p-6 bg-slate-50 rounded-lg border-l-4 border-indigo-300">
+        <h4 class="text-2xl font-semibold text-slate-800 mb-3">觀念二：對「物件廣告」不設限</h4>
+        <p class="font-medium text-slate-600 mb-4">—— 建立多元的流量池，而非單一的水龍頭</p>
+        <p class="text-slate-600 mb-4"><span class="font-bold">【分析】:</span> 只經營單一類型的物件，會讓您的客群結構變得脆弱，難以抵抗市場波動。</p>
+        <div class="space-y-4">
+            <div>
+                <h5 class="font-bold text-indigo-700 mb-2">市場常態分佈的應用：</h5>
+                <img src="images/image_c04ae9.png" alt="房地產物件類型常態分佈圖" class="w-full max-w-lg mx-auto my-4 rounded-lg shadow-md border">
+                <p>市場的主流需求（分佈圖的中央高峰）會隨經濟、政策、社會風氣而偏移。當主流從「電梯大樓」偏移到「低總價公寓/套房」時，手上沒有這類客戶的業務就會陷入困境。</p>
+            </div>
+            <div>
+                 <h5 class="font-bold text-indigo-700 mb-2">建立個人品牌廣度：</h5>
+                 <p>當您長期經營各類物件，市場對您的認知就會是「全能型房產專家」，而非「專做豪宅」或「專做首購」的業務。無論買方有何種需求，第一個想到的都會是您，因為您的「服務範圍」夠廣。</p>
+            </div>
+        </div>
+    </div>
+    <div class="p-6 bg-indigo-100 rounded-lg text-center space-y-4">
+         <h4 class="text-2xl font-bold text-indigo-800">總結與金句</h4>
+         <ul class="text-slate-700 text-lg space-y-3">
+            <li><span class="font-bold">關於客戶：</span>「不做客戶的『點餐員』，要做客戶的『尋寶家』。」</li>
+            <li><span class="font-bold">關於市場：</span>「市場是流動的河，只守著一個碼頭，等不到所有的船。」</li>
+            <li><span class="font-bold">關於策略：</span>「經營案件的廣度，決定事業機會的高度。」</li>
+         </ul>
+    </div>
+</div>
+             <div class="bg-white p-8 rounded-xl shadow-lg content-card  ">
+                <h3 class="text-2xl font-semibold text-slate-700 mb-4">看屋練習</h3>
+                <p class="text-slate-600 mb-6">在正式帶看前，對每個物件進行自我演練，是專業的體現。</p>
+                <div class="space-y-4">
+                    <p class="p-4 bg-slate-100 rounded-lg">▶ 請試著說出房子的五個優點。</p>
+                    <p class="p-4 bg-slate-100 rounded-lg">▶ 請試著說出房子的五個缺點。</p>
+                    <p class="p-4 bg-slate-100 rounded-lg">▶ 請試著把這五個缺點轉化成客戶可以接受的說法。</p>
+                    <p class="p-4 bg-slate-100 rounded-lg">▶ 請試著說出這間房子合理的行情區間。</p>
+                </div>
+            </div>
+            
+            <div class="bg-white p-8 rounded-xl shadow-lg content-card  ">
+                <h3 class="text-2xl font-semibold text-slate-700 mb-4">帶看前：萬全的準備是成功の一半</h3>
+                <div class="grid md:grid-cols-2 gap-8">
+                    <div>
+                        <h4 class="font-bold text-lg text-indigo-600 mb-3">物件基本功</h4>
+                        <ul class="list-disc list-inside space-y-2 text-slate-600">
+                            <li>清楚帶看方式 (空屋或約看)</li>
+                            <li>熟記底價、鑑價與屋主條件</li>
+                            <li>掌握屋況瑕疵並準備好說詞</li>
+                            <li>備齊斡旋單、實價登錄等資料</li>
+                            <li>提早15-30分鐘到場巡視環境</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 class="font-bold text-lg text-indigo-600 mb-3">周遭環境分析</h4>
+                         <ul class="list-disc list-inside space-y-2 text-slate-600">
+                            <li>所屬學區與重點學校</li>
+                            <li>醫療資源與醫院等級</li>
+                            <li>交通便利性 (捷運、公車)</li>
+                            <li>生活機能 (商圈、採買)</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="bg-white p-8 rounded-xl shadow-lg content-card  ">
+                <h3 class="text-2xl font-semibold text-slate-700 mb-4">帶看中：引導與鋪陳的技巧</h3>
+                <div class="space-y-6">
+                    <div>
+                        <h4 class="font-bold text-lg text-indigo-600">CBA帶看法則</h4>
+                        <p class="text-slate-600 mt-2">準備三間物件，依序帶看，營造比較心理，凸顯目標物件的價值。</p>
+                        <ul class="list-decimal list-inside ml-4 text-slate-600">
+                            <li><span class="font-bold">C物件:</span> 房況較差的，作為比較基準。</li>
+                            <li><span class="font-bold">B物件:</span> 與客戶需求較接近的。</li>
+                            <li><span class="font-bold">A物件:</span> 完全符合客戶需求的目標物件。</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="bg-white p-8 rounded-xl shadow-lg content-card animate-on-scroll">
+                <h3 class="text-2xl font-semibold text-slate-700 mb-4">引導客戶「想像未來生活」的六種方式</h3>
+                <div class="space-y-4">
+                    <div class="p-4 bg-slate-50 rounded-lg">
+                        <h4 class="font-bold text-lg text-indigo-700">1. 「未來生活」引導法</h4>
+                        <p class="text-slate-600 mt-2">「如果這間房子是你們的，你會怎麼佈置客廳？電視牆打算怎麼做？」<br><span class="text-sm text-slate-500">目的：讓客戶從觀望者轉為擁有者視角，進入「想像已經買下來」的情境。</span></p>
+                    </div>
+                    <div class="p-4 bg-slate-50 rounded-lg">
+                        <h4 class="font-bold text-lg text-indigo-700">2. 「孩子成長」觸動法</h4>
+                        <p class="text-slate-600 mt-2">「你覺得這個房間適合做孩子的房間嗎？學齡期、青春期用起來都很OK吧？」<br><span class="text-sm text-slate-500">目的：帶入人生階段變化，強化居住穩定感與家庭成長性。</span></p>
+                    </div>
+                    <div class="p-4 bg-slate-50 rounded-lg">
+                        <h4 class="font-bold text-lg text-indigo-700">3. 「家人互動」情境法</h4>
+                        <p class="text-slate-600 mt-2">「這裡的餐廳空間，我剛剛就想到你們家聚餐的畫面，是不是很有氣氛？」<br><span class="text-sm text-slate-500">目的：從情感連結切入，讓買方產生溫馨畫面。</span></p>
+                    </div>
+                    <div class="p-4 bg-slate-50 rounded-lg">
+                        <h4 class="font-bold text-lg text-indigo-700">4. 「小細節大幸福」法</h4>
+                        <p class="text-slate-600 mt-2">「陽台這邊晚上可以放個小桌子，喝杯茶、種幾盆花，你會想怎麼佈置？」<br><span class="text-sm text-slate-500">目的：引發細膩幻想，讓屋主心中「住進去的畫面」更具體。</span></p>
+                    </div>
+                    <div class="p-4 bg-slate-50 rounded-lg">
+                        <h4 class="font-bold text-lg text-indigo-700">5. 「親友分享」帶入法</h4>
+                        <p class="text-slate-600 mt-2">「下次朋友來你家，看到這個視野，應該會超羨慕吧？你覺得要怎麼佈置比較有品味？」<br><span class="text-sm text-slate-500">目的：將買房轉化為社交成就，提升擁有欲望。</span></p>
+                    </div>
+                    <div class="p-4 bg-slate-50 rounded-lg">
+                        <h4 class="font-bold text-lg text-indigo-700">6. 「價格提醒」平衡法</h4>
+                        <p class="text-slate-600 mt-2">「如果真的喜歡，其實可以先出個你們覺得合理的價格，這種物件說不定撐不到週末。」<br><span class="text-sm text-slate-500">目的：提醒行動的時機，同時讓買方掌握主導權。</span></p>
+                    </div>
+                    <div class="border-t pt-4 mt-4">
+                         <p class="text-slate-700 font-semibold">結論：這類話術重點在於不硬推、不催促，用「畫面感」創造心動感。只要對方出現遲疑與幻想的交集，就是出價時機！</p>
+                    </div>
+                </div>
+            </div>
+            <div class="bg-white p-8 rounded-xl shadow-lg content-card animate-on-scroll">
+                <h3 class="text-2xl font-semibold text-slate-700 mb-4">反市場操作引導</h3>
+                <p class="text-slate-600 mb-6">與其等房市熱起來再追高，不如現在冷靜期進場卡位。以下是幾種引導方式：</p>
+                <div class="space-y-4">
+                    <div class="p-4 bg-blue-50 rounded-lg">
+                        <p class="text-slate-600">「你是想買理想價格的，還是買熱的？等大家都在搶房的時候，價格自然就上去了。現在沒那麼熱，反而有機會談到好價格。」<br><span class="text-sm text-blue-800 font-semibold">效果：讓買方開始思考「冷靜期才有議價空間」。</span></p>
+                    </div>
+                    <div class="p-4 bg-blue-50 rounded-lg">
+                        <p class="text-slate-600">「別人退場的時候，你才有空間進場。現在市場上很多人觀望，其實就是我們談判的籌碼。當你看到新聞說大家都在買的時候，那就太晚了。」<br><span class="text-sm text-blue-800 font-semibold">效果：營造「現在是你獨佔舞台」的感覺。</span></p>
+                    </div>
+                    <div class="p-4 bg-blue-50 rounded-lg">
+                        <p class="text-slate-600">「撿便宜，是現在還是等大家來搶？你覺得是現在屋主願意談比較便宜？還是等過幾個月看漲了，屋主反過來挑買方？」<br><span class="text-sm text-blue-800 font-semibold">效果：點醒買方「便宜貨是冷門時買的」。</span></p>
+                    </div>
+                    <div class="p-4 bg-blue-50 rounded-lg">
+                        <p class="text-slate-600">「一樣的房子，3個月後你可能多花幾十萬。如果現在就喜歡，那何必冒風險？等新聞一熱起來，同樣的條件會更貴，還不見得輪得到你談。」<br><span class="text-sm text-blue-800 font-semibold">效果：結合未來想像與現在決斷，製造小小的壓力。</span></p>
+                    </div>
+                    <div class="p-4 bg-blue-50 rounded-lg">
+                        <p class="text-slate-600">「你是用投資的眼光在看，還是用情緒？聰明的買家都知道，最該買的時候，就是別人不買、你敢下手的時候。這才是買到價值，不是跟風。」<br><span class="text-sm text-blue-800 font-semibold">效果：拉高對方的自我認同感。</span></p>
+                    </div>
+                    <div class="p-4 bg-blue-50 rounded-lg">
+                        <p class="text-slate-600">「你是要等房價通知你，還是現在就通知房價？很多人是等房價先漲了才動作，但你現在是有機會去主導價格的那一方。」<br><span class="text-sm text-blue-800 font-semibold">效果：從被動等房市，到主動搶先機。</span></p>
+                    </div>
+                </div>
+            </div>
+            <div class="bg-white p-8 rounded-xl shadow-lg content-card  ">
+                <h3 class="text-2xl font-semibold text-slate-700 mb-4">帶看後：精準探索與判斷</h3>
+                <p class="text-slate-600 mb-6">帶看完畢後的探索，是決定能否順利收斡的關鍵時刻。</p>
+                 <ul class="list-decimal list-inside space-y-3 text-slate-700">
+                    <li><span class="font-bold">傾聽想法：</span>主動詢問客戶對房子的看法，並專心傾聽。</li>
+                    <li><span class="font-bold">了解過去經驗：</span>詢問之前看過哪些房子，了解其喜好與未成交原因，判斷誠意度。</li>
+                    <li><span class="font-bold">建立信任：</span>主動提出講解產權、稅費、代書流程，展現專業度，降低客戶對斡旋的恐懼。</li>
+                    <li><span class="font-bold">要求出價：</span>若客戶反應良好，應勇敢要求出價，把握時機。</li>
+                </ul>
+            </div>
+            
+            <div class="bg-white p-8 rounded-xl shadow-lg content-card  ">
+                <h3 class="text-2xl font-semibold text-slate-700 mb-4">帶看完回訪常見錯誤</h3>
+                 <p class="text-slate-600 mb-4">客戶看完趕著離開，沒時間深入溝通時，後續電話回訪至關重要，但切記：</p>
+                <p class="text-center text-xl font-bold text-red-600 bg-red-100 p-6 rounded-lg">絕對不要在電話中談價格！</p>
+                <p class="text-slate-600 mt-4">若在電話中察覺客戶有興趣出價，<span class="font-bold">務必先約碰面</span>。電話談價容易讓客戶試探底價後退縮，或因價格有落差而感受不佳，導致後續調價困難，甚至失去信任。</p>
+            </div>
+            <div class="bg-white p-8 rounded-xl shadow-lg content-card  ">
+                <h3 class="text-2xl font-semibold text-slate-700 mb-4">判斷買方等級</h3>
+                <p class="text-slate-600 mb-6">透過與客戶的互動，快速判斷其等級，有助於分配時間與精力。</p>
+                <div class="overflow-x-auto">
+                    <table class="min-w-full bg-white text-center">
+                        <thead class="bg-slate-200">
+                            <tr>
+                                <th class="py-3 px-4">等級</th>
+                                <th class="py-3 px-4">明確購屋需求</th>
+                                <th class="py-3 px-4">價格認知</th>
+                                <th class="py-3 px-4">特徵</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="border-b">
+                                <td class="py-3 px-4 font-bold text-red-600">A級</td>
+                                <td class="py-3 px-4">✔️</td>
+                                <td class="py-3 px-4">✔️</td>
+                                <td class="py-3 px-4 text-left">需求明確，對行情有概念，隨時可做決定。</td>
+                            </tr>
+                            <tr class="border-b">
+                                <td class="py-3 px-4 font-bold text-orange-500">B級</td>
+                                <td class="py-3 px-4">✔️❌</td>
+                                <td class="py-3 px-4">❌✔️</td>
+                                <td class="py-3 px-4 text-left">需求明確，但對價格認知有落差，或需求不明確，但對價格有認知。</td>
+                            </tr>
+                            <tr>
+                                <td class="py-3 px-4 font-bold text-yellow-500">C級</td>
+                                <td class="py-3 px-4">❌</td>
+                                <td class="py-3 px-4">❌</td>
+                                <td class="py-3 px-4 text-left">需求模糊，只是隨便看看，成交機率低。</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>",
+        
+        "chapter11": "<div id=\"chapter11\" class=\"content-section space-y-8">
+            <header class=" ">
+                <h2 class="text-4xl font-bold text-slate-800 border-b-4 border-indigo-500 pb-3 mb-2">引導收斡與調價</h2>
+                <p class="text-slate-500">臨門一腳的藝術</p>
+            </header>
+            <div class="bg-white p-8 rounded-xl shadow-lg content-card  ">
+                <h3 class="text-2xl font-semibold text-slate-700 mb-4">斡旋的觀念建立</h3>
+                <div class="grid md:grid-cols-2 gap-8">
+                    <div class="p-6 bg-slate-50 rounded-lg">
+                        <h4 class="font-bold text-lg mb-3">為什麼要收斡旋金？</h4>
+                        <p class="text-slate-600 mb-3">斡旋金是向屋主展現「購買誠意」的具體作法，有助於洽談順利。</p>
+                        <ul class="list-disc list-inside text-slate-600 space-y-2">
+                            <li><span class="font-bold">故事法：</span>講述因沒收斡旋導致談好價錢後買方反悔，造成三方困擾的案例。</li>
+                            <li><span class="font-bold text-indigo-600">換位思考法：</span>「如果您是屋主，同時有兩個買方出現，一個直接拿訂金出來，一個兩手空空，您會想跟誰談呢？」</li>
+                        </ul>
+                    </div>
+                     <div class="p-6 bg-slate-50 rounded-lg">
+                         <h4 class="font-bold text-lg mb-3">斡旋失效三要素 (可退還斡旋金)</h4>
+                        <p class="text-slate-600 mb-3">向買方講清楚規則，排除他們對未知的恐懼。</p>
+                         <ul class="list-decimal list-inside text-slate-600 space-y-2">
+                            <li>斡旋時間到期，買方不願再談。</li>
+                            <li>屋主不同意該價格，買方不願再加價。</li>
+                            <li>在屋主同意出售前，買方決定不買了。</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+             <div class="bg-white p-8 rounded-xl shadow-lg content-card  ">
+                <h3 class="text-2xl font-semibold text-slate-700 mb-4">碰面收斡與調價技巧【拒絕三次】</h3>
+                <p class="text-slate-600 mb-6">當買方出價過低時，不要直接否定，而是透過策略引導，讓他自己願意提高價格。</p>
+                 <div class="space-y-6">
+                    <div>
+                        <h4 class="font-bold text-lg text-indigo-600">1. 探索：站在同一陣線</h4>
+                        <p class="text-slate-600 mt-2">先傾聽買方出此價格的想法。接著與他分析：「現在房市很透明，出價差距太大會讓屋主第一印象不好，反而不利後續洽談。我們的目標是讓屋主願意降價，而不是激怒他。」</p>
+                    </div>
+                    <div class="border-t pt-6">
+                        <h4 class="font-bold text-lg text-indigo-600">2. 提議：擬定出價策略</h4>
+                        <p class="text-slate-600 mt-2">建議一個更有機會讓屋主點頭的價格，並說明這是「有利基點」的誠意出價，能讓談判順利開啟。</p>
+                    </div>
+                     <div class="border-t pt-6">
+                        <h4 class="font-bold text-lg text-indigo-600">3. 預應：為加價做鋪陳</h4>
+                        <p class="text-slate-600 mt-2">告知買方：「您要有加價的心理準備，但不能十萬十萬的加，那樣會讓屋主感覺疲勞無感。最好的方式是在自己能接受的範圍內一次出到位，才能展現您的決心。」</p>
+                    </div>
+                </div>
+            </div>
+            <div class="bg-white p-8 rounded-xl shadow-lg content-card animate-on-scroll">
+            <h3 class="text-2xl font-semibold text-slate-700 mb-4">常見收斡問題</h3>
+            <div class="p-6 bg-amber-50 rounded-lg">
+                <p class="font-bold text-slate-800 text-lg">Q: 「買方如果收斡旋要壓解約條款 (如：貸款不足7成無條件解約)？」</p>
+                <div class="mt-4 space-y-4">
+                    <div>
+                        <h4 class="font-semibold text-gray-800">1. 反問對方：</h4>
+                        <p class="text-slate-700 mt-1 pl-4 border-l-2 border-gray-400">「那相同權益狀況下，您跑貸款當中，屋主也能同時讓其他買方看屋，如果有出更高的話，也可以無條件解約，OK嗎？」</p>
+                    </div>
+                    <div>
+                        <h4 class="font-semibold text-gray-800">2. 引導思考：</h4>
+                        <p class="text-slate-700 mt-1 pl-4 border-l-2 border-gray-400">「您壓這個但書，屋主不一定要跟您談啊，他要等您確認貸款，又有可能無條件解約，那您是屋主的話，是不是會覺得寧願等下一組不需要壓但書的買方，何必跟您談價格呢？」</p>
+                    </div>
+                    <div>
+                        <h4 class="font-semibold text-gray-800">3. 探詢底線：</h4>
+                        <p class="text-slate-700 mt-1 pl-4 border-l-2 border-gray-400">「我們先不談但書，在不壓但書的狀況下，您最多能出多少？」</p>
+                    </div>
+                    <div>
+                        <h4 class="font-semibold text-gray-800">4. 建立共識：</h4>
+                        <p class="text-slate-700 mt-1 pl-4 border-l-2 border-gray-400">「銀行只會給予鑑價，也絕對沒有任何一個銀行專員敢打包票說可以貸幾成，更何況是我們房仲或屋主呢？」</p>
+                    </div>
+                </div>
+                <div class="mt-6 border-t-2 border-amber-300 pt-4">
+                    <p class="font-bold text-red-700">【核心觀念】：貸款是買方的需求，並不是屋主的義務，不能因為買方的需求而損及屋主的權利。</p>
+                </div>
+            </div>
+        </div>
+<div class="bg-white p-8 rounded-xl shadow-lg content-card animate-on-scroll">
+                <h3 class="text-2xl font-semibold text-slate-700 mb-4">銷售收斡後的洽談 (對買方)</h3>
+                <p class="text-slate-600 mb-4">買方進入收斡後洽談階段，焦點往往只鎖定在「價格」。顧問式引導的目標是將買方的焦點轉移到「需求」與「情感價值」，促使他們突破價格障礙。</p>
+                <p class="font-bold text-red-600 mb-6">【核心重點】此階段務必依各主管協助為主，並採用顧問式引導。</p>
+                 
+                <div class="space-y-6">
+                    <div class="p-6 bg-green-50 rounded-lg border-l-4 border-green-600">
+                        <h4 class="font-bold text-lg text-green-700 mb-2">1. 探索：挖掘購屋動機與策略</h4>
+                        <p class="text-slate-600">探索買方購屋動機，與買方討論購屋的策略。</p>
+                        <div class="mt-3 p-3 bg-white rounded-md border">
+                            <h5 class="font-semibold text-slate-700">【確立優先順序】</h5>
+                            <p class="text-slate-600 mt-1 italic">EX:您最在意買不買得到便宜，還是買不買得到房子呢？</p>
+                        </div>
+                    </div>
+                    <div class="p-6 bg-green-50 rounded-lg border-l-4 border-green-600">
+                        <h4 class="font-bold text-lg text-green-700 mb-2">2. 情緒連結：從「房子」到「家」</h4>
+                        <p class="text-slate-600">沒有買到都叫房子，買到了才能叫做家。</p>
+                        <p class="text-sm text-slate-500 mt-2">（運用情感力量，讓買方將價格讓步視為對未來生活的投資，而非金錢的損失。）</p>
+                    </div>
+                    <div class="p-6 bg-green-50 rounded-lg border-l-4 border-green-600">
+                        <h4 class="font-bold text-lg text-green-700 mb-2">3. 破冰：尋求共同解決方案</h4>
+                        <p class="text-slate-600">不如我們討論看看哪個部分是您目前最大關卡與問題呢？</p>
+                        <p class="text-sm text-slate-500 mt-2">（將僵局轉為共同討論，讓業務成為協助買方突破困境的角色。）</p>
+                    </div>
+                </div>
+            </div>
+        </div>",
+        
+        "chapter12": "<div id=\"chapter12\" class=\"content-section space-y-8">
+    <header class=" ">
+        <h2 class="text-4xl font-bold text-slate-800 border-b-4 border-indigo-500 pb-3 mb-2">總結：成為頂尖顧問的思維</h2>
+        <p class="text-slate-500">整合所學，內化為專業本能，成為客戶的顧問而非業務</p>
+    </header>
+        <div id="market-decision-carousel" class="relative bg-white p-8 rounded-xl shadow-lg content-card animate-on-scroll">
+        <h3 id="carousel-title" class="text-3xl font-extrabold text-indigo-700 mb-6 text-center cursor-pointer hover:text-indigo-900 transition duration-200">
+            停下來，思考一下
+        </h3>
+        <div id="carousel-slides" class="relative w-full overflow-hidden rounded-lg shadow-xl border border-slate-200" style="height: auto;">
+            <img src="images/0.png" data-index="0" class="carousel-slide absolute w-full transition-opacity duration-700 opacity-100" alt="想像一下？">
+            
+            <img src="images/1.png" data-index="1" class="carousel-slide absolute w-full transition-opacity duration-700 opacity-100" alt="如果你是買方，你會出多少買呢？">
+            
+            <img src="images/2.png" data-index="2" class="carousel-slide absolute w-full transition-opacity duration-700 opacity-0" alt="倒數3">
+            
+            <img src="images/3.png" data-index="3" class="carousel-slide absolute w-full transition-opacity duration-700 opacity-0" alt="倒數2">
+            
+            <img src="images/4.png" data-index="4" class="carousel-slide absolute w-full transition-opacity duration-700 opacity-0" alt="倒數1">
+            
+            <img src="images/5.png" data-index="5" class="carousel-slide absolute w-full transition-opacity duration-700 opacity-0" alt="你覺得買貴了？還是便宜了呢？">
+            
+            <img src="images/6.png" data-index="6" class="carousel-slide absolute w-full transition-opacity duration-700 opacity-0" alt="那現在呢？">
+            
+            <img src="images/7.png" data-index="7" class="carousel-slide absolute w-full transition-opacity duration-700 opacity-0" alt="這次，你會出多少買呢？">
+            
+            <img src="images/8.png" data-index="8" class="carousel-slide absolute w-full transition-opacity duration-700 opacity-0" alt="那這次呢？">
+            
+            <img src="images/9.png" data-index="9" class="carousel-slide absolute w-full transition-opacity duration-700 opacity-0" alt="你覺得呢？">
+            
+            <img src="images/10.png" data-index="10" class="carousel-slide absolute w-full transition-opacity duration-700 opacity-0" alt="目前的實價登錄">
+            <div id="carousel-click-layer" class="absolute inset-0 z-10 cursor-pointer"></div>
+        </div>
+        <div class="mt-8 p-6 bg-indigo-50 rounded-lg border-l-4 border-indigo-500">
+            <h4 class="font-bold text-xl text-indigo-800 mb-3">從實價登錄看見業務價值</h4>
+            <ul class="list-disc list-inside space-y-2 text-slate-700">
+                <li>
+    <span class="font-bold">波動性：</span>
+    <span style="color: red;">從來沒有人可以買到最低點，也從來沒有人可以賣到最高點</span>，
+    因為市場與政策會持續在變化。一旦決定了，就不要讓「等待」成為您錯失良機的原因。
+</li>
+<li>
+    <span class="font-bold">即時性：</span>
+    <span style="color: red;">每一個實價登錄，都是經歷一次次血淋淋的洽談，當下的買賣雙方都做出重要選擇，才成為現今的參考依據。</span>
+    面對買方時，您可以強調：「現在就是您決定價格、創造下一個實價登錄的時刻。」
+</li>
+<li>
+    <span class="font-bold">價值性：</span>
+    市場環境、政策、屋況、格局、樓層、坐向等，都影響了最終的成交價格。這是我們房仲的
+    <span style="color: red;">職責與重要所在</span>
+    ——運用專業，整合所有因素，為客戶爭取最大利益。
+</li>
+            </ul>
+        </div>
+    </div>
+    <div class="bg-white p-8 rounded-xl shadow-lg content-card">
+    <h3 class="text-3xl font-bold text-slate-800 mb-8 text-center">三大談判思路</h3>
+    <div class="mb-10">
+        <h4 class="text-2xl font-semibold text-slate-700 mb-4">1. SWOT 分析</h4>
+        <img src="images/image_5795c3.jpg" alt="SWOT分析圖" class="w-full max-w-2xl mx-auto border rounded-lg shadow-md">
+    </div>
+    <div class="mb-10">
+        <h4 class="text-2xl font-semibold text-slate-700 mb-4">2. 說之以理、動之以情、喻之以弊、誘之以利</h4>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 text-center">
+            <div class="p-6 bg-blue-100 rounded-lg">
+                <h5 class="font-bold text-lg text-blue-800">說之以理</h5>
+                <p class="text-sm text-blue-700 mt-2">用邏輯、數據、SWOT分析(優勢/劣勢/機會/威脅)，讓對方信服。</p>
+            </div>
+            <div class="p-6 bg-green-100 rounded-lg">
+                <h5 class="font-bold text-lg text-green-800">動之以情</h5>
+                <p class="text-sm text-green-700 mt-2">用故事、同理心、換位思考，觸動對方的情感。</p>
+            </div>
+            <div class="p-6 bg-red-100 rounded-lg">
+                <h5 class="font-bold text-lg text-red-800">喻之以弊</h5>
+                <p class="text-sm text-red-700 mt-2">分析不做決定的壞處，點出可能錯失的機會。</p>
+            </div>
+            <div class="p-6 bg-yellow-100 rounded-lg">
+                <h5 class="font-bold text-lg text-yellow-800">誘之以利</h5>
+                <p class="text-sm text-yellow-700 mt-2">強調成交後的好處，描繪美好的未來願景。</p>
+            </div>
+        </div>
+    </div>
+    <div>
+        <h4 class="text-2xl font-semibold text-slate-700 mb-4">3. 關鍵行為模式</h4>
+        <p class="text-slate-600 mb-6">這是一套結構化的談判流程，能有效引導客戶達成共識。</p>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            <div class="p-6 border rounded-lg">
+                <h5 class="font-bold text-lg text-indigo-700">1. 探索</h5>
+                <p class="text-slate-600 mt-2">發掘客戶的真實需求與期望，核心任務是幫助客戶澄清自己的利益訴求和動機。</p>
+            </div>
+            <div class="p-6 border rounded-lg">
+                <h5 class="font-bold text-lg text-indigo-700">2. 提議</h5>
+                <p class="text-slate-600 mt-2">核心理念是「創造雙贏」，提出的方案必須完整、實際，且對雙方都有利。</p>
+            </div>
+            <div class="p-6 border rounded-lg">
+                <h5 class="font-bold text-lg text-indigo-700">3. 行動</h5>
+                <p class="text-slate-600 mt-2">確實落實「提議」中的各項要素，展現執行力。</p>
+            </div>
+            <div class="p-6 border rounded-lg">
+                <h5 class="font-bold text-lg text-indigo-700">4. 確認</h5>
+                <p class="text-slate-600 mt-2">測試客戶的滿意程度，幫助客戶回想起他所得到的利益和價值，鞏固成交結果。</p>
+            </div>
+        </div>
+    </div>
+        </div><div class="bg-white p-8 rounded-xl shadow-lg content-card  ">
+        <h3 class="text-2xl font-semibold text-slate-700 mb-4">兩種敘述法</h3>
+         <div class="grid md:grid-cols-2 gap-8">
+             <div class="p-6 bg-slate-50 rounded-lg">
+                 <h4 class="font-bold text-lg mb-3 text-indigo-600">1. 故事法</h4>
+                 <p class="text-slate-600 mb-3">一個好的故事包含五大要素，能讓你的表達更有畫面感與說服力。</p>
+                 <p class="text-slate-700 font-mono p-4 bg-slate-200 rounded text-center">「某<span class="text-red-500">角色</span>」在「某<span class="text-blue-500">時空</span>」執行「某<span class="text-green-500">行動</span>」產生「某<span class="text-orange-500">衝突</span>」導致「某<span class="text-purple-500">結果</span>」。</p>
+             </div>
+             <div class="p-6 bg-slate-50 rounded-lg">
+    <h4 class="font-bold text-lg mb-4 text-indigo-600">2. 換位思考法</h4>
+    <div class="grid md:grid-cols-2 gap-6 items-center">
+        <div>
+            <p class="text-slate-600">站在客戶的視角看待事件，真正理解他的想法與感受。可以透過「同理心地圖」來輔助思考：他看到了什麼？聽到了什麼？感覺到了什麼？</p>
+        </div>
+        <div class="flex justify-center">
+            <img src="images/empathy_map.jpg" alt="換位思考或同理心地圖示意圖" class="rounded-lg shadow-md max-w-full h-auto">
+        </div>
+    </div>
+</div>
+         </div>
+     </div>
+    <div class="bg-white p-8 rounded-xl shadow-lg content-card  ">
+        <h3 class="text-2xl font-semibold text-slate-700 mb-4">表達能力訓練：麥肯錫金字塔理論</h3>
+        <div class="grid md:grid-cols-2 gap-8 items-center">
+            <img src="images/image_5795e7.jpg" alt="金字塔原理圖" class="w-full rounded-lg shadow-md border">
+            <img src="images/image_579603.png" alt="金字塔結構範例" class="w-full rounded-lg shadow-md border">
+        </div>
+         <p class="text-slate-600 my-6">專業的表達能力，能讓你的說服力倍增。金字塔理論的核心是：</p>
+        <ul class="list-disc list-inside space-y-3 text-slate-700 font-semibold">
+            <li>結論先行：開場就講結論，抓住對方注意力。</li>
+            <li>以上統下：每一層的論點，都是對下一層論點的總結。</li>
+            <li>歸類分組：將相同範疇的資訊歸為一類。</li>
+            <li>邏輯遞進：論述要符合邏輯和順序。</li>
+        </ul>
+         <p class="text-slate-600 mt-4">例如，當屋主不願降價時，可以先提出結論：「我認為價格是目前銷售最大的挑戰。」接著再分點闡述原因：1. 市場行情分析 2. 買方家人意見 3. 其他競爭個案比較。</p>
+    </div>
+    <div class="bg-white p-8 rounded-xl shadow-lg content-card  ">
+        <h3 class="text-2xl font-semibold text-slate-700 mb-4">表達能力訓練：邏輯之重要性</h3>
+        <p class="text-slate-600 mb-6">清晰的邏輯是有效溝通的基石，確保你的表達具備以下特點：</p>
+        <ul class="list-disc list-inside space-y-3 text-slate-600">
+            <li><span class="font-bold">明確：</span>清楚表達目的，不留模糊空間。</li>
+            <li><span class="font-bold">一致：</span>前後論點不矛盾。</li>
+            <li><span class="font-bold">正確：</span>查明資訊來源，確保內容無誤。</li>
+            <li><span class="font-bold">連貫：</span>善用「因為...所以...」的句型，或依時間順序表達。</li>
+            <li><span class="font-bold">完整：</span>確保故事五大要素（角色、時空、行動、衝突、結果）齊全。</li>
+        </ul>
+    </div>
+   <div class="bg-white p-8 rounded-xl shadow-lg content-card">
+    <h3 class="text-3xl font-bold text-slate-800 mb-6 border-b-2 pb-2">日常習慣培養與刻意練習</h3>
+    <p class="text-slate-600 mb-8">成功不是偶然，而是習慣的累積。將市場分析內化為說帖，是頂尖顧問必備的「刻意練習」。</p>
+    <div class="space-y-6 mb-8">
+        <ul class="list-disc list-inside space-y-3 text-slate-600">
+            <li><span class="font-bold text-indigo-600">持續學習：</span>每周閱讀2-3則房地產新聞，隨時追蹤最新政策。</li>
+            <li class="font-bold text-red-600">刻意練習：將市場 SWOT 分析內化為對買賣雙方的說帖，練習應對話術。</li>
+            <li><span class="font-bold text-indigo-600">自我管理：</span>練習預排行程，每日複盤，不斷精進自己的專業能力。</li>
+        </ul>
+    </div>
+    
+    <div class="p-6 bg-slate-100 rounded-xl">
+        <h4 class="text-2xl font-bold text-indigo-700 mb-4 flex items-center">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-2" viewBox="0 0 20 20" fill="currentColor">
+                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clip-rule="evenodd" />
+            </svg>
+            刻意練習範例：房市策略分析與說帖
+        </h4>
+        <p class="text-sm text-slate-600 mb-6 border-b pb-3">頂尖顧問會引導客戶從「說之以理」（SWOT 數據）到「動之以情/喻之以弊」（促使行動）。</p>
+        <h5 class="font-bold text-xl text-slate-700 mb-3">房地產市場 SWOT 分析 (2025 年觀望期)</h5>
+        <div class="overflow-x-auto mb-6">
+            <table class="min-w-full bg-white border border-gray-200 text-sm">
+                <thead>
+                    <tr class="bg-gray-200">
+                        <th class="p-2 text-left font-bold text-gray-700 w-1/4">類別</th>
+                        <th class="p-2 text-left font-bold text-gray-700">賣方/物件 優勢 (Strength)</th>
+                        <th class="p-2 text-left font-bold text-gray-700">賣方/物件 劣勢 (Weakness)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="border-b">
+                        <td class="p-2 font-bold text-sm">內部 (物件本身)</td>
+                        <td class="p-2 space-y-1">
+                            <p class="text-green-700">1. 台灣經濟韌性無敵：房價長期穩定向上</p>
+                            <p>2. 長期保值資產：房價指數呈長期穩定向上趨勢</p>
+                            <p>3. 極低房貸違約率：最新房貸違約率僅 0.07%</p>
+                            <p>4. 供給短缺與低稅環境：讓房價穩如泰山</p>
+                        </td>
+                        <td class="p-2 space-y-1">
+                            <p class="text-red-700">1. 交易量創低：年減近三成</p>
+                            <p>2. 政策觀望期延續：政策頻繁變動，市場氛圍保守</p>
+                            <p>3. 高通膨/升息壓力：市場短期壓力仍在</p>
+                        </td>
+                    </tr>
+                    <tr class="bg-gray-50">
+                        <td class="p-2 font-bold text-sm">外部 (市場環境)</td>
+                        <td class="p-2 space-y-1">
+                            <p class="text-green-700">1. 絕佳買點：回檔不是危機，是絕佳進場時機</p>
+                            <p>2. 政策控穩結果：小幅回落可抓住波谷進場</p>
+                            <p>3. 新青安貸款：2024 年優惠方案</p>
+                        </td>
+                        <td class="p-2 space-y-1">
+                            <p class="text-red-700">1. 長期房價上漲趨勢不變：平均年增長率 7.3%</p>
+                            <p>2. 剛性需求買盤仍在：市場底氣仍在</p>
+                            <p>3. 錯過議價空間：房市熱起來追高，將錯失議價空間</p>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="grid lg:grid-cols-2 gap-6">
+            <div class="p-4 bg-red-50 rounded-lg border-l-4 border-red-500">
+                <h6 class="font-bold text-lg text-red-700 mb-3">1. 賣方說帖 (議價與續約)</h6>
+                <p class="text-sm font-semibold text-slate-700 mb-2">核心目標：將賣不掉的原因導向唯一可變動的「價況」。</p>
+                <div class="space-y-3 text-sm text-slate-600">
+                    <div class="p-2 bg-white rounded-md">
+                        <p class="font-bold text-red-600">策略分析：</p>
+                        <p>「現在是市場在考驗我們的價格。市場趨勢沒變，但短期交易量下降，現在就是篩選優質買方進場的時刻。您掛高價，只會錯失真正有誠意買家的出價。」</p>
+                    </div>
+                    <div class="p-2 bg-white rounded-md">
+                        <p class="font-bold text-red-600">價格引導：</p>
+                        <p>「我們來分析買方自備款能力。如果銀行鑑價 1,000 萬，您賣 1,200 萬，買方需自備 400 萬。您覺得有多少符合『急迫需求』、『自備款超多』的買家會來看您這個案子？」</p>
+                    </div>
+                </div>
+            </div>
+            <div class="p-4 bg-blue-50 rounded-lg border-l-4 border-blue-500">
+                <h6 class="font-bold text-lg text-blue-700 mb-3">2. 買方說帖 (收斡與促成)</h6>
+                <p class="text-sm font-semibold text-slate-700 mb-2">核心目標：營造「現在是進場良機」和「錯過可惜」的氛圍。</p>
+                <div class="space-y-3 text-sm text-slate-600">
+                    <div class="p-2 bg-white rounded-md">
+                        <p class="font-bold text-blue-600">反市場操作：</p>
+                        <p>「你是想買理想價格的，還是買熱的？現在市場很多人在觀望，正是我們談判的籌碼。等新聞說大家都買了，價格自然上去了。聰明的買家都知道，最該買的時候，就是別人不買、你敢下手的時候。」</p>
+                    </div>
+                    <div class="p-2 bg-white rounded-md">
+                        <p class="font-bold text-blue-600">營造壓力：</p>
+                        <p>「一樣的房子，三個月後你可能多花幾十萬。如果現在就喜歡，那何必冒風險？你是要等房價通知你，還是現在就通知房價？現在是有機會去主導價格的那一方。」</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </div>
+        </div>
+       <div class="bg-amber-50 p-8 rounded-xl shadow-lg content-card animate-on-scroll border-t-4 border-amber-500">
+                <h3 class="text-2xl font-bold text-amber-700 mb-4">經驗復盤與應用：將話術轉為戰略資產</h3>
+                <p class="text-slate-600 mb-4 font-semibold">這段話是頂尖顧問將所學知識轉化為個人實戰資產的終極心法，也是「日常習慣培養」的最高體現。</p>
+                <p class="text-xl text-slate-800 mb-6 border-b-2 border-amber-300 pb-2">這就是經驗累積與復盤的重要～</p>
+                
+                <dl class="space-y-4">
+                    <div class="p-4 bg-amber-100 rounded-lg">
+                        <dt class="font-bold text-lg text-amber-800">1. 記下買賣雙方曾說過的話</dt>
+                        <dd class="mt-1 text-slate-700">
+                        核心價值：收集情報，建立側寫。客戶的抱怨、堅持或非理性話語，都是其潛在動機的線索。如同 <span class="font-semibold text-indigo-600">章節 7 回報與議價</span>和<span class="font-semibold text-indigo-600">章節 11 引導收斡與調價</span> 的「探索」環節。
+                        </dd>
+                    </div>
+                    <div class="p-4 bg-amber-100 rounded-lg">
+                        <dt class="font-bold text-lg text-amber-800">2. 不斷思考下次遇到如何應對</dt>
+                        <dd class="mt-1 text-slate-700">
+                            核心價值：刻意練習與流程優化。 將每一次經驗（無論成敗）系統化、模組化，把業務工作提升為有目的的「刻意練習」。如同 <span class="font-semibold text-indigo-600">麥肯錫金字塔理論</span> 中強調的「邏輯遞進」的思維。
+                        </dd>
+                    </div>
+                    <div class="p-4 bg-amber-100 rounded-lg">
+                        <dt class="font-bold text-lg text-amber-800">3. 引用過往洽談的話去應對買方/屋主</dt>
+                        <dd class="mt-1 text-slate-700">
+                            核心價值：經驗的跨界應用。 將一個客戶的「抗性」或「滿意點」與「結果」，轉化提供另一個客戶的「可能發生」，增加說服力和畫面感。善用 <span class="font-semibold text-indigo-600">兩種敘述法</span> 中強調的「故事法」應用，讓說話更有畫面感和可信度。
+                        </dd>
+                    </div>
+                </dl>
+            </div>
+    <div class="bg-white p-8 rounded-xl shadow-lg content-card">
+        <h3 class="text-3xl font-bold text-slate-700 mb-4 text-center">作業理念</h3>
+        <img src="images/yji4.jpg" alt="作業理念圖" class="w-full max-w-2xl mx-auto rounded-lg shadow-md my-8 border">
+        <p class="text-slate-500 mb-10 text-center max-w-2xl mx-auto">
+            將以下理念內化為專業本能，時時自我提醒，便能在房仲的道路上走得更穩健、更長遠。
+        </p>
+        <div class="max-w-3xl mx-auto">
+            <ul class="space-y-6">
+                <li>
+                    <h4 class="text-2xl font-semibold text-slate-800 tracking-wider">善盡告知基本權利義務</h4>
+                    <p class="mt-2 text-slate-600 pl-2 border-l-4 border-indigo-200">
+                        <span class="font-bold text-indigo-600">【說明】</span>誠實告知屋況、產權細節與交易流程中的權利義務，是建立信任的基石，也能保護自己免於糾紛。
+                    </p>
+                </li>
+                <li>
+                    <h4 class="text-2xl font-semibold text-slate-800 tracking-wider">以專業服務為客觀判斷</h4>
+                    <p class="mt-2 text-slate-600 pl-2 border-l-4 border-indigo-200">
+                        <span class="font-bold text-indigo-600">【說明】</span>你的判斷應基於市場行情、法規與經驗，而非個人好惡或客戶壓力。提供客觀的專業建議，才能真正為客戶創造價值。
+                    </p>
+                </li>
+                <li>
+                    <h4 class="text-2xl font-semibold text-slate-800 tracking-wider">把握自身原則遵守底線</h4>
+                    <p class="mt-2 text-slate-600 pl-2 border-l-4 border-indigo-200">
+                        <span class="font-bold text-indigo-600">【說明】</span>建立自己的職業道德標準，有所為、有所不為。誠信是房仲事業的生命線，絕不為了短期利益而犧牲。
+                    </p>
+                </li>
+                <li>
+                    <h4 class="text-2xl font-semibold text-slate-800 tracking-wider">資訊查明避免不當承諾</h4>
+                    <p class="mt-2 text-slate-600 pl-2 border-l-4 border-indigo-200">
+                        <span class="font-bold text-indigo-600">【說明】</span>不輕易做出無法百分之百確定的承諾。對於屋況、價格、貸款等關鍵資訊，都應仔細查證後再回覆客戶。
+                    </p>
+                </li>
+                <li>
+                    <h4 class="text-2xl font-semibold text-slate-800 tracking-wider">知之為知之不知為不知</h4>
+                    <p class="mt-2 text-slate-600 pl-2 border-l-4 border-indigo-200">
+                        <span class="font-bold text-indigo-600">【說明】</span>誠實面對自己的知識極限。遇到不確定的問題，勇敢承認「我需要查證一下再回覆您」，這比猜測或含糊帶過更能贏得尊敬。
+                    </p>
+                </li>
+                <li>
+                    <h4 class="text-2xl font-semibold text-slate-800 tracking-wider">換位思考並求理性溝通</h4>
+                    <p class="mt-2 text-slate-600 pl-2 border-l-4 border-indigo-200">
+                        <span class="font-bold text-indigo-600">【說明】</span>站在買賣雙方的角度去理解他們的需求與擔憂。在議價或處理客訴時，保持冷靜與同理心，用理性的溝通化解衝突。
+                    </p>
+                </li>
+                <li>
+                    <h4 class="text-2xl font-semibold text-slate-800 tracking-wider">明確目的減少無效對話</h4>
+                    <p class="mt-2 text-slate-600 pl-2 border-l-4 border-indigo-200">
+                        <span class="font-bold text-indigo-600">【說明】</span>再非回報與非追蹤的洽談過程中，每一次與客戶的探索引導，都要設立明確的小目標。可以利用聊天緩和彼此，但莫忘記解決問題或推進進度，避免單純只有閒聊，造成無效溝通。
+                    </p>
+                </li>
+                <li>
+                    <h4 class="text-2xl font-semibold text-slate-800 tracking-wider">做到極致才能順其自然</h4>
+                    <p class="mt-2 text-slate-600 pl-2 border-l-4 border-indigo-200">
+                        <span class="font-bold text-indigo-600">【說明】</span>將自己能掌控的每一個環節（如開發、回報、行銷、帶看）都做到最好。當你付出極致的努力後，好的結果自然會隨之而來。
+                    </p>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+       </div>,
+        
+        "chapter13": "<div id=\"chapter13\" class=\"content-section space-y-8">
+                <header class=" ">
+                    <h2 class="text-4xl font-bold text-slate-800 border-b-4 border-indigo-500 pb-3 mb-2">菁英課程模擬考</h2>
+                    <p class="text-slate-500">隨機抽取 10 題選擇題，考驗您的學習成果！</p>
+                </header>
+
+                <div id="quiz-container" class="bg-white p-6 md:p-8 rounded-xl shadow-lg content-card">
+                    <h3 class="text-2xl font-semibold text-slate-700 mb-6 flex items-center">
+                        <i class="fas fa-edit mr-3 text-red-600"></i>模擬測驗：共 10 題
+                    </h3>
+                    <div id="quiz-status" class="mb-4 p-4 bg-indigo-50 rounded-lg text-indigo-800 font-semibold text-center">
+                        <i class="fas fa-spinner fa-spin mr-2"></i>測驗載入中，請稍候...
+                    </div>
+                    <div id="quiz-questions-area" class="space-y-6">
+                        <!-- Questions will be injected here -->
+                    </div>
+                    
+                    <div id="quiz-controls" class="mt-8 pt-6 border-t border-slate-200 flex justify-center">
+                         <button id="start-quiz-btn" class="hidden py-3 px-8 bg-indigo-600 text-white font-bold rounded-lg hover:bg-indigo-700 transition duration-300 shadow-lg">
+                            開始測驗 (點擊載入題目)
+                        </button>
+                        <button id="submit-quiz-btn" class="hidden py-3 px-8 bg-red-600 text-white font-bold rounded-lg hover:bg-red-700 transition duration-300 shadow-lg" disabled>
+                            提交並查看成績
+                        </button>
+                    </div>
+                    
+                    <div id="quiz-result-area" class="mt-8 hidden">
+                        <h4 class="text-3xl font-extrabold text-center text-green-700 mb-4">
+                            ✅ 測驗結果
+                        </h4>
+                        <div id="score-display" class="p-6 bg-green-100 rounded-lg text-center shadow-inner">
+                            <p class="text-xl font-semibold text-green-800">您的得分：<span id="final-score" class="text-5xl font-extrabold text-red-600">0</span> / 100 分</p>
+                            <p id="correct-count-display" class="text-lg text-green-700 mt-2">答對題數：0 / 10 題</p>
+                        </div>
+                        <div id="detailed-results" class="mt-6 space-y-4">
+                            <!-- Detailed results will be injected here -->
+                        </div>
+                        <div class="mt-8 flex justify-center space-x-4">
+                            <button id="retake-quiz-btn" class="py-3 px-6 bg-indigo-600 text-white font-bold rounded-lg hover:bg-indigo-700 transition duration-300 shadow-md">
+                                <i class="fas fa-redo mr-2"></i>再次測驗
+                            </button>
+                            <button id="back-to-toc-quiz-btn" class="py-3 px-6 bg-slate-300 text-slate-800 font-bold rounded-lg hover:bg-slate-400 transition duration-300 shadow-md">
+                                <i class="fas fa-list-alt mr-2"></i>返回目錄
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            </div>,
+        
+        "chapter14": "<div id=\"chapter14\" class=\"content-section space-y-8">
+            <header class=" ">
+                <h2 class="text-4xl font-bold text-slate-800 border-b-4 border-indigo-500 pb-3 mb-2">實用工具箱</h2>
+                <p class="text-slate-500">整合所有線上稅務與貸款計算機</p>
+            </header>
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                
+                <div class="p-6 bg-white rounded-xl shadow-lg content-card">
+                    <h5 class="font-semibold text-slate-700">房地合一稅2.0試算</h5>
+                    <p class="text-sm text-slate-500 mt-1 mb-3">您可以點擊下方按鈕，前往線上房地合一稅2.0計算機快速估算。</p>
+                    <a href="https://www.etax.nat.gov.tw/etwmain/etw158w/2506" target="_blank" rel="noopener noreferrer" class="inline-flex items-center bg-indigo-600 text-white font-semibold py-2 px-5 rounded-lg hover:bg-indigo-700 transition shadow-sm">
+                        前往房地合一稅2.0計算機
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 ml-2" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" /></svg>
+                    </a>
+                </div>
+                <div class="p-6 bg-white rounded-xl shadow-lg content-card">
+                    <h5 class="font-semibold text-slate-700">土地增值稅試算</h5>
+                    <p class="text-sm text-slate-500 mt-1 mb-3">您可以點擊下方按鈕，前往線上土地增值稅計算機快速估算。</p>
+                    <a href="https://www.etax.nat.gov.tw/etwmain/etw158w/51" target="_blank" rel="noopener noreferrer" class="inline-flex items-center bg-indigo-600 text-white font-semibold py-2 px-5 rounded-lg hover:bg-indigo-700 transition shadow-sm">
+                        前往土地增值稅計算機
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 ml-2" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" /></svg>
+                    </a>
+                </div>
+                <div class="p-6 bg-white rounded-xl shadow-lg content-card">
+                    <h5 class="font-semibold text-slate-700">房貸月還款試算</h5>
+                    <p class="text-sm text-slate-500 mt-1 mb-3">您可以點擊下方按鈕，前往線上房貸月還款計算機快速估算每月還款金額。</p>
+                    <a href="https://pip.moi.gov.tw/Publicize/Info/C1040" target="_blank" rel="noopener noreferrer" class="inline-flex items-center bg-indigo-600 text-white font-semibold py-2 px-5 rounded-lg hover:bg-indigo-700 transition shadow-sm">
+                        前往房貸月還款計算機
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 ml-2" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" /></svg>
+                    </a>
+                </div>
+            </div>
+        </div>"
+    }
+}
