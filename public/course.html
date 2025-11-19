@@ -651,34 +651,39 @@ document.addEventListener('DOMContentLoaded', () => {
             
             // 遍歷後端傳來的內容
             Object.keys(dynamicContent).forEach(chapterId => {
-                const targetDiv = document.getElementById(chapterId);
+    const targetDiv = document.getElementById(chapterId);
 
-                // 僅處理要動態載入的章節 (Chapter 1~12)
-                if (targetDiv && chapterId.startsWith('chapter') && chapterId !== 'chapter0' && chapterId !== 'chapter13' && chapterId !== 'chapter14') {
-                    
-                    // --- 關鍵修正邏輯：去除重複的 ID 容器 ---
-                    const htmlString = dynamicContent[chapterId];
-                    
-                    // 1. 創建一個臨時容器 (div)
-                    const tempDiv = document.createElement('div');
-                    // 2. 將包含整個章節 div 的 HTML 放入臨時容器
-                    tempDiv.innerHTML = htmlString;
-                    
-                    // 3. 取得臨時容器內的第一個子元素 (也就是 JSON 裡帶 ID 的那個容器)
-                    const contentContainer = tempDiv.firstElementChild; 
-                    
-                    if (contentContainer) {
-                        // 4. 將子元素 (實際內容) 的 **內部** HTML 複製到前端的 targetDiv
-                        // 這樣可以避免 ID 重複，並將實際內容載入到前端的空容器中
-                        targetDiv.innerHTML = contentContainer.innerHTML;
-                        
-                        // 確保目標容器是可見的
-                        // 由於內容被載入了，我們必須確保它不是被隱藏的狀態。
-                        // 然而，顯示的責任應該在 showContent，這裡只需確保內容完整。
-                    } else {
-                        // 備用方案：如果 JSON 內容結構不是預期的，直接插入
-                        targetDiv.innerHTML = htmlString;
-                    }
+    if (targetDiv && chapterId.startsWith('chapter') && chapterId !== 'chapter0' && chapterId !== 'chapter13' && chapterId !== 'chapter14') {
+        
+        const htmlString = dynamicContent[chapterId];
+        
+        // 🚨 替換成更直接的 DOM 節點處理方式
+        
+        // 1. 創建一個臨時容器
+        const tempDiv = document.createElement('div');
+        // 2. 將包含整個章節 div 的 HTML 放入臨時容器
+        tempDiv.innerHTML = htmlString;
+        
+        // 3. 取得臨時容器內的第一個子元素 (也就是 JSON 裡帶 ID 的那個容器)
+        const contentContainer = tempDiv.firstElementChild; 
+        
+        if (contentContainer) {
+            // 4. 將 contentContainer 的所有子節點 (Nodes) 逐一移動到 targetDiv
+            // 這是最安全且最不會發生解析錯誤的方法
+            
+            // **清除 targetDiv 內所有現有內容 (如果有的話)**
+            targetDiv.innerHTML = '';
+            
+            // **將所有子節點移動到目標 DIV**
+            while (contentContainer.firstChild) {
+                targetDiv.appendChild(contentContainer.firstChild);
+            }
+            
+        } else {
+            // 如果解析失敗，將整個 HTML 字串（包含外層 DIV）當作文字內容注入
+            // 這可能會導致 ID 重複但確保內容不會遺失
+            targetDiv.innerHTML = htmlString;
+        }
                     // ---------------------------------------------
                 }
             });
@@ -2533,6 +2538,7 @@ function bindQuizEventListeners() {
     </script>
 </body>
 </html>
+
 
 
 
