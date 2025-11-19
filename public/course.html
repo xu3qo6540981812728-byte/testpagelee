@@ -649,18 +649,42 @@ document.addEventListener('DOMContentLoaded', () => {
         if (data.success && data.content) {
             const dynamicContent = data.content;
             
-            // 遍歷後端傳來的內容，並插入到對應的章節容器中
+            // 遍歷後端傳來的內容
             Object.keys(dynamicContent).forEach(chapterId => {
                 const targetDiv = document.getElementById(chapterId);
-                // 僅處理非進度表、模擬考、工具箱的章節
-                if (targetDiv && chapterId !== 'chapter0' && chapterId !== 'chapter13' && chapterId !== 'chapter14') {
-                    // 將後端傳來的 HTML 內容插入
-                    targetDiv.innerHTML = dynamicContent[chapterId];
+
+                // 僅處理要動態載入的章節 (Chapter 1~12)
+                if (targetDiv && chapterId.startsWith('chapter') && chapterId !== 'chapter0' && chapterId !== 'chapter13' && chapterId !== 'chapter14') {
+                    
+                    // --- 關鍵修正邏輯：去除重複的 ID 容器 ---
+                    const htmlString = dynamicContent[chapterId];
+                    
+                    // 1. 創建一個臨時容器 (div)
+                    const tempDiv = document.createElement('div');
+                    // 2. 將包含整個章節 div 的 HTML 放入臨時容器
+                    tempDiv.innerHTML = htmlString;
+                    
+                    // 3. 取得臨時容器內的第一個子元素 (也就是 JSON 裡帶 ID 的那個容器)
+                    const contentContainer = tempDiv.firstElementChild; 
+                    
+                    if (contentContainer) {
+                        // 4. 將子元素 (實際內容) 的 **內部** HTML 複製到前端的 targetDiv
+                        // 這樣可以避免 ID 重複，並將實際內容載入到前端的空容器中
+                        targetDiv.innerHTML = contentContainer.innerHTML;
+                        
+                        // 確保目標容器是可見的
+                        // 由於內容被載入了，我們必須確保它不是被隱藏的狀態。
+                        // 然而，顯示的責任應該在 showContent，這裡只需確保內容完整。
+                    } else {
+                        // 備用方案：如果 JSON 內容結構不是預期的，直接插入
+                        targetDiv.innerHTML = htmlString;
+                    }
+                    // ---------------------------------------------
                 }
             });
             console.log('✅ 課程內容已從後端載入並插入完成！');
-
-            // 重新建立搜尋索引，確保動態載入的內容可被搜尋
+            
+            // 重新建立搜尋索引
             createSearchIndex();
         } else {
             console.error('❌ 從後端載入內容失敗:', data.message);
@@ -2505,6 +2529,7 @@ function bindQuizEventListeners() {
     </script>
 </body>
 </html>
+
 
 
 
