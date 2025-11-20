@@ -425,7 +425,7 @@
     100% { opacity: 1; transform: scale(1) rotate(-12deg); }
 }
 .stamp-image-stamped { /* 達成 100% 時添加此 Class */
-    animation: stamp-in 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+    animation: stamp-in 1.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
 }
    </style>
     
@@ -2206,19 +2206,26 @@ function handleProgressLogic(sectionId) {
    if (closeCertificationModal) {
         closeCertificationModal.addEventListener('click', () => {
             
-            // 1. 取得印章元素
             const stampImage = document.getElementById('stamp-image-placeholder');
             const stampPlaceholder = document.getElementById('stamp-placeholder-border');
             
-            // 2. 觸發蓋章動畫
+            // 關鍵修改區域：確保動畫可以重播
             if (stampImage) {
-                stampImage.classList.add('opacity-100', 'stamp-image-stamped'); // 增加 class
+                // 1. 先將動畫類別移除 (Reset)
+                stampImage.classList.remove('stamp-image-stamped');
+                
+                // 2. 强制浏览器重绘/重排（Force Reflow/Repaint）
+                // 這是確保動畫能重新開始的關鍵技巧！
+                void stampImage.offsetWidth; 
+                
+                // 3. 重新加入類別，觸發動畫
+                stampImage.classList.add('opacity-100', 'stamp-image-stamped'); 
             }
             if (stampPlaceholder) {
                 stampPlaceholder.classList.add('hidden');
             }
             
-            // 3. 延遲關閉彈窗 (讓使用者能看到動畫被觸發)
+            // 延遲關閉彈窗 (讓使用者能看到動畫被觸發)
             setTimeout(() => {
                 if (eliteCertificationModal) {
                     eliteCertificationModal.style.display = 'none';
@@ -2657,6 +2664,7 @@ function bindQuizEventListeners() {
     </script>
 </body>
 </html>
+
 
 
 
