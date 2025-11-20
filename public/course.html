@@ -434,20 +434,20 @@
             left: 0;
             width: 100%;
             height: 100%;
-            z-index: 999; /* 放在水印之下，內容之上 */
-            pointer-events: none; /* 允許滑鼠穿透，不影響點擊 */
-            background: radial-gradient(circle at 50% 50%, rgba(20, 30, 70, 0.05) 0%, rgba(0, 0, 0, 0) 70%); /* 輕微的中央光暈 */
-            overflow: hidden;
-        }
+            z-index: 999; 
+            pointer-events: none; 
+            background: radial-gradient(circle at 50% 50%, rgba(12, 30, 70, 0.2) 0%, rgba(0, 0, 0, 0) 70%); 
+    overflow: hidden;
+}
 
-        /* 2. 定義微小粒子的動畫 */
+        
         @keyframes dust-float {
-            0% { transform: translate(0, 0) rotate(0deg); opacity: 0.1; }
-            50% { transform: translate(200px, 150px) rotate(180deg); opacity: 0.05; }
-            100% { transform: translate(0, 0) rotate(360deg); opacity: 0.1; }
-        }
+    0% { transform: translate(0, 0) rotate(0deg); opacity: 0.3; } 
+    50% { transform: translate(200px, 150px) rotate(180deg); opacity: 0.1; } 
+    100% { transform: translate(0, 0) rotate(360deg); opacity: 0.3; } 
+}
 
-        /* 3. 創建大量的虛擬粒子 (使用 box-shadow 模擬) */
+        
         #particle-overlay::after {
             content: '';
             position: absolute;
@@ -455,15 +455,15 @@
             left: 0;
             width: 100%;
             height: 100%;
-            /* 使用多層 box-shadow 模擬大量微小粒子 */
+            
             box-shadow: 
-                30vw 30vh 2px 2px rgba(100, 150, 255, 0.6), /* 藍色光點 */
-                50vw 50vh 1px 1px rgba(150, 200, 255, 0.5),
-                70vw 70vh 1px 1px rgba(100, 150, 255, 0.4),
-                10vw 80vh 1px 1px rgba(150, 200, 255, 0.7),
-                80vw 20vh 2px 2px rgba(100, 150, 255, 0.5),
-                -10vw -10vh 1px 1px rgba(150, 200, 255, 0.6);
-            /* 讓粒子在畫面上緩慢漂浮 */
+               30vw 30vh 2px 2px rgba(150, 200, 255, 0.8), 
+        50vw 50vh 1px 1px rgba(150, 200, 255, 0.6),
+        70vw 70vh 1px 1px rgba(100, 150, 255, 0.5),
+        10vw 80vh 1px 1px rgba(150, 200, 255, 0.9), 
+        80vw 20vh 2px 2px rgba(100, 150, 255, 0.7),
+        -10vw -10vh 1px 1px rgba(150, 200, 255, 0.7);
+           
             animation: dust-float 120s linear infinite alternate;
         }
     </style>
@@ -2610,41 +2610,7 @@ function bindQuizEventListeners() {
 }
    
 });
- const particleOverlay = document.getElementById('particle-overlay');
-
-if (particleOverlay) {
-    // 設置一個極小的 CSS 3D 景深效果，讓粒子看起來不是貼在螢幕上
-    particleOverlay.style.transition = 'transform 0.1s linear';
-    
-    // 監聽滑鼠移動事件，用於體積光和景深
-    document.addEventListener('mousemove', (e) => {
-        
-        // 1. 體積光/光暈效果：將光暈中心點設置在滑鼠位置
-        const x = e.clientX;
-        const y = e.clientY;
-
-        // 計算滑鼠位置相對於中心點的百分比 (用於控制光線強度和位置)
-        const centerX = window.innerWidth / 2;
-        const centerY = window.innerHeight / 2;
-        const offsetX = (x - centerX) / centerX;
-        const offsetY = (y - centerY) / centerY;
-
-        // 應用 CSS 樣式：模擬光線追蹤
-        particleOverlay.style.background = `radial-gradient(circle at ${x}px ${y}px, rgba(100, 150, 255, 0.15) 0%, rgba(0, 0, 0, 0) 25%)`;
-
-        // 2. 粒子景深/視差效果：讓粒子層隨著滑鼠輕微移動 (創造深度)
-        // 數值越小，移動越輕微，越穩定
-        const depthFactor = 8; 
-        
-        particleOverlay.style.transform = `translateX(${-offsetX * depthFactor}px) translateY(${-offsetY * depthFactor}px)`;
-    });
-
-    // 滑鼠移出時，恢復預設光暈
-    document.addEventListener('mouseleave', () => {
-        particleOverlay.style.background = 'radial-gradient(circle at 50% 50%, rgba(20, 30, 70, 0.05) 0%, rgba(0, 0, 0, 0) 70%)';
-        particleOverlay.style.transform = 'translate(0, 0)';
-    });
-}
+ 
 </script>
 <div id="elite-certification-modal" class="fixed inset-0 z-[100] hidden items-center justify-center bg-black bg-opacity-70 backdrop-blur-sm transition-opacity duration-300">
     
@@ -2736,8 +2702,42 @@ if (particleOverlay) {
         
     </script>
     <div id="particle-overlay"></div>
+    <script>
+        const particleOverlay = document.getElementById('particle-overlay');
+
+        if (particleOverlay) {
+            // 設置一個極小的 CSS 3D 景深效果，讓粒子看起來不是貼在螢幕上
+            particleOverlay.style.transition = 'transform 0.1s linear';
+            
+            // 監聽滑鼠移動事件，用於體積光和景深
+            document.addEventListener('mousemove', (e) => {
+                
+                const x = e.clientX;
+                const y = e.clientY;
+
+                // 應用 CSS 樣式：模擬光線追蹤 (提高光暈強度到 0.3)
+                particleOverlay.style.background = `radial-gradient(circle at ${x}px ${y}px, rgba(100, 150, 255, 0.3) 0%, rgba(0, 0, 0, 0) 25%)`;
+
+                // 粒子景深/視差效果：讓粒子層隨著滑鼠輕微移動 (景深因子提高到 12)
+                const depthFactor = 12; 
+                const centerX = window.innerWidth / 2;
+                const centerY = window.innerHeight / 2;
+                const offsetX = (e.clientX - centerX) / centerX;
+                const offsetY = (e.clientY - centerY) / centerY;
+                
+                particleOverlay.style.transform = `translateX(${-offsetX * depthFactor}px) translateY(${-offsetY * depthFactor}px)`;
+            });
+
+            // 滑鼠移出時，恢復預設光暈
+            document.addEventListener('mouseleave', () => {
+                particleOverlay.style.background = 'radial-gradient(circle at 50% 50%, rgba(12, 30, 70, 0.2) 0%, rgba(0, 0, 0, 0) 70%)';
+                particleOverlay.style.transform = 'translate(0, 0)';
+            });
+        }
+    </script>
 </body>
 </html>
+
 
 
 
