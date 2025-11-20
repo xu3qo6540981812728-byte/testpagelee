@@ -125,7 +125,7 @@
             transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
         .content-card:hover, .toc-card:hover {
-            transform: translateY(-5px);
+            transform: translateY(-3px) scale(1.005);
             box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
         }
         .toc-card {
@@ -414,6 +414,19 @@
         -ms-user-select: none;
         user-select: none;
     }
+        .btn-base:active {
+    transform: scale(0.98);
+    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.15); /* 內凹陰影 */
+    transition: transform 0.1s ease-out, box-shadow 0.1s ease-out;
+}
+        @keyframes stamp-in {
+    0% { opacity: 0; transform: scale(3) rotate(45deg); }
+    60% { opacity: 1; transform: scale(1.1) rotate(-15deg); }
+    100% { opacity: 1; transform: scale(1) rotate(-12deg); }
+}
+.stamp-image-stamped { /* 達成 100% 時添加此 Class */
+    animation: stamp-in 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+}
    </style>
     
 </head>
@@ -2626,6 +2639,7 @@ function bindQuizEventListeners() {
     </script>
 </body>
 </html>
+
 
 
 
