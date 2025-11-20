@@ -121,74 +121,13 @@
         }
         
         
-       .content-card, .toc-card {
-    /* 1. 縮短/移除 transform 的預設過渡，只保留陰影 */
-    transition: box-shadow 0.3s ease; 
-    
-    /* 🌟 修正關鍵點 A：確保子元素在 3D 空間中呈現層次感 🌟 */
-    transform-style: preserve-3d; 
-    
-    /* 🌟 修正關鍵點 B：告訴瀏覽器準備硬體加速，提升 3D 效能 🌟 */
-    will-change: transform, box-shadow;
-}
-/* hover 樣式保持不變 */
-.content-card:hover, .toc-card:hover {
-    box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
-}
-
-        .toc-card {
-    position: relative; 
-    z-index: 1; /* 確保卡片內容在陰影之上 */
-    overflow: hidden; /* 防止偽元素的陰影超出卡片 */
-}
-
-/* 發光主體：使用 ::after 偽元素作為光暈層 */
-.toc-card::after {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    border-radius: inherit; /* 繼承卡片的圓角 */
-    box-shadow: 0 0 10px rgba(79, 70, 229, 0), /* 預設無陰影 */
-                0 0 20px rgba(79, 70, 229, 0); 
-    transition: box-shadow 0.5s ease-in-out; 
-    z-index: -1; /* 讓光暈在卡片下方 */
-}
-
-/* 滑鼠懸停時啟動發光 */
-.toc-card:hover::after {
-    /* 使用 indigo-600 的顏色 (79, 70, 229) */
-    box-shadow: 0 0 15px rgba(79, 70, 229, 0.6), /* 內層光暈 */
-                0 0 30px rgba(79, 70, 229, 0.4), /* 外層光暈 */
-                0 0 45px rgba(79, 70, 229, 0.2); /* 最外層光暈 */
-}
-        @keyframes pulse-glow {
-    /* 1. 調整 0% 和 100% 狀態：設定一個中等強度的基礎光暈 */
-    0% {
-        /* 使用較低的透明度作為基底光暈，確保不會完全消失 */
-        box-shadow: 0 0 5px 2px rgba(79, 70, 229, 0.4); 
-    }
-    
-    /* 2. 調整 50% 狀態：設定一個高強度的光暈，作為最亮點 */
-    50% {
-        /* 設定最高的亮度，讓光暈向外擴散，呈現「呼吸」效果 */
-        box-shadow: 0 0 15px 7px rgba(79, 70, 229, 0.7),
-                    0 0 30px 10px rgba(79, 70, 229, 0.3);
-    }
-    
-    /* 3. 確保 100% 結束於中等強度，與 0% 連續平滑 */
-    100% {
-        /* 與 0% 相同，保持一個基礎光暈 */
-        box-shadow: 0 0 5px 2px rgba(79, 70, 229, 0.4); 
-    }
-}
-/* 步驟二: 目錄數字圓圈樣式 */
-.toc-icon-pulse {
-    /* 套用閃爍動畫: 1.5秒一次, 保持循環, 讓它慢慢開始和結束 */
-    animation: pulse-glow 1.5s infinite ease-in-out;
-}
+        .content-card, .toc-card {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .content-card:hover, .toc-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+        }
         
         
         
@@ -1616,7 +1555,7 @@ function showContent(sectionId, element) {
                 iconHtml = `<div class="bg-stone-600 text-white rounded-full h-12 w-12 flex items-center justify-center font-bold text-xl mb-4"><i class="fas fa-tools"></i></div>`; 
             } else {
             
-            iconHtml = `<div class="bg-indigo-100 text-indigo-600 rounded-full h-12 w-12 flex items-center justify-center font-bold text-xl mb-4 toc-icon-pulse">${chapterCount}</div>`; // <<-- 🌟 新增 toc-icon-pulse 🌟
+            iconHtml = `<div class="bg-indigo-100 text-indigo-600 rounded-full h-12 w-12 flex items-center justify-center font-bold text-xl mb-4">${chapterCount}</div>`;
             chapterCount++; 
         }
         
@@ -2540,76 +2479,9 @@ function bindQuizEventListeners() {
         backToTocBtn.addEventListener('click', showTOC);
     }
 }
-const parallaxElementsSelector = '.toc-card, .content-card'; // 設定要移動的元素
-const parallaxIntensity = 15; // 視差強度，可調整幅度 (數字越大，移動越明顯)
-let parallaxTimeout; // 用來計時滑鼠是否靜止
-
-// 歸位函式：讓卡片平滑地回到靜止狀態
-function resetParallax() {
-    document.querySelectorAll(parallaxElementsSelector).forEach(element => {
-        // 1. 設置平滑過渡時間（讓卡片優雅地歸位，0.5秒）
-        element.style.transition = 'transform 0.5s ease-out, box-shadow 0.5s ease-out';
-        
-        // 2. 將 transform 重設為無變形 (卡片回到正中間)
-        element.style.transform = 'perspective(1000px) none'; 
-        
-        // 3. 重設 box-shadow 為原本的靜態值 (讓陰影恢復正常)
-        element.style.boxShadow = '0 10px 30px rgba(0, 0, 0, 0.1)';
-    });
-}
-
-function handleParallax(e) {
-    // 每次滑鼠移動，就清除計時器，表示我們還在移動中
-    clearTimeout(parallaxTimeout);
-
-    // 1. 計算滑鼠位置 (這部分是計算中心點)
-    const centerX = window.innerWidth / 2;
-    const centerY = window.innerHeight / 2;
-    const offsetX = (e.clientX - centerX) / centerX;
-    const offsetY = (e.clientY - centerY) / centerY;
-    
-    const elements = document.querySelectorAll(parallaxElementsSelector);
-
-    elements.forEach(element => {
-        // 🌟 關鍵修正：在移動時，移除 transform 的過渡，讓移動是即時且流暢的
-        element.style.transition = 'box-shadow 0.3s ease'; // 只有陰影有過渡，移動是即時的
-
-        // 3. 根據滑鼠位置計算旋轉和移動量
-        const translateX = -offsetX * parallaxIntensity * 2;
-        const translateY = -offsetY * parallaxIntensity * 2;
-        const rotateY = offsetX * (parallaxIntensity / 2);
-        const rotateX = -offsetY * (parallaxIntensity / 2);
-
-        // 5. 套用 CSS 變形 (讓卡片傾斜和移動)
-        element.style.transform = `
-            perspective(1000px) 
-            translateX(${translateX}px) 
-            translateY(${translateY}px) 
-            rotateX(${rotateX}deg) 
-            rotateY(${rotateY}deg)
-            scale(1.0);
-        `;
-        
-        // 6. 優化: 讓陰影跟著移動，增加真實感
-        const depthShadowX = -offsetX * 10;
-        const depthShadowY = -offsetY * 10;
-        element.style.boxShadow = `
-            ${depthShadowX}px ${depthShadowY}px 25px rgba(0, 0, 0, 0.2), 
-            ${depthShadowX / 2}px ${depthShadowY / 2}px 10px rgba(0, 0, 0, 0.1)
-        `;
-    });
-
-    // 7. 設定計時器：如果在 100ms 內滑鼠沒有再次移動，就執行 resetParallax 讓卡片歸位
-    parallaxTimeout = setTimeout(resetParallax, 100); 
-}
-
-// 綁定事件：滑鼠移動時執行 handleParallax
-document.addEventListener('mousemove', handleParallax);
-
-// 綁定事件：滑鼠離開瀏覽器視窗時，立即執行歸位
-document.addEventListener('mouseleave', resetParallax);
-
-}); // <--- 🌟 這裡必須是 DOMContentLoaded 的結尾 🌟
+   
+});
+ 
 </script>
 <div id="elite-certification-modal" class="fixed inset-0 z-[100] hidden items-center justify-center bg-black bg-opacity-70 backdrop-blur-sm transition-opacity duration-300">
     
@@ -2697,12 +2569,131 @@ document.addEventListener('mouseleave', resetParallax);
             if (e.key === 'Escape' && imageModal.classList.contains('flex')) {
                 closeModal();
             }
-            
         });
         
     </script>
 </body>
 </html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
