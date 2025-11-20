@@ -126,8 +126,6 @@
     transition: transform 1.5s ease-out, box-shadow 0.3s ease; 
 }
 .content-card:hover, .toc-card:hover {
-    /* 這裡保留原本的 hover 效果，但因為 JS 已經接管了 transform，所以實際效果會以 JS 為主 */
-    transform: translateY(-5px); 
     box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
 }
 
@@ -160,17 +158,25 @@
                 0 0 45px rgba(79, 70, 229, 0.2); /* 最外層光暈 */
 }
         @keyframes pulse-glow {
+    /* 1. 調整 0% 和 100% 狀態：設定一個中等強度的基礎光暈 */
     0% {
-        box-shadow: 0 0 0 0 rgba(79, 70, 229, 0.7);
+        /* 使用較低的透明度作為基底光暈，確保不會完全消失 */
+        box-shadow: 0 0 5px 2px rgba(79, 70, 229, 0.4); 
     }
+    
+    /* 2. 調整 50% 狀態：設定一個高強度的光暈，作為最亮點 */
     50% {
-        box-shadow: 0 0 10px 5px rgba(79, 70, 229, 0.4);
+        /* 設定最高的亮度，讓光暈向外擴散，呈現「呼吸」效果 */
+        box-shadow: 0 0 15px 7px rgba(79, 70, 229, 0.7),
+                    0 0 30px 10px rgba(79, 70, 229, 0.3);
     }
+    
+    /* 3. 確保 100% 結束於中等強度，與 0% 連續平滑 */
     100% {
-        box-shadow: 0 0 0 0 rgba(79, 70, 229, 0.7);
+        /* 與 0% 相同，保持一個基礎光暈 */
+        box-shadow: 0 0 5px 2px rgba(79, 70, 229, 0.4); 
     }
 }
-
 /* 步驟二: 目錄數字圓圈樣式 */
 .toc-icon-pulse {
     /* 套用閃爍動畫: 1.5秒一次, 保持循環, 讓它慢慢開始和結束 */
@@ -2681,3 +2687,4 @@ document.addEventListener('mouseleave', () => {
     </script>
 </body>
 </html>
+
