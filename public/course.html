@@ -122,10 +122,14 @@
         
         
        .content-card, .toc-card {
-    /* 1. 縮短/移除 transform 的預設過渡，改由 JS 控制歸位時的平滑度 */
+    /* 1. 縮短/移除 transform 的預設過渡，只保留陰影 */
     transition: box-shadow 0.3s ease; 
-    /* 2. 確保元素在 3D 空間中初始化，這是 Parallax 效果的基礎 */
-    transform: perspective(1000px); 
+    
+    /* 🌟 修正關鍵點 A：確保子元素在 3D 空間中呈現層次感 🌟 */
+    transform-style: preserve-3d; 
+    
+    /* 🌟 修正關鍵點 B：告訴瀏覽器準備硬體加速，提升 3D 效能 🌟 */
+    will-change: transform, box-shadow;
 }
 /* hover 樣式保持不變 */
 .content-card:hover, .toc-card:hover {
@@ -2699,6 +2703,7 @@ document.addEventListener('mouseleave', resetParallax);
     </script>
 </body>
 </html>
+
 
 
 
