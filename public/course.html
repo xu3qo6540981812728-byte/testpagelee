@@ -1607,8 +1607,6 @@ function showContent(sectionId, element) {
     tocContainer.innerHTML = '';
     
     const loggedInRole = sessionStorage.getItem('loggedInRole'); 
-    
-    // 移除 chapterCount，因為現在我們有專屬圖標
 
     chapterList.forEach((chapter, index) => {
         
@@ -1641,22 +1639,30 @@ function showContent(sectionId, element) {
             cardClass = 'toc-card p-6 rounded-xl shadow-2xl flex flex-col items-center text-center bg-indigo-50 border-4 border-indigo-500 hover:bg-indigo-100 transition duration-300 transform hover:scale-[1.02]';
         }
 
-        // 使用 chapter.icon 屬性來生成圖標 HTML
-        const iconClass = chapter.icon || 'fas fa-circle-question'; // 預設圖標
+        // 使用 chapter.icon 屬性來生成圖標
+        const iconClass = chapter.icon || 'fas fa-circle-question'; 
         
-        // 統一圖標的容器樣式 (非特殊章節使用 indigo 漸層/動畫)
-        let iconBgClass = (isManagerDashboard || isQuizChapter || isToolbox) 
-            ? 'bg-transparent text-current' // 特殊章節樣式已在卡片上設定
-            : 'bg-indigo-600 text-white';
-
-        if (chapter.id === 'chapter0') {
-             iconBgClass = 'bg-indigo-600 text-white';
+        // **🌟 修正點：確保所有圖標都有一個圓圈容器 🌟**
+        let iconBgClass;
+        
+        if (isManagerDashboard) {
+             iconBgClass = 'bg-yellow-600 text-white'; // 儀表板：黃色圓圈
+        } else if (isQuizChapter) {
+             iconBgClass = 'bg-red-600 text-white';    // 模擬考：紅色圓圈
+        } else if (isToolbox) {
+             iconBgClass = 'bg-stone-600 text-white';  // 工具箱：深灰圓圈
+        } else {
+            // 預設 (課程章節和進度表)：靛藍色圓圈 + 脈衝動畫
+            iconBgClass = 'bg-indigo-600 text-white';
         }
+        
+        // 確保 toc-icon-pulse 只存在於非特殊章節
+        const pulseClass = (chapter.id !== 'chapter0' && !isManagerDashboard && !isQuizChapter && !isToolbox) 
+            ? 'toc-icon-pulse' 
+            : '';
 
         iconHtml = `
-            <div class="${iconBgClass} rounded-full h-12 w-12 flex items-center justify-center font-bold text-xl mb-4 
-                 ${(!isManagerDashboard && !isQuizChapter && !isToolbox) ? 'toc-icon-pulse' : ''}"
-            >
+            <div class="${iconBgClass} rounded-full h-12 w-12 flex items-center justify-center font-bold text-xl mb-4 ${pulseClass}">
                 <i class="${iconClass}"></i>
             </div>
         `;
@@ -2726,6 +2732,7 @@ function bindQuizEventListeners() {
     </script>
 </body>
 </html>
+
 
 
 
