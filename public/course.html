@@ -119,11 +119,17 @@
                 transform: translateY(0);
             }
         }
-        
+        #app-wrapper {
+    /* 啟用 3D 空間，這點非常重要！ */
+    transform-style: preserve-3d; 
+    perspective: 1000px; /* 設定透視距離，數值越大，3D效果越不明顯 */
+}
         
         .content-card, .toc-card {
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
+    transition: transform 0.15s ease-out, box-shadow 0.3s ease; /* 調整為更快速的變換 */
+    transform-style: preserve-3d; /* 新增：啟用 3D 空間 */
+    will-change: transform; /* 新增：效能優化 */
+}
         .content-card:hover, .toc-card:hover {
             transform: translateY(-5px);
             box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
@@ -2622,10 +2628,56 @@ function bindQuizEventListeners() {
                 closeModal();
             }
         });
+        function initializeParallaxEffect() {
+        // 獲取所有需要應用效果的元素 (目錄卡片 + 章節內容卡片)
+        const parallaxTargets = document.querySelectorAll('.toc-card, .content-card');
+
+        // 參數調整區 -----------------------------------------------------------------
+        const ROTATION_MAX = 5;      // 最大旋轉角度 (degrees, 建議 3 到 5 度)
+        const MOVEMENT_MAX = 10;     // 最大平移距離 (pixels, 建議 10 到 20 像素)
+        const INVERSE_EFFECT = 1;    // 1: 效果與滑鼠方向一致，-1: 效果與滑鼠方向相反 (更具漂浮感)
+        // ----------------------------------------------------------------------------
         
+        // 監聽整個視窗的滑鼠移動事件
+        document.addEventListener('mousemove', (e) => {
+            // 取得視窗寬高
+            const windowWidth = window.innerWidth;
+            const windowHeight = window.innerHeight;
+
+            // 1. 計算滑鼠位置相對於視窗中心的標準化座標 (-1 到 1)
+            const mouseX = (e.clientX - windowWidth / 2) / (windowWidth / 2);
+            const mouseY = (e.clientY - windowHeight / 2) / (windowHeight / 2);
+
+            // 2. 計算旋轉角度 (Rotate)
+            // X 軸旋轉與 Y 軸位置成正比，Y 軸旋轉與 X 軸位置成反比
+            const rotateX = -mouseY * ROTATION_MAX * INVERSE_EFFECT;
+            const rotateY = mouseX * ROTATION_MAX * INVERSE_EFFECT;
+
+            // 3. 計算平移距離 (Translate)
+            const translateX = mouseX * MOVEMENT_MAX * INVERSE_EFFECT;
+            const translateY = mouseY * MOVEMENT_MAX * INVERSE_EFFECT;
+            
+            // 4. 對所有目標元素套用計算結果
+            parallaxTargets.forEach(target => {
+                // 組合 CSS Transform 屬性
+                const transformValue = `
+                    translate3d(${translateX}px, ${translateY}px, 0) 
+                    rotateX(${rotateX}deg) 
+                    rotateY(${rotateY}deg)
+                `;
+
+                target.style.transform = transformValue;
+            });
+        });
+    }
+
+    // 在所有 DOM 載入完畢後啟動效果
+    initializeParallaxEffect();
+        });
     </script>
 </body>
 </html>
+
 
 
 
