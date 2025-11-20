@@ -459,7 +459,7 @@
         </div>
         <!-- Chapter Detail View -->
         <div id="chapter-view" class="relative min-h-screen md:flex" style="display: none;">
-            <button id="prev-chapter-btn" ;" class="hidden fixed bottom-20 left-6 z-30 inline-flex items-center justify-center w-14 h-14 md:w-auto md:h-auto md:py-3 md:px-6 bg-indigo-600 text-white rounded-full md:rounded-lg shadow-lg hover:bg-indigo-700 transition duration-200 md:hidden">
+            <button id="prev-chapter-btn" ;" class="hidden fixed bottom-20 left-6 z-30 inline-flex items-center justify-center w-14 h-14 md:w-auto md:h-auto md:py-3 md:px-6 bg-indigo-600 text-white rounded-full md:rounded-lg shadow-lg hover:bg-indigo-700 transition duration-200 md:hidden btn-base">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" /></svg>
                 <span class="hidden md:inline ml-2 font-semibold">上一章</span>
             </button>
@@ -486,7 +486,7 @@
                     <!-- Nav links will be injected here by JS -->
                 </nav>
                 <div class="p-4 mt-auto border-t border-blue-800">
-                    <button id="logout-button" class="w-full flex items-center justify-center py-2 px-4 rounded-lg bg-red-600 hover:bg-red-700 transition duration-200">
+                    <button id="logout-button" class="w-full flex items-center justify-center py-2 px-4 rounded-lg bg-red-600 hover:bg-red-700 transition duration-200 btn-base">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
                             <path fill-rule="evenodd" d="M3 3a1 1 0 00-1 1v12a1 1 0 102 0V4a1 1 0 00-1-1zm10.293 9.293a1 1 0 001.414 1.414l3-3a1 1 0 000-1.414l-3-3a1 1 0 10-1.414 1.414L14.586 9H7a1 1 0 100 2h7.586l-1.293 1.293z" clip-rule="evenodd" />
                         </svg>
@@ -511,7 +511,7 @@
             </header>
             <!-- Main Content -->
             <main class="flex-1 md:ml-72 p-6 md:p-10 pt-24 md:pt-10">
-                <button id="back-to-toc-desktop" class="hidden md:inline-flex items-center mb-6 text-sm font-medium text-indigo-600 hover:text-indigo-800 transition">
+                <button id="back-to-toc-desktop" class="hidden md:inline-flex items-center mb-6 text-sm font-medium text-indigo-600 hover:text-indigo-800 transition btn-base">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 17l-5-5m0 0l5-5m-5 5h12" /></svg>
                     返回目錄
                 </button>
@@ -612,7 +612,7 @@
                     </div>
                     
                     <div id="quiz-controls" class="mt-8 pt-6 border-t border-slate-200 flex justify-center">
-                         <button id="start-quiz-btn" class="hidden py-3 px-8 bg-indigo-600 text-white font-bold rounded-lg hover:bg-indigo-700 transition duration-300 shadow-lg">
+                         <button id="start-quiz-btn" class="hidden py-3 px-8 bg-indigo-600 text-white font-bold rounded-lg hover:bg-indigo-700 transition duration-300 shadow-lg btn-base">
                             開始測驗 (點擊載入題目)
                         </button>
                         <button id="submit-quiz-btn" class="hidden py-3 px-8 bg-red-600 text-white font-bold rounded-lg hover:bg-red-700 transition duration-300 shadow-lg" disabled>
@@ -1835,13 +1835,17 @@ function updateProgressDisplay() {
         if (motivationText) {
              motivationText.innerHTML = `<span class="text-xl font-extrabold text-red-600 animate-bounce">菁英認證達成！請點擊下方的「我知道了」按鈕！</span>`;
         }
-        if (stampImage) stampImage.classList.add('opacity-100');
+       if (stampImage) {
+            stampImage.classList.add('opacity-100', 'stamp-image-stamped'); // 新增這行
+        }
         if (stampPlaceholder) stampPlaceholder.classList.add('hidden');
     } else {
          if (modal) {
             modal.style.display = 'none';
         }
-        if (stampImage) stampImage.classList.remove('opacity-100');
+        if (stampImage) {
+            stampImage.classList.remove('opacity-100', 'stamp-image-stamped'); // 新增這行
+        }
         if (stampPlaceholder) stampPlaceholder.classList.remove('hidden');
     }
     
@@ -2639,6 +2643,7 @@ function bindQuizEventListeners() {
     </script>
 </body>
 </html>
+
 
 
 
