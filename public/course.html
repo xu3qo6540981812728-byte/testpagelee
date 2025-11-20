@@ -425,7 +425,7 @@
     100% { opacity: 1; transform: scale(1) rotate(-12deg); }
 }
 .stamp-image-stamped { /* 達成 100% 時添加此 Class */
-    animation: stamp-in 1.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+    animation: stamp-in 2.0s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
 }
    </style>
     
@@ -2230,7 +2230,7 @@ function handleProgressLogic(sectionId) {
                 if (eliteCertificationModal) {
                     eliteCertificationModal.style.display = 'none';
                 }
-            }, 300); // 延遲 300ms 讓蓋章動畫開始後再關閉彈窗
+            }, 200); // 延遲 300ms 讓蓋章動畫開始後再關閉彈窗
             
         });
     }
@@ -2664,6 +2664,7 @@ function bindQuizEventListeners() {
     </script>
 </body>
 </html>
+
 
 
 
