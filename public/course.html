@@ -423,7 +423,7 @@
     <!-- Main Wrapper -->
     <div id="app-wrapper" style="display: none;">
         <!-- Table of Contents View -->
-        <div id="table-of-contents">
+        <div id="table-of-contents" class="relative min-h-screen bg-white <span style="color: red; font-weight: bold;">floating-content</span>">
             <div class="p-6 md:p-10">
                 
                 <div class="relative flex justify-center items-center mb-10 md:mb-12">
@@ -445,7 +445,7 @@
             </div>
         </div>
         <!-- Chapter Detail View -->
-        <div id="chapter-view" class="relative min-h-screen md:flex" style="display: none;">
+        <div id="chapter-view" class="relative min-h-screen md:flex hidden <span style="color: red; font-weight: bold;">floating-content</span>">
             <button id="prev-chapter-btn" ;" class="hidden fixed bottom-20 left-6 z-30 inline-flex items-center justify-center w-14 h-14 md:w-auto md:h-auto md:py-3 md:px-6 bg-indigo-600 text-white rounded-full md:rounded-lg shadow-lg hover:bg-indigo-700 transition duration-200 md:hidden">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" /></svg>
                 <span class="hidden md:inline ml-2 font-semibold">上一章</span>
@@ -505,7 +505,7 @@
                 <!-- Chapter Content will be injected here -->
             </main>
         </div>
-     <footer class="text-center py-8 text-sm text-slate-500 border-t border-slate-200">
+    <footer class="text-center py-8 text-sm text-slate-500 border-t border-slate-200 <span style="color: red; font-weight: bold;">floating-content</span>">
             <p class="font-semibold">房仲菁英班教育訓練系統</p>
             <p class="mt-1">Copyright © 2025 李培智. All Rights Reserved.</p>
         </footer>
@@ -2533,7 +2533,43 @@ function bindQuizEventListeners() {
 }
    
 });
- 
+ const floatingElements = document.querySelectorAll('.floating-content');
+
+if (floatingElements.length > 0) {
+    const intensity = 15; // 浮動強度，值越大，移動幅度越大
+
+    function applyFloatingEffect(e) {
+        // 取得視窗中心點的 X 和 Y 座標
+        const centerX = window.innerWidth / 2;
+        const centerY = window.innerHeight / 2;
+        
+        // 計算滑鼠位置相對於中心點的偏移量 (從 -1 到 1)
+        const mouseX = (e.clientX - centerX) / centerX;
+        const mouseY = (e.clientY - centerY) / centerY;
+
+        floatingElements.forEach(element => {
+            // 計算位移量：滑鼠越往左上，內容越往右上移動
+            // Y 軸位移：滑鼠往下(mouseY > 0)，內容向上移動 (translateY 為負)
+            const y_offset = -mouseY * intensity * 0.5; // Y軸位移幅度小一點
+            // X 軸位移：滑鼠往右(mouseX > 0)，內容往左移動 (translateX 為負)
+            const x_offset = -mouseX * intensity;
+            
+            // 應用 CSS 3D 變換 (translate3d 實現平移, rotateX/Y 實現輕微傾斜)
+            element.style.transform = `translate3d(${x_offset}px, ${y_offset}px, 0) rotateX(${mouseY * 2}deg) rotateY(${-mouseX * 2}deg)`;
+        });
+    }
+
+    // 監聽滑鼠移動事件
+    document.addEventListener('mousemove', applyFloatingEffect);
+    
+    // 監聽滾動事件，滾動時將效果歸零，以保持側邊欄和內容的同步視覺效果
+    // 這是為了避免在內容捲動時，固定不動的側邊欄和浮動的內容產生錯位
+    document.addEventListener('scroll', () => {
+         floatingElements.forEach(element => {
+            element.style.transform = `translate3d(0, 0, 0) rotateX(0deg) rotateY(0deg)`;
+        });
+    });
+}
 </script>
 <div id="elite-certification-modal" class="fixed inset-0 z-[100] hidden items-center justify-center bg-black bg-opacity-70 backdrop-blur-sm transition-opacity duration-300">
     
@@ -2576,6 +2612,33 @@ function bindQuizEventListeners() {
     .animate-zoomIn {
         animation: zoomIn 0.5s ease-out;
     }
+    body {
+            /* ... 現有 body 樣式 ... */
+        /* 🌟 新增：設定 3D 視角和透視效果 🌟 */
+            perspective: 1000px; 
+            overflow-x: hidden; /* 防止內容位移時出現水平捲軸 */
+            overflow-y: scroll;
+        }
+
+        /* 🌟 新增：主要的內容容器 🌟 */
+        .floating-effect-container {
+            /* 讓內容層疊在背景之上 */
+            position: relative; 
+            z-index: 10;
+        }
+
+        /* 🌟 新增：應用 3D 位移的元素 🌟 */
+        .floating-content {
+            /* 允許 3D 變換 */
+            transform-style: preserve-3d;
+            /* 平滑過渡效果 */
+            transition: transform 0.1s ease-out; 
+        }
+
+        /* 側邊欄固定，不移動 */
+        #sidebar {
+            transform: translateZ(0); /* 確保它在 3D 空間中不位移 */
+        }
 </style>
     <script>
         const imageModal = document.getElementById('image-modal');
@@ -2626,6 +2689,7 @@ function bindQuizEventListeners() {
     </script>
 </body>
 </html>
+
 
 
 
