@@ -1860,14 +1860,22 @@ function updateProgressDisplay() {
         
         // --- ⭐ 動畫控制邏輯新增/修改部分 ⭐ ---
         if (stampImage) {
-            
-            stampImage.classList.remove('animate-stamp-drop'); // 1. 移除舊動畫
-            void stampImage.offsetWidth; // 2. 強制瀏覽器重繪/重設動畫
-            stampImage.classList.add('animate-stamp-drop'); // 3. 應用新動畫
-            
-            stampImage.classList.remove('opacity-0'); // 確保動畫開始時印章可見
-            stampPlaceholder.classList.add('hidden'); // 隱藏虛線邊框
-        }
+    // 步驟 1: 確保元素可見，並隱藏虛線框
+    stampPlaceholder.classList.add('hidden');
+    stampImage.classList.remove('opacity-0'); 
+
+    // 步驟 2: 清除所有動畫效果，準備重啟
+    stampImage.classList.remove('animate-stamp-drop');
+
+    // 步驟 3: 使用 requestAnimationFrame 確保瀏覽器完成清除動作，再重新加上動畫
+    // 這比單純的 .offsetWidth 更可靠。
+    requestAnimationFrame(() => {
+        requestAnimationFrame(() => {
+            // 步驟 4: 重新套用動畫
+            stampImage.classList.add('animate-stamp-drop');
+        });
+    });
+}
         // --- ⭐ 結束動畫控制邏輯 ⭐ ---
 
     } else {
@@ -2675,6 +2683,7 @@ function bindQuizEventListeners() {
     </script>
 </body>
 </html>
+
 
 
 
