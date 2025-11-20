@@ -2540,11 +2540,10 @@ function bindQuizEventListeners() {
         backToTocBtn.addEventListener('click', showTOC);
     }
 }
-   
-
 const parallaxElementsSelector = '.toc-card, .content-card'; // 設定要移動的元素
 const parallaxIntensity = 15; // 視差強度，可調整幅度 (數字越大，移動越明顯)
-let parallaxTimeout;
+let parallaxTimeout; // 用來計時滑鼠是否靜止
+
 // 歸位函式：讓卡片平滑地回到靜止狀態
 function resetParallax() {
     document.querySelectorAll(parallaxElementsSelector).forEach(element => {
@@ -2609,7 +2608,8 @@ document.addEventListener('mousemove', handleParallax);
 
 // 綁定事件：滑鼠離開瀏覽器視窗時，立即執行歸位
 document.addEventListener('mouseleave', resetParallax);
-    });
+
+}); // <--- 🌟 這裡必須是 DOMContentLoaded 的結尾 🌟
 </script>
 <div id="elite-certification-modal" class="fixed inset-0 z-[100] hidden items-center justify-center bg-black bg-opacity-70 backdrop-blur-sm transition-opacity duration-300">
     
