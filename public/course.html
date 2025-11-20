@@ -414,41 +414,6 @@
         -ms-user-select: none;
         user-select: none;
     }
-       @keyframes stamp-drop-bounce {
-    0% {
-        opacity: 0;
-        /* 從上方 50px 處開始，縮小並旋轉 */
-        transform: translateY(-50px) scale(0.7) rotate(-20deg); 
-    }
-    60% {
-        opacity: 1;
-        /* 快速落下，稍微超過終點（彈動向下） */
-        transform: translateY(10px) scale(1.1) rotate(5deg); 
-    }
-    80% {
-        /* 輕微彈回上方 */
-        transform: translateY(-3px) scale(0.98) rotate(-2deg); 
-    }
-    100% {
-        opacity: 1;
-        /* 最終靜止位置 */
-        transform: translateY(0) scale(1) rotate(0deg); 
-    }
-}
-
-/* 應用動畫的 class */
-.animate-stamp-drop {
-    /* 使用 cubic-bezier 曲線來創建物理感的彈跳效果 */
-    animation: stamp-drop-bounce 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards; 
-    transition: none !important; /* 確保不與原有的 opacity transition 衝突 */
-}
-
-/* 修正印章元素的初始隱藏狀態，讓動畫能從 opacity: 0 開始 */
-#stamp-image-placeholder {
-    opacity: 0; /* 確保初始隱藏 */
-    transform: none !important; /* 清除原有的 -rotate-12 避免動畫衝突 */
-    transition: none !important; /* 禁用原有的 transition-opacity */
-}
    </style>
     
 </head>
@@ -1857,36 +1822,14 @@ function updateProgressDisplay() {
         if (motivationText) {
              motivationText.innerHTML = `<span class="text-xl font-extrabold text-red-600 animate-bounce">菁英認證達成！請點擊下方的「我知道了」按鈕！</span>`;
         }
-        
-        // --- ⭐ 動畫控制邏輯新增/修改部分 ⭐ ---
-        if (stampImage) {
-    // 步驟 1: 確保元素可見，並隱藏虛線框
-    stampPlaceholder.classList.add('hidden');
-    stampImage.classList.remove('opacity-0'); 
-
-    // 步驟 2: 清除所有動畫效果，準備重啟
-    stampImage.classList.remove('animate-stamp-drop');
-
-    // 步驟 3: 使用 requestAnimationFrame 確保瀏覽器完成清除動作，再重新加上動畫
-    // 這比單純的 .offsetWidth 更可靠。
-    requestAnimationFrame(() => {
-        requestAnimationFrame(() => {
-            // 步驟 4: 重新套用動畫
-            stampImage.classList.add('animate-stamp-drop');
-        });
-    });
-}
-        // --- ⭐ 結束動畫控制邏輯 ⭐ ---
-
+        if (stampImage) stampImage.classList.add('opacity-100');
+        if (stampPlaceholder) stampPlaceholder.classList.add('hidden');
     } else {
          if (modal) {
             modal.style.display = 'none';
         }
-        if (stampImage) {
-             stampImage.classList.remove('animate-stamp-drop');
-             stampImage.classList.add('opacity-0'); // 隱藏印章
-        }
-        if (stampPlaceholder) stampPlaceholder.classList.remove('hidden'); // 顯示虛線邊框
+        if (stampImage) stampImage.classList.remove('opacity-100');
+        if (stampPlaceholder) stampPlaceholder.classList.remove('hidden');
     }
     
     const percentageText = document.getElementById('progress-percentage');
@@ -2683,9 +2626,6 @@ function bindQuizEventListeners() {
     </script>
 </body>
 </html>
-
-
-
 
 
 
