@@ -270,7 +270,6 @@
 }
         .highlight-update {
     background-color: #fffbeb; /* amber-50 */
- transition: background-color 0.5s ease-in-out;
 }
         .speed-btn {
             padding: 4px 8px;
@@ -1307,7 +1306,7 @@ const loggedInRole = sessionStorage.getItem('loggedInRole');
             });
     }
     
-    function saveProgress(itemElement) { // <--- 🌟 新增參數 itemElement 🌟
+    function saveProgress() {
         if (!currentViewingUser || typeof db === 'undefined') {
             console.error("未登入使用者，無法儲存進度。");
             return;
@@ -1315,14 +1314,6 @@ const loggedInRole = sessionStorage.getItem('loggedInRole');
         db.collection("progressData").doc(currentViewingUser).set(progressData) 
             .then(() => {
                  console.log("寫入 Firebase 成功");
-                 // 🌟 新增的成功反饋邏輯 🌟
-                 if (itemElement) {
-                     itemElement.classList.add('highlight-update');
-                     setTimeout(() => {
-                         itemElement.classList.remove('highlight-update');
-                     }, 500); // 0.5秒後移除，讓動畫回歸
-                 }
-                 // 🌟 結束新增 🌟
             })
             .catch((error) => {
                 console.error("寫入 Firebase 失敗: ", error);
@@ -1965,7 +1956,6 @@ function handleProgressLogic(sectionId) {
         const isRemarkInput = e.target.classList.contains('remark-input'); 
         
         if (isCheckbox || isCountInput || isRemarkInput) {
-            const itemWrapper = e.target.closest('.progress-item');
             if (!progressData[index]) {
                 progressData[index] = {};
             }
@@ -2002,7 +1992,7 @@ function handleProgressLogic(sectionId) {
                 }
             }
             
-            saveProgress(itemWrapper);
+            saveProgress();
             
             
             if (isCheckbox) {
@@ -2636,7 +2626,6 @@ function bindQuizEventListeners() {
     </script>
 </body>
 </html>
-
 
 
 
