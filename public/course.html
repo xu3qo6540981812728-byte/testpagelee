@@ -128,8 +128,60 @@
             transform: translateY(-5px);
             box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
         }
-        
-        
+        .toc-card {
+    position: relative; 
+    z-index: 1; /* 確保卡片內容在陰影之上 */
+    overflow: hidden; /* 防止偽元素的陰影超出卡片 */
+}
+
+/* 發光主體：使用 ::after 偽元素作為光暈層 */
+.toc-card::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    border-radius: inherit; /* 繼承卡片的圓角 */
+    box-shadow: 0 0 10px rgba(79, 70, 229, 0), /* 預設無陰影 */
+                0 0 20px rgba(79, 70, 229, 0); 
+    transition: box-shadow 0.5s ease-in-out; 
+    z-index: -1; /* 讓光暈在卡片下方 */
+}
+
+/* 滑鼠懸停時啟動發光 */
+.toc-card:hover::after {
+    /* 使用 indigo-600 的顏色 (79, 70, 229) */
+    box-shadow: 0 0 15px rgba(79, 70, 229, 0.6), /* 內層光暈 */
+                0 0 30px rgba(79, 70, 229, 0.4), /* 外層光暈 */
+                0 0 45px rgba(79, 70, 229, 0.2); /* 最外層光暈 */
+}
+      @keyframes pulse-glow {
+    /* 1. 調整 0% 和 100% 狀態：設定一個中等強度的基礎光暈 */
+    0% {
+        /* 使用較低的透明度作為基底光暈，確保不會完全消失 */
+        box-shadow: 0 0 5px 2px rgba(79, 70, 229, 0.4); 
+    }
+    
+    /* 2. 調整 50% 狀態：設定一個高強度的光暈，作為最亮點 */
+    50% {
+        /* 設定最高的亮度，讓光暈向外擴散，呈現「呼吸」效果 */
+        box-shadow: 0 0 15px 7px rgba(79, 70, 229, 0.7),
+                    0 0 30px 10px rgba(79, 70, 229, 0.3);
+    }
+    
+    /* 3. 確保 100% 結束於中等強度，與 0% 連續平滑 */
+    100% {
+        /* 與 0% 相同，保持一個基礎光暈 */
+        box-shadow: 0 0 5px 2px rgba(79, 70, 229, 0.4); 
+    }
+}
+
+/* 步驟二: 目錄數字圓圈樣式 */
+.toc-icon-pulse {
+    /* 套用閃爍動畫: 1.5秒一次, 保持循環, 讓它慢慢開始和結束 */
+    animation: pulse-glow 1.5s infinite ease-in-out;
+} 
         
         @keyframes zoomIn {
             from {
@@ -1553,9 +1605,9 @@ function showContent(sectionId, element) {
           } else if (isToolbox) {
                 cardClass = 'toc-card p-6 rounded-xl shadow-2xl flex flex-col items-center text-center bg-stone-100 border-4 border-stone-600 hover:bg-stone-200 transition duration-300 transform hover:scale-[1.02]';
                 iconHtml = `<div class="bg-stone-600 text-white rounded-full h-12 w-12 flex items-center justify-center font-bold text-xl mb-4"><i class="fas fa-tools"></i></div>`; 
-            } else {
+          } else {
             
-            iconHtml = `<div class="bg-indigo-100 text-indigo-600 rounded-full h-12 w-12 flex items-center justify-center font-bold text-xl mb-4">${chapterCount}</div>`;
+            iconHtml = `<div class="bg-indigo-100 text-indigo-600 rounded-full h-12 w-12 flex items-center justify-center font-bold text-xl mb-4 toc-icon-pulse">${chapterCount}</div>`; // <<-- 🌟 新增 toc-icon-pulse 🌟
             chapterCount++; 
         }
         
@@ -2574,6 +2626,7 @@ function bindQuizEventListeners() {
     </script>
 </body>
 </html>
+
 
 
 
