@@ -436,7 +436,7 @@
             height: 100%;
             z-index: 999; 
             pointer-events: none; 
-            background: radial-gradient(circle at 50% 50%, rgba(12, 30, 70, 0.2) 0%, rgba(0, 0, 0, 0) 70%); 
+            background: radial-gradient(circle at 50% 50%, rgba(12, 30, 70, 0.1) 0%, rgba(0, 0, 0, 0) 70%); 
     overflow: hidden;
 }
 
@@ -2716,7 +2716,7 @@ function bindQuizEventListeners() {
                 const y = e.clientY;
 
                 // 應用 CSS 樣式：模擬光線追蹤 (提高光暈強度到 0.3)
-                particleOverlay.style.background = `radial-gradient(circle at ${x}px ${y}px, rgba(100, 150, 255, 0.3) 0%, rgba(0, 0, 0, 0) 25%)`;
+                particleOverlay.style.background = `radial-gradient(circle at ${x}px ${y}px, rgba(100, 150, 255, 0.1) 0%, rgba(0, 0, 0, 0) 25%)`;
 
                 // 粒子景深/視差效果：讓粒子層隨著滑鼠輕微移動 (景深因子提高到 12)
                 const depthFactor = 12; 
@@ -2730,13 +2730,14 @@ function bindQuizEventListeners() {
 
             // 滑鼠移出時，恢復預設光暈
             document.addEventListener('mouseleave', () => {
-                particleOverlay.style.background = 'radial-gradient(circle at 50% 50%, rgba(12, 30, 70, 0.2) 0%, rgba(0, 0, 0, 0) 70%)';
+                particleOverlay.style.background = 'radial-gradient(circle at 50% 50%, rgba(12, 30, 70, 0.1) 0%, rgba(0, 0, 0, 0) 70%)';
                 particleOverlay.style.transform = 'translate(0, 0)';
             });
         }
     </script>
 </body>
 </html>
+
 
 
 
