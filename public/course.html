@@ -2696,7 +2696,7 @@ function bindQuizEventListeners() {
                 const y = e.clientY;
 
                 // 應用 CSS 樣式：模擬光線追蹤 (提高光暈強度到 0.3)
-                particleOverlay.style.background = `radial-gradient(circle at ${x}px ${y}px, rgba(100, 150, 255, 0.15) 0%, rgba(0, 0, 0, 0) 50%)`;
+                particleOverlay.style.background = `radial-gradient(circle at ${x}px ${y}px, rgba(100, 150, 255, 0.15) 0%, rgba(0, 0, 0, 0) 80%)`;
 
                 // 粒子景深/視差效果：讓粒子層隨著滑鼠輕微移動 (景深因子提高到 12)
                 const depthFactor = 12; 
@@ -2718,6 +2718,7 @@ function bindQuizEventListeners() {
     </script>
 </body>
 </html>
+
 
 
 
