@@ -38,6 +38,27 @@
 }
         @keyframes zoomIn { from { opacity: 0; transform: scale(0.9); } to { opacity: 1; transform: scale(1); } }
         body { background-color: #f0f4f8; }
+
+        /* --- ✨ 新增的閃爍動畫效果 CSS ✨ --- */
+        @keyframes flicker-glow {
+            0%, 100% { 
+                /* 正常狀態或淡出狀態 (稍微有光) */
+                box-shadow: 0 0 5px rgba(79, 70, 229, 0.5), 0 0 10px rgba(79, 70, 229, 0.2); 
+            }
+            50% { 
+                /* 最亮狀態 (發出強光) */
+                box-shadow: 0 0 15px rgba(79, 70, 229, 0.8), 0 0 25px rgba(79, 70, 229, 0.4); 
+            }
+        }
+
+        .flickering-input {
+            /* 確保過渡效果不會影響動畫 */
+            transition: none !important; 
+            /* 套用動畫：名稱, 速度, 方式, 次數 */
+            animation: flicker-glow 1.0s ease-in-out infinite alternate;
+        }
+        /* --- ✨ 結束新增 CSS ✨ --- */
+
     </style>
 </head>
 <body>
@@ -64,6 +85,26 @@
         const passwordInput = document.getElementById('password-input');
         const submitButton = document.getElementById('submit-password');
         const errorMessage = document.getElementById('error-message');
+
+        // --- ✨ 新增的焦點事件處理函數 ✨ ---
+        function addFlickerEffect(event) {
+            // 點擊/Tab 進來時，加上閃爍 class
+            event.target.classList.add('flickering-input');
+        }
+
+        function removeFlickerEffect(event) {
+            // 點擊/Tab 離開時，移除閃爍 class
+            event.target.classList.remove('flickering-input');
+        }
+
+        // 綁定事件監聽器
+        usernameInput.addEventListener('focus', addFlickerEffect);
+        usernameInput.addEventListener('blur', removeFlickerEffect);
+
+        passwordInput.addEventListener('focus', addFlickerEffect);
+        passwordInput.addEventListener('blur', removeFlickerEffect);
+        // --- ✨ 結束新增 JS ✨ ---
+
 
         async function handleLogin() {
             const username = usernameInput.value.trim();
@@ -143,7 +184,3 @@ if (loginCard && loginContainer) {
 </body>
 
 </html>
-
-
-
-
