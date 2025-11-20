@@ -51,22 +51,6 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <style>
-        body {
-    perspective: 1000px; 
-    transform-style: preserve-3d;
-}
-.sidebar {
-    background: linear-gradient(180deg, #1e3a8a 0%, #0c1e42 100%);
-    transition: left 0.3s ease-in-out; 
-    left: -18rem; 
-    transform: translateZ(0); 
-}
-#chapter-view {
-    transition: transform 0.3s ease-out;
-}
-        .content-section h2, .content-card {
-    transition: transform 0.3s ease-out;
-}
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&family=Noto+Sans+TC:wght@100..900&display=swap');
         body {
             font-family: 'Inter', 'Noto Sans TC', sans-serif;
@@ -137,31 +121,13 @@
         }
         
         
-        .toc-card {
-    /* 確保 transform 有過渡效果 */
-    transition: transform 0.3s ease-out, box-shadow 0.3s ease;
-    cursor: pointer; /* 讓使用者知道可以互動 */
-    /* 增加基礎發光效果 (來自您上一個請求的保留) */
-    box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1), 
-                0 0 5px rgba(79, 70, 229, 0.2);
-}
-.toc-card:hover {
-    /* 移除 transform: translateY(-5px); 讓 JS 全權管理移動 */
-    
-    /* 保留懸停發光效果 */
-    box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1), 
-                0 8px 10px -6px rgb(0 0 0 / 0.1),
-                0 0 15px rgba(79, 70, 229, 0.6), /* 主要發光體 */
-                0 0 25px rgba(79, 70, 229, 0.4);
-}
-
-/* 特別樣式的卡片 (例如：實戰模擬考/團隊儀表板/工具箱) 可以考慮套用 `scribble-border` 的發光 */
-.scribble-border:hover {
-    transform: translate(-2px, -2px);
-    box-shadow: 6px 6px 0 #000000, 
-                0 0 10px rgba(255, 193, 7, 0.8), /* 讓這個特殊的邊框也發光，這裡使用黃色/金色 */
-                0 0 20px rgba(255, 193, 7, 0.5);
-}
+        .content-card, .toc-card {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .content-card:hover, .toc-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+        }
         
         
         
@@ -1635,71 +1601,6 @@ function showContent(sectionId, element) {
     renderTOCCards(chapters);
 
     
-// --- 調整浮動層次與幅度 ---
-const MAX_MOVEMENT = 10; // 統一設定所有元素的最大平移幅度 (只影響主內容區和內部卡片)
-// ----------------------------
-
-function setupGlobalParallax() {
-    
-    // 監聽整個頁面 body 的滑鼠移動事件
-    document.body.addEventListener('mousemove', (e) => {
-        
-        // 變數在函數內部宣告
-        // 側邊欄現在僅用於判斷是否存在，不再對其應用 transform
-        const chapterView = document.getElementById('chapter-view');
-        const tocCards = document.querySelectorAll('.toc-card'); 
-        const elementsToMove = chapterView ? chapterView.querySelectorAll('header h2, .content-card, #progress-display-area') : [];
-
-        // 使用 window 尺寸作為參考點
-        const centerX = window.innerWidth / 2;
-        const centerY = window.innerHeight / 2;
-
-        const offsetX = (e.clientX - centerX) / centerX;
-        const offsetY = (e.clientY - centerY) / centerY;
-
-        // 計算整體平移距離 (使用負號讓頁面往滑鼠的反方向移動，產生漂浮感)
-        const totalMoveX = -offsetX * MAX_MOVEMENT;
-        const totalMoveY = -offsetY * MAX_MOVEMENT;
-        
-       
-       
-        if (chapterView) {
-             chapterView.style.transform = `translateX(${totalMoveX}px) translateY(${totalMoveY}px)`;
-        }
-        
-       
-        elementsToMove.forEach(el => {
-            el.style.transform = `translateX(${totalMoveX}px) translateY(${totalMoveY}px)`;
-        });
-        
-        
-        tocCards.forEach(card => {
-            card.style.transform = `translateX(${totalMoveX}px) translateY(${totalMoveY}px)`;
-        });
-        
-        
-        
-    });
-
-    // 當滑鼠移出視窗或靜止時，將所有 transform 歸位
-    document.body.addEventListener('mouseleave', () => {
-        const chapterView = document.getElementById('chapter-view');
-        const sidebar = document.getElementById('sidebar');
-        const elementsToReset = document.querySelectorAll('.content-section h2, .content-card, #progress-display-area, .toc-card');
-        
-        if (chapterView) {
-            chapterView.style.transform = 'none';
-        }
-
-        // 重置所有內層元素的 transform
-        elementsToReset.forEach(el => {
-            el.style.transform = 'none';
-        });
-    });
-}
-
-// 執行全域浮動設置
-setupGlobalParallax();
 
     let navChapterCount = 0; 
 
@@ -2673,23 +2574,6 @@ function bindQuizEventListeners() {
     </script>
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
