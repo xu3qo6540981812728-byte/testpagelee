@@ -121,10 +121,13 @@
         }
         
         
-        .content-card, .toc-card {
-    /* 🌟 修改點: 延長 transform 的過渡時間到 1.5s 🌟 */
-    transition: transform 1.5s ease-out, box-shadow 0.3s ease; 
+       .content-card, .toc-card {
+    /* 1. 縮短/移除 transform 的預設過渡，改由 JS 控制歸位時的平滑度 */
+    transition: box-shadow 0.3s ease; 
+    /* 2. 確保元素在 3D 空間中初始化，這是 Parallax 效果的基礎 */
+    transform: perspective(1000px); 
 }
+/* hover 樣式保持不變 */
 .content-card:hover, .toc-card:hover {
     box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
 }
@@ -2535,45 +2538,57 @@ function bindQuizEventListeners() {
 }
    
 });
- const parallaxElementsSelector = '.toc-card, .content-card'; // 目錄卡片和內容卡片
-const parallaxIntensity = 15; // 視差強度 (數字越大，移動越明顯)
+const parallaxElementsSelector = '.toc-card, .content-card'; // 設定要移動的元素
+const parallaxIntensity = 15; // 視差強度，可調整幅度 (數字越大，移動越明顯)
+let parallaxTimeout; // 用來計時滑鼠是否靜止
+
+// 歸位函式：讓卡片平滑地回到靜止狀態
+function resetParallax() {
+    document.querySelectorAll(parallaxElementsSelector).forEach(element => {
+        // 1. 設置平滑過渡時間（讓卡片優雅地歸位，0.5秒）
+        element.style.transition = 'transform 0.5s ease-out, box-shadow 0.5s ease-out';
+        
+        // 2. 將 transform 重設為無變形 (卡片回到正中間)
+        element.style.transform = 'perspective(1000px) none'; 
+        
+        // 3. 重設 box-shadow 為原本的靜態值 (讓陰影恢復正常)
+        element.style.boxShadow = '0 10px 30px rgba(0, 0, 0, 0.1)';
+    });
+}
 
 function handleParallax(e) {
-    // 1. 計算滑鼠在視窗中的百分比位置 (-0.5 到 0.5)
+    // 每次滑鼠移動，就清除計時器，表示我們還在移動中
+    clearTimeout(parallaxTimeout);
+
+    // 1. 計算滑鼠位置 (這部分是計算中心點)
     const centerX = window.innerWidth / 2;
     const centerY = window.innerHeight / 2;
+    const offsetX = (e.clientX - centerX) / centerX;
+    const offsetY = (e.clientY - centerY) / centerY;
     
-    // 從中心點計算滑鼠偏移量
-    const offsetX = (e.clientX - centerX) / centerX; // 範圍約 -1 到 1
-    const offsetY = (e.clientY - centerY) / centerY; // 範圍約 -1 到 1
-    
-    // 2. 獲取所有目標元素
     const elements = document.querySelectorAll(parallaxElementsSelector);
 
     elements.forEach(element => {
+        // 🌟 關鍵修正：在移動時，移除 transform 的過渡，讓移動是即時且流暢的
+        element.style.transition = 'box-shadow 0.3s ease'; // 只有陰影有過渡，移動是即時的
+
         // 3. 根據滑鼠位置計算旋轉和移動量
-        // - X軸移動: 與滑鼠的 Y 偏移量成反比
-        // - Y軸移動: 與滑鼠的 X 偏移量成反比
         const translateX = -offsetX * parallaxIntensity * 2;
         const translateY = -offsetY * parallaxIntensity * 2;
-        
-        // 4. 計算 3D 傾斜角度
-        // - X軸傾斜: 與滑鼠的 Y 偏移量成反比
-        // - Y軸傾斜: 與滑鼠的 X 偏移量成反比
-        const rotateY = offsetX * (parallaxIntensity / 2); // 左右傾斜
-        const rotateX = -offsetY * (parallaxIntensity / 2); // 上下傾斜 (負值使效果更自然)
+        const rotateY = offsetX * (parallaxIntensity / 2);
+        const rotateX = -offsetY * (parallaxIntensity / 2);
 
-        // 5. 套用 CSS 變形
+        // 5. 套用 CSS 變形 (讓卡片傾斜和移動)
         element.style.transform = `
             perspective(1000px) 
             translateX(${translateX}px) 
             translateY(${translateY}px) 
             rotateX(${rotateX}deg) 
             rotateY(${rotateY}deg)
-            scale(1.0); /* 保持縮放 */
+            scale(1.0);
         `;
         
-        // 6. 優化: 讓陰影也一起改變，增加真實感 (可選)
+        // 6. 優化: 讓陰影跟著移動，增加真實感
         const depthShadowX = -offsetX * 10;
         const depthShadowY = -offsetY * 10;
         element.style.boxShadow = `
@@ -2581,18 +2596,16 @@ function handleParallax(e) {
             ${depthShadowX / 2}px ${depthShadowY / 2}px 10px rgba(0, 0, 0, 0.1)
         `;
     });
+
+    // 7. 設定計時器：如果在 100ms 內滑鼠沒有再次移動，就執行 resetParallax 讓卡片歸位
+    parallaxTimeout = setTimeout(resetParallax, 100); 
 }
 
-// 綁定事件監聽器到整個文檔
+// 綁定事件：滑鼠移動時執行 handleParallax
 document.addEventListener('mousemove', handleParallax);
 
-// 當滑鼠離開視窗時，重設所有元素的 transform，避免元素停留在傾斜狀態
-document.addEventListener('mouseleave', () => {
-    document.querySelectorAll(parallaxElementsSelector).forEach(element => {
-        element.style.transition = 'transform 0.5s ease-out, box-shadow 0.5s ease-out';
-        element.style.boxShadow = '0 10px 30px rgba(0, 0, 0, 0.1)'; 
-    });
-});
+// 綁定事件：滑鼠離開瀏覽器視窗時，立即執行歸位
+document.addEventListener('mouseleave', resetParallax);
 </script>
 <div id="elite-certification-modal" class="fixed inset-0 z-[100] hidden items-center justify-center bg-black bg-opacity-70 backdrop-blur-sm transition-opacity duration-300">
     
@@ -2686,5 +2699,6 @@ document.addEventListener('mouseleave', () => {
     </script>
 </body>
 </html>
+
 
 
