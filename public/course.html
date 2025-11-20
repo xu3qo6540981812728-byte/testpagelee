@@ -2590,7 +2590,6 @@ document.addEventListener('mousemove', handleParallax);
 document.addEventListener('mouseleave', () => {
     document.querySelectorAll(parallaxElementsSelector).forEach(element => {
         element.style.transition = 'transform 0.5s ease-out, box-shadow 0.5s ease-out';
-        element.style.transform = 'perspective(1000px) none';
         element.style.boxShadow = '0 10px 30px rgba(0, 0, 0, 0.1)'; 
     });
 });
@@ -2687,4 +2686,5 @@ document.addEventListener('mouseleave', () => {
     </script>
 </body>
 </html>
+
 
