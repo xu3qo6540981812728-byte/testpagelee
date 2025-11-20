@@ -1372,23 +1372,23 @@ const loggedInRole = sessionStorage.getItem('loggedInRole');
     }
    
    const chapters = [
-         { id: 'manager-dashboard', title: '團隊進度儀表板', description: '主管專用：查看團隊完成清單', role: 'manager_only' },
-        { id: 'chapter0', title: '菁英課程進度表', description: '追蹤你的學習進度' },
-        { id: 'chapter1', title: '台灣房市歷史', description: '回顧過去，洞見未來' },
-        { id: 'chapter2', title: '認識謄本與建物型態', description: '產權的照妖鏡，保障交易安全' },
-        { id: 'chapter3', title: '代書流程', description: '從簽約到交屋的完整路徑圖' },
-        { id: 'chapter4', title: '房地產稅務', description: '買賣持有各階段的稅務知識' },
-        { id: 'chapter5', title: '拍照與建測圖', description: '用專業視角呈現物件' },
-        { id: 'chapter6', title: '開發篇：來源與實戰', description: '業績之母，一切成交的起點' },
-        { id: 'chapter7', title: '回報與議價', description: '贏得信任、創造價值的關鍵溝通' },
-        { id: 'chapter8', title: '銀行貸款與月還款能力評估', description: '協助客戶順利成交的金融知識' },
-        { id: 'chapter9', title: '廣告法規與注意事項', description: '避免廣告不實遭檢舉裁罰的必修課' },
-        { id: 'chapter10', title: '銷售篇：帶看與客戶探索', description: '從帶看到收斡的關鍵步驟' },
-        { id: 'chapter11', title: '引導收斡與調價', description: '臨門一腳的藝術' },
-        { id: 'chapter12', title: '總結：成為頂尖顧問的思維', description: '整合所學，內化為專業本能，成為客戶的顧問而非業務' },
-        { id: 'chapter13', title: '菁英課程模擬考', description: '隨機抽取 10 題選擇題，考驗您的學習成果' }, 
-        { id: 'chapter14', title: '實用工具箱', description: '整合所有線上計算機' } 
-    ];
+     { id: 'manager-dashboard', title: '團隊進度儀表板', description: '主管專用：查看團隊完成清單', icon: 'fas fa-chart-line', role: 'manager_only' },
+     { id: 'chapter0', title: '菁英課程進度表', description: '追蹤你的學習進度', icon: 'fas fa-clipboard-check' }, 
+     { id: 'chapter1', title: '台灣房市歷史', description: '回顧過去，洞見未來', icon: 'fas fa-landmark' },
+     { id: 'chapter2', title: '認識謄本與建物型態', description: '產權的照妖鏡，保障交易安全', icon: 'fas fa-file-contract' },
+     { id: 'chapter3', title: '代書流程', description: '從簽約到交屋的完整路徑圖', icon: 'fas fa-handshake' },
+     { id: 'chapter4', title: '房地產稅務', description: '買賣持有各階段的稅務知識', icon: 'fas fa-regular fa-money-bill-1' }, // 注意使用 regular 
+     { id: 'chapter5', title: '拍照與建測圖', description: '用專業視角呈現物件', icon: 'fas fa-camera-retro' },
+     { id: 'chapter6', title: '開發篇：來源與實戰', description: '業績之母，一切成交的起點', icon: 'fas fa-map-marked-alt' },
+     { id: 'chapter7', title: '回報與議價', description: '贏得信任、創造價值的關鍵溝通', icon: 'fas fa-comment-dollar' },
+     { id: 'chapter8', title: '銀行貸款與月還款能力評估', description: '協助客戶順利成交的金融知識', icon: 'fas fa-house-chimney-medical' },
+     { id: 'chapter9', title: '廣告法規與注意事項', description: '避免廣告不實遭檢舉裁罰的必修課', icon: 'fas fa-bullhorn' },
+     { id: 'chapter10', title: '銷售篇：帶看與客戶探索', description: '從帶看到收斡的關鍵步驟', icon: 'fas fa-people-arrows' },
+     { id: 'chapter11', title: '引導收斡與調價', description: '臨門一腳的藝術', icon: 'fas fa-gavel' },
+     { id: 'chapter12', title: '總結：成為頂尖顧問的思維', description: '整合所學，內化為專業本能，成為客戶的顧問而非業務', icon: 'fas fa-lightbulb' },
+     { id: 'chapter13', title: '菁英課程模擬考', description: '隨機抽取 10 題選擇題，考驗您的學習成果', icon: 'fas fa-file-signature' },
+     { id: 'chapter14', title: '實用工具箱', description: '整合所有線上計算機', icon: 'fas fa-tools' } 
+];
     const audioMap = {
     'chapter1': 'chapter1-history.mp3', // 台灣房市歷史
     'chapter2': 'chapter2.mp3',         // 認識謄本與建物型態
@@ -1606,45 +1606,63 @@ function showContent(sectionId, element) {
     function renderTOCCards(chapterList) {
     tocContainer.innerHTML = '';
     
-    
     const loggedInRole = sessionStorage.getItem('loggedInRole'); 
     
-    let chapterCount = 0; 
+    // 移除 chapterCount，因為現在我們有專屬圖標
 
     chapterList.forEach((chapter, index) => {
         
+        // 檢查權限
         if (chapter.role === 'manager_only' && loggedInRole !== 'manager' && loggedInRole !== 'director') {
             return;
         }
        
-        
+        // 檢查特殊章節 ID
         const isManagerDashboard = chapter.id === 'manager-dashboard';
         const isQuizChapter = chapter.id === 'chapter13';
         const isToolbox = chapter.id === 'chapter14';
+        
         const tocCard = document.createElement('a');
         tocCard.href = `#${chapter.id}`;
         
+        // 統一的基礎樣式
         let cardClass = 'toc-card bg-white p-6 rounded-xl shadow-lg flex flex-col items-center text-center';
         let iconHtml;
 
+        // 判斷專屬樣式
         if (isManagerDashboard) {
-           
-            cardClass = 'toc-card p-6 rounded-xl shadow-2xl flex flex-col items-center text-center bg-yellow-50 border-4 border-yellow-500 hover:bg-yellow-100 transition duration-300 transform hover:scale-[1.02]';
-            iconHtml = `<div class="bg-yellow-600 text-white rounded-full h-12 w-12 flex items-center justify-center font-bold text-xl mb-4"><i class="fas fa-chart-line"></i></div>`;
+           cardClass = 'toc-card p-6 rounded-xl shadow-2xl flex flex-col items-center text-center bg-yellow-50 border-4 border-yellow-500 hover:bg-yellow-100 transition duration-300 transform hover:scale-[1.02]';
         } else if (isQuizChapter) {
-                cardClass = 'toc-card p-6 rounded-xl shadow-2xl flex flex-col items-center text-center bg-red-100 border-4 border-red-600 hover:bg-red-200 transition duration-300 transform hover:scale-[1.02]';
-                iconHtml = `<div class="bg-red-600 text-white rounded-full h-12 w-12 flex items-center justify-center font-bold text-xl mb-4"><i class="fas fa-file-signature"></i></div>`;
-          } else if (isToolbox) {
-                cardClass = 'toc-card p-6 rounded-xl shadow-2xl flex flex-col items-center text-center bg-stone-100 border-4 border-stone-600 hover:bg-stone-200 transition duration-300 transform hover:scale-[1.02]';
-                iconHtml = `<div class="bg-stone-600 text-white rounded-full h-12 w-12 flex items-center justify-center font-bold text-xl mb-4"><i class="fas fa-tools"></i></div>`; 
-          } else {
-            
-            iconHtml = `<div class="bg-indigo-100 text-indigo-600 rounded-full h-12 w-12 flex items-center justify-center font-bold text-xl mb-4 toc-icon-pulse">${chapterCount}</div>`; // <<-- 🌟 新增 toc-icon-pulse 🌟
-            chapterCount++; 
+           cardClass = 'toc-card p-6 rounded-xl shadow-2xl flex flex-col items-center text-center bg-red-100 border-4 border-red-600 hover:bg-red-200 transition duration-300 transform hover:scale-[1.02]';
+        } else if (isToolbox) {
+           cardClass = 'toc-card p-6 rounded-xl shadow-2xl flex flex-col items-center text-center bg-stone-100 border-4 border-stone-600 hover:bg-stone-200 transition duration-300 transform hover:scale-[1.02]';
+        } else if (chapter.id === 'chapter0') {
+            // 進度表卡片樣式
+            cardClass = 'toc-card p-6 rounded-xl shadow-2xl flex flex-col items-center text-center bg-indigo-50 border-4 border-indigo-500 hover:bg-indigo-100 transition duration-300 transform hover:scale-[1.02]';
         }
+
+        // 使用 chapter.icon 屬性來生成圖標 HTML
+        const iconClass = chapter.icon || 'fas fa-circle-question'; // 預設圖標
+        
+        // 統一圖標的容器樣式 (非特殊章節使用 indigo 漸層/動畫)
+        let iconBgClass = (isManagerDashboard || isQuizChapter || isToolbox) 
+            ? 'bg-transparent text-current' // 特殊章節樣式已在卡片上設定
+            : 'bg-indigo-600 text-white';
+
+        if (chapter.id === 'chapter0') {
+             iconBgClass = 'bg-indigo-600 text-white';
+        }
+
+        iconHtml = `
+            <div class="${iconBgClass} rounded-full h-12 w-12 flex items-center justify-center font-bold text-xl mb-4 
+                 ${(!isManagerDashboard && !isQuizChapter && !isToolbox) ? 'toc-icon-pulse' : ''}"
+            >
+                <i class="${iconClass}"></i>
+            </div>
+        `;
+        
         
         tocCard.className = cardClass;
-        
         
         tocCard.onclick = (e) => { 
             e.preventDefault(); 
@@ -1688,37 +1706,27 @@ function showContent(sectionId, element) {
 
     let navChapterCount = 0; 
 
-    chapters.forEach((chapter, index) => {
-        
-        
-        if (chapter.role === 'manager_only' && loggedInRole !== 'manager' && loggedInRole !== 'director') {
-            return;
-        }
+chapters.forEach((chapter, index) => {
+    
+    // 檢查權限
+    if (chapter.role === 'manager_only' && loggedInRole !== 'manager' && loggedInRole !== 'director') {
+        return;
+    }
 
-        const isManagerDashboard = chapter.id === 'manager-dashboard';
-        
-        const navLink = document.createElement('a');
-        navLink.href = `#${chapter.id}`;
-        navLink.className = `nav-link flex items-center py-3 px-4 rounded-lg transition duration-200`;
-        navLink.dataset.chapterId = chapter.id;
-        
-        
-        let navIcon;
-        if (isManagerDashboard) {
-            
-            navIcon = '<i class="fas fa-chart-line"></i>'; 
-        } else {
-            
-            navIcon = navChapterCount;
-            navChapterCount++; 
-        }
-        
-        
-        navLink.onclick = (e) => { e.preventDefault(); showChapterView(chapter.id); };
-        
-        
-        navLink.innerHTML = `<span class="w-6 text-center mr-3">${navIcon}</span> ${chapter.title}`;
-        sidebarNav.appendChild(navLink);
+    const navLink = document.createElement('a');
+    navLink.href = `#${chapter.id}`;
+    navLink.className = `nav-link flex items-center py-3 px-4 rounded-lg transition duration-200`;
+    navLink.dataset.chapterId = chapter.id;
+    
+    // 使用 chapter.icon 來生成圖標，如果沒有，則使用預設
+    const navIcon = chapter.icon || 'fas fa-circle-question';
+    
+    // 設定點擊事件
+    navLink.onclick = (e) => { e.preventDefault(); showChapterView(chapter.id); };
+    
+    // 側邊欄使用圖標
+    navLink.innerHTML = `<span class="w-6 text-center mr-3"><i class="${navIcon}"></i></span> ${chapter.title}`;
+    sidebarNav.appendChild(navLink);
         
         
         const content = chapterTemplate.content.querySelector('#' + chapter.id); 
@@ -2718,6 +2726,7 @@ function bindQuizEventListeners() {
     </script>
 </body>
 </html>
+
 
 
 
