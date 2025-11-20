@@ -1684,10 +1684,8 @@ function setupGlobalParallax() {
     // 當滑鼠移出視窗或靜止時，將所有 transform 歸位
     document.body.addEventListener('mouseleave', () => {
         const chapterView = document.getElementById('chapter-view');
-        
+        const sidebar = document.getElementById('sidebar');
         const elementsToReset = document.querySelectorAll('.content-section h2, .content-card, #progress-display-area, .toc-card');
-        
-        // 🌟 移除了對 sidebar 的重置，因為它沒有移動 🌟
         
         if (chapterView) {
             chapterView.style.transform = 'none';
@@ -2675,6 +2673,7 @@ function bindQuizEventListeners() {
     </script>
 </body>
 </html>
+
 
 
 
