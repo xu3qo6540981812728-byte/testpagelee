@@ -441,7 +441,45 @@
     overflow: hidden;
 }
 
-        
+/* --- 🚀 進度條縮放優化開始 --- */
+
+/* 1. 設定過渡動畫，讓縮放時很平滑 */
+#progress-display-area {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    will-change: padding, background-color; /* 效能優化 */
+}
+
+/* 2. 當被標記為 'stuck' (黏住/縮小) 狀態時的樣式 */
+#progress-display-area.is-stuck {
+    padding: 0.75rem 1rem !important; /* 縮減上下內距 */
+    background-color: rgba(255, 255, 255, 0.95) !important; /* 背景改為白色微透明 */
+    backdrop-filter: blur(8px); /* 毛玻璃效果 */
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1); /* 增加陰影區隔內容 */
+    border-bottom: 1px solid #e2e8f0;
+    z-index: 50 !important; /* 確保層級最高 */
+}
+
+/* 3. 縮小狀態下：隱藏不必要的元素 (金句、主管面板、當前查看者) */
+#progress-display-area.is-stuck #progress-motivation,
+#progress-display-area.is-stuck #manager-control-panel,
+#progress-display-area.is-stuck #current-user-info,
+#progress-display-area.is-stuck p.text-base {
+    display: none !important;
+    opacity: 0;
+    height: 0;
+    margin: 0;
+}
+
+/* 4. 縮小狀態下：調整標題與進度條排版 */
+#progress-display-area.is-stuck h4#progress-percentage {
+    font-size: 1rem !important; /* 字體變小 */
+    margin-bottom: 0.25rem !important;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* --- 🚀 進度條縮放優化結束 --- */        
        
 
         
@@ -2729,9 +2767,73 @@ function bindQuizEventListeners() {
     particleOverlay.style.transform = 'translate(0, 0)';
 });
         }
+        // --- 🚀 進度條自動縮放邏輯 (Sentinel Observer) ---
+function initStickyObserver() {
+    const progressArea = document.getElementById('progress-display-area');
+    
+    if (!progressArea) return;
+
+    // 1. 建立一個「哨兵」元素 (透明的線)
+    // 如果已經有哨兵了就不要重複建立
+    if (!document.getElementById('sticky-sentinel')) {
+        const sentinel = document.createElement('div');
+        sentinel.id = 'sticky-sentinel';
+        // 設定樣式：絕對定位，向上偏移一點點，確保它比 sticky 元素早一點滾出去
+        sentinel.style.position = 'absolute';
+        sentinel.style.top = '-10px'; 
+        sentinel.style.height = '1px';
+        sentinel.style.width = '100%';
+        sentinel.style.visibility = 'hidden'; // 看不見
+        
+        // 將哨兵插入到 progressArea 的「正上方」 (父容器內)
+        progressArea.parentNode.insertBefore(sentinel, progressArea);
+        
+        // 為了讓 sentinel 的 absolute 定位準確，父容器 chapter0 需要是 relative
+        // 你的 HTML 結構是 #chapter0 > #progress-display-area
+        progressArea.parentNode.style.position = 'relative'; 
+        
+        // 2. 建立觀察器 (IntersectionObserver)
+        const observer = new IntersectionObserver((entries) => {
+            const entry = entries[0];
+            
+            // 邏輯：如果哨兵「看不見了」(isIntersecting = false) 且 它是從「上方」滾出去的 (boundingClientRect.top < 0)
+            // 代表進度條現在已經黏在頂部了
+            if (!entry.isIntersecting && entry.boundingClientRect.top < 0) {
+                progressArea.classList.add('is-stuck');
+            } else {
+                progressArea.classList.remove('is-stuck');
+            }
+        }, {
+            threshold: 0,
+            rootMargin: '0px 0px 0px 0px'
+        });
+
+        // 開始監視哨兵
+        observer.observe(sentinel);
+    }
+}
+
+// 3. 確保在切換到 chapter0 時啟動這個邏輯
+// 請將此函式掛載到你的 showChapterView 或 loadProgressFromFirebase 之後
+// 為了保險起見，這裡設一個 MutationObserver 自動監聽 chapter0 是否出現
+const chapter0Observer = new MutationObserver((mutations) => {
+    const chapter0 = document.getElementById('chapter0');
+    if (chapter0 && chapter0.classList.contains('active')) {
+        // 延遲一點點確保 DOM 渲染完成
+        setTimeout(initStickyObserver, 100);
+    }
+});
+
+// 開始監聽 main 區域的變化
+const mainContent = document.querySelector('main');
+if (mainContent) {
+    chapter0Observer.observe(mainContent, { childList: true, subtree: true, attributes: true });
+}
+// ------------------------------------------------
     </script>
 </body>
 </html>
+
 
 
 
