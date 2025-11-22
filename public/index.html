@@ -1,190 +1,162 @@
 <!DOCTYPE html>
-<html lang="zh-Hant">
+<html lang="zh-TW">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>菁英班教育訓練 - 登入</title>
+    <title>系統登入</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <style>
-        #password-modal {
-    /* 設定視角，讓變換看起來是 3D 的 */
-    perspective: 1000px;
-}
-.parallax-card {
-    /* 定義旋轉的 CSS 變量 */
-    --rotateX: 0deg;
-    --rotateY: 0deg;
-    /* 應用 3D 變換 */
-    transform: rotateX(var(--rotateX)) rotateY(var(--rotateY));
-    /* 讓變換更流暢 */
-    transition: transform 0.1s ease-out;
-    transform-style: preserve-3d; /* 保留子元素的 3D 位置 */
-}
-       .glowing-box {
-    /* 調整發光參數：增強藍色發光 (79, 70, 229 是 indigo 色) */
-    box-shadow: 0 0 15px rgba(79, 70, 229, 0.8), 0 0 30px rgba(79, 70, 229, 0.5), 0 15px 40px rgba(0, 0, 0, 0.1); 
-    transition: box-shadow 0.3s ease-in-out, transform 0.3s ease-out;
-}
-.glowing-box:hover {
-    /* 增強懸停時的發光，讓它看起來像在「呼吸」或被「充電」 */
-    box-shadow: 0 0 25px rgba(79, 70, 229, 0.9), 0 0 50px rgba(79, 70, 229, 0.7), 0 20px 50px rgba(0, 0, 0, 0.3);
-}
-/* 登入按鈕發光效果 (使用 Tailwind 的 indigo-600 顏色) */
-.glowing-button {
-    box-shadow: 0 4px 15px rgba(79, 70, 229, 0.6), 0 0 10px rgba(79, 70, 229, 0.3);
-    transition: box-shadow 0.3s ease-in-out;
-}
-.glowing-button:hover {
-    box-shadow: 0 6px 20px rgba(79, 70, 229, 0.8), 0 0 15px rgba(79, 70, 229, 0.5);
-}
-        @keyframes zoomIn { from { opacity: 0; transform: scale(0.9); } to { opacity: 1; transform: scale(1); } }
-        body { background-color: #000000; }
+        /* --- 自定義樣式開始 --- */
 
-        /* --- ✨ 新增的閃爍動畫效果 CSS ✨ --- */
-        @keyframes flicker-glow {
-            0%, 100% { 
-                /* 正常狀態或淡出狀態 (稍微有光) */
-                box-shadow: 0 0 5px rgba(79, 70, 229, 0.5), 0 0 10px rgba(79, 70, 229, 0.2); 
+        /* 1. 整體容器：設定為 Flex 佈局 */
+        .login-container {
+            min-height: 100vh;
+            display: flex;
+            /* 手機優先：預設為垂直排列 (Column) */
+            flex-direction: column;
+        }
+
+        /* 2. 左側圖片區塊樣式 */
+        .brand-section {
+            background: linear-gradient(135deg, #1a202c 0%, #2d3748 100%); /* 深色漸層背景，凸顯金色 */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 3rem;
+            min-height: 35vh; /* 手機版至少佔高 35% */
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* 3. 右側表單區塊樣式 */
+        .form-section {
+            flex: 1; /* 佔滿剩餘空間 */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #f7fafc; /* 淺灰背景，乾淨俐落 */
+            padding: 2rem;
+        }
+
+        /* 表單本身的容器限制寬度 */
+        .form-box {
+            width: 100%;
+            max-width: 420px;
+            /* 手機版增加一點圓角和陰影，讓它浮起來 */
+            background: white;
+            padding: 2rem;
+            border-radius: 1rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        }
+
+
+        /* --- 桌面版 (寬度大於 768px) 佈局調整 --- */
+        @media (min-width: 768px) {
+            .login-container {
+                /* 改為水平排列 (Row) */
+                flex-direction: row;
             }
-            50% { 
-                /* 最亮狀態 (發出強光) */
-                box-shadow: 0 0 15px rgba(79, 70, 229, 0.8), 0 0 25px rgba(79, 70, 229, 0.4); 
+
+            .brand-section {
+                flex: 1; /* 左側佔一半 */
+                min-height: 100vh; /* 滿高 */
+                padding: 0;
+            }
+
+            .form-section {
+                flex: 1; /* 右側佔一半 */
+                padding: 4rem;
+                background-color: white; /* 桌面版背景改全白 */
+            }
+            
+            .form-box {
+                box-shadow: none; /* 桌面版移除陰影，更平面化 */
+                padding: 0;
+            }
+        }
+        /* ---------------------------------- */
+
+
+        /* --- 金色光芒動畫設計 --- */
+
+        /* 定義關鍵影格動畫：GoldenPulse */
+        @keyframes goldenPulse {
+            0% {
+                /* 初始狀態：較弱的金光 */
+                filter: drop-shadow(0 0 15px rgba(212, 175, 55, 0.5));
+                transform: scale(1);
+            }
+            50% {
+                /* 中間狀態：強烈的金光，並稍微放大 */
+                /* 使用兩個 drop-shadow 疊加，製造層次感 */
+                filter: drop-shadow(0 0 30px rgba(255, 223, 0, 0.8)) 
+                        drop-shadow(0 0 60px rgba(212, 175, 55, 0.4));
+                transform: scale(1.03); /* 輕微的呼吸放大效果 */
+            }
+            100% {
+                /* 回到初始狀態 */
+                filter: drop-shadow(0 0 15px rgba(212, 175, 55, 0.5));
+                transform: scale(1);
             }
         }
 
-        .flickering-input {
-            /* 確保過渡效果不會影響動畫 */
-            transition: none !important; 
-            /* 套用動畫：名稱, 速度, 方式, 次數 */
-            animation: flicker-glow 1.0s ease-in-out infinite alternate;
+        .glowing-logo {
+            max-width: 80%; /* 手機版大小 */
+            height: auto;
+            /* 套用動畫：時長 3秒，緩入緩出，無限循環 */
+            animation: goldenPulse 3s ease-in-out infinite;
+            /* 確保在深色背景上看起來更有質感 */
+            opacity: 0.95;
         }
-        /* --- ✨ 結束新增 CSS ✨ --- */
 
+        /* 桌面版圖片大一點 */
+        @media (min-width: 768px) {
+            .glowing-logo {
+                max-width: 60%;
+            }
+        }
+
+        /* --- 自定義樣式結束 --- */
     </style>
 </head>
-<body>
-    <div id="password-modal" class="fixed inset-0 z-50 flex items-center justify-center bg-gray-900 bg-opacity-75 backdrop-blur-sm">
-        <div class="bg-white p-8 rounded-2xl shadow-2xl w-full max-w-sm text-center glowing-box parallax-card" style="animation: zoomIn 0.3s ease-out;">
-            <h2 class="text-2xl font-bold text-slate-800 mb-4">課程系統登入</h2>
-            <p class="text-slate-500 mb-6">此為內部訓練課程，請輸入您的帳號密碼。</p>
-            <input type="text" id="username-input" class="w-full px-4 py-3 border-2 border-slate-300 rounded-lg text-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition mb-4" placeholder="請輸入帳號">
-            <input type="password" id="password-input" class="w-full px-4 py-3 border-2 border-slate-300 rounded-lg text-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition" placeholder="請輸入密碼">
-            <p id="error-message" class="text-red-500 h-6 mt-2 text-sm"></p>
-            <button id="submit-password" class="w-full bg-indigo-600 text-white font-bold py-3 px-4 rounded-lg hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition duration-300 mt-4 glowing-button">
-    登入課程
-</button>
+<body> <div class="login-container">
+        
+        <div class="brand-section">
+            <img src="images/icon4.png" alt="Logo" class="glowing-logo">
         </div>
 
-        <footer class="absolute bottom-0 left-0 right-0 text-center py-6 text-sm text-slate-300 w-full">
-            <p>Copyright © 2025 李培智. All Rights Reserved.</p>
-        </footer>
+        <div class="form-section">
+            <div class="form-box space-y-8"> <div class="text-center">
+                    <h2 class="text-3xl font-extrabold text-gray-900">登入系統</h2>
+                    <p class="mt-2 text-sm text-gray-600">請輸入您的帳號密碼以繼續</p>
+                </div>
+
+                <form id="loginForm" class="space-y-6">
+                    <div>
+                        <label for="username" class="block text-sm font-medium text-gray-700 mb-1">帳號</label>
+                        <input type="text" id="username" name="username" required 
+                            class="appearance-none block w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 sm:text-sm transition duration-200"
+                            placeholder="請輸入帳號">
+                    </div>
+                    <div>
+                        <label for="password" class="block text-sm font-medium text-gray-700 mb-1">密碼</label>
+                        <input type="password" id="password" name="password" required 
+                            class="appearance-none block w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 sm:text-sm transition duration-200"
+                            placeholder="請輸入密碼">
+                    </div>
+                    <div>
+                        <button type="submit" 
+                            class="w-full flex justify-center py-3 px-4 border border-transparent rounded-lg shadow-sm text-sm font-bold text-white bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition duration-300 transform hover:scale-[1.02]">
+                            登入
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
     </div>
 
-   <script>
-    document.addEventListener('DOMContentLoaded', () => {
-        const usernameInput = document.getElementById('username-input');
-        const passwordInput = document.getElementById('password-input');
-        const submitButton = document.getElementById('submit-password');
-        const errorMessage = document.getElementById('error-message');
-
-        // --- ✨ 新增的焦點事件處理函數 ✨ ---
-        function addFlickerEffect(event) {
-            // 點擊/Tab 進來時，加上閃爍 class
-            event.target.classList.add('flickering-input');
-        }
-
-        function removeFlickerEffect(event) {
-            // 點擊/Tab 離開時，移除閃爍 class
-            event.target.classList.remove('flickering-input');
-        }
-
-        // 綁定事件監聽器
-        usernameInput.addEventListener('focus', addFlickerEffect);
-        usernameInput.addEventListener('blur', removeFlickerEffect);
-
-        passwordInput.addEventListener('focus', addFlickerEffect);
-        passwordInput.addEventListener('blur', removeFlickerEffect);
-        // --- ✨ 結束新增 JS ✨ ---
-
-
-        async function handleLogin() {
-            const username = usernameInput.value.trim();
-            const password = passwordInput.value;
-            errorMessage.textContent = '';
-            submitButton.disabled = true;
-            submitButton.textContent = '登入中...';
-
-            try {
-                const response = await fetch('/.netlify/functions/login', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ username, password })
-                });
-                const data = await response.json();
-
-                if (response.ok && data.success) {
-                    sessionStorage.setItem('loggedInUser', data.username);
-                    sessionStorage.setItem('loggedInName', data.name);
-                    sessionStorage.setItem('loggedInRole', data.role); 
-                    sessionStorage.setItem('loggedInTeam', data.team);
-                    window.location.href = '/course.html';
-                } else {
-                    errorMessage.textContent = data.message || '登入失敗，請重試。';
-                    passwordInput.value = '';
-                    passwordInput.focus();
-                }
-            } catch (error) {
-                errorMessage.textContent = '網路連線錯誤，請稍後再試。';
-            } finally {
-                submitButton.disabled = false;
-                submitButton.textContent = '登入課程';
-            }
-        }
-
-        submitButton.addEventListener('click', handleLogin);
-        passwordInput.addEventListener('keydown', (e) => { if (e.key === 'Enter') handleLogin(); });
-        usernameInput.addEventListener('keydown', (e) => { if (e.key === 'Enter') passwordInput.focus(); });
-    const loginCard = document.querySelector('.parallax-card');
-const loginContainer = document.getElementById('password-modal'); // 使用父容器作為事件監聽
-
-if (loginCard && loginContainer) {
-    loginContainer.addEventListener('mousemove', (e) => {
-        // 獲取容器的大小與位置
-        const rect = loginContainer.getBoundingClientRect();
-        
-        // 計算滑鼠在容器中的相對位置 (x: 0~1, y: 0~1)
-        const x = e.clientX - rect.left;
-        const y = e.clientY - rect.top;
-
-        // 計算中心點的偏差 (normalized to -1 to 1)
-        const centerX = rect.width / 2;
-        const centerY = rect.height / 2;
-        
-        const offsetX = (x - centerX) / centerX; // -1 (左) 到 1 (右)
-        const offsetY = (y - centerY) / centerY; // -1 (上) 到 1 (下)
-
-        // 設定最大移動像素
-        const MAX_MOVEMENT = 10; 
-
-        // 計算移動距離。
-        // 使用負號 (-) 讓卡片往滑鼠的**反方向**移動，這會產生卡片像在漂浮，或滑鼠在推動卡片的視覺效果。
-        const moveX = -offsetX * MAX_MOVEMENT;
-        const moveY = -offsetY * MAX_MOVEMENT;
-
-        // 應用 2D 平移 (TranslateX/Y)
-        loginCard.style.transform = `translateX(${moveX}px) translateY(${moveY}px)`;
-    });
-
-    // 當滑鼠移出容器時，將卡片歸位
-    loginContainer.addEventListener('mouseleave', () => {
-        loginCard.style.transform = `translateX(0px) translateY(0px)`;
-    });
-}
-    });
-   </script>
+    <script src="login.js"></script>
 </body>
-
 </html>
-
-
-
