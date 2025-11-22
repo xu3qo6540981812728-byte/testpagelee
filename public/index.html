@@ -8,133 +8,145 @@
     <style>
         /* --- 核心背景設定 --- */
         body {
-            background-color: #000000; /* 保持全黑背景 */
+            background-color: #000000;
             margin: 0;
-            overflow-x: hidden; /* 防止手機橫向卷軸 */
+            overflow: hidden; /* 隱藏卷軸，讓體驗更像應用程式 */
             font-family: 'Noto Sans TC', sans-serif;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
-        /* --- 1. 左側圖片：金色光芒特效 --- */
+        /* --- 環境光融合 (解決分界線太明顯的問題) --- */
+        /* 增加一個全域的背景光暈，把金與藍融合在一起 */
+        .ambient-light {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at center, rgba(30, 30, 50, 0.3) 0%, rgba(0, 0, 0, 1) 80%);
+            z-index: 0;
+            pointer-events: none; /* 確保不擋住點擊 */
+        }
+
+        /* --- 1. 左側圖片：金色呼吸光芒 --- */
         @keyframes golden-breath {
             0%, 100% {
-                filter: drop-shadow(0 0 15px rgba(212, 175, 55, 0.4));
+                filter: drop-shadow(0 0 15px rgba(212, 175, 55, 0.3));
                 transform: scale(1);
             }
             50% {
-                /* 使用多重 drop-shadow 製造層次豐富的金光 */
-                filter: drop-shadow(0 0 30px rgba(255, 215, 0, 0.8)) 
-                        drop-shadow(0 0 60px rgba(255, 140, 0, 0.5));
-                transform: scale(1.02); /* 輕微呼吸放大 */
+                filter: drop-shadow(0 0 35px rgba(255, 215, 0, 0.7)) 
+                        drop-shadow(0 0 70px rgba(255, 140, 0, 0.4));
+                transform: scale(1.02);
             }
         }
         .golden-glow-img {
-            animation: golden-breath 3s ease-in-out infinite;
-            max-width: 80%; /* 手機版圖片大小 */
+            animation: golden-breath 4s ease-in-out infinite; /* 放慢一點，更有質感 */
+            max-width: 80%;
             height: auto;
+            position: relative;
+            z-index: 10;
         }
-        /* 桌面版圖片限制 */
         @media (min-width: 768px) {
-            .golden-glow-img {
-                max-width: 65%; 
-            }
+            .golden-glow-img { max-width: 65%; }
         }
 
-        /* --- 2. 右側登入框：保留您原本的 3D 視差與藍色發光 --- */
+        /* --- 2. 3D 視差容器 --- */
         .perspective-container {
-            perspective: 1000px; /* 3D 視角 */
+            perspective: 1200px; /* 拉遠一點視角，讓轉動更自然 */
         }
 
         .parallax-card {
-            /* 定義旋轉的 CSS 變量，由 JS 控制 */
+            /* 變數由 JS 控制 */
             --rotateX: 0deg;
             --rotateY: 0deg;
             transform: rotateX(var(--rotateX)) rotateY(var(--rotateY));
-            transition: transform 0.1s ease-out;
+            transition: transform 0.15s ease-out; /* 稍微調慢一點點，增加重量感 */
             transform-style: preserve-3d;
+            z-index: 20;
         }
 
         .glowing-box {
-            /* 原本的強烈藍色發光 */
-            box-shadow: 0 0 20px rgba(79, 70, 229, 0.6), 
-                        0 0 40px rgba(79, 70, 229, 0.4), 
-                        0 20px 50px rgba(0, 0, 0, 0.5);
-            transition: box-shadow 0.3s ease-in-out;
-            background-color: rgba(255, 255, 255, 0.95); /* 稍微不透明一點，更有質感 */
+            /* 藍色發光 */
+            box-shadow: 0 0 25px rgba(79, 70, 229, 0.5), 
+                        0 0 50px rgba(79, 70, 229, 0.3), 
+                        0 20px 60px rgba(0, 0, 0, 0.7);
+            background-color: rgba(255, 255, 255, 0.95);
+            border: 1px solid rgba(255, 255, 255, 0.1);
         }
 
-        .glowing-box:hover {
-            box-shadow: 0 0 30px rgba(79, 70, 229, 0.8), 
-                        0 0 60px rgba(79, 70, 229, 0.6), 
-                        0 30px 60px rgba(0, 0, 0, 0.6);
-        }
-
-        /* --- 3. 輸入框與按鈕特效：保留原本的設定 --- */
+        /* --- 3. 輸入框特效 --- */
         .glowing-button {
-            box-shadow: 0 4px 15px rgba(79, 70, 229, 0.6), 0 0 10px rgba(79, 70, 229, 0.3);
-            transition: box-shadow 0.3s ease-in-out, transform 0.1s;
+            box-shadow: 0 4px 15px rgba(79, 70, 229, 0.5);
+            transition: all 0.3s;
         }
         .glowing-button:hover {
-            box-shadow: 0 6px 25px rgba(79, 70, 229, 0.9), 0 0 20px rgba(79, 70, 229, 0.6);
-            transform: translateY(-2px);
+            box-shadow: 0 0 20px rgba(79, 70, 229, 0.8);
+            transform: scale(1.02);
         }
 
         @keyframes flicker-glow {
-            0%, 100% { box-shadow: 0 0 5px rgba(79, 70, 229, 0.5), 0 0 10px rgba(79, 70, 229, 0.2); }
-            50% { box-shadow: 0 0 20px rgba(79, 70, 229, 0.9), 0 0 30px rgba(79, 70, 229, 0.5); }
+            0%, 100% { box-shadow: 0 0 5px rgba(79, 70, 229, 0.4); border-color: #6366f1; }
+            50% { box-shadow: 0 0 15px rgba(79, 70, 229, 0.8); border-color: #4f46e5; }
         }
-
         .flickering-input {
-            transition: none !important;
-            animation: flicker-glow 1.0s ease-in-out infinite alternate;
-            border-color: #4f46e5 !important;
+            animation: flicker-glow 1.2s infinite alternate;
         }
 
         /* 入場動畫 */
-        @keyframes zoomIn { 
-            from { opacity: 0; transform: scale(0.9); } 
-            to { opacity: 1; transform: scale(1); } 
+        @keyframes fadeZoomIn { 
+            from { opacity: 0; transform: scale(0.9) translateY(20px); } 
+            to { opacity: 1; transform: scale(1) translateY(0); } 
         }
     </style>
 </head>
-<body class="min-h-screen flex flex-col md:flex-row items-center justify-center relative">
+<body>
 
-    <div class="w-full md:w-1/2 h-[40vh] md:h-screen flex items-center justify-center relative p-6 order-1">
-        <img src="images/icon4.png" alt="Logo" class="golden-glow-img z-10 relative">
-        
-        <div class="absolute inset-0 bg-gradient-to-t from-blue-900/20 to-transparent pointer-events-none"></div>
-    </div>
+    <div class="ambient-light"></div>
 
-    <div id="login-container-area" class="w-full md:w-1/2 h-auto md:h-screen flex items-center justify-center p-6 perspective-container order-2 z-20">
-        
-        <div class="bg-white p-8 rounded-2xl w-full max-w-sm text-center glowing-box parallax-card relative" style="animation: zoomIn 0.5s ease-out;">
+    <div class="relative w-full max-w-7xl mx-auto h-full flex flex-col md:flex-row items-center justify-center z-10 p-6 gap-8 md:gap-0">
+
+        <div class="w-full md:w-1/2 flex items-center justify-center order-1 md:order-1">
+            <img src="icon4.png" alt="Logo" class="golden-glow-img">
+        </div>
+
+        <div class="w-full md:w-1/2 flex items-center justify-center perspective-container order-2 md:order-2">
             
-            <h2 class="text-3xl font-bold text-slate-800 mb-2">課程系統登入</h2>
-            <p class="text-slate-500 mb-8 text-sm">內部訓練專用系統</p>
-            
-            <div class="space-y-6">
-                <div>
-                    <input type="text" id="username-input" 
-                        class="w-full px-4 py-3 border-2 border-slate-300 rounded-lg text-lg focus:outline-none transition duration-200" 
-                        placeholder="請輸入帳號">
+            <div id="login-card" class="bg-white p-8 md:p-10 rounded-2xl w-full max-w-sm text-center glowing-box parallax-card" 
+                 style="animation: fadeZoomIn 0.6s ease-out;">
+                
+                <h2 class="text-3xl font-bold text-slate-800 mb-2">課程系統登入</h2>
+                <p class="text-slate-500 mb-8 text-sm">內部訓練專用系統</p>
+                
+                <div class="space-y-6">
+                    <div class="relative">
+                        <input type="text" id="username-input" 
+                            class="w-full px-4 py-3 border-2 border-slate-200 rounded-lg text-lg bg-slate-50 focus:bg-white focus:outline-none transition duration-200 placeholder-slate-400" 
+                            placeholder="請輸入帳號">
+                    </div>
+                    <div class="relative">
+                        <input type="password" id="password-input" 
+                            class="w-full px-4 py-3 border-2 border-slate-200 rounded-lg text-lg bg-slate-50 focus:bg-white focus:outline-none transition duration-200 placeholder-slate-400" 
+                            placeholder="請輸入密碼">
+                    </div>
                 </div>
-                <div>
-                    <input type="password" id="password-input" 
-                        class="w-full px-4 py-3 border-2 border-slate-300 rounded-lg text-lg focus:outline-none transition duration-200" 
-                        placeholder="請輸入密碼">
+
+                <p id="error-message" class="text-red-500 h-6 mt-3 text-sm font-bold"></p>
+                
+                <button id="submit-password" 
+                    class="w-full bg-indigo-600 text-white font-bold py-3 px-4 rounded-lg mt-2 glowing-button text-lg tracking-wide">
+                    登入課程
+                </button>
+
+                <div class="mt-8 border-t border-slate-100 pt-4">
+                    <p class="text-xs text-slate-400">Copyright © 2025 李培智. All Rights Reserved.</p>
                 </div>
-            </div>
-
-            <p id="error-message" class="text-red-500 h-6 mt-3 text-sm font-bold"></p>
-            
-            <button id="submit-password" 
-                class="w-full bg-indigo-600 text-white font-bold py-3 px-4 rounded-lg mt-2 glowing-button text-lg">
-                登入課程
-            </button>
-
-            <div class="mt-6 border-t border-slate-200 pt-4">
-                <p class="text-xs text-slate-400">Copyright © 2025 李培智. All Rights Reserved.</p>
             </div>
         </div>
+
     </div>
 
    <script>
@@ -143,29 +155,63 @@
         const passwordInput = document.getElementById('password-input');
         const submitButton = document.getElementById('submit-password');
         const errorMessage = document.getElementById('error-message');
+        const loginCard = document.getElementById('login-card');
 
-        // --- 1. 輸入框發光特效 (保留原本邏輯) ---
-        function addFlickerEffect(event) {
-            event.target.classList.add('flickering-input');
-        }
-        function removeFlickerEffect(event) {
-            event.target.classList.remove('flickering-input');
-        }
-        usernameInput.addEventListener('focus', addFlickerEffect);
-        usernameInput.addEventListener('blur', removeFlickerEffect);
-        passwordInput.addEventListener('focus', addFlickerEffect);
-        passwordInput.addEventListener('blur', removeFlickerEffect);
+        // --- 1. 輸入框閃爍特效 ---
+        function addFlicker(e) { e.target.classList.add('flickering-input'); }
+        function removeFlicker(e) { e.target.classList.remove('flickering-input'); }
+        
+        [usernameInput, passwordInput].forEach(input => {
+            input.addEventListener('focus', addFlicker);
+            input.addEventListener('blur', removeFlicker);
+        });
 
-        // --- 2. 登入邏輯 ---
+        // --- 2. 全域 3D 浮動特效 (修正版) ---
+        // 我們現在監聽 document，讓滑鼠在畫面任何地方都能觸發轉動
+        document.addEventListener('mousemove', (e) => {
+            // 手機版通常不需要這個特效，避免干擾滑動
+            if (window.innerWidth < 768) return;
+
+            // 取得登入卡片的中心點位置
+            const rect = loginCard.getBoundingClientRect();
+            const cardCenterX = rect.left + rect.width / 2;
+            const cardCenterY = rect.top + rect.height / 2;
+
+            // 計算滑鼠相對於卡片中心的距離
+            // 為了讓轉動更平滑，我們把螢幕寬度當作參考分母
+            const x = e.clientX - cardCenterX;
+            const y = e.clientY - cardCenterY;
+
+            // 設定轉動係數 (數字越小轉動越小)
+            // 我們讓 Y 軸轉動(左右傾斜)稍微明顯一點
+            const sensitivity = 25; 
+
+            // 計算旋轉角度
+            // 滑鼠在右邊 -> 卡片要往右轉 -> rotateY 是正值
+            // 滑鼠在上面 -> 卡片要往上仰 -> rotateX 是正值
+            const rotateY = (x / window.innerWidth) * sensitivity;
+            const rotateX = -(y / window.innerHeight) * sensitivity;
+
+            loginCard.style.setProperty('--rotateX', `${rotateX}deg`);
+            loginCard.style.setProperty('--rotateY', `${rotateY}deg`);
+        });
+
+        // 當滑鼠移出視窗時，讓卡片慢慢回正
+        document.addEventListener('mouseleave', () => {
+            loginCard.style.setProperty('--rotateX', `0deg`);
+            loginCard.style.setProperty('--rotateY', `0deg`);
+        });
+
+        // --- 3. 登入功能 ---
         async function handleLogin() {
             const username = usernameInput.value.trim();
             const password = passwordInput.value;
             errorMessage.textContent = '';
             submitButton.disabled = true;
             submitButton.textContent = '驗證中...';
+            submitButton.classList.add('opacity-75', 'cursor-wait');
 
             try {
-                // 呼叫後端 API (請確保 login.js 已部署)
                 const response = await fetch('/.netlify/functions/login', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
@@ -182,76 +228,28 @@
                 } else {
                     errorMessage.textContent = data.message || '帳號或密碼錯誤';
                     passwordInput.value = '';
-                    
-                    // 登入失敗的小動畫：搖晃視窗
-                    const card = document.querySelector('.parallax-card');
-                    card.style.animation = 'none';
-                    card.offsetHeight; /* trigger reflow */
-                    card.style.animation = 'shake 0.5s';
                     passwordInput.focus();
+                    // 錯誤時輕微震動
+                    loginCard.animate([
+                        { transform: 'translateX(0)' },
+                        { transform: 'translateX(-5px)' },
+                        { transform: 'translateX(5px)' },
+                        { transform: 'translateX(0)' }
+                    ], { duration: 300 });
                 }
             } catch (error) {
                 errorMessage.textContent = '網路連線錯誤，請稍後再試。';
             } finally {
                 submitButton.disabled = false;
                 submitButton.textContent = '登入課程';
+                submitButton.classList.remove('opacity-75', 'cursor-wait');
             }
         }
 
         submitButton.addEventListener('click', handleLogin);
         passwordInput.addEventListener('keydown', (e) => { if (e.key === 'Enter') handleLogin(); });
         usernameInput.addEventListener('keydown', (e) => { if (e.key === 'Enter') passwordInput.focus(); });
-
-        // --- 3. 3D 浮動特效 (Parallax Effect) ---
-        // 這次我們監聽右側的容器 (login-container-area)
-        const loginCard = document.querySelector('.parallax-card');
-        const mouseArea = document.getElementById('login-container-area'); 
-
-        if (loginCard && mouseArea) {
-            mouseArea.addEventListener('mousemove', (e) => {
-                // 只有在桌面版才啟用滑鼠互動，手機版不需要
-                if (window.innerWidth < 768) return;
-
-                const rect = mouseArea.getBoundingClientRect();
-                const x = e.clientX - rect.left;
-                const y = e.clientY - rect.top;
-
-                const centerX = rect.width / 2;
-                const centerY = rect.height / 2;
-                
-                // 計算偏移量 (-1 到 1)
-                const offsetX = (x - centerX) / centerX; 
-                const offsetY = (y - centerY) / centerY; 
-
-                // 設定最大旋轉角度
-                const MAX_ROTATE = 10; // 增加一點角度讓效果更明顯
-
-                // 計算旋轉角度：滑鼠在左邊，卡片往左傾斜 (RotateY 負值)
-                // 滑鼠在上面，卡片往上傾斜 (RotateX 正值)
-                const rotateY = offsetX * MAX_ROTATE;
-                const rotateX = -offsetY * MAX_ROTATE;
-
-                // 更新 CSS 變數
-                loginCard.style.setProperty('--rotateX', `${rotateX}deg`);
-                loginCard.style.setProperty('--rotateY', `${rotateY}deg`);
-            });
-
-            // 滑鼠離開時歸位
-            mouseArea.addEventListener('mouseleave', () => {
-                loginCard.style.setProperty('--rotateX', `0deg`);
-                loginCard.style.setProperty('--rotateY', `0deg`);
-            });
-        }
     });
    </script>
-   
-   <style>
-       /* 登入失敗時的搖晃動畫 */
-       @keyframes shake {
-           0%, 100% { transform: translateX(0); }
-           25% { transform: translateX(-10px); }
-           75% { transform: translateX(10px); }
-       }
-   </style>
 </body>
 </html>
