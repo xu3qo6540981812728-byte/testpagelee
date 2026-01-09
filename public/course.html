@@ -465,6 +465,16 @@
     border-bottom: 1px solid #e2e8f0;
     z-index: 50 !important;
     cursor: pointer;
+
+    position: sticky;
+    top: 0; 
+}
+
+/* 🌟 新增：針對手機版的修正 (讓它黏在 Header 下方) */
+@media (max-width: 767px) {
+    #progress-display-area.is-stuck {
+        top: 64px !important; /* 避開手機版上方 Header 的高度 */
+    }
 }
 
 /* 2. 黏住時：隱藏不需要的元素 */
@@ -2804,68 +2814,99 @@ function bindQuizEventListeners() {
 }
         
        // --- 🚀 進度條自動縮放邏輯 (修正版) ---
+let stickyObserver = null;
+
 function initStickyObserver() {
     const progressArea = document.getElementById('progress-display-area');
     
-    if (!progressArea) return;
+    // 如果找不到進度條，或者已經有哨兵了(避免重複添加)，就停止
+    if (!progressArea || document.getElementById('sticky-sentinel')) return;
 
-    // 1. 點擊回頂部功能 (綁定在整個條上)
+    // 1. 建立哨兵 (偵測是否滑動到頂部)
+    const sentinel = document.createElement('div');
+    sentinel.id = 'sticky-sentinel';
+    
+    // 設定樣式：絕對定位於 progressArea 的「正上方偏移一點點」
+    sentinel.style.position = 'absolute';
+    sentinel.style.top = '-10px'; // 稍微往上拉一點，增加靈敏度
+    sentinel.style.left = '0';
+    sentinel.style.height = '1px';
+    sentinel.style.width = '100%';
+    sentinel.style.visibility = 'hidden';
+    sentinel.style.pointerEvents = 'none';
+    
+    // 確保父容器有定位基準
+    if (progressArea.parentNode) {
+        progressArea.parentNode.style.position = 'relative';
+        // 將哨兵插入到 progressArea 的前面
+        progressArea.parentNode.insertBefore(sentinel, progressArea);
+    }
+
+    // 2. 點擊回頂部功能
     progressArea.onclick = function() {
-        // 只有在「縮小黏住」的狀態下，點擊才觸發滾動
         if (this.classList.contains('is-stuck')) {
+            // 嘗試捲動 main 區域 (因為內容是在 main 裡面捲動)
+            const mainContent = document.querySelector('main');
+            if (mainContent) {
+                mainContent.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+            // 備用：捲動視窗
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
     };
 
-    // 2. 建立哨兵 (偵測是否滑動到頂部)
-    if (!document.getElementById('sticky-sentinel')) {
-        const sentinel = document.createElement('div');
-        sentinel.id = 'sticky-sentinel';
-        
-        // 設定樣式：絕對定位於 progressArea 的「正上方偏移一點點」
-        // 這樣當 progressArea 碰到頂部時，哨兵剛好滾出去
-        sentinel.style.position = 'absolute';
-        sentinel.style.top = '-2px';  
-        sentinel.style.left = '0';
-        sentinel.style.height = '1px';
-        sentinel.style.width = '100%';
-        sentinel.style.visibility = 'hidden';
-        sentinel.style.pointerEvents = 'none';
-        
-        // 將哨兵插入到 progressArea 的前面
-        progressArea.parentNode.insertBefore(sentinel, progressArea);
-        // 確保父容器有定位基準
-        progressArea.parentNode.style.position = 'relative'; 
-        
-        // 3. 建立觀察器
-        const observer = new IntersectionObserver((entries) => {
-            const entry = entries[0];
-            
-            // 邏輯：當哨兵滾出畫面上方 (boundingClientRect.top < 0) 且不可見時
-            // 代表使用者往下滑了，progressArea 應該要黏住並縮小
-            if (!entry.isIntersecting && entry.boundingClientRect.top < 0) {
-                progressArea.classList.add('is-stuck');
-            } else {
-                progressArea.classList.remove('is-stuck');
-            }
-        }, {
-            threshold: 0,
-            rootMargin: '0px 0px 0px 0px'
-        });
-
-        observer.observe(sentinel);
+    // 3. 清除舊的觀察器 (如果有的話)
+    if (stickyObserver) {
+        stickyObserver.disconnect();
     }
+
+    // 4. 建立新的 IntersectionObserver
+    stickyObserver = new IntersectionObserver((entries) => {
+        const entry = entries[0];
+        // 邏輯：當哨兵滾出畫面上方 (top < 0) 且不可見時 -> 變形
+        if (!entry.isIntersecting && entry.boundingClientRect.top < 0) {
+            progressArea.classList.add('is-stuck');
+        } else {
+            progressArea.classList.remove('is-stuck');
+        }
+    }, {
+        threshold: 0,
+        // 使用 main 作為根容器，如果失敗則預設為 viewport
+        root: document.querySelector('main') || null 
+    });
+
+    stickyObserver.observe(sentinel);
+    console.log("✅ 進度條縮放功能已啟動");
 }
 
-// 3. 確保在切換到 chapter0 時啟動這個邏輯
-// 請將此函式掛載到你的 showChapterView 或 loadProgressFromFirebase 之後
-// 為了保險起見，這裡設一個 MutationObserver 自動監聽 chapter0 是否出現
-const chapter0Observer = new MutationObserver((mutations) => {
+// 監聽 DOM 變化：專門處理「動態載入內容」後哨兵被刪除的問題
+const contentObserver = new MutationObserver((mutations) => {
     const chapter0 = document.getElementById('chapter0');
+    // 只有當 chapter0 存在且是顯示狀態(active)時才執行
     if (chapter0 && chapter0.classList.contains('active')) {
-        // 延遲一點點確保 DOM 渲染完成
-        setTimeout(initStickyObserver, 100);
+        const progressArea = document.getElementById('progress-display-area');
+        // 如果進度條存在，但哨兵不見了 (被動態載入洗掉了)，就重新初始化
+        if (progressArea && !document.getElementById('sticky-sentinel')) {
+            // 延遲一點點執行，確保畫面渲染完成
+            setTimeout(initStickyObserver, 200);
+        }
     }
+});
+
+// 開始監聽 main 區域 (因為 chapter0 會被動態插入 main)
+const mainContentAreaForSticky = document.querySelector('main');
+if (mainContentAreaForSticky) {
+    contentObserver.observe(mainContentAreaForSticky, { 
+        childList: true, 
+        subtree: true, 
+        attributes: true, 
+        attributeFilter: ['class'] 
+    });
+}
+
+// 頁面載入時先嘗試執行一次
+document.addEventListener('DOMContentLoaded', () => {
+    setTimeout(initStickyObserver, 500);
 });
 
 // 開始監聽 main 區域的變化
@@ -2877,6 +2918,7 @@ if (mainContent) {
     </script>
 </body>
 </html>
+
 
 
 
