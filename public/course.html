@@ -427,61 +427,95 @@
 .stamp-image-stamped { /* 達成 100% 時添加此 Class */
     animation: stamp-in 2.0s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
 }
-   /* 1. 粒子容器的基本樣式 */
-        #particle-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: 999; 
-    pointer-events: none; 
-    /* 🌟 將 background 改為完全透明 🌟 */
-    background: transparent; 
-    overflow: hidden;
-}
+   #particle-overlay {
+       position: fixed;
+       /* 關鍵修正：讓它比螢幕大一圈 (120%) */
+       width: 120%;
+       height: 120%;
+       /* 關鍵修正：往左上偏移，讓它保持置中 */
+       top: -10%;
+       left: -10%;
+       
+       z-index: 999; 
+       pointer-events: none; 
+       background: transparent; 
 
-/* --- 🚀 進度條縮放優化開始 --- */
+   }
+/* --- 🚀 進度條終極修復 (單行模式) --- */
 
-/* 1. 設定過渡動畫，讓縮放時很平滑 */
+/* 1. 基礎過渡設定 */
 #progress-display-area {
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    will-change: padding, background-color; /* 效能優化 */
+    will-change: padding, background-color, transform;
+    /* 預設狀態：保持原本的垂直堆疊，不需要特別寫 */
 }
 
-/* 2. 當被標記為 'stuck' (黏住/縮小) 狀態時的樣式 */
+/* 2. 黏住狀態 (.is-stuck) 的樣式：強制橫向排列 */
 #progress-display-area.is-stuck {
-    padding: 0.75rem 1rem !important; /* 縮減上下內距 */
-    background-color: rgba(255, 255, 255, 0.95) !important; /* 背景改為白色微透明 */
-    backdrop-filter: blur(8px); /* 毛玻璃效果 */
-    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1); /* 增加陰影區隔內容 */
+    display: flex !important;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: nowrap;
+    gap: 12px;
+    
+    padding: 0.5rem 1rem !important;
+    background-color: rgba(255, 255, 255, 0.98) !important;
+    backdrop-filter: blur(10px);
+    box-shadow: 0 4px 15px -3px rgba(0, 0, 0, 0.1);
     border-bottom: 1px solid #e2e8f0;
-    z-index: 50 !important; /* 確保層級最高 */
+    z-index: 50 !important;
+    cursor: pointer;
 }
 
-/* 3. 縮小狀態下：隱藏不必要的元素 (金句、主管面板、當前查看者) */
+/* 2. 黏住時：隱藏不需要的元素 */
 #progress-display-area.is-stuck #progress-motivation,
 #progress-display-area.is-stuck #manager-control-panel,
 #progress-display-area.is-stuck #current-user-info,
-#progress-display-area.is-stuck p.text-base {
+#progress-display-area.is-stuck p.text-base,
+#progress-display-area.is-stuck #progress-subtitle {
     display: none !important;
-    opacity: 0;
-    height: 0;
+}
+
+/* 3. 黏住時：標題樣式 */
+#progress-display-area.is-stuck h4#progress-percentage {
+    font-size: 0.9rem !important;
+    margin-bottom: 0 !important;
+    white-space: nowrap;
+    flex-shrink: 0;
+    color: #4f46e5;
+}
+
+/* 4. 黏住時：進度條變形 */
+#progress-display-area.is-stuck .w-full.bg-slate-200 {
+    flex-grow: 1;
+    width: auto !important;
+    height: 0.6rem;
     margin: 0;
 }
 
-/* 4. 縮小狀態下：調整標題與進度條排版 */
-#progress-display-area.is-stuck h4#progress-percentage {
-    font-size: 1rem !important; /* 字體變小 */
-    margin-bottom: 0.25rem !important;
-    display: flex;
-    justify-content: space-between;
+/* 5. 黏住時：箭頭容器 (負責定位，不動) */
+#progress-display-area.is-stuck #sticky-arrow-indicator {
+    display: flex !important;     /* 顯示出來 */
+    position: static !important;  /* 讓它乖乖排在右邊，不要浮動 */
+    transform: none !important;   /* 這裡強制不動，解決排版問題 */
+    margin-left: auto;
+    flex-shrink: 0;
     align-items: center;
+    font-size: 0.9rem;
+    color: #4f46e5;
 }
 
-/* --- 🚀 進度條縮放優化結束 --- */        
-       
+/* 6. 【關鍵修正】只讓內部的「箭頭圖標 (i)」跳動 */
+#progress-display-area.is-stuck #sticky-arrow-indicator i {
+    animation: bounce-arrow-icon 1s infinite; /* 動畫加在這裡 */
+    margin-right: 4px; /* 稍微跟 TOP 文字拉開一點距離 */
+}
 
+/* 定義專用的箭頭跳動動畫 (上下跳) */
+@keyframes bounce-arrow-icon {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-5px); } /* 加大一點幅度讓電腦版更明顯 */
+}
         
         
     </style>
@@ -524,9 +558,9 @@
                 <span class="hidden md:inline mr-2 font-semibold">下一章</span>
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" /></svg>
             </button>
-            <div id="mobile-overlay" class="fixed inset-0 bg-black opacity-50 z-30 md:hidden" style="display: none;"></div>
+            <div id="mobile-overlay" class="fixed inset-0 bg-black opacity-50 z-[55] md:hidden" style="display: none;"></div>
             <!-- Sidebar Navigation -->
-            <aside id="sidebar" class="w-72 fixed top-0 h-full bg-blue-900 text-white flex flex-col shadow-2xl sidebar z-40 ">
+            <aside id="sidebar" class="w-72 fixed top-0 h-full bg-blue-900 text-white flex flex-col shadow-2xl sidebar z-[60] ">
                <div class="p-4 border-b border-blue-800 flex items-center justify-center">
     <img src="images/icon3.png" alt="房仲菁英班 Logo" class="w-full max-w-[200px] h-auto">
 </div>
@@ -551,7 +585,7 @@
                     </button>
                 </div>
             </aside>
-<div id="search-results-container" class="fixed top-28 left-4 md:left-80 z-50 bg-white rounded-xl shadow-2xl w-11/12 md:w-1/2 max-w-2xl hidden max-h-[70vh] flex flex-col">
+<div id="search-results-container" class="fixed top-60 md:top-28 left-4 md:left-80 z-[70] bg-white rounded-xl shadow-2xl w-11/12 md:w-1/2 max-w-2xl hidden max-h-[70vh] flex flex-col">
     <div id="search-results-header" class="p-4 border-b text-slate-600">搜尋結果</div>
     <div id="search-results-list" class="overflow-y-auto p-2">
         </div>
@@ -599,6 +633,10 @@
         
     </div> 
     <div id="progress-display-area" class="mb-6 p-4 bg-indigo-50 rounded-lg sticky top-0 z-10">
+        <div id="sticky-arrow-indicator" class="hidden text-indigo-600 text-sm font-bold flex items-center">
+            <span class="mr-1">TOP</span>
+            <i class="fas fa-arrow-up"></i>
+        </div>
         <h4 id="progress-percentage" class="text-xl font-bold text-indigo-800 mb-2">
             </h4>
         <div class="w-full bg-slate-200 rounded-full h-2.5">
@@ -2733,71 +2771,78 @@ function bindQuizEventListeners() {
         });
         
     </script>
-    <div id="particle-overlay"></div>
+    <div id="particle-overlay" class="hidden md:block"></div>
     <script>
-        const particleOverlay = document.getElementById('particle-overlay');
+        if (particleOverlay && window.innerWidth > 768) {
+    particleOverlay.style.transition = 'transform 0.1s linear';
+    
+    document.addEventListener('mousemove', (e) => {
+        // 1. 取得容器位置
+        const rect = particleOverlay.getBoundingClientRect();
+        
+        // 2. 校正座標
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
 
-        if (particleOverlay) {
-            // 設置一個極小的 CSS 3D 景深效果，讓粒子看起來不是貼在螢幕上
-            particleOverlay.style.transition = 'transform 0.1s linear';
-            
-            // 監聽滑鼠移動事件，用於體積光和景深
-            document.addEventListener('mousemove', (e) => {
-                
-                const x = e.clientX;
-                const y = e.clientY;
+        // 3. 設定光暈
+        particleOverlay.style.background = `radial-gradient(circle at ${x}px ${y}px, rgba(79, 70, 229, 0.25) 0%, rgba(0, 0, 0, 0) 20%)`;
 
-                // 應用 CSS 樣式：模擬光線追蹤 (提高光暈強度到 0.3)
-                particleOverlay.style.background = `radial-gradient(circle at ${x}px ${y}px, rgba(100, 150, 255, 0.15) 0%, rgba(0, 0, 0, 0) 15%)`;
+        // 4. 視差移動效果
+        const depthFactor = 12; 
+        const centerX = window.innerWidth / 2;
+        const centerY = window.innerHeight / 2;
+        const offsetX = (e.clientX - centerX) / centerX;
+        const offsetY = (e.clientY - centerY) / centerY;
+        
+        particleOverlay.style.transform = `translateX(${-offsetX * depthFactor}px) translateY(${-offsetY * depthFactor}px)`;
+    });
 
-                // 粒子景深/視差效果：讓粒子層隨著滑鼠輕微移動 (景深因子提高到 12)
-                const depthFactor = 12; 
-                const centerX = window.innerWidth / 2;
-                const centerY = window.innerHeight / 2;
-                const offsetX = (e.clientX - centerX) / centerX;
-                const offsetY = (e.clientY - centerY) / centerY;
-                
-                particleOverlay.style.transform = `translateX(${-offsetX * depthFactor}px) translateY(${-offsetY * depthFactor}px)`;
-            });
-
-            // 滑鼠移出時，恢復預設光暈
-            document.addEventListener('mouseleave', () => {
-  
-    particleOverlay.style.background = 'transparent';
-    particleOverlay.style.transform = 'translate(0, 0)';
-});
-        }
-        // --- 🚀 進度條自動縮放邏輯 (Sentinel Observer) ---
+    document.addEventListener('mouseleave', () => {
+        particleOverlay.style.background = 'transparent';
+        particleOverlay.style.transform = 'translate(0, 0)';
+    });
+}
+        
+       // --- 🚀 進度條自動縮放邏輯 (修正版) ---
 function initStickyObserver() {
     const progressArea = document.getElementById('progress-display-area');
     
     if (!progressArea) return;
 
-    // 1. 建立一個「哨兵」元素 (透明的線)
-    // 如果已經有哨兵了就不要重複建立
+    // 1. 點擊回頂部功能 (綁定在整個條上)
+    progressArea.onclick = function() {
+        // 只有在「縮小黏住」的狀態下，點擊才觸發滾動
+        if (this.classList.contains('is-stuck')) {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+    };
+
+    // 2. 建立哨兵 (偵測是否滑動到頂部)
     if (!document.getElementById('sticky-sentinel')) {
         const sentinel = document.createElement('div');
         sentinel.id = 'sticky-sentinel';
-        // 設定樣式：絕對定位，向上偏移一點點，確保它比 sticky 元素早一點滾出去
+        
+        // 設定樣式：絕對定位於 progressArea 的「正上方偏移一點點」
+        // 這樣當 progressArea 碰到頂部時，哨兵剛好滾出去
         sentinel.style.position = 'absolute';
-        sentinel.style.top = '-10px'; 
+        sentinel.style.top = '-2px';  
+        sentinel.style.left = '0';
         sentinel.style.height = '1px';
         sentinel.style.width = '100%';
-        sentinel.style.visibility = 'hidden'; // 看不見
+        sentinel.style.visibility = 'hidden';
+        sentinel.style.pointerEvents = 'none';
         
-        // 將哨兵插入到 progressArea 的「正上方」 (父容器內)
+        // 將哨兵插入到 progressArea 的前面
         progressArea.parentNode.insertBefore(sentinel, progressArea);
-        
-        // 為了讓 sentinel 的 absolute 定位準確，父容器 chapter0 需要是 relative
-        // 你的 HTML 結構是 #chapter0 > #progress-display-area
+        // 確保父容器有定位基準
         progressArea.parentNode.style.position = 'relative'; 
         
-        // 2. 建立觀察器 (IntersectionObserver)
+        // 3. 建立觀察器
         const observer = new IntersectionObserver((entries) => {
             const entry = entries[0];
             
-            // 邏輯：如果哨兵「看不見了」(isIntersecting = false) 且 它是從「上方」滾出去的 (boundingClientRect.top < 0)
-            // 代表進度條現在已經黏在頂部了
+            // 邏輯：當哨兵滾出畫面上方 (boundingClientRect.top < 0) 且不可見時
+            // 代表使用者往下滑了，progressArea 應該要黏住並縮小
             if (!entry.isIntersecting && entry.boundingClientRect.top < 0) {
                 progressArea.classList.add('is-stuck');
             } else {
@@ -2808,7 +2853,6 @@ function initStickyObserver() {
             rootMargin: '0px 0px 0px 0px'
         });
 
-        // 開始監視哨兵
         observer.observe(sentinel);
     }
 }
@@ -2833,145 +2877,6 @@ if (mainContent) {
     </script>
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
